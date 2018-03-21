@@ -1,0 +1,220 @@
+
+
+ifeq (,$(strip $(RUNpath)))
+$(error "you should define RUNpath and run again" )
+endif
+
+#help -arch spartan3 -command elaborate
+RUNxst11:=help -arch $(DEV02) 
+RUNxst12:=  run set elaborate timing script time help memory
+
+RUNxst10=cd tmp/ && echo "$(1)" | $(RUNpath)/xst -intstyle silent -ofn ../out/log_$(PROJname)_32_xst_help_$(IDXxst)_$(shell basename $(lastword $(1))).txt  
+RUNxst20=cd tmp/ && $(RUNpath)/xst -intstyle silent -ofn ../out/log_$(PROJname)_32_xst_help_x_run.txt -ifn ../out/$(RUNxst31)
+IDXxst:=1
+define RUNxst14
+       $(RUNxst10)
+
+@echo '$(RUNxst10)' >> out/$(CMDxst33)
+
+$(eval IDXxst=$$(shell echo $$$$(($(IDXxst)+1))))
+
+endef
+#$(eval IDXxst=$$(shell echo $$($$(IDXxst)+1)))
+
+# /home/bootH/vm3/VMs/topVM/VM.jg1/virtFS.jg1/xilinx3s500e_example/demoXilinx3s500e/3S500E-Demo/verilog/LED/LED4.xst
+
+define RUNxst21
+-iuc NO
+-keep_hierarchy No
+-netlist_hierarchy As_Optimized
+-rtlview Yes
+-glob_opt AllClockNets
+-read_cores YES
+-write_timing_constraints NO
+-cross_clock_analysis NO
+-hierarchy_separator /
+-bus_delimiter <>
+-case Maintain
+-slice_utilization_ratio 100
+-bram_utilization_ratio 100
+-verilog2001 YES
+-fsm_extract YES -fsm_encoding Auto
+-safe_implementation No
+-fsm_style LUT
+-ram_extract Yes
+-ram_style Auto
+-rom_extract Yes
+-mux_style Auto
+-decoder_extract YES
+-priority_extract Yes
+-shreg_extract YES
+-shift_extract YES
+-xor_collapse YES
+-rom_style Auto
+-auto_bram_packing NO
+-mux_extract Yes
+-resource_sharing YES
+-async_to_sync NO
+-mult_style Auto
+-max_fanout 500
+-bufg 24
+-register_duplication YES
+-register_balancing No
+-slice_packing YES
+-optimize_primitives NO
+
+endef
+
+define RUNxst22
+run 
+-p $(DEV01) 
+-ifmt mixed 
+-ofmt ngc 
+-top $(topModule) 
+-ifn ../out/scr_$(PROJname)_32_2_xst_verilog.scr 
+-ofn obj_$(PROJname)_32_1_xst.ngc
+-opt_mode Speed
+-opt_level 1
+-iobuf YES
+-use_clock_enable Yes
+-use_sync_set Yes
+-use_sync_reset Yes
+-iob Auto
+-slice_utilization_ratio_maxmargin 5
+-equivalent_register_removal YES
+$(RUNxst21xxxxx)
+
+endef
+export RUNxst22
+
+#/home/bootH/vm3/VMs/topVM/VM.jg1/virtFS.jg1/1/a2_io_2018_0320_1044am.try/CP447_CMI_AL0205.xst
+#set -tmpdir "xst/projnav.tmp"
+#set -xsthdpdir "xst"
+#-sd {"ipcore_dir"  }
+#-p xc3sd3400a-4-fg676
+define RUNxst23
+run
+-ifn $(topModule).prj
+-ifmt mixed
+-ofn $(topModule)
+-ofmt NGC
+-p $(DEV01)
+-top $(topModule)
+-opt_mode Speed
+-opt_level 1
+-iuc NO
+-keep_hierarchy No
+-netlist_hierarchy As_Optimized
+-rtlview Yes
+-glob_opt AllClockNets
+-read_cores YES
+-write_timing_constraints NO
+-cross_clock_analysis NO
+-hierarchy_separator /
+-bus_delimiter <>
+-case Maintain
+-slice_utilization_ratio 100
+-bram_utilization_ratio 100
+-dsp_utilization_ratio 100
+-verilog2001 YES
+-fsm_extract YES -fsm_encoding Auto
+-safe_implementation No
+-fsm_style LUT
+-ram_extract Yes
+-ram_style Auto
+-rom_extract Yes
+-mux_style Auto
+-decoder_extract YES
+-priority_extract Yes
+-shreg_extract YES
+-shift_extract YES
+-xor_collapse YES
+-rom_style Auto
+-auto_bram_packing NO
+-mux_extract Yes
+-resource_sharing YES
+-async_to_sync NO
+-use_dsp48 Auto
+-iobuf YES
+-max_fanout 500
+-bufg 24
+-register_duplication YES
+-register_balancing No
+-slice_packing YES
+-optimize_primitives NO
+-use_clock_enable Yes
+-use_sync_set Yes
+-use_sync_reset Yes
+-iob Auto
+-equivalent_register_removal YES
+-slice_utilization_ratio_maxmargin 5
+
+endef
+export RUNxst23
+
+#/home/bootH/vm3/VMs/topVM/VM.jg1/virtFS.jg1/xilinx3s500e_example/demoXilinx3s500e/3S500E-Demo/verilog/LED/LED4.prj
+define RUNxst42
+$(foreach bb1,$(wildcard src1/*.v src2/*.v src3/*.v src/*.v), verilog work ../$(bb1)$(EOL))
+
+
+endef
+export RUNxst42
+
+RUNxst31:=scr_$(PROJname)_32_1_xst_load.scr
+RUNxst32:=scr_$(PROJname)_32_2_xst_verilog.scr
+CMDxst33:=cmd_$(PROJname)_32_xst_help.txt  
+
+rx:=run_xst_to_compile_the_verilog
+run_xst_to_compile_the_verilog:= add the "HELP=1" can generate the help of xst
+rx $(rx):
+	@[ -d tmp/ ] || mkdir -p tmp/
+	@echo  > out/$(CMDxst33)
+ifdef HELP
+	$(call RUNxst14,$(RUNxst11),help)
+	@echo >> out/$(CMDxst33)
+	$(foreach aa1,$(RUNxst12),$(eval aa2:=$(RUNxst11) -command $(aa1))$(call RUNxst14,$(aa2))$(EOL))
+	@echo >> out/$(CMDxst33)
+endif
+	echo "$${RUNxst22}" > out/$(RUNxst31)
+	echo "$${RUNxst23}" > out/$(RUNxst31)
+	echo "$${RUNxst42}" > out/$(RUNxst32)
+	       $(RUNxst20)
+	@echo '$(RUNxst20)' >> out/$(CMDxst33)
+	mv tmp/obj_$(PROJname)_32_1_xst.ngc  out/
+
+
+RUNcmdList +=rx   
+
+define xst_help
+
+
+Release 14.7 - xst P.20131013 (lin64)
+Copyright (c) 1995-2013 Xilinx, Inc.  All rights reserved.
+Usage: xst [-ifn <InputFile>] [-ofn <OutputFile>] [-filter <FilterFile>] [-ise
+<iseProjectFile>] [-intstyle <Style>] 
+There is no -finalclean architecture-specific help available for "xst".  The
+architecture-independent help is instead provided below.
+ 
+Where:
+  -ifn = Script file name
+      Contains a set of valid Xst commands.
+  -ofn = Output log file name
+      If not specified, <ifn>.srp will be generated.
+      If -intstyle is not used, the output goes on stdout as well.
+  -filter = Message Filter file name (for example "filter.filter").
+      If specified, the contents of this file will be used to 
+      filter messages from this application. The filter file 
+      can be created using Xreport.      
+  -intstyle [ise | xflow | silent] = Indicate contextual information when
+invoking Xilinx applications within a flow or project environment.
+      The mode "ise" indicates that the program is being run as part of an
+integrated design environment.
+      The mode "xflow" indicates that the program is being run as part of a
+batch flow.
+      The mode "silent" indicates that no output will be displayed to the
+screen.
+      Default: Program is run as a standalone application.
+
+Note: if no options are specified XST will be run in interactive mode.
+
+endef

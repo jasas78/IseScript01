@@ -1,0 +1,29 @@
+
+
+ifeq (,$(strip $(RUNpath)))
+$(error "you should define RUNpath and run again" )
+endif
+
+define UpImpactFlashPara
+	-w \
+	-p mcs \
+	-o obj_b_msc_$(PROJname) \
+	-u 0 ../out/obj_9_bit_$(PROJname) \
+
+endef
+export UpImpactFlashPara
+
+uf:=upload_to_flash
+uf $(uf):
+	@[ -d tmp/ ] || mkdir -p tmp/
+	      cd tmp/ && $(RUNpath)/promgen $(UpImpactFlashPara) > b.txt
+	echo "cd tmp/ && $(RUNpath)/promgen $(UpImpactFlashPara) > b.txt"     > out/cmd_b_msc.txt
+	@ls -l tmp/b.txt
+	@grep -i warning tmp/b.txt || echo 
+	@[ -d out/ ] || mkdir -p out/
+	cp  tmp/obj_b_msc_$(PROJname).mcs          out/
+	cp  tmp/b.txt                              out/log_b_msc_$(PROJname).txt
+
+RUNcmdList +=uf   
+
+

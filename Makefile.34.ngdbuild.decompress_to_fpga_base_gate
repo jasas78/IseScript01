@@ -1,0 +1,103 @@
+
+
+ifeq (,$(strip $(RUNpath)))
+$(error "you should define RUNpath and run again" )
+endif
+
+# ngdbuild -intstyle ise -dd _ngo -nt timestamp -uc LED4.ucf -p xc3s500e-pq208-4 LED4.ngc LED4.ngd  
+
+PROJngdX:=$(PROJname)_34_2_ngd
+FNngdInNGC:=obj_$(PROJname)_32_1_xst.ngc 		
+FNngdOutNGD:=obj_$(PROJngdX).ngd 		
+FNngdLog1:=log_$(PROJngdX).txt 		
+FNngdCMD1:=cmd_$(PROJngdX).txt 		
+
+define RUNngdPara
+	-p $(DEV01) 				\
+	-uc $(ttUCF) 				\
+	../out/$(FNngdInNGC) 		\
+	$(FNngdOutNGD) 				\
+
+endef
+RUNngd:=cd tmp/ && $(RUNpath)/ngdbuild $(RUNngdPara) > ../out/$(FNngdLog1)
+
+rn:=run_ngdbuild_to_decompress_to_base_fpga_gates
+rn $(rn):
+	@[ -d tmp/ ] || mkdir -p tmp/
+	$(RUNngd)
+	@echo '$(RUNngd)'  > out/$(FNngdCMD1)
+	@ls -l out/$(FNngdCMD1) 		out/$(FNngdLog1)
+	mv tmp/$(FNngdOutNGD)    		out/$(FNngdOutNGD)    
+	mv tmp/obj_$(PROJngdX).bld    	out/log_$(PROJngdX).bld    
+
+#	      cd tmp/ && $(RUNpath)/ngdbuild $(RUNngdPara) > 3.txt
+#	echo "cd tmp/ && $(RUNpath)/ngdbuild $(RUNngdPara) > 3.txt"     > out/cmd_4_ngdbuild.txt
+#	@ls tmp/3.txt
+#	@grep -i warning tmp/3.txt
+#	@[ -d out/ ] || mkdir -p out/
+#	cp  tmp/obj_$(PROJname)_32_1_xst.ngd              out/obj_4_ngdbuild_$(PROJname).ngd 
+#	cp  tmp/3.txt                                  out/log_4_ngdbuild_$(PROJname).txt
+#	cp  tmp/obj_$(PROJname)_32_1_xst_ngdbuild.xrpt    out/rpt_4_ngdbuild_$(PROJname).xrpt
+#	cat tmp/obj_$(PROJname)_32_1_xst_ngdbuild.xrpt    \
+#		| grep 'item dataType="int" stringID' |awk -F\" '{print $$4 "                                   " $$6}' \
+#		>                                          out/rpt_4_ngdbuild_$(PROJname).xrpt.txt
+
+RUNcmdList +=rn   
+
+define HelpNGDbuild
+
+
+Release 14.7 - ngdbuild P.20131013 (lin64)
+Copyright (c) 1995-2013 Xilinx, Inc.  All rights reserved.
+Usage: ngdbuild [-p <partname>] {-sd <source_dir>} {-l <library>} [-ur
+<rules_file[.urf]>] [-dd <output_dir>] [-r] [-a] [-u] [-nt timestamp|on|off]
+[-uc <ucf_file[.ucf]>] [-aul] [-aut] [-bm <bmm_file[.bmm]>] [-i] [-intstyle
+ise|xflow|silent] [-quiet] [-verbose] [-insert_keep_hierarchy] [-filter
+<filter_file[.filter]>] <design_name> [<ngd_file[.ngd]>]
+
+      -p  partname     Use specified part type to implement the design
+      -sd source_dir   Add "source_dir" to the list of directories
+                       to search when resolving netlist file references
+      -l library       Add "library" to the list of source libraries
+                       passed to the netlisters
+      -ur rules_file   User rules file for netlist launcher
+      -dd output_dir   Directory to place intermediate .ngo files
+      -nt value        NGO file generation
+                       Options:       "timestamp", "on", "off"
+                       -nt timestamp: Regenerate NGO only when source
+                                      netlist is newer than existing
+                                      NGO file (default)
+                       -nt on:        Always regenerate NGO file from
+                                      source design netlists
+                       -nt off:       Do not regenerate NGO files
+                                      which already exist. Build NGD
+                                      file from existing NGO files
+      -uc ucf_file     Use specified "User Constraint File".
+                       The file <design_name>.ucf is used by default
+                       if it is found in the local directory.
+      -r               Ignore location constraints
+      -aul             Allow unmatched LOC constraints
+      -aut             Allow unmatched timing group constraints
+      -a               Infer pad components from ports in top-level EDIF
+                       netlist (if any)
+      -i               Ignore usage of default ucf file, if present
+      -u               Allow unexpanded blocks in output NGD design.
+      -insert_keep_hierarchy
+                       Preserve hierarchical boundaries for timing simulation
+                       at module boundaries for designs represented by multiple
+                       input netlists.
+      -bm bmm_file     Use specified ".bmm file".
+      -f <cmdfile>     Read command line arguments from file <cmdfile>.
+      -filter          Message Filter file name (for example "filter.filter").
+                       If specified, the contents of this file will be used to 
+                       filter messages from this application. The filter file 
+                       can be created using Xreport.
+      -intstyle ise|xflow|silent
+                       Indicate contextual information when invoking Xilinx 
+                       applications within a flow or project environment.
+      -quiet           Only report Warning and Error messages.
+      -verbose         Reports all messages
+NGDBUILD:  Translates and merges the various source files of a design into a
+single "NGD" design database.
+
+endef

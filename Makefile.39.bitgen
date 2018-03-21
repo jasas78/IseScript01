@@ -1,0 +1,129 @@
+
+
+ifeq (,$(strip $(RUNpath)))
+$(error "you should define RUNpath and run again" )
+endif
+
+# bitgen -intstyle ise -f LED4.ut LED4.ncd
+
+define SCRbit1
+-w
+-g DebugBitstream:No
+-g Binary:no
+-g CRC:Enable
+-g ConfigRate:1
+-g ProgPin:PullUp
+-g DonePin:PullUp
+-g TckPin:PullUp
+-g TdiPin:PullUp
+-g TdoPin:PullUp
+-g TmsPin:PullUp
+-g UnusedPin:PullDown
+-g UserID:0xFFFFFFFF
+-g DCMShutdown:Disable
+-g StartUpClk:CClk
+-g DONE_cycle:4
+-g GTS_cycle:5
+-g GWE_cycle:6
+-g LCK_cycle:NoWait
+-g Security:None
+-g DonePipe:No
+-g DriveDone:No
+
+endef
+export SCRbit1
+
+PROJbitX:=$(PROJname)_39_6_bit
+FNbitOut0:=obj_$(PROJbitX)
+FNbitOut1:=$(FNbitOut0).bit
+FNbitIn1:=obj_$(PROJname)_37_4_par_outNCD.ncd
+FNbitLog1:=log_$(PROJbitX).txt
+FNbitCmd1:=cmd_$(PROJbitX).txt
+FNbitScr1:=scr_$(PROJbitX).scr
+
+define CMDbitLine1
+$(RUNpath)/bitgen              			\
+	    -f ../out/$(FNbitScr1)          \
+		../out/$(FNbitIn1)						\
+		$(FNbitOut1)					\
+
+endef
+CMDbitLine2:= cd tmp/ && $(CMDbitLine1) > ../out/$(FNbitLog1)
+export CMDbitLine2
+
+
+rb:=run_bitgen
+rb $(rb):
+	@[ -d tmp/ ] || mkdir -p tmp/
+	echo "$${SCRbit1}"     > out/$(FNbitScr1)
+	      $(CMDbitLine2)
+	@echo "$(CMDbitLine2)"   > out/$(FNbitCmd1)
+	cp   tmp/$(FNbitOut1)		out/$(FNbitOut1).2
+	mv   tmp/$(FNbitOut1)		out/$(FNbitOut1)
+
+RUNcmdList +=rb   
+
+
+define bitgenHelp
+Release 14.7 - Bitgen P.20131013 (lin64)
+Copyright (c) 1995-2013 Xilinx, Inc.  All rights reserved.
+Usage: bitgen [-d] [-j] [-b] [-w] [-l] [-m] [-t] [-n] [-u] [-a] [-r <bitFile>]
+[-intstyle ise|xflow|silent|pa] [-ise <projectrepositoryfile>] {-bd
+<BRAM_data_file> [tag <tagname>]} {-g <setting_value>} [-filter
+<filter_file[.filter]>] <infile[.ncd]> [<outfile>] [<pcffile[.pcf]>]
+ 
+Where:
+  -d            = Don't Run DRC (Design Rules Checker)
+  -j            = Don't create bit file
+  -b            = Create rawbits file
+  -w            = Overwrite existing output file
+  -l            = Create logic allocation file
+  -m            = Create mask file
+  -t            = Tie down unused interconnect
+  -n            = Save tied ncd as _<file>.ncd
+  -u            = Use critical nets as last resort during tiedown
+  -a            = Attempt "full" tiedown, allowing use of user signals
+  -f <cmdfile>  = Read command line arguments from file <cmdfile>
+  -r <bitfile>  = Create a partial bit file using <bitfile> as reference
+  -bd <memfile> = Update BlockRAM contents with data from file <memfile>
+  -g <opt:val>  = Set architecture specific option "opt" to value "val"
+
+Use "bitgen -help <architecture>" to display architecture specific options.
+
+BITGEN:  Creates the configuration (BIT) file based on the contents of a
+physical implementation file (NCD).  The BIT file defines the behavior of
+the programmed FPGA.
+
+Valid architectures are:
+   aartix7
+   artix7l
+   aspartan3
+   aspartan3a
+   aspartan3adsp
+   aspartan3e
+   aspartan6
+   kintex7
+   kintex7l
+   qartix7
+   qkintex7
+   qkintex7l
+   qrvirtex4
+   qspartan6
+   qspartan6l
+   qvirtex4
+   qvirtex5
+   qvirtex6
+   qvirtex6l
+   qvirtex7
+   spartan3
+   spartan3a
+   spartan3e
+   spartan6
+   spartan6l
+   virtex4
+   virtex5
+   virtex6
+   virtex6l
+   virtex7
+endef
+
