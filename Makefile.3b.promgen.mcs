@@ -4,25 +4,44 @@ ifeq (,$(strip $(RUNpath)))
 $(error "you should define RUNpath and run again" )
 endif
 
-define RUNgenMscPara
+
+FNmcsEXT0:=$(PROJname)_3b_8_mcs
+FNmcsOut0:=obj_$(FNmcsEXT0)
+FNmcsOut1:=$(FNmcsOut0).mcs
+FNmcsIn1:=$(FNbitOut1)
+FNmcsLog1:=log_$(FNmcsEXT0).txt
+FNmcsCmd1:=cmd_$(FNmcsEXT0).txt
+FNmcsScr1:=scr_$(FNmcsEXT0).scr
+
+
+define CMDmcsLine1
+$(RUNpath)/promgen                       \
 	-w \
 	-p mcs \
-	-o obj_b_mcs_$(PROJname) \
-	-u 0 ../out/obj_9_bit_$(PROJname) \
+	-o $(FNmcsOut1)  \
+	-u 0 \
+	../out/$(FNmcsIn1) \
 
 endef
-export RUNgenMscPara
+CMDmcsLine2:= cd tmp/ && $(CMDmcsLine1) > ../out/$(FNmcsLog1)
+export CMDmcsLine2
+
 
 rs:=run_promgen_to_gen_mcs
 rs $(rs):
-	      cd tmp/ && $(RUNpath)/promgen $(RUNgenMscPara) > b.txt
-	echo "cd tmp/ && $(RUNpath)/promgen $(RUNgenMscPara) > b.txt"     > out/cmd_b_mcs.txt
-	@ls -l tmp/b.txt
-	@grep -i warning tmp/b.txt || echo 
-	cp  tmp/obj_b_mcs_$(PROJname).mcs          out/
-	cp  tmp/b.txt                              out/log_b_mcs_$(PROJname).txt
+	echo "$${SCRmcs1}"     > out/$(FNmcsScr1)
+	       $(CMDmcsLine2)
+	@echo "$(CMDmcsLine2)"   > out/$(FNmcsCmd1)
+	cp   tmp/$(FNmcsOut1)       out/$(FNmcsOut1).2
+	mv   tmp/$(FNmcsOut1)       out/$(FNmcsOut1)
 
-#RUNcmd +=rs   : $(rs)$(EOL)   
+
+
+
+
+
+
+
 RUNcmdList +=rs   
 
 
