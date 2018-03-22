@@ -13,8 +13,8 @@ FNxstSCR1:=scr_$(FNxstEXT1).scr
 FNxstSCR2:=scr_$(FNxstEXT2).scr
 FNxstOutNGC:=obj_$(FNxstEXT0).ngc
 FNxstCMD1:=cmd_$(FNxstEXT3).txt  
-FNxstLOG1:=log_$(FNxstEXT0)_1_help
-FNxstLOG2:=log_$(FNxstEXT0)_2_help_x_run.txt
+FNxstLOG1:=log_$(FNxstEXT0)_0_help
+FNxstLOG2:=log_$(FNxstEXT0).txt
 
 #help -arch spartan3 -command elaborate
 RUNxst11:=help -arch $(DEV02) 

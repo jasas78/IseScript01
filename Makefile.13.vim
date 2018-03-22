@@ -52,5 +52,7 @@ bt:= beautified format the text by :  $(bt111)
 bt:
 	$(foreach aa1,$(vsList), @$(bt111) $(aa1) $(EOL))
 
+an:
+	cd out && grep ' out  *of ' log_* |sed -e 's;^\([^ ]\+\) \+\([^ ]\+\) \+;\1      \2                   ;g' 
 
 
