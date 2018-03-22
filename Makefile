@@ -34,6 +34,9 @@ spartan3e    : xc3s500e-pq208-4
 endef
 export known_xilinxFpga_list
 
+time_called?=$(shell date +"%Y_%m%d__%H%M%P")
+export time_called
+
 DEV01?=xc3s500e-pq208-4
 DEV02?=$(shell echo $(DEV01)|sed -e 's;[-_].*$$;;g')
 DEV11:=
@@ -85,6 +88,9 @@ $$(eval include $($($(1))))
 
 endef
 
+CFGmakeGIT:=$(TM)/Makefile.11.git
+CFGmakeVIM:=$(TM)/Makefile.13.vim
+
 
 CFGmakeXST:=$(TM)/Makefile.32.xst.compile.verilog
 CFGmakeNGD:=$(TM)/Makefile.34.ngdbuild.decompress_to_fpga_base_gate
@@ -97,6 +103,8 @@ CFGmakeMSC:=$(TM)/Makefile.3b.promgen.mcs
 CFGmakeUpToRun:=$(TM)/Makefile.41.impact.upload_and_run
 CFGmakeUpFlash:=$(TM)/Makefile.42.impact.upload_to_flash
 CFGmakePartGen:=$(TM)/Makefile.51.partgen.gen_device_pin_info
+vg:=CFGmakeGIT
+vv:=CFGmakeVIM
 vme:=CFGmakeEnv
 vrx:=CFGmakeXST
 vrn:=CFGmakeNGD
@@ -111,7 +119,7 @@ vuf:=CFGmakeUpFlash
 vpg:=CFGmakePartGen
 
 
-INClist:=vrx vrn vrm vrp vrt vrb vrr vrs vur vuf vpg
+INClist:=vg vv vrx vrn vrm vrp vrt vrb vrr vrs vur vuf vpg
 $(foreach aa,$(INClist),$(eval $(call incMAKE,$(aa))))
 
 
@@ -155,7 +163,7 @@ define show_helpText
     TT          : $(TT)
     PROJdirTop  : $(PROJdirTop)
     PROJname    : $(PROJname)
-    vme  : $(vme) : $($(vme))
+    
     m    : $(m) : $($(m))
     ct   : $(ct)
     co   : $(co)
@@ -214,10 +222,4 @@ $$(eval    kk$(1)  : $(wordlist 1,$(1),$(aaa)) )
 
 endef
 $(foreach aa1,3 4 5 6 7 8 9 ,$(eval $(call KK,$(aa1))))
-
-gss:
-	cd $(TM) && git status
-
-gcc:
-	cd $(TM) && git commit -a
 

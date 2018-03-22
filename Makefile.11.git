@@ -1,0 +1,32 @@
+
+
+gs:
+	git status
+gc:
+	rm -f date.now.txt
+	echo "$(TT)_ _$(time_called)" > date.now.txt
+	git commit -a --template=date.now.txt
+	sync
+
+gd:
+	git diff
+
+ga:
+	git add .
+
+
+
+gss:
+	cd $(TM) && git status
+gcc:
+	cd $(TM) && rm -f date.now.txt
+	cd $(TM) && echo "$(TT)_ _$(time_called)" > date.now.txt
+	cd $(TM) && git commit -a --template=date.now.txt
+	cd $(TM) && sync
+
+gdd:
+	cd $(TM) && git diff
+
+gaa:
+	cd $(TM) && git add .
+
