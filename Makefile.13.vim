@@ -47,3 +47,10 @@ vs $(vs) :
 	@[ -f _vim/cscope.files ] || make vp
 	@echo;echo "   $${vsHelpTEXT}"
 
+bt111:= astyle --suffix=none 
+bt:= beautified format the text by :  $(bt111) 
+bt:
+	$(foreach aa1,$(vsList), @$(bt111) $(aa1) $(EOL))
+
+
+

@@ -183,6 +183,7 @@ define show_helpText
     aaa  : $(aaa)
    $(KKlist)
     vs   : $(vs)
+    bt   : $(bt)
 
 endef
 export showEnvUsage
