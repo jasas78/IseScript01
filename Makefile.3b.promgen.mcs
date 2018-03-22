@@ -15,12 +15,10 @@ export RUNgenMscPara
 
 rs:=run_promgen_to_gen_mcs
 rs $(rs):
-	@[ -d tmp/ ] || mkdir -p tmp/
 	      cd tmp/ && $(RUNpath)/promgen $(RUNgenMscPara) > b.txt
 	echo "cd tmp/ && $(RUNpath)/promgen $(RUNgenMscPara) > b.txt"     > out/cmd_b_mcs.txt
 	@ls -l tmp/b.txt
 	@grep -i warning tmp/b.txt || echo 
-	@[ -d out/ ] || mkdir -p out/
 	cp  tmp/obj_b_mcs_$(PROJname).mcs          out/
 	cp  tmp/b.txt                              out/log_b_mcs_$(PROJname).txt
 

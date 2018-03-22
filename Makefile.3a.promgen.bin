@@ -15,12 +15,10 @@ export RUNpromgenPara
 
 rr:=run_promgen_to_gen_bin
 rr $(rr):
-	@[ -d tmp/ ] || mkdir -p tmp/
 	      cd tmp/ && $(RUNpath)/promgen $(RUNpromgenPara) > a.txt
 	echo "cd tmp/ && $(RUNpath)/promgen $(RUNpromgenPara) > a.txt"     > out/cmd_a_rom.txt
 	@ls -l tmp/a.txt
 	@grep -i warning tmp/a.txt || echo 
-	@[ -d out/ ] || mkdir -p out/
 	cp  tmp/obj_a_rom_$(PROJname).bin          out/
 	cp  tmp/a.txt                              out/log_a_rom_$(PROJname).txt
 

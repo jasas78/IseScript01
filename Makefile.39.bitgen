@@ -54,7 +54,6 @@ export CMDbitLine2
 
 rb:=run_bitgen
 rb $(rb):
-	@[ -d tmp/ ] || mkdir -p tmp/
 	echo "$${SCRbit1}"     > out/$(FNbitScr1)
 	      $(CMDbitLine2)
 	@echo "$(CMDbitLine2)"   > out/$(FNbitCmd1)

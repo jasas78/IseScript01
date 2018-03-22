@@ -29,7 +29,6 @@ export CMDmapLine2
 
 rm:=run_map_to_target_fapga
 rm $(rm):
-	@[ -d tmp/ ] || mkdir -p tmp/
 	       $(CMDmapLine2)
 	@echo "$(CMDmapLine2)" > out/$(FNmapCmd1)
 	mv  tmp/$(FNmapOut1)   		out/$(FNmapOut1)

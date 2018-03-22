@@ -94,6 +94,7 @@ export RUNxst22
 #-ifn $(topModule).prj
 #-ofn $(topModule)
 #-sd {"ipcore_dir"  }
+DSPonly:=-dsp_utilization_ratio 100 -use_dsp48 Auto
 define RUNxst23
 run
 -sd ../src2
@@ -118,7 +119,6 @@ run
 -case Maintain
 -slice_utilization_ratio 100
 -bram_utilization_ratio 100
--dsp_utilization_ratio 100
 -verilog2001 YES
 -fsm_extract YES -fsm_encoding Auto
 -safe_implementation No
@@ -137,7 +137,6 @@ run
 -mux_extract Yes
 -resource_sharing YES
 -async_to_sync NO
--use_dsp48 Auto
 -iobuf YES
 -max_fanout 500
 -bufg 24
@@ -157,7 +156,7 @@ export RUNxst23
 
 #/home/bootH/vm3/VMs/topVM/VM.jg1/virtFS.jg1/xilinx3s500e_example/demoXilinx3s500e/3S500E-Demo/verilog/LED/LED4.prj
 define RUNxst42
-$(foreach bb1,$(wildcard src1/*.v src2/*.v src3/*.v src/*.v), verilog work ../$(bb1)$(EOL))
+$(foreach bb1,$(wildcard src1/*.v src2/*.v src3/*.v src9/*.v), verilog work ../$(bb1)$(EOL))
 
 
 endef
@@ -170,7 +169,6 @@ CMDxst33:=cmd_$(PROJname)_32_xst_help.txt
 rx:=run_xst_to_compile_the_verilog
 run_xst_to_compile_the_verilog:= add the "HELP=1" can generate the help of xst
 rx $(rx):
-	@[ -d tmp/ ] || mkdir -p tmp/
 	@echo  > out/$(CMDxst33)
 ifdef HELP
 	$(call RUNxst14,$(RUNxst11),help)

@@ -12,11 +12,9 @@ export PartGenPara
 
 pg:=partgen_gen_device_info
 pg $(pg):
-	@[ -d tmp/ ] || mkdir -p tmp/
 	      cd tmp/ && $(RUNpath)/partgen $(PartGenPara) > 51.txt
 	echo "cd tmp/ && $(RUNpath)/partgen $(PartGenPara) > 51.txt"     > out/cmd_51_partgen.txt
 	@ls -l tmp/51.txt tmp/$(DEV02)*.pkg
-	@[ -d out/ ] || mkdir -p out/
 	cp  tmp/51.txt                              out/log_51_partgen_$(PROJname).txt
 	cat tmp/$(DEV02)*.pkg                     > out/$(DEV01).0.pkg
 	cat tmp/$(DEV02)*.pkg |sed -ne '1,5p'     > out/$(DEV01).1.pkg

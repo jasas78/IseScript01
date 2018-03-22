@@ -25,7 +25,6 @@ RUNngd:=cd tmp/ && $(RUNpath)/ngdbuild $(RUNngdPara) > ../out/$(FNngdLog1)
 
 rn:=run_ngdbuild_to_decompress_to_base_fpga_gates
 rn $(rn):
-	@[ -d tmp/ ] || mkdir -p tmp/
 	$(RUNngd)
 	@echo '$(RUNngd)'  > out/$(FNngdCMD1)
 	@ls -l out/$(FNngdCMD1) 		out/$(FNngdLog1)
@@ -36,7 +35,6 @@ rn $(rn):
 #	echo "cd tmp/ && $(RUNpath)/ngdbuild $(RUNngdPara) > 3.txt"     > out/cmd_4_ngdbuild.txt
 #	@ls tmp/3.txt
 #	@grep -i warning tmp/3.txt
-#	@[ -d out/ ] || mkdir -p out/
 #	cp  tmp/obj_$(PROJname)_32_1_xst.ngd              out/obj_4_ngdbuild_$(PROJname).ngd 
 #	cp  tmp/3.txt                                  out/log_4_ngdbuild_$(PROJname).txt
 #	cp  tmp/obj_$(PROJname)_32_1_xst_ngdbuild.xrpt    out/rpt_4_ngdbuild_$(PROJname).xrpt

@@ -19,15 +19,16 @@ TM:=$(CFGmakeDIR)
 CFGmakeEnv:=$(TT)/Makefile.env.Xilinx
 ifeq (,$(strip $(wildcard $(CFGmakeEnv))))
 $(info )
-$(info file not found : [$(CFGmakeEnv)])
+$(info file not found 183: [$(CFGmakeEnv)])
 $(info )
 $(error )
 endif
 PROJdirTop:=$(TT)
 PROJname:=$(shell basename $(PROJdirTop))
 endif
+
 DEV01?=xc3s500e-pq208-4
-DEV02:=$(shell echo $(DEV01)|sed -e 's;[-_].*$$;;g')
+DEV02?=$(shell echo $(DEV01)|sed -e 's;[-_].*$$;;g')
 DEV11?=spartan3
 
 export CFGmakeTOP
@@ -50,8 +51,8 @@ export LDso641
 export RUNpath
 export topModule
 
-ttUCF?=$(TT)/$(firstword $(wildcard src/*.ucf) $(wildcard config/*.ucf))
-ttSRCfull?=$(foreach aa,$(wildcard src1/*.v src2/*.v src3/*.v src/*.v),$(TT)/$(aa))
+ttUCF?=$(TT)/$(firstword $(wildcard src9/*.ucf) $(wildcard config/*.ucf))
+ttSRCfull?=$(foreach aa,$(wildcard src1/*.v src2/*.v src3/*.v src9/*.v),$(TT)/$(aa))
 ttSRCshort?=$(foreach aa,$(ttSRCfull),$(shell basename $(aa)))
 export ttUCF
 export ttSRCfull
@@ -162,7 +163,7 @@ define show_helpText
     LDso641     : $(LDso641)
     RUNpath     : $(RUNpath)
     ttUCF       : $(ttUCF)
-    ttSRC       : $(TT)/src 
+    ttSRC       : $(TT)/src9 
     ttSRCshort  : $(ttSRCshort)
 
    $(VIMset1)
@@ -175,13 +176,14 @@ endef
 export showEnvUsage
 export show_helpText
 
+create_tmp_dir:=$(shell [ -d  tmp/ ] || mkdir -p tmp/ )
+create_tmp_dir+=$(shell [ -d  out/ ] || mkdir -p out/ )
+
 ct:=clean_tmp
 ct:
-	@[ -d  tmp/ ] || mkdir -p tmp/
 	rm -fr tmp/*
 co:=clean_output
 co:
-	@[ -d  out/ ] || mkdir -p out/
 	rm -fr out/*
 
 ll:
@@ -207,7 +209,7 @@ KKlist += kk$(1)  : $(wordlist 1,$(1),$(aaa)) $$(EOL)
 $$(eval    kk$(1)  : $(wordlist 1,$(1),$(aaa)) )
 
 endef
-$(foreach aa1,3 4 5 6 7,$(eval $(call KK,$(aa1))))
+$(foreach aa1,3 4 5 6 7 8 9 ,$(eval $(call KK,$(aa1))))
 
 gss:
 	cd $(TM) && git status
