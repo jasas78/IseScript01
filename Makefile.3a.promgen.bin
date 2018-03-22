@@ -4,13 +4,13 @@ ifeq (,$(strip $(RUNpath)))
 $(error "you should define RUNpath and run again" )
 endif
 
-PROJbinX:=$(PROJname)_3a_7_bin
-FNbinOut0:=obj_$(PROJbinX)
+FNbinEXT0:=$(PROJname)_3a_7_bin
+FNbinOut0:=obj_$(FNbinEXT0)
 FNbinOut1:=$(FNbinOut0).bin
-FNbinIn1:=obj_$(PROJname)_39_6_bit.bit
-FNbinLog1:=log_$(PROJbinX).txt
-FNbinCmd1:=cmd_$(PROJbinX).txt
-FNbinScr1:=scr_$(PROJbinX).scr
+FNbinIn1:=$(FNbitOut1)
+FNbinLog1:=log_$(FNbinEXT0).txt
+FNbinCmd1:=cmd_$(FNbinEXT0).txt
+FNbinScr1:=scr_$(FNbinEXT0).scr
 
 
 define CMDbinLine1
