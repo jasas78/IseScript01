@@ -13,9 +13,20 @@ FNuufScr1:=scr_$(FNuufEXT0).scr
 
 
 ifeq (,$(ufufuf))
-ufufuf:=$(FNmcsOut1)
+ufufufX:=out/$(FNmcsOut1)
+FNuufIn1:=$(shell realpath $(ufufufX) )
+else
+ufufufX:=out/$(ufufuf) $(TM)/$(ufufuf)
+ifeq (,$(firstword $(wildcard $(ufufufX))))
+$(info )
+$(info 'file not found :$(ufufufX)' )
+$(info )
+$(error )
 endif
-FNuufIn1:=$(shell realpath $(firstword $(wildcard out/$(ufufuf) $(TM)/$(ufufuf) )))
+FNuufIn1:=$(shell realpath $(firstword $(wildcard $(ufufufX) )))
+endif
+
+
 
 define SCRuuf1
 setMode -bscan
@@ -34,18 +45,23 @@ export SCRuuf1
 uf:=impact_upload_to_flash
 uf $(uf):
 	@echo " --- $(FNuufIn1) --- "
+	@[ -f $(FNuufIn1) ] || ( echo ; echo ' file not found' ; echo ; exit 32 )
 	@echo "$${SCRuuf1}" > out/$(FNuufScr1)
 	       cd tmp/ && $(LDso641) $(RUNpath)/impact -batch < ../out/$(FNuufScr1)  > ../out/$(FNuufLog1)
 	echo  "cd tmp/ && $(LDso641) $(RUNpath)/impact -batch < ../out/$(FNuufScr1)  > ../out/$(FNuufLog1)" > out/$(FNuufCmd1)
 
 RUNcmdList +=uf   
-uf2:=$(uf)    use the $(FNmcsOut1).2
-uf3:=$(uf)    use the $(FNmcsOut1).3
-RUNcmdList +=uf2   
-RUNcmdList +=uf3   
+uf2:=$(uf)    use the $(FNmcsOut1).2.mcs
+uf3:=$(uf)    use the $(FNmcsOut1).3.mcs
+uf4:=$(uf)    use the $(FNmcsOut1).4.mcs
+RUNcmdList +=uf2
+RUNcmdList +=uf3
+RUNcmdList +=uf4
 
 uf2:
 	make uf ufufuf=$(FNmcsOut1).2.mcs
 uf3:
 	make uf ufufuf=$(FNmcsOut1).3.mcs
+uf4:
+	make uf ufufuf=$(FNmcsOut1).4.mcs
 

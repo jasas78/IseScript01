@@ -27,9 +27,28 @@ PROJdirTop:=$(TT)
 PROJname:=$(shell basename $(PROJdirTop))
 endif
 
+define known_xilinxFpga_list
+spartan3adsp : xc3sd3400a-fg676-4
+spartan3e    : xc3s500e-pq208-4
+
+endef
+export known_xilinxFpga_list
+
 DEV01?=xc3s500e-pq208-4
 DEV02?=$(shell echo $(DEV01)|sed -e 's;[-_].*$$;;g')
-DEV11?=spartan3
+DEV11:=
+ifeq ($(DEV02),xc3s500e)
+DEV11:=spartan3e
+endif
+ifeq ($(DEV02),xc3sd3400a)
+DEV11:=spartan3adsp
+endif
+ifeq ($(strip $(DEV11)),)
+$(info )
+$(info $(known_xilinxFpga_list) )
+$(info )
+$(error )
+endif
 
 export CFGmakeTOP
 export CFGmakeDIR
@@ -152,7 +171,7 @@ define show_helpText
    $(VIMset1)
 
    $(RUNcmd) 
-    aaa :$(aaa)
+    aaa  : $(aaa)
    $(KKlist)
 
 endef
@@ -179,7 +198,7 @@ $(foreach aa,vme $(INClist),$(eval $(call vimCFG,$(aa))))
 
 RUNcmd:=
 $(foreach aa,$(RUNcmdList),$(eval RUNcmd +=$(aa)  : $($(aa)) : $($($(aa))) $$(EOL)   ))
-aaa:=ct co $(filter-out uf pg,$(RUNcmdList))
+aaa:= ct co $(filter-out uf pg uf2 uf3 uf4 ,$(RUNcmdList))
 aaa : $(aaa)
 
 #kk1:=ct co rx 
