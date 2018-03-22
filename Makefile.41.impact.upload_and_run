@@ -4,27 +4,31 @@ ifeq (,$(strip $(RUNpath)))
 $(error "you should define RUNpath and run again" )
 endif
 
-define UpImpactRunPara
+FNuurEXT0:=$(PROJname)_41_10_uur
+FNuurIn1:=$(FNparOut1)
+FNuurLog1:=log_$(FNuurEXT0).txt
+FNuurCmd1:=cmd_$(FNuurEXT0).txt
+FNuurScr1:=scr_$(FNuurEXT0).scr
 
+
+define SCRuur1
 setMode -bscan
 setCable -port auto
 Identify -inferir 
 identifyMPM 
-assignFile -p 1 -file ../out/obj_ise03_39_6_bit.bit
+assignFile -p 1 -file ../out/$(FNbitOut1)
 ReadIdcode -p 1 
 Program -p 1 -prog 
 quit
 
 endef
-export UpImpactRunPara
+export SCRuur1
 
 ur:=impact_upload_and_run
 ur $(ur):
-	@echo "$${UpImpactRunPara}" > tmp/ur1.txt
-	       cd tmp/ && $(LDso641) $(RUNpath)/impact -batch < ur1.txt  > log_42_u_run.txt
-	echo  "cd tmp/ && $(LDso641) $(RUNpath)/impact -batch < ur1.txt  > log_42_u_run.txt" > out/cmd_u_run.txt
-	@grep -i warning tmp/log_42_u_run.txt || echo 
-	cp  tmp/log_42_u_run.txt          out/
+	@echo "$${SCRuur1}" > out/$(FNuurScr1)
+	       cd tmp/ && $(LDso641) $(RUNpath)/impact -batch < ../out/$(FNuurScr1)  > ../out/$(FNuurLog1)
+	echo  "cd tmp/ && $(LDso641) $(RUNpath)/impact -batch < ../out/$(FNuurScr1)  > ../out/$(FNuurLog1)" > out/$(FNuurCmd1)
 
 RUNcmdList +=ur   
 
