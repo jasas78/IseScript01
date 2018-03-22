@@ -6,13 +6,15 @@ endif
 
 # par -w -intstyle ise -ol high -t 1 LED4_map.ncd LED4.ncd LED4.pcf
 
-PROJparX:=$(PROJname)_37_4_par
-FNparOut0:=obj_$(PROJparX)_outNCD
+FNparEXT0:=$(PROJname)_37_4_par
+FNparOut0:=obj_$(FNparEXT0)_outNCD
 FNparOut1:=$(FNparOut0).ncd
-FNparIn1:=obj_$(PROJname)_36_3_map.ncd
-FNparIn2:=obj2_obj_$(PROJname)_36_3_map.pcf.2.pcf
-FNparLog1:=log_$(PROJparX).txt
-FNparCmd1:=cmd_$(PROJparX).txt
+#FNparIn1:=obj_$(PROJname)_36_3_map.ncd
+#FNparIn2:=obj2_obj_$(PROJname)_36_3_map.pcf.2.pcf
+FNparIn1:=$(FNmapOut1ncd)
+FNparIn2:=$(FNmapOut2pcf)
+FNparLog1:=log_$(FNparEXT0).txt
+FNparCmd1:=cmd_$(FNparEXT0).txt
 
 define CMDparLine1
 $(RUNpath)/par              \
@@ -32,7 +34,7 @@ rp $(rp):
 	      $(CMDparLine2)
 	echo "$(CMDparLine2)" 	  > out/$(FNparCmd1)
 	cp tmp/$(FNparOut1)  		out/$(FNparOut1).2
-	mv tmp/$(FNparOut1)  		out/$(FNparOut1)
+	mv tmp/$(FNparOut1)  		out/
 	cp tmp/$(FNparOut0).par  	out/log2_$(FNparOut0).par
 
 RUNcmdList +=rp   

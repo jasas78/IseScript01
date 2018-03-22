@@ -6,22 +6,22 @@ endif
 
 # map -intstyle ise -p xc3s500e-pq208-4 -cm area -ir off -pr off -c 100 -o LED4_map.ncd LED4.ngd LED4.pcf
 
-PROJmapX:=$(PROJname)_36_3_map
-FNmapOut0:=obj_$(PROJmapX)
-FNmapOut1:=$(FNmapOut0).ncd
-FNmapOut2:=$(FNmapOut0).pcf
-FNmapIn1:=obj_$(PROJname)_34_2_ngd.ngd
-FNmapLog1:=log_$(PROJmapX).txt
-FNmapCmd1:=cmd_$(PROJmapX).txt
+FNmapEXT0:=$(PROJname)_36_3_map
+FNmapOut0:=obj_$(FNmapEXT0)
+FNmapOut1ncd:=$(FNmapOut0).ncd
+FNmapOut2pcf:=$(FNmapOut0).pcf
+FNmapIn1:=$(FNngdOut1NGD)
+FNmapLog1:=log_$(FNmapEXT0).txt
+FNmapCmd1:=cmd_$(FNmapEXT0).txt
 
 define CMDmapLine1
 $(RUNpath)/map 				\
 	-p $(DEV01) 			\
 	-detail 				\
 	-pr b 					\
-	-o $(FNmapOut1) 		\
+	-o $(FNmapOut1ncd) 		\
 	../out/$(FNmapIn1) 		\
-	$(FNmapOut2) 			\
+	$(FNmapOut2pcf) 			\
 
 endef
 CMDmapLine2:= cd tmp/ && $(CMDmapLine1) > ../out/$(FNmapLog1)
@@ -31,12 +31,13 @@ rm:=run_map_to_target_fapga
 rm $(rm):
 	       $(CMDmapLine2)
 	@echo "$(CMDmapLine2)" > out/$(FNmapCmd1)
-	mv  tmp/$(FNmapOut1)   		out/$(FNmapOut1)
-	cp  tmp/$(FNmapOut2)   		out/obj2_$(FNmapOut2).1.pcf
-	mv  tmp/$(FNmapOut2)   		out/obj2_$(FNmapOut2).2.pcf
+	cp  tmp/$(FNmapOut1ncd)   		out/$(FNmapOut1ncd).2
+	mv  tmp/$(FNmapOut1ncd)   		out/
+	cp  tmp/$(FNmapOut2pcf)   		out/$(FNmapOut2pcf).2
+	mv  tmp/$(FNmapOut2pcf)   		out/
 	mv  tmp/$(FNmapOut0).map   	out/log2_$(FNmapOut0).map
 	mv  tmp/$(FNmapOut0).mrp   	out/log2_$(FNmapOut0).mrp
-	mv  tmp/$(FNmapOut0).ngm   	out/obj2_$(FNmapOut0).ngm
+	mv  tmp/$(FNmapOut0).ngm   	out/$(FNmapOut0).2.ngm
 
 RUNcmdList +=rm   
 
