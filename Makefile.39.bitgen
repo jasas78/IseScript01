@@ -4,6 +4,14 @@ ifeq (,$(strip $(RUNpath)))
 $(error "you should define RUNpath and run again" )
 endif
 
+FNbitEXT0:=$(PROJname)_39_6_bit
+FNbitOut0:=obj_$(FNbitEXT0)
+FNbitOut1:=$(FNbitOut0).bit
+FNbitIn1:=$(FNparOut1)
+FNbitLog1:=log_$(FNbitEXT0).txt
+FNbitCmd1:=cmd_$(FNbitEXT0).txt
+FNbitScr1:=scr_$(FNbitEXT0).scr
+
 # bitgen -intstyle ise -f LED4.ut LED4.ncd
 
 define SCRbit1
@@ -33,13 +41,6 @@ define SCRbit1
 endef
 export SCRbit1
 
-PROJbitX:=$(PROJname)_39_6_bit
-FNbitOut0:=obj_$(PROJbitX)
-FNbitOut1:=$(FNbitOut0).bit
-FNbitIn1:=obj_$(PROJname)_37_4_par_outNCD.ncd
-FNbitLog1:=log_$(PROJbitX).txt
-FNbitCmd1:=cmd_$(PROJbitX).txt
-FNbitScr1:=scr_$(PROJbitX).scr
 
 define CMDbitLine1
 $(RUNpath)/bitgen              			\
