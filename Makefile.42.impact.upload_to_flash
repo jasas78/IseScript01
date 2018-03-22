@@ -4,23 +4,31 @@ ifeq (,$(strip $(RUNpath)))
 $(error "you should define RUNpath and run again" )
 endif
 
-define UpImpactFlashPara
-	-w \
-	-p mcs \
-	-o obj_b_msc_$(PROJname) \
-	-u 0 ../out/obj_9_bit_$(PROJname) \
+FNuufEXT0:=$(PROJname)_42_11_uuf
+FNuufIn1:=$(FNparOut1)
+FNuufLog1:=log_$(FNuufEXT0).txt
+FNuufCmd1:=cmd_$(FNuufEXT0).txt
+FNuufScr1:=scr_$(FNuufEXT0).scr
+
+
+define SCRuuf1
+setMode -bscan
+setCable -port auto
+Identify -inferir 
+identifyMPM 
+assignFile -p 1 -file ../out/$(FNbitOut1)
+ReadIdcode -p 1 
+Program -p 1 -prog 
+quit
 
 endef
-export UpImpactFlashPara
+export SCRuuf1
 
-uf:=upload_to_flash
+uf:=impact_upload_to_flash
 uf $(uf):
-	      cd tmp/ && $(RUNpath)/promgen $(UpImpactFlashPara) > b.txt
-	echo "cd tmp/ && $(RUNpath)/promgen $(UpImpactFlashPara) > b.txt"     > out/cmd_b_msc.txt
-	@ls -l tmp/b.txt
-	@grep -i warning tmp/b.txt || echo 
-	cp  tmp/obj_b_msc_$(PROJname).mcs          out/
-	cp  tmp/b.txt                              out/log_b_msc_$(PROJname).txt
+	@echo "$${SCRuuf1}" > out/$(FNuufScr1)
+	       cd tmp/ && $(LDso641) $(RUNpath)/impact -batch < ../out/$(FNuufScr1)  > ../out/$(FNuufLog1)
+	echo  "cd tmp/ && $(LDso641) $(RUNpath)/impact -batch < ../out/$(FNuufScr1)  > ../out/$(FNuufLog1)" > out/$(FNuufCmd1)
 
 RUNcmdList +=uf   
 
