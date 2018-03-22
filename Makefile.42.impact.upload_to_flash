@@ -11,12 +11,18 @@ FNuufCmd1:=cmd_$(FNuufEXT0).txt
 FNuufScr1:=scr_$(FNuufEXT0).scr
 
 
+
+ifeq (,$(ufufuf))
+ufufuf:=$(FNmcsOut1)
+endif
+FNuufIn1:=$(shell realpath $(firstword $(wildcard out/$(ufufuf) $(TM)/$(ufufuf) )))
+
 define SCRuuf1
 setMode -bscan
 setCable -port auto
 Identify -inferir 
 identifyMPM 
-assignFile -p 2 -file ../out/$(FNmcsOut1)
+assignFile -p 2 -file $(FNuufIn1)
 setAttribute -position 2 -attr packageName -value ""
 ReadIdcode -p 2 
 Program -p 2 -e -v 
@@ -27,10 +33,19 @@ export SCRuuf1
 
 uf:=impact_upload_to_flash
 uf $(uf):
+	@echo " --- $(FNuufIn1) --- "
 	@echo "$${SCRuuf1}" > out/$(FNuufScr1)
 	       cd tmp/ && $(LDso641) $(RUNpath)/impact -batch < ../out/$(FNuufScr1)  > ../out/$(FNuufLog1)
 	echo  "cd tmp/ && $(LDso641) $(RUNpath)/impact -batch < ../out/$(FNuufScr1)  > ../out/$(FNuufLog1)" > out/$(FNuufCmd1)
 
 RUNcmdList +=uf   
+uf2:=$(uf)    use the $(FNmcsOut1).2
+uf3:=$(uf)    use the $(FNmcsOut1).3
+RUNcmdList +=uf2   
+RUNcmdList +=uf3   
 
+uf2:
+	make uf ufufuf=$(FNmcsOut1).2.mcs
+uf3:
+	make uf ufufuf=$(FNmcsOut1).3.mcs
 
