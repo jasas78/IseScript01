@@ -53,6 +53,14 @@ bt:
 	$(foreach aa1,$(vsList), @$(bt111) $(aa1) $(EOL))
 
 an:
-	cd out && grep ' out  *of ' log_* |sed -e 's;^\([^ ]\+\) \+\([^ ]\+\) \+;\1      \2                   ;g' 
+	 @echo
+	 @cd out && \
+		 grep ' out  *of ' log_* \
+		 |sed \
+		 -e 's; \+\([0-9]\+ \+out \+of\) \+;: \1;g' \
+		 -e 's;:\+;:;g' \
+		 -e 's; \+; ;g' \
+		 |awk -F: '{printf "%25s _ %50s _ %s \n\r" , $$1 , $$2, $$3}' 
+	 @echo
 
 
