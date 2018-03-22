@@ -75,29 +75,29 @@ CFGmakeTRC:=$(TM)/Makefile.38.trc
 CFGmakeBIT:=$(TM)/Makefile.39.bitgen
 CFGmakeBIN:=$(TM)/Makefile.3a.promgen.bin
 CFGmakeMSC:=$(TM)/Makefile.3b.promgen.mcs
-CFGmakeUpRun:=$(TM)/Makefile.41.impact.upload_and_run
+CFGmakeUpToRun:=$(TM)/Makefile.41.impact.upload_and_run
 CFGmakeUpFlash:=$(TM)/Makefile.42.impact.upload_to_flash
 CFGmakePartGen:=$(TM)/Makefile.51.partgen.gen_device_pin_info
 vme:=CFGmakeEnv
-vmx:=CFGmakeXST
-vmn:=CFGmakeNGD
-vmm:=CFGmakeMAP
-vmp:=CFGmakePAR
-vmt:=CFGmakeTRC
-vmb:=CFGmakeBIT
-vmr:=CFGmakeBIN
-vms:=CFGmakeMSC
-vur:=CFGmakeUpRun
+vrx:=CFGmakeXST
+vrn:=CFGmakeNGD
+vrm:=CFGmakeMAP
+vrp:=CFGmakePAR
+vrt:=CFGmakeTRC
+vrb:=CFGmakeBIT
+vrr:=CFGmakeBIN
+vrs:=CFGmakeMSC
+vur:=CFGmakeUpToRun
 vuf:=CFGmakeUpFlash
 vpg:=CFGmakePartGen
 
 
-INClist:=vmx vmn vmm vmp vmt vmb vmr vms vur vuf vpg
+INClist:=vrx vrn vrm vrp vrt vrb vrr vrs vur vuf vpg
 $(foreach aa,$(INClist),$(eval $(call incMAKE,$(aa))))
 
 
-#    vmx  : $(vmx) : $($(vmx))
-#    vmn  : $(vmn) : $($(vmn))
+#    vrx  : $(vrx) : $($(vrx))
+#    vrn  : $(vrn) : $($(vrn))
 define vimCFG
 $$(eval VIMset1+=$(1)  : $($(1))  : $($($(1)))   $$$$(EOL)   )
 $(1) $($(1)): $($($(1)))
@@ -175,7 +175,7 @@ ll:
 	@ls -dl tmp/* ; echo ;ls -dl out/* ; 
 
 VIMset1:=
-$(foreach aa,vme vmx vmn vmm vmp vmt vmb vmr vms vur vuf vpg,$(eval $(call vimCFG,$(aa))))
+$(foreach aa,vme $(INClist),$(eval $(call vimCFG,$(aa))))
 
 RUNcmd:=
 $(foreach aa,$(RUNcmdList),$(eval RUNcmd +=$(aa)  : $($(aa)) : $($($(aa))) $$(EOL)   ))
