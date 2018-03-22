@@ -13,8 +13,10 @@ FNngdLog1:=log_$(PROJngdX).txt
 FNngdCMD1:=cmd_$(PROJngdX).txt 		
 
 define RUNngdPara
-	-p $(DEV01) 				\
+	-sd ../src2 \
+	-nt timestamp  \
 	-uc $(ttUCF) 				\
+	-p $(DEV01) 				\
 	../out/$(FNngdInNGC) 		\
 	$(FNngdOutNGD) 				\
 

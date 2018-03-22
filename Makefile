@@ -213,5 +213,5 @@ gss:
 	cd $(TM) && git status
 
 gcc:
-	cd $(TM) && git commit
+	cd $(TM) && git commit -a
 

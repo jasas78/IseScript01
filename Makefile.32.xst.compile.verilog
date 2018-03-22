@@ -90,13 +90,16 @@ export RUNxst22
 #/home/bootH/vm3/VMs/topVM/VM.jg1/virtFS.jg1/1/a2_io_2018_0320_1044am.try/CP447_CMI_AL0205.xst
 #set -tmpdir "xst/projnav.tmp"
 #set -xsthdpdir "xst"
-#-sd {"ipcore_dir"  }
 #-p xc3sd3400a-4-fg676
+#-ifn $(topModule).prj
+#-ofn $(topModule)
+#-sd {"ipcore_dir"  }
 define RUNxst23
 run
--ifn $(topModule).prj
+-sd ../src2
+-ifn ../out/scr_$(PROJname)_32_2_xst_verilog.scr 
 -ifmt mixed
--ofn $(topModule)
+-ofn obj_$(PROJname)_32_1_xst.ngc
 -ofmt NGC
 -p $(DEV01)
 -top $(topModule)
