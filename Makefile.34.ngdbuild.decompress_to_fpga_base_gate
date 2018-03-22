@@ -6,11 +6,12 @@ endif
 
 # ngdbuild -intstyle ise -dd _ngo -nt timestamp -uc LED4.ucf -p xc3s500e-pq208-4 LED4.ngc LED4.ngd  
 
-PROJngdX:=$(PROJname)_34_2_ngd
-FNngdInNGC:=obj_$(PROJname)_32_1_xst.ngc 		
-FNngdOutNGD:=obj_$(PROJngdX).ngd 		
-FNngdLog1:=log_$(PROJngdX).txt 		
-FNngdCMD1:=cmd_$(PROJngdX).txt 		
+FNngdEXT0:=$(PROJname)_34_2_ngd
+FNngdInNGC:=$(FNxstOutNGC)
+FNngdOut1NGD:=obj_$(FNngdEXT0).ngd
+FNngdOut2BLD:=obj_$(FNngdEXT0).bld
+FNngdLog1:=log_$(FNngdEXT0).txt
+FNngdCMD1:=cmd_$(FNngdEXT0).txt
 
 define RUNngdPara
 	-sd ../src2 \
@@ -18,29 +19,20 @@ define RUNngdPara
 	-uc $(ttUCF) 				\
 	-p $(DEV01) 				\
 	../out/$(FNngdInNGC) 		\
-	$(FNngdOutNGD) 				\
+	$(FNngdOut1NGD) 				\
 
 endef
 RUNngd:=cd tmp/ && $(RUNpath)/ngdbuild $(RUNngdPara) > ../out/$(FNngdLog1)
 
 rn:=run_ngdbuild_to_decompress_to_base_fpga_gates
 rn $(rn):
-	$(RUNngd)
-	@echo '$(RUNngd)'  > out/$(FNngdCMD1)
-	@ls -l out/$(FNngdCMD1) 		out/$(FNngdLog1)
-	mv tmp/$(FNngdOutNGD)    		out/$(FNngdOutNGD)    
-	mv tmp/obj_$(PROJngdX).bld    	out/log_$(PROJngdX).bld    
+	       $(RUNngd)
+	@echo '$(RUNngd)'             > out/$(FNngdCMD1)
+	cp tmp/$(FNngdOut1NGD)    		out/$(FNngdOut1NGD).2
+	mv tmp/$(FNngdOut1NGD)    		out/
+	cp tmp/$(FNngdOut2BLD)    		out/$(FNngdOut2BLD).2    
+	mv tmp/$(FNngdOut2BLD)    		out/
 
-#	      cd tmp/ && $(RUNpath)/ngdbuild $(RUNngdPara) > 3.txt
-#	echo "cd tmp/ && $(RUNpath)/ngdbuild $(RUNngdPara) > 3.txt"     > out/cmd_4_ngdbuild.txt
-#	@ls tmp/3.txt
-#	@grep -i warning tmp/3.txt
-#	cp  tmp/obj_$(PROJname)_32_1_xst.ngd              out/obj_4_ngdbuild_$(PROJname).ngd 
-#	cp  tmp/3.txt                                  out/log_4_ngdbuild_$(PROJname).txt
-#	cp  tmp/obj_$(PROJname)_32_1_xst_ngdbuild.xrpt    out/rpt_4_ngdbuild_$(PROJname).xrpt
-#	cat tmp/obj_$(PROJname)_32_1_xst_ngdbuild.xrpt    \
-#		| grep 'item dataType="int" stringID' |awk -F\" '{print $$4 "                                   " $$6}' \
-#		>                                          out/rpt_4_ngdbuild_$(PROJname).xrpt.txt
 
 RUNcmdList +=rn   
 
