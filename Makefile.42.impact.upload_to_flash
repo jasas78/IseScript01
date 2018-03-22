@@ -16,9 +16,10 @@ setMode -bscan
 setCable -port auto
 Identify -inferir 
 identifyMPM 
-assignFile -p 1 -file ../out/$(FNbitOut1)
-ReadIdcode -p 1 
-Program -p 1 -prog 
+assignFile -p 2 -file ../out/$(FNmcsOut1)
+setAttribute -position 2 -attr packageName -value ""
+ReadIdcode -p 2 
+Program -p 2 -e -v 
 quit
 
 endef
