@@ -34,7 +34,7 @@ spartan3e    : xc3s500e-pq208-4
 endef
 export known_xilinxFpga_list
 
-time_called?=$(shell date +"%Y_%m%d__%H%M%P")
+time_called?=$(shell LANG=LANG=en_US.UTF-8 date +"%Y_%m%d__%H%M%P")
 export time_called
 
 DEV01?=xc3s500e-pq208-4
@@ -128,8 +128,9 @@ $(foreach aa,$(INClist),$(eval $(call incMAKE,$(aa))))
 define vimCFG
 $$(eval VIMset1+=$(1)  : $($(1))  : $($($(1)))   $$$$(EOL)   )
 $(1) $($(1)): $($($(1)))
-	@echo " $(1) $($(1)): $($($(1)))"
+	@echo ; echo " $(1) $($(1)): $($($(1)))"
 	vim $$^
+	@echo
 
 
 endef
@@ -181,6 +182,7 @@ define show_helpText
    $(RUNcmd) 
     aaa  : $(aaa)
    $(KKlist)
+    vs   : $(vs)
 
 endef
 export showEnvUsage
