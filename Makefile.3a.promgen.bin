@@ -4,23 +4,44 @@ ifeq (,$(strip $(RUNpath)))
 $(error "you should define RUNpath and run again" )
 endif
 
-define RUNpromgenPara
+PROJbinX:=$(PROJname)_3a_7_bin
+FNbinOut0:=obj_$(PROJbinX)
+FNbinOut1:=$(FNbinOut0).bin
+FNbinIn1:=obj_$(PROJname)_39_6_bit.bit
+FNbinLog1:=log_$(PROJbinX).txt
+FNbinCmd1:=cmd_$(PROJbinX).txt
+FNbinScr1:=scr_$(PROJbinX).scr
+
+
+define CMDbinLine1
+$(RUNpath)/promgen                       \
 	-w \
 	-p bin \
-	-o obj_a_rom_$(PROJname) \
-	-u 0 ../out/obj_9_bit_$(PROJname) \
+	-o $(FNbinOut1)  \
+	-u 0 \
+	../out/$(FNbinIn1) \
 
 endef
-export RUNpromgenPara
+CMDbinLine2:= cd tmp/ && $(CMDbinLine1) > ../out/$(FNbinLog1)
+export CMDbinLine2
+
 
 rr:=run_promgen_to_gen_bin
 rr $(rr):
-	      cd tmp/ && $(RUNpath)/promgen $(RUNpromgenPara) > a.txt
-	echo "cd tmp/ && $(RUNpath)/promgen $(RUNpromgenPara) > a.txt"     > out/cmd_a_rom.txt
-	@ls -l tmp/a.txt
-	@grep -i warning tmp/a.txt || echo 
-	cp  tmp/obj_a_rom_$(PROJname).bin          out/
-	cp  tmp/a.txt                              out/log_a_rom_$(PROJname).txt
+	echo "$${SCRbin1}"     > out/$(FNbinScr1)
+	       $(CMDbinLine2)
+	@echo "$(CMDbinLine2)"   > out/$(FNbinCmd1)
+	cp   tmp/$(FNbinOut1)       out/$(FNbinOut1).2
+	mv   tmp/$(FNbinOut1)       out/$(FNbinOut1)
+
+
+
+#	      cd tmp/ && $(RUNpath)/promgen $(RUNpromgenPara) > a.txt
+#	echo "cd tmp/ && $(RUNpath)/promgen $(RUNpromgenPara) > a.txt"     > out/cmd_a_rom.txt
+#	@ls -l tmp/a.txt
+#	@grep -i warning tmp/a.txt || echo 
+#	cp  tmp/obj_a_rom_$(PROJname).bin          out/
+#	cp  tmp/a.txt                              out/log_a_rom_$(PROJname).txt
 
 #RUNcmd +=rr   : $(rr)$(EOL)   
 RUNcmdList +=rr   

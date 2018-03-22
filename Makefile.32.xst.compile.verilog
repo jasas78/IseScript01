@@ -4,22 +4,33 @@ ifeq (,$(strip $(RUNpath)))
 $(error "you should define RUNpath and run again" )
 endif
 
+
+FNxstEXT0:=$(PROJname)_32_1_xst
+FNxstEXT1:=$(FNxstEXT0)_scr1_load
+FNxstEXT2:=$(FNxstEXT0)_scr2_verilog
+FNxstEXT3:=$(FNxstEXT0)_help
+FNxstSCR1:=scr_$(FNxstEXT1).scr
+FNxstSCR2:=scr_$(FNxstEXT2).scr
+FNxstOutNGC:=obj_$(FNxstEXT0).ngc
+FNxstCMD1:=cmd_$(FNxstEXT3).txt  
+FNxstLOG1:=log_$(FNxstEXT0)_1_help
+FNxstLOG2:=log_$(FNxstEXT0)_2_help_x_run.txt
+
 #help -arch spartan3 -command elaborate
 RUNxst11:=help -arch $(DEV02) 
 RUNxst12:=  run set elaborate timing script time help memory
 
-RUNxst10=cd tmp/ && echo "$(1)" | $(RUNpath)/xst -intstyle silent -ofn ../out/log_$(PROJname)_32_xst_help_$(IDXxst)_$(shell basename $(lastword $(1))).txt  
-RUNxst20=cd tmp/ && $(RUNpath)/xst -intstyle silent -ofn ../out/log_$(PROJname)_32_xst_help_x_run.txt -ifn ../out/$(RUNxst31)
+RUNxst10=cd tmp/ && echo "$(1)" | $(RUNpath)/xst -intstyle silent -ofn ../out/$(FNxstLOG1)_$(IDXxst)_$(shell basename $(lastword $(1))).txt  
+RUNxst20=cd tmp/ && $(RUNpath)/xst -intstyle silent -ofn ../out/$(FNxstLOG2) -ifn ../out/$(FNxstSCR1)
 IDXxst:=1
 define RUNxst14
        $(RUNxst10)
 
-@echo '$(RUNxst10)' >> out/$(CMDxst33)
+@echo '$(RUNxst10)' >> out/$(FNxstCMD1)
 
 $(eval IDXxst=$$(shell echo $$$$(($(IDXxst)+1))))
 
 endef
-#$(eval IDXxst=$$(shell echo $$($$(IDXxst)+1)))
 
 # /home/bootH/vm3/VMs/topVM/VM.jg1/virtFS.jg1/xilinx3s500e_example/demoXilinx3s500e/3S500E-Demo/verilog/LED/LED4.xst
 
@@ -71,8 +82,8 @@ run
 -ifmt mixed 
 -ofmt ngc 
 -top $(topModule) 
--ifn ../out/scr_$(PROJname)_32_2_xst_verilog.scr 
--ofn obj_$(PROJname)_32_1_xst.ngc
+-ifn ../out/$(FNxstSCR2) 
+-ofn $(FNxstOutNGC)
 -opt_mode Speed
 -opt_level 1
 -iobuf YES
@@ -87,20 +98,13 @@ $(RUNxst21xxxxx)
 endef
 export RUNxst22
 
-#/home/bootH/vm3/VMs/topVM/VM.jg1/virtFS.jg1/1/a2_io_2018_0320_1044am.try/CP447_CMI_AL0205.xst
-#set -tmpdir "xst/projnav.tmp"
-#set -xsthdpdir "xst"
-#-p xc3sd3400a-4-fg676
-#-ifn $(topModule).prj
-#-ofn $(topModule)
-#-sd {"ipcore_dir"  }
 DSPonly:=-dsp_utilization_ratio 100 -use_dsp48 Auto
 define RUNxst23
 run
 -sd ../src2
--ifn ../out/scr_$(PROJname)_32_2_xst_verilog.scr 
+-ifn ../out/$(FNxstSCR2) 
 -ifmt mixed
--ofn obj_$(PROJname)_32_1_xst.ngc
+-ofn $(FNxstOutNGC)
 -ofmt NGC
 -p $(DEV01)
 -top $(topModule)
@@ -162,26 +166,23 @@ $(foreach bb1,$(wildcard src1/*.v src2/*.v src3/*.v src9/*.v), verilog work ../$
 endef
 export RUNxst42
 
-RUNxst31:=scr_$(PROJname)_32_1_xst_load.scr
-RUNxst32:=scr_$(PROJname)_32_2_xst_verilog.scr
-CMDxst33:=cmd_$(PROJname)_32_xst_help.txt  
-
 rx:=run_xst_to_compile_the_verilog
 run_xst_to_compile_the_verilog:= add the "HELP=1" can generate the help of xst
 rx $(rx):
-	@echo  > out/$(CMDxst33)
+	@echo  > out/$(FNxstCMD1)
 ifdef HELP
 	$(call RUNxst14,$(RUNxst11),help)
-	@echo >> out/$(CMDxst33)
+	@echo >> out/$(FNxstCMD1)
 	$(foreach aa1,$(RUNxst12),$(eval aa2:=$(RUNxst11) -command $(aa1))$(call RUNxst14,$(aa2))$(EOL))
-	@echo >> out/$(CMDxst33)
+	@echo >> out/$(FNxstCMD1)
 endif
-	echo "$${RUNxst22}" > out/$(RUNxst31)
-	echo "$${RUNxst23}" > out/$(RUNxst31)
-	echo "$${RUNxst42}" > out/$(RUNxst32)
+	echo "$${RUNxst22}" > out/$(FNxstSCR1)
+	echo "$${RUNxst23}" > out/$(FNxstSCR1)
+	echo "$${RUNxst42}" > out/$(FNxstSCR2)
 	       $(RUNxst20)
-	@echo '$(RUNxst20)' >> out/$(CMDxst33)
-	mv tmp/obj_$(PROJname)_32_1_xst.ngc  out/
+	@echo '$(RUNxst20)' >> out/$(FNxstCMD1)
+	cp tmp/$(FNxstOutNGC)  out/$(FNxstOutNGC).2  
+	mv tmp/$(FNxstOutNGC)  out/
 
 
 RUNcmdList +=rx   
