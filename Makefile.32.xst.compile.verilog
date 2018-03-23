@@ -169,6 +169,7 @@ export RUNxst42
 rx:=run_xst_to_compile_the_verilog
 run_xst_to_compile_the_verilog:= add the "HELP=1" can generate the help of xst
 rx $(rx):
+	@echo ;echo '---- $(rx) start --- out/$(FNxstLOG2)'
 	@echo  > out/$(FNxstCMD1)
 ifdef HELP
 	$(call RUNxst14,$(RUNxst11),help)

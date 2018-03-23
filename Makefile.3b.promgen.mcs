@@ -29,6 +29,7 @@ export CMDmcsLine2
 
 rs:=run_promgen_to_gen_mcs
 rs $(rs):
+	@echo ;echo '---- $(rs) start --- out/$(FNmcsLog1)'
 	echo "$${SCRmcs1}"     > out/$(FNmcsScr1)
 	       $(CMDmcsLine2)
 	@echo "$(CMDmcsLine2)"   > out/$(FNmcsCmd1)

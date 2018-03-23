@@ -28,6 +28,7 @@ export CMDbinLine2
 
 rr:=run_promgen_to_gen_bin
 rr $(rr):
+	@echo ;echo '---- $(rr) start --- out/$(FNbinLog1)'
 	echo "$${SCRbin1}"     > out/$(FNbinScr1)
 	       $(CMDbinLine2)
 	@echo "$(CMDbinLine2)"   > out/$(FNbinCmd1)

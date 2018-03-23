@@ -26,6 +26,7 @@ RUNngd:=cd tmp/ && $(RUNpath)/ngdbuild $(RUNngdPara) > ../out/$(FNngdLog1)
 
 rn:=run_ngdbuild_to_decompress_to_base_fpga_gates
 rn $(rn):
+	@echo ;echo '---- $(rn) start --- out/$(FNngdLog1)'
 	       $(RUNngd)
 	@echo '$(RUNngd)'             > out/$(FNngdCMD1)
 	cp tmp/$(FNngdOut1NGD)    		out/$(FNngdOut1NGD).2
