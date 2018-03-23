@@ -38,6 +38,8 @@ v$$(vsIdx)   :
 	@echo
 	vim $(1)$$(EOL)
 	@echo
+	$$(bt111)   $(1)
+	@echo
 
 endef
 
@@ -48,9 +50,12 @@ vs $(vs) :
 	@echo;echo "   $${vsHelpTEXT}"
 
 bt111:= astyle --suffix=none 
+bt111:= vim -n -E -c ':argdo normal gg=G' -c ':retab' -c ':wq' 
 bt:= beautified format the text by :  $(bt111) 
 bt:
-	$(foreach aa1,$(vsList), @$(bt111) $(aa1) $(EOL))
+	@echo 
+	$(foreach aa1,$(vsList), $(bt111) $(aa1) $(EOL))
+	@echo 
 
 an:
 	 @echo
