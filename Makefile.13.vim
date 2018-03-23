@@ -50,7 +50,7 @@ vs $(vs) :
 	@echo;echo "   $${vsHelpTEXT}"
 
 bt111:= astyle --suffix=none 
-bt111:= vim -n -E -c ':argdo normal gg=G' -c ':retab' -c ':wq' 
+bt111:= /usr/bin/vim -n -E -c ':argdo normal gg=G' -c ':retab' -c ':wq' 
 bt:= beautified format the text by :  $(bt111) 
 bt:
 	@echo 

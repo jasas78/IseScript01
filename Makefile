@@ -226,3 +226,4 @@ $$(eval    kk$(1)  : $(wordlist 1,$(1),$(aaa)) )
 endef
 $(foreach aa1,3 4 5 6 7 8 9 ,$(eval $(call KK,$(aa1))))
 
+v : vs
