@@ -6,6 +6,9 @@ $(info )
 $(error )
 endif
 all: show_help
+	@[ ! -f out/loging.txt ] || ls -l out/loging.txt
+	@[ ! -f out/loging.txt ] || (echo -n zzzz===grep ERROR ===  ; cat $$(head -n 1 out/loging.txt) |grep ERROR |wc &&  echo ok || echo failed.)
+
 define EOL
 
 
@@ -141,6 +144,7 @@ endef
 
 	
 h help : show_help
+
 show_help:
 	@echo "$${show_helpText}"
 
