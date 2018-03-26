@@ -44,6 +44,7 @@ export SCRuuf1
 
 uf:=impact_upload_to_flash
 uf $(uf):
+	@echo out/$(FNuufLog1) > out/loging.txt
 	@echo ;echo '---- $(uf) start --- out/$(FNuufLog1)'
 	@echo " --- $(FNuufIn1) --- "
 	@[ -f $(FNuufIn1) ] || ( echo ; echo ' file not found' ; echo ; exit 32 )
