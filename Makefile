@@ -5,9 +5,13 @@ $(info you can NOT work as root to call this makefile.)
 $(info )
 $(error )
 endif
+
+LOGing:=$(strip $(shell [ -f out/loging.txt ] && head -n 1 out/loging.txt||echo))
 all: show_help
-	@[ ! -f out/loging.txt ] || ls -l out/loging.txt
-	@[ ! -f out/loging.txt ] || (echo -n zzzz===grep ERROR ===  ; cat $$(head -n 1 out/loging.txt) |grep ERROR |wc &&  echo ok || echo failed.)
+	@$(if $(LOGing),ls -l $(LOGing) ;$(EOL)\
+		echo ; echo zzzz===trying grep ERROR ===  ;$(EOL)\
+		grep --with-filename ERROR $(LOGing) \
+		|head -n 8 && echo && ls -l $(LOGing) || echo ok.)
 
 define EOL
 
