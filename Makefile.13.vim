@@ -34,7 +34,7 @@ vsIdx:=0
 define CallVimSrcS
 $$(eval vsIdx:=$$(shell echo "$$$$(($$(vsIdx) + 1))") )
 vsHelpTEXT+=    v$$(vsIdx)   : $(1)$$(EOL)   
-v$$(vsIdx)   : 
+v$$(vsIdx)   : vp
 	@echo
 	vim $(1)$$(EOL)
 	@echo
