@@ -13,6 +13,9 @@ all: show_help
 		grep --with-filename ERROR $(LOGing) \
 		|head -n 8 && echo && ls -l $(LOGing) || echo ok.)
 
+ve:
+	@$(if $(LOGing),vim $(LOGing), echo 'out/loging.txt do NOT exist.')
+
 define EOL
 
 
