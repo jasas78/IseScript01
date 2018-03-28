@@ -36,9 +36,11 @@ $$(eval vsIdx:=$$(shell echo "$$$$(($$(vsIdx) + 1))") )
 vsHelpTEXT+=    v$$(vsIdx)   : $(1)$$(EOL)   
 v$$(vsIdx)   : vp
 	@echo
+	make vp
 	vim $(1)$$(EOL)
 	@echo
 	$$(bt111)   $(1)
+	make vp
 	@echo
 
 endef
