@@ -222,7 +222,7 @@ $(foreach aa,vme $(INClist),$(eval $(call vimCFG,$(aa))))
 RUNcmd:=
 $(foreach aa,$(RUNcmdList),$(eval RUNcmd +=$(aa)  : $($(aa)) : $($($(aa))) $$(EOL)   ))
 aaa:= ct co $(filter-out uf pg uf2 uf3 uf4 ,$(RUNcmdList))
-aaa : $(aaa)
+aaa : $(aaa) 
 
 #kk1:=ct co rx 
 #kk1:$(kk1)
