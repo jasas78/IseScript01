@@ -70,4 +70,12 @@ an:
 		 |awk -F: '{printf "%25s _ %50s _ %s \n\r" , $$1 , $$2, $$3}' 
 	 @echo
 
+bk:= backup_the_bit_and_mcs_by_date
+bkOBJs=$(strip $(wildcard out/$(FNbitOut1) out/$(FNmcsOut1)))
+bk $(bk):
+	for aa1 in $(bkOBJs) ; do \
+		cp $${aa1}    bkOBJsDIR/$$(basename $${aa1}).$(time_called) || exit 32 ; \
+		ls -l bkOBJsDIR/$$(basename $${aa1}).$(time_called) ; \
+		done
+
 

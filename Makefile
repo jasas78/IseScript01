@@ -195,6 +195,7 @@ define show_helpText
    $(KKlist)
     vs   : $(vs)
     bt   : $(bt)
+    bk   : $(bk) : $(bkOBJs)
 
 endef
 export showEnvUsage
