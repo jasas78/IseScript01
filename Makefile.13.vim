@@ -70,6 +70,15 @@ an:
 		 |awk -F: '{printf "%25s _ %50s _ %s \n\r" , $$1 , $$2, $$3}' 
 	 @echo
 
+RAR0:=/home/bootH/bin/rar
+RAR1:=$(wildcard $(RAR0))
+ifeq (,$(strip $(RAR1)))
+RAR1:=$(wildcard $(shell which rar))
+endif
+ifeq (,$(strip $(RAR1)))
+$(error 'why RAR not found ? $(RAR0)' )
+endif
+
 bk:= backup_the_bit_and_mcs_by_date
 bkOBJs=$(strip $(wildcard out/$(FNbitOut1) out/$(FNmcsOut1)))
 bk $(bk):
@@ -77,5 +86,14 @@ bk $(bk):
 		cp $${aa1}    bkOBJsDIR/$$(basename $${aa1}).$(time_called) || exit 32 ; \
 		ls -l bkOBJsDIR/$$(basename $${aa1}).$(time_called) ; \
 		done
+	/home/bootH/bin/rar a -m5 -s -hp1 -r- \
+		bkOBJsDIR/$$(basename $${PWD}).$(time_called).rar \
+		src/*.v   src?/*.v   \
+		bkOBJsDIR/*.$(time_called)
+	ls -l \
+		bkOBJsDIR/$$(basename $${PWD}).$(time_called).rar 
+
+#$(error 'RAR1 now <$(RAR1)>')
+
 
 
