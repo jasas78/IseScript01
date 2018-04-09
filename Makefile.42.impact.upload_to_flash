@@ -43,7 +43,7 @@ endef
 export SCRuuf1
 
 uf:=impact_upload_to_flash
-uf $(uf):
+ufo uf_only:
 	@echo out/$(FNuufLog1) > out/loging.txt
 	@echo ;echo '---- $(uf) start --- out/$(FNuufLog1)'
 	@echo " --- $(FNuufIn1) --- "
@@ -52,7 +52,7 @@ uf $(uf):
 	       cd tmp/ && $(LDso641) $(RUNpath)/impact -batch < ../out/$(FNuufScr1)  > ../out/$(FNuufLog1)
 	echo  "cd tmp/ && $(LDso641) $(RUNpath)/impact -batch < ../out/$(FNuufScr1)  > ../out/$(FNuufLog1)" > out/$(FNuufCmd1)
 	@grep Programming out/$(FNuufLog1)
-	make bk
+uf $(uf): ufo bk
 
 RUNcmdList +=uf   
 uf2:=$(uf)    use the $(FNmcsOut1).2.mcs
