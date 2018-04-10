@@ -1,10 +1,5 @@
+all: show_help
 
-ifeq (root,$(USER))
-$(info )
-$(info you can NOT work as root to call this makefile.)
-$(info )
-$(error )
-endif
 
 LOGing:=$(strip $(shell [ -f out/loging.txt ] && head -n 1 out/loging.txt||echo))
 all: show_help
@@ -16,10 +11,6 @@ all: show_help
 ve:
 	@$(if $(LOGing),vim $(LOGing), echo 'out/loging.txt do NOT exist.')
 
-define EOL
-
-
-endef
 
 ifndef CFGmakeTOP
 CFGmakeTOP:=$(shell realpath ./Makefile)
@@ -44,8 +35,6 @@ spartan3e    : xc3s500e-pq208-4
 endef
 export known_xilinxFpga_list
 
-time_called?=$(shell LANG=LANG=en_US.UTF-8 date +"%Y_%m%d__%H%M%P")
-export time_called
 
 DEV01?=xc3s500e-pq208-4
 DEV02?=$(shell echo $(DEV01)|sed -e 's;[-_].*$$;;g')
