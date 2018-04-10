@@ -1,38 +1,4 @@
 
-ifeq (root,$(USER))
-$(info )
-$(info you can NOT work as root to call this makefile.)
-$(info )
-$(error )
-endif
-
-define EOL
-
-
-endef
-
-time_called?=$(shell LANG=LANG=en_US.UTF-8 date +"%Y_%m%d__%H%M%P")
-export time_called
-
-define TTtmTEXT
-
-TT  dir_current
-TM  dir_of_Makefile
-
-endef
-
-ifeq (,$(TT))
-$(info you should define TT at first.$(EOL)$(TTtmTEXT))
-
-endif
-ifeq (,$(TM))
-$(info you should define TM at first.$(EOL)$(TTtmTEXT))
-
-endif
-ifeq (,$(time_called))
-$(info you should define time_called at first.$(EOL)$(TTtmTEXT))
-
-endif
 
 
 
