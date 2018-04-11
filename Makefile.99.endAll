@@ -19,10 +19,10 @@ h $(h) $($(h)):
 
 ifdef inMakeScriptDIR
 all: showOption showVimMakefileList
-	echo kkk99000021
+#	echo kkk99000021
 else
 all: showOption
-	echo kkk99000022
+#	echo kkk99000022
 endif
 
 #gs:=git_status
