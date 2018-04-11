@@ -2,36 +2,45 @@ all:
 
 
 
-
-gs:
+gs:=git_status
+gs $(gs) $($(gs)):
 	git status
-gc:
+gc:=git_commit
+$(gc):=git_commit_with_date
+gc $(gc) $($(gc)):
 	rm -f date.now.txt
 	echo "$(TT)_ _$(time_called)" > date.now.txt
 	git commit -a --template=date.now.txt
 	sync
 
-gd:
+gd:=git_diff
+gd $(gd) $($(gd)):
 	git diff
 
-ga:
+ga:=git_add
+$(ga):=git_add_current_dir_files
+ga $(ga) $($(ga)):
 	git add .
 
 
 ifndef inMakeScriptDIR
 
+gss:=git_status_script_dir_files
 gss:
 	cd $(TM) && git status
+gcc:=git_commit_script_dir_files
 gcc:
 	cd $(TM) && rm -f date.now.txt
 	cd $(TM) && echo "$(TT)_ _$(time_called)" > date.now.txt
 	cd $(TM) && git commit -a --template=date.now.txt
 	cd $(TM) && sync
 
+gdd:=git_diff_script_dir_files
 gdd:
 	cd $(TM) && git diff
 
-gaa:
-	cd $(TM) && git add .
+gaa:=git_add_script_dir_files
+gaa $(gaa) $($(gaa)):
+	make -C $(TM) ga
 
 endif
