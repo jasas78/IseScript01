@@ -1,3 +1,4 @@
+all:
 
 
 
@@ -17,6 +18,7 @@ ga:
 	git add .
 
 
+ifndef inMakeScriptDIR
 
 gss:
 	cd $(TM) && git status
@@ -32,3 +34,4 @@ gdd:
 gaa:
 	cd $(TM) && git add .
 
+endif
