@@ -42,8 +42,8 @@ quit
 endef
 export SCRuuf1
 
-uf:=impact_upload_to_flash
-ufo uf_only:
+ufo:=upload_to_flash_only
+ufo :
 	@echo out/$(FNuufLog1) > out/loging.txt
 	@echo ;echo '---- $(uf) start --- out/$(FNuufLog1)'
 	@echo " --- $(FNuufIn1) --- "
@@ -52,9 +52,11 @@ ufo uf_only:
 	       cd tmp/ && $(LDso641) $(RUNpath)/impact -batch < ../out/$(FNuufScr1)  > ../out/$(FNuufLog1)
 	echo  "cd tmp/ && $(LDso641) $(RUNpath)/impact -batch < ../out/$(FNuufScr1)  > ../out/$(FNuufLog1)" > out/$(FNuufCmd1)
 	@grep Programming out/$(FNuufLog1)
-uf $(uf): ufo bk
+uf:=impact_upload_to_flash_and_backup
+uf : ufo 
 
-showRunHelpList +=uf   
+showRunHelpList +=ufo uf
+
 uf2:=$(uf)    use the $(FNmcsOut1).2.mcs
 uf3:=$(uf)    use the $(FNmcsOut1).3.mcs
 uf4:=$(uf)    use the $(FNmcsOut1).4.mcs
