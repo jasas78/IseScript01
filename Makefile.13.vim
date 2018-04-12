@@ -27,12 +27,17 @@ vp vim_prepare1 : vim_prepare_clean
 _vim/cscope.files : vp
 
 
+define CallExpandHelpOne
+$(1)         => $($(1))$(if $($($(1))),        =>> $($($(1))))
 
-export vsHelpTEXT
-vs:=vim_show_file_list 
-vs $(vs) : 
-	@[ -f _vim/cscope.files ] || make vp
-	@echo;echo "   $${vsHelpTEXT}"
+endef
+define CallExpandHelpAll
+$(eval $(1)=$$(EOL) $(foreach aa1,$(2),   $$(call CallExpandHelpOne,$(aa1))))\
+$(eval export $(1))
+endef
+
+
+
 
 
 
@@ -66,6 +71,4 @@ define vimMakefile
 endef
 
 MakefileList:=$(sort $(wildcard $(TM)/Makefile*))
-#sml:=showVimMakefileList
-#sml $(sml) :
-#	$(foreach aa1,$(MakefileList),$(call vimMakeFile,$(aa1))$(EOL))
+
