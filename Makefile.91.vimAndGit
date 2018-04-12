@@ -1,8 +1,8 @@
 
 all:
 
-$(eval $(call tryINCmustExist,$(TT)/Makefile.11.git,db9100001))
-$(eval $(call tryINCmustExist,$(TT)/Makefile.13.vim,db9100002))
+$(eval $(call tryINCmustExist,$(TM)/Makefile.11.git,db9100001))
+$(eval $(call tryINCmustExist,$(TM)/Makefile.13.vim,db9100002))
 
 m:=vim_Makefile
 m : $(TT)/Makefile
