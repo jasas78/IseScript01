@@ -1,6 +1,7 @@
 all:
 
-an analyze_ise_report_for_resource_usage:
+an:=analyze_ise_report_for_resource_usage
+an:
 	 @echo
 	 @cd out && \
 		 grep ' out  *of ' log_* \
@@ -10,3 +11,7 @@ an analyze_ise_report_for_resource_usage:
 		 -e 's; \+; ;g' \
 		 |awk -F: '{printf "%25s _ %50s _ %s \n\r" , $$1 , $$2, $$3}' 
 	 @echo
+
+
+
+showRunHelpList += an

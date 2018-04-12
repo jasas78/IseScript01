@@ -57,9 +57,9 @@ uf : ufo
 
 showRunHelpList +=ufo uf
 
-uf2:=$(uf)    use the $(FNmcsOut1).2.mcs
-uf3:=$(uf)    use the $(FNmcsOut1).3.mcs
-uf4:=$(uf)    use the $(FNmcsOut1).4.mcs
+uf2:=$(uf)____use_the_$(FNmcsOut1).2.mcs
+uf3:=$(uf)____use_the_$(FNmcsOut1).3.mcs
+uf4:=$(uf)____use_the_$(FNmcsOut1).4.mcs
 showRunHelpList +=uf2
 showRunHelpList +=uf3
 showRunHelpList +=uf4
