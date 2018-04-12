@@ -11,6 +11,7 @@ endef
 export PartGenPara
 
 pg:=partgen_gen_device_info
+$(pg):=Makefile.3051.partgen.gen_device_pin_info
 pg :
 	@echo ;echo '---- $(pg) start --- out/$(FNpgLog1)'
 	      cd tmp/ && $(RUNpath)/partgen $(PartGenPara) > 51.txt
