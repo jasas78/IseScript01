@@ -46,25 +46,7 @@ endef
 
 
 
-vimMakeFileL:=
-vsIdx:=0
-define CallVimSrcS
-$$(eval vsIdx:=$$(shell echo "$$$$(($$(vsIdx) + 1))") )
-vimMakeFileL+=    v$$(vsIdx)   : $(1)$$(EOL)   
-v$$(vsIdx)   : vp
-	@echo
-	make vp
-	vim $(1)$$(EOL)
-	@echo
-	$$(bt111)   $(1)
-	make vp
-	@echo
 
-endef
-
-vsList:=$(shell test -f _vim/cscope.files && cat _vim/cscope.files |grep -v /Makefile|sort -u )
-
-$(foreach aa1,$(vsList),$(eval $(call CallVimSrcS,$(aa1))))
 
 sml:=showVimMakefileList
 sml :
@@ -77,12 +59,11 @@ $(eval gvList1+=$(3)$(gvIdx))
 $(eval $(1)+=$$(EOL)    $(3)$(gvIdx)    =>   $(2) )
 $(eval                  $(3)$(gvIdx)    :$(EOL)	vim $(2) )
 
-$(eval gvMOD:=$$(shell echo "$$$$(($$(gvIdx) % 4))"))
+$(eval gvMOD:=$$(shell echo "$$$$(($$(gvIdx) % 5))"))
 $(eval ifeq (0,$(gvMOD))$(EOL)$(1)+=$$(EOL)$(EOL)endif)
 
 $(eval gvIdx:=$$(shell echo "$$$$(($$(gvIdx) + 1))"))
 endef
-#$(eval $(if $(shell bash -c "[ 3 = $$(($(gvIdx) - 3 )) ] && echo 111"),$(1)+=$$(EOL)))
 
 define genVimWithFileList
 $(eval gvIdx:=1)\
