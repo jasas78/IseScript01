@@ -3,23 +3,23 @@ all:
 
 
 gs:=git_status
-gs $(gs) $($(gs)):
+gs :
 	git status
 gc:=git_commit
 $(gc):=git_commit_with_date
-gc $(gc) $($(gc)):
+gc :
 	rm -f date.now.txt
 	echo "$(TT)_ _$(time_called)" > date.now.txt
 	git commit -a --template=date.now.txt
 	sync
 
 gd:=git_diff
-gd $(gd) $($(gd)):
+gd :
 	git diff
 
 ga:=git_add
 $(ga):=git_add_current_dir_files
-ga $(ga) $($(ga)):
+ga :
 	git add .
 
 
@@ -40,7 +40,7 @@ gdd:
 	cd $(TM) && git diff
 
 gaa:=git_add_script_dir_files
-gaa $(gaa) $($(gaa)):
+gaa :
 	make -C $(TM) ga
 
 endif

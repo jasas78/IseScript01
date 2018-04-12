@@ -5,7 +5,7 @@ $(eval $(call tryINCmustExist,$(TT)/Makefile.11.git,db9100001))
 $(eval $(call tryINCmustExist,$(TT)/Makefile.13.vim,db9100002))
 
 m:=vim_Makefile
-m $(m): $(TT)/Makefile
+m : $(TT)/Makefile
 	vim $^
 
 
