@@ -63,17 +63,39 @@ v$$(vsIdx)   : vp
 endef
 
 vsList:=$(shell test -f _vim/cscope.files && cat _vim/cscope.files |grep -v /Makefile|sort -u )
+
 $(foreach aa1,$(vsList),$(eval $(call CallVimSrcS,$(aa1))))
 
 sml:=showVimMakefileList
-#sml $(sml):
 sml :
-	@echo "$${showVimMakefileList}"
+	@echo "$${showVimMakefileListText}";echo
 
+define genVimWithFile01
+$(iinfo 123,$1,$2,$3)
+$(eval gvList1+=$(3)$(gvIdx))
 
-define vimMakefile
+$(eval $(1)+=$$(EOL)    $(3)$(gvIdx)    =>   $(2) )
+$(eval                  $(3)$(gvIdx)    :$(EOL)	vim $(2) )
+
+$(eval gvMOD:=$$(shell echo "$$$$(($$(gvIdx) % 4))"))
+$(eval ifeq (0,$(gvMOD))$(EOL)$(1)+=$$(EOL)$(EOL)endif)
+
+$(eval gvIdx:=$$(shell echo "$$$$(($$(gvIdx) + 1))"))
+endef
+#$(eval $(if $(shell bash -c "[ 3 = $$(($(gvIdx) - 3 )) ] && echo 111"),$(1)+=$$(EOL)))
+
+define genVimWithFileList
+$(eval gvIdx:=1)\
+$(eval gvList1:=)\
+$(eval gvList2:=)\
+$(eval $(1):=)\
+$(eval $(foreach aa1,$(2),$(call genVimWithFile01,$(1),$(aa1),$(3))))\
+$(iinfo gvList1=$(gvList1))\
+$(iinfo gvList2=$(gvList2))\
+$(eval export $(1))\
 
 endef
 
 MakefileList:=$(sort $(wildcard $(TM)/Makefile*))
+$(call genVimWithFileList,showVimMakefileListText,$(MakefileList),vm)
 
