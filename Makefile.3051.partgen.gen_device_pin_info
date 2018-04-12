@@ -11,7 +11,7 @@ endef
 export PartGenPara
 
 pg:=partgen_gen_device_info
-pg $(pg):
+pg :
 	@echo ;echo '---- $(pg) start --- out/$(FNpgLog1)'
 	      cd tmp/ && $(RUNpath)/partgen $(PartGenPara) > 51.txt
 	echo "cd tmp/ && $(RUNpath)/partgen $(PartGenPara) > 51.txt"     > out/cmd_51_partgen.txt

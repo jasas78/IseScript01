@@ -2,8 +2,12 @@ all:
 
 bt111:= astyle --suffix=none 
 bt111:= /usr/bin/vim -n -E -c ':argdo normal gg=G' -c ':retab' -c ':wq' 
-bt:= beautified format the text by :  $(bt111) 
-bt:
+bt1:=beautified_format_the_text_by____vim
+$(bt1):=$(bt111)
+bt1:
 	@echo 
 	$(foreach aa1,$(vsList), $(bt111) $(aa1) $(EOL))
 	@echo 
+
+
+showRunHelpList += bt1

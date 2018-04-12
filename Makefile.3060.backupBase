@@ -11,7 +11,7 @@ endif
 
 bk:= backup_the_bit_and_mcs_by_date
 bkOBJs=$(strip $(wildcard out/$(FNbitOut1) out/$(FNmcsOut1)))
-bk $(bk):
+bk :
 	for aa1 in $(bkOBJs) ; do \
 		cp $${aa1}    bkOBJsDIR/$$(basename $${aa1}).$(time_called) || exit 32 ; \
 		ls -l bkOBJsDIR/$$(basename $${aa1}).$(time_called) ; \
@@ -24,3 +24,7 @@ bk $(bk):
 		bkOBJsDIR/$$(basename $${PWD}).$(time_called).rar 
 
 #$(error 'RAR1 now <$(RAR1)>')
+
+
+showRunHelpList += bk
+
