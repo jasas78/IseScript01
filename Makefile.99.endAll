@@ -8,14 +8,33 @@ define showOptionTEXT
 endef
 export showOptionTEXT
 
-define showHelpTEXT
-
-$(foreach aa1,so sml,$(call CallExpand,$(aa1)))
+define CallExpandHelpOne
+$(1)         => $($(1))$(if $($($(1))),        =>> $($($(1))))
 
 endef
-export showHelpTEXT
+define CallExpandHelpAll
+
+ $(foreach aa1,$1,$(call CallExpandHelpOne,$(aa1)))
+
+endef
+
+define CallExpandHelpAll2
+$(eval $(1)=$$(EOL) $(foreach aa1,$(2),   $$(call CallExpandHelpOne,$(aa1))))\
+$(eval export $(1))
+endef
+
+#define showHelpTEXT
+#
+# $(foreach aa1,so sml,$(call CallExpandHelpOne,$(aa1)))
+#
+#endef
+#showHelpTEXT=$(call CallExpandHelpAll,so sml)
+#export showHelpTEXT
+
+$(call CallExpandHelpAll2,showHelpTEXT,so sml)
 
 so:=showOption
+$(so):=kkk
 so $(so):
 	@echo "$${showOptionTEXT}"
 
