@@ -70,7 +70,10 @@ ll:
 	@ls -dl tmp/* ; echo ;ls -dl out/* ; 
 
 
-define showRunHelpTEXT
------- showRunHelp ----- begin
+showRunHelpList += ct co ll
+
+define showRunHelpTEXText1
+    c      => ct co
 
 endef
+export showRunHelpTEXText1

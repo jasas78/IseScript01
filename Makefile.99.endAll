@@ -14,6 +14,7 @@ h :
 
 srh:=showRunHelp
 srh:
+	@[ -z "$${showRunHelpTEXText1}" ] || echo "$${showRunHelpTEXText1}" 
 	@echo "$${showRunHelpTEXT}"
 
 $(call CallExpandHelpAll,showHelpTEXT,so sml srh)
