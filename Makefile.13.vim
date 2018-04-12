@@ -31,8 +31,12 @@ define CallExpandHelpOne
 $(1)         => $($(1))$(if $($($(1))),        =>> $($($(1))))
 
 endef
+
+CallExpandHelpDependance=$(if $($(1)), $(eval $($(1)) : $(1) ))
+
 define CallExpandHelpAll
 $(eval $(1)=$$(EOL) $(foreach aa1,$(2),   $$(call CallExpandHelpOne,$(aa1))))\
+$(eval $(foreach aa1,$(2),$(call CallExpandHelpDependance,$(aa1))))\
 $(eval export $(1))
 endef
 
@@ -62,7 +66,8 @@ vsList:=$(shell test -f _vim/cscope.files && cat _vim/cscope.files |grep -v /Mak
 $(foreach aa1,$(vsList),$(eval $(call CallVimSrcS,$(aa1))))
 
 sml:=showVimMakefileList
-sml $(sml):
+#sml $(sml):
+sml :
 	@echo "$${showVimMakefileList}"
 
 

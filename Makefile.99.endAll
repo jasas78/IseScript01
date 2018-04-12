@@ -2,18 +2,19 @@ all:
 
 
 
-$(call CallExpandHelpAll,showHelpTEXT,so sml)
-$(call CallExpandHelpAll,showOptionTEXT,$(showOptionList))
 
 so:=showOption
-so $(so):
+so :
 	@echo "$${showOptionTEXT}"
 
 h := help 
 $(h) := showHelp
-h $(h) $($(h)): 
+h :
 	@echo "$${showHelpTEXT}"
 
+
+$(call CallExpandHelpAll,showHelpTEXT,so sml)
+$(call CallExpandHelpAll,showOptionTEXT,$(showOptionList))
 
 ifdef inMakeScriptDIR
 all: showOption showVimMakefileList
