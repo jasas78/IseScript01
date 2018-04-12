@@ -32,6 +32,6 @@ ur $(ur):
 	       cd tmp/ && $(LDso641) $(RUNpath)/impact -batch < ../out/$(FNuurScr1)  > ../out/$(FNuurLog1)
 	echo  "cd tmp/ && $(LDso641) $(RUNpath)/impact -batch < ../out/$(FNuurScr1)  > ../out/$(FNuurLog1)" > out/$(FNuurCmd1)
 
-RUNcmdList +=ur   
+showRunHelpList +=ur   
 
 

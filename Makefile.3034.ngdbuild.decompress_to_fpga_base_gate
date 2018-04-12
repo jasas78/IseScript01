@@ -36,7 +36,7 @@ rn $(rn):
 	mv tmp/$(FNngdOut2BLD)    		out/
 
 
-RUNcmdList +=rn   
+showRunHelpList +=rn   
 
 define HelpNGDbuild
 

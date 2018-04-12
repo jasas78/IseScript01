@@ -39,7 +39,7 @@ rp $(rp):
 	mv tmp/$(FNparOut1)  		out/
 	cp tmp/$(FNparOut0).par  	out/log2_$(FNparOut0).par
 
-RUNcmdList +=rp   
+showRunHelpList +=rp   
 
 
 define HELPparText

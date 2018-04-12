@@ -63,7 +63,7 @@ rb $(rb):
 	cp   tmp/$(FNbitOut1)		out/$(FNbitOut1).2
 	mv   tmp/$(FNbitOut1)		out/$(FNbitOut1)
 
-RUNcmdList +=rb   
+showRunHelpList +=rb   
 
 
 define bitgenHelp

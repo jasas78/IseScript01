@@ -28,6 +28,6 @@ pg $(pg):
 		|sort -k 3 -n                        \
 		>> out/$(DEV01).2.pkg
 
-RUNcmdList +=pg   
+showRunHelpList +=pg   
 
 

@@ -54,13 +54,13 @@ ufo uf_only:
 	@grep Programming out/$(FNuufLog1)
 uf $(uf): ufo bk
 
-RUNcmdList +=uf   
+showRunHelpList +=uf   
 uf2:=$(uf)    use the $(FNmcsOut1).2.mcs
 uf3:=$(uf)    use the $(FNmcsOut1).3.mcs
 uf4:=$(uf)    use the $(FNmcsOut1).4.mcs
-RUNcmdList +=uf2
-RUNcmdList +=uf3
-RUNcmdList +=uf4
+showRunHelpList +=uf2
+showRunHelpList +=uf3
+showRunHelpList +=uf4
 
 uf2:
 	make uf ufufuf=$(FNmcsOut1).2.mcs

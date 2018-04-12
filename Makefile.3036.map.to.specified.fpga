@@ -44,7 +44,7 @@ rm $(rm):
 check_io_standard:
 	echo ;  grep OUTPUT  out/log2_obj_ise10_36_3_map.mrp |awk -F \| '{print $$5 " " $$8 }' |sort -u ; echo
 
-RUNcmdList +=rm   
+showRunHelpList +=rm   
 
 define HELPmapSpartan3e
 

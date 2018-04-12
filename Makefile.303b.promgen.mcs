@@ -44,7 +44,7 @@ rs $(rs):
 
 
 
-RUNcmdList +=rs   
+showRunHelpList +=rs   
 
 
 define promgenHelp

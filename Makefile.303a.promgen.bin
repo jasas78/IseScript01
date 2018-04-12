@@ -46,7 +46,7 @@ rr $(rr):
 #	cp  tmp/a.txt                              out/log_a_rom_$(PROJname).txt
 
 #RUNcmd +=rr   : $(rr)$(EOL)   
-RUNcmdList +=rr   
+showRunHelpList +=rr   
 
 
 define promgenHelp
