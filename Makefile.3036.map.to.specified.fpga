@@ -28,6 +28,7 @@ CMDmapLine2:= cd tmp/ && $(CMDmapLine1) > ../out/$(FNmapLog1)
 export CMDmapLine2
 
 rm:=run_map_to_target_fapga
+$(rm):=Makefile.3036.map.to.specified.fpga
 rm :
 	@echo out/$(FNmapLog1) > out/loging.txt
 	@echo ;echo '---- $(rm) start --- out/$(FNmapLog1)'

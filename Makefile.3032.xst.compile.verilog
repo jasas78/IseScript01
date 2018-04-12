@@ -167,7 +167,7 @@ endef
 export RUNxst42
 
 rx:=run_xst_to_compile_the_verilog
-$(rx):=_add_the_"HELP=1"_can_generate_the_help_of_xst
+$(rx):=_add_the_"HELP=1"_can_generate_the_help_of_xst Makefile.3032.xst.compile.verilog
 rx :
 	@echo out/$(FNxstLOG2) > out/loging.txt
 	@echo ;echo '---- $(rx) start --- out/$(FNxstLOG2)'
