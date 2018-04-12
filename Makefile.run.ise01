@@ -1,5 +1,24 @@
 all: 
 
+CFGrunINCset:=\
+Makefile.3032.xst.compile.verilog    \
+Makefile.3034.ngdbuild.decompress_to_fpga_base_gate    \
+Makefile.3036.map.to.specified.fpga    \
+Makefile.3037.par    \
+Makefile.3038.trc    \
+Makefile.3039.bitgen    \
+Makefile.303a.promgen.bin    \
+Makefile.303b.promgen.mcs    \
+Makefile.3041.impact.upload_and_run    \
+Makefile.3042.impact.upload_to_flash    \
+Makefile.3043.iseAnalyze.report.resouce.usage    \
+Makefile.3051.partgen.gen_device_pin_info    \
+Makefile.3060.backupBase    \
+Makefile.3061.backupXilinxISE    \
+Makefile.3071.beautifyBase    \
+Makefile.3072.beautifyVerilog    \
+
+VerilogRunINCset:=$(wildcard src?/*.v)
 
 LOGing:=$(strip $(shell [ -f out/loging.txt ] && head -n 1 out/loging.txt||echo))
 
@@ -74,6 +93,10 @@ showRunHelpList += ct co ll
 
 define showRunHelpTEXText1
     c      => ct co
-
 endef
-export showRunHelpTEXText1
+
+
+$(call genVimWithFileList,showSourceCodeTEXT,$(VerilogRunINCset),vv)
+
+
+

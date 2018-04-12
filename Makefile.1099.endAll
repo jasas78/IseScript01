@@ -17,7 +17,13 @@ srh:
 	@[ -z "$${showRunHelpTEXText1}" ] || echo "$${showRunHelpTEXText1}" 
 	@echo "$${showRunHelpTEXT}"
 
-$(call CallExpandHelpAll,showHelpTEXT,so sml srh)
+ss:=showSourceCode
+ss:
+	@echo "$${showSourceCodeTEXT}"
+
+$(call CallExpandHelpAll,showHelpTEXT,so sml srh )
+
+showOptionList += so h srh ss
 $(call CallExpandHelpAll,showOptionTEXT,$(showOptionList))
 
 
@@ -27,8 +33,10 @@ all: showOption showVimMakefileList
 #	echo kkk99000021
 else
 $(call CallExpandHelpAll,showRunHelpTEXT,$(showRunHelpList))
+export showSourceCodeTEXT
+export showRunHelpTEXText1
 export showRunHelpTEXT
-all: showOption showRunHelp
+all: showSourceCode showOption showRunHelp
 #	echo kkk99000022
 endif
 
