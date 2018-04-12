@@ -28,7 +28,7 @@ export CMDmcsLine2
 
 
 rs:=run_promgen_to_gen_mcs
-rs $(rs):
+rs :
 	@echo out/$(FNmcsLog1) > out/loging.txt
 	@echo ;echo '---- $(rs) start --- out/$(FNmcsLog1)'
 	echo "$${SCRmcs1}"     > out/$(FNmcsScr1)

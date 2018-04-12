@@ -30,7 +30,7 @@ export CMDparLine2
 
 
 rp:=run_par_to_gen_the_last_ncd
-rp $(rp):
+rp :
 	@echo out/$(FNparLog1) > out/loging.txt
 	@echo ;echo '---- $(rp) start --- out/$(FNparLog1)'
 	      $(CMDparLine2)
