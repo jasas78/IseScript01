@@ -8,6 +8,13 @@ define showOptionTEXT
 endef
 export showOptionTEXT
 
+define showHelpTEXT
+
+$(foreach aa1,so sml,$(call CallExpand,$(aa1)))
+
+endef
+export showHelpTEXT
+
 so:=showOption
 so $(so):
 	@echo "$${showOptionTEXT}"
@@ -16,6 +23,7 @@ h := help
 $(h) := showHelp
 h $(h) $($(h)): 
 	@echo "$${showHelpTEXT}"
+
 
 ifdef inMakeScriptDIR
 all: showOption showVimMakefileList

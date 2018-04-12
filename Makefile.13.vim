@@ -26,13 +26,22 @@ vp vim_prepare1 : vim_prepare_clean
 
 _vim/cscope.files : vp
 
-vsList:=$(shell test -f _vim/cscope.files && cat _vim/cscope.files |grep -v /Makefile|sort -u )
 
-vsHelpTEXT:=
+
+export vsHelpTEXT
+vs:=vim_show_file_list 
+vs $(vs) : 
+	@[ -f _vim/cscope.files ] || make vp
+	@echo;echo "   $${vsHelpTEXT}"
+
+
+
+
+vimMakeFileL:=
 vsIdx:=0
 define CallVimSrcS
 $$(eval vsIdx:=$$(shell echo "$$$$(($$(vsIdx) + 1))") )
-vsHelpTEXT+=    v$$(vsIdx)   : $(1)$$(EOL)   
+vimMakeFileL+=    v$$(vsIdx)   : $(1)$$(EOL)   
 v$$(vsIdx)   : vp
 	@echo
 	make vp
@@ -44,19 +53,19 @@ v$$(vsIdx)   : vp
 
 endef
 
+vsList:=$(shell test -f _vim/cscope.files && cat _vim/cscope.files |grep -v /Makefile|sort -u )
 $(foreach aa1,$(vsList),$(eval $(call CallVimSrcS,$(aa1))))
-export vsHelpTEXT
-vs:=vim_show_file_list 
-vs $(vs) : 
-	@[ -f _vim/cscope.files ] || make vp
-	@echo;echo "   $${vsHelpTEXT}"
-
-
-
-
 
 sml:=showVimMakefileList
 sml $(sml):
 	@echo "$${showVimMakefileList}"
 
 
+define vimMakefile
+
+endef
+
+MakefileList:=$(sort $(wildcard $(TM)/Makefile*))
+#sml:=showVimMakefileList
+#sml $(sml) :
+#	$(foreach aa1,$(MakefileList),$(call vimMakeFile,$(aa1))$(EOL))
