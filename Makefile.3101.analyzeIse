@@ -12,8 +12,9 @@ iseAnalyzeFileset01:=ana/ana.ise.fileset01.all.$(AnalyzeIseTopXise).txt
 iseAnalyzeFileset02:=ana/ana.ise.fileset02.verilog.$(AnalyzeIseTopXise).txt
 iseAnalyzeFileset03:=ana/ana.ise.fileset03.simVerilog.$(AnalyzeIseTopXise).txt
 iseAnalyzeFileset04:=ana/ana.ise.fileset04.config.$(AnalyzeIseTopXise).txt
+iseAnalyzeFileset05:=ana/ana.ise.fileset05.rtlTop.$(AnalyzeIseTopXise).txt
 
-iseSED01:=\
+iseSED000:=\
 		|dos2unix \
 		|tr -d '\r\n' \
 		|sed \
@@ -22,54 +23,73 @@ iseSED01:=\
 		-e 's;> </file;></file;g' \
 		-e 's;> <;>\n<;g' \
 		|dos2unix 
-iseSED02:= |grep 'file xil_pn:name=' 
-iseSED03:= |grep    '"FILE_VERILOG"' |grep -v '"PostMapSimulation"'
-iseSED04:= |grep -v '"FILE_VERILOG"' 
-iseSED05:= |grep '"PostMapSimulation"'
-iseSED06:= \
+iseSED010:= |grep 'file xil_pn:name=' 
+iseSED020:= |grep    '"FILE_VERILOG"' |grep -v '"PostMapSimulation"'
+iseSED040:= |grep -v '"FILE_VERILOG"' 
+iseSED030:= |grep '"PostMapSimulation"'
+iseSED100:= \
 		|sed \
 		-e 's;^.*file xil_pn:name=\";;g' 		\
+		-e 's;\".*$$;;g' 
+iseSED050:= |grep '"Implementation Top"'
+iseSED105:= \
+		|sed \
+		-e 's;^.*|;;g' 		\
 		-e 's;\".*$$;;g' 
 
 an1:=iseAnalyzeFileset01
 an1:
 	cat $(anaTopIse) \
-		$(iseSED01) \
+		$(iseSED000) \
 		> $(iseAnalyzeFileset00)
 	cat $(iseAnalyzeFileset00) \
-		$(iseSED02) \
+		$(iseSED010) \
 		> $(iseAnalyzeFileset01)
 	@
 	cat $(iseAnalyzeFileset01) \
-		$(iseSED03) \
+		$(iseSED020) \
 		> $(iseAnalyzeFileset02)
 	cat $(iseAnalyzeFileset01) \
-		$(iseSED04) \
+		$(iseSED040) \
 		> $(iseAnalyzeFileset04)
 	cat $(iseAnalyzeFileset01) \
-		$(iseSED05) \
+		$(iseSED030) \
 		> $(iseAnalyzeFileset03)
+	cat $(iseAnalyzeFileset00) \
+		$(iseSED050) \
+		> $(iseAnalyzeFileset05)
 	@
 	cat $(iseAnalyzeFileset02) \
-		$(iseSED06) \
+		$(iseSED100) \
 		> $(iseAnalyzeFileset02).2
 	cat $(iseAnalyzeFileset03) \
-		$(iseSED06) \
+		$(iseSED100) \
 		> $(iseAnalyzeFileset03).2
 	cat $(iseAnalyzeFileset04) \
-		$(iseSED06) \
+		$(iseSED100) \
 		> $(iseAnalyzeFileset04).2
+	cat $(iseAnalyzeFileset05) \
+		$(iseSED105) \
+		> $(iseAnalyzeFileset05).2
 	@
 	@wc ana/ana.ise.*.txt*
 
-$(iseAnalyzeFileset01):
+RTLtopName:=$(strip $(shell [ -f $(iseAnalyzeFileset05).2 ] && cat $(iseAnalyzeFileset05).2))
+ifdef RTLtopName
+ifneq ($(topModule),$(RTLtopName))
+$(info )$(info 'not equal topModule<$(topModule)>, RTLtopName<$(RTLtopName)>')$(info )$(error )
+endif
+endif
+
+iseRTLverilogListFile=$(iseAnalyzeFileset02).2
+$(iseRTLverilogListFile):
 	make an1
 
 an2:=link_the_origin_verilog_to_src8
-an2: $(iseAnalyzeFileset01)
+an2: $(iseRTLverilogListFile)
 	[ -d src8 ] || mkdir -p src8
 	rm -f src8/*.v
-	@cd src8/ && ln -s $(foreach aa1,$(filter-out $(AnalyzeIseExcludeVerilog),$(shell cat $(iseAnalyzeFileset02))),$(AnalyzeIseTopDir)/$(aa1)) ./
+	@cd src8/ && ln -s $(foreach aa1,$(filter-out $(AnalyzeIseExcludeVerilog),$(shell cat $(iseRTLverilogListFile))),$(AnalyzeIseTopDir)/$(aa1)) ./
 	@ls src8/*.v|wc
 	@wc ana/ana.ise.*.txt
 
