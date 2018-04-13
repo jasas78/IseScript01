@@ -25,7 +25,7 @@ ss:
 
 $(call CallExpandHelpAll,showHelpTEXT,so sml srh )
 
-showOptionList += so h srh ss sml
+showOptionList += $(showOptionListDefault)
 $(call CallExpandHelpAll,showOptionTEXT,$(showOptionList))
 
 
