@@ -10,8 +10,8 @@ nr: bit.now.bit
 nf:=try_to_burn_the_fpga_with_the_tmp_file_named____into_flash___forever______mcs.now.mcs
 $(nf):= AnotherDST
 nf: mcs.now.mcs
-	       make uf AnotherDST=$^
-	@echo 'make uf AnotherDST=$^'
+	       make ufo AnotherDST=$^
+	@echo 'make ufo AnotherDST=$^'
 
 
 showRunHelpList += nr nf

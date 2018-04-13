@@ -58,7 +58,8 @@ ufo :
 	echo  "cd tmp/ && $(LDso641) $(RUNpath)/impact -batch < ../out/$(FNuufScr1)  > ../out/$(FNuufLog1)" > out/$(FNuufCmd1)
 	@grep Programming out/$(FNuufLog1)
 uf:=impact_upload_to_flash_and_backup
-uf : ufo 
+$(uf):=ufo bk
+uf : $($(uf))
 
 showRunHelpList +=ufo uf
 
