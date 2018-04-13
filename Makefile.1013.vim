@@ -5,9 +5,12 @@ vpc :
 	@mkdir -p _vim/
 	@rm -f _vim/cscope.out       _vim/cscope.in?     _vim/tags
 
+
+vFFset01:=*.c  *.s  *.S  *.h  *.cpp  *.hpp *.sh  Makefile*  *.v  *.ucf Kconfig* *config.mk *.conf *.ucf scr*.scr *.ncd
 vp:=vim_prepare1
 vp: vpc
-	mkdir -p _vim src1 src2 src3 src9
+	@#mkdir -p _vim src1 src2 src3 src9
+	@[ -d src9 ] || mkdir src9
 	@ls $(wildcard $(TM)/Makefile*)    > _vim/cscope.in0
 	@touch _vim/vim_file01.txt _vim/dir_01.txt 
 	@
@@ -16,25 +19,25 @@ vp: vpc
 		echo $(ff1)|sed -e 's/^ *//g' |sed -e '/^#.*$$/d' |sed -e 's/ *$$//g' |sed -e '/^$$/d' >> _vim/cscope.in1 $(EOL))
 	@
 	@echo -n > _vim/cscope.in2
-	@$(foreach ff1,$(strip $(shell cat _vim/dir_01.txt \
-		|sed -e 's/^ *//g' |sed -e '/^#.*$$/d' |sed -e 's/ *$$//g' |sed -e '/^$$/d' |sort -u )),\
-		$(if $(strip $(shell test -d $(ff1) && echo 1)),\
-		find $(ff1) -maxdepth 1 -type f \
-		-name "*.c" -o -name "*.s" -o -name "*.S" -o -name "*.h" -o -name "*.cpp" -o -name "*.hpp" \
-		-o -name "*.sh" -o -name "Makefile*" \
-		-o -name "*.v" -o -name "*ucf" \
-		-o -name "Kconfig*" \
-		-o -name "*config.mk" \
-		-o -name "*.conf" \
+	@echo $(wildcard \
+		$(foreach ff1,$(strip $(shell cat _vim/dir_01.txt |sed -e 's/^ *//g' |sed -e '/^#.*$$/d' |sed -e 's/ *$$//g' |sed -e '/^$$/d' |sort -u )),\
+		$(foreach ff2,$(vFFset01),$(ff1)/$(ff2)))\
+		)\
+		|tr ' ' '\n' \
 		|grep -v mod\\.c$$  \
-		|sort -u >> _vim/cscope.in2\
-		$(EOL)))
+		|grep -v '^ *$$' \
+		|sort -u \
+		>> _vim/cscope.in2
 	@
-	@cat _vim/cscope.in? |sort -u |grep -v '^ *$$' >_vim/cscope.files
+	@cat _vim/cscope.in? \
+		|sort -u \
+		|xargs -n 10 realpath \
+		>_vim/cscope.files
 	@
 	@#rm -f _vim/cscope.in? cscope.out tags
 	@ctags -L _vim/cscope.files
-	@cscope -Rbu  -k -i_vim/cscope.files 
+	@cscope -Rbu  -k -i _vim/cscope.files 
+	@wc _vim/cscope.files 
 	sync
 
 _vim/cscope.files : vp
