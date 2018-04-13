@@ -1,0 +1,46 @@
+all:
+
+ERRmsgAnalyzeIseTEXT:= analyze need those VARS.
+$(eval $(call testVARmustExist,AnalyzeIseTopXise,ERRmsgAnalyzeIseTEXT))
+
+$(shell [ -d ana ] || mkdir ana)
+
+anaTopIse:=$(AnalyzeIseTopDir)/$(AnalyzeIseTopXise)
+
+iseAnalyzeFileset01:=ana/ana.ise.fileset01.all.$(AnalyzeIseTopXise).txt
+iseAnalyzeFileset02:=ana/ana.ise.fileset02.verilog.$(AnalyzeIseTopXise).txt
+iseAnalyzeFileset03:=ana/ana.ise.fileset03.config.$(AnalyzeIseTopXise).txt
+
+an1:=iseAnalyzeFileset01
+an1:
+	cat $(anaTopIse) \
+		|dos2unix \
+		|grep 'file xil_pn:name=' \
+		|sed -e 's;^.*xil_pn:name=\";;g' 		-e 's;\".*$$;;g' \
+		> $(iseAnalyzeFileset01)
+	cat $(iseAnalyzeFileset01) \
+		|grep    '\.v$$' \
+		> $(iseAnalyzeFileset02);echo -n 
+	cat $(iseAnalyzeFileset01) \
+		|grep -v '\.v$$' \
+		> $(iseAnalyzeFileset03);echo -n 
+	@wc ana/ana.ise.*.txt
+
+$(iseAnalyzeFileset01):
+	make an1
+
+an2:=link_the_origin_verilog_to_src8
+an2: $(iseAnalyzeFileset01)
+	[ -d src8 ] || mkdir -p src8
+	rm -f src8/*.v
+	@cd src8/ && ln -s $(foreach aa1,$(filter-out $(AnalyzeIseExcludeVerilog),$(shell cat $(iseAnalyzeFileset02))),$(AnalyzeIseTopDir)/$(aa1)) ./
+	@ls src8/*.v|wc
+	@wc ana/ana.ise.*.txt
+
+
+cana:=clean_analyze_results
+cana:
+	rm -f ana/ana.ise.*.txt
+
+showRunHelpList +=  cana an1 an2
+

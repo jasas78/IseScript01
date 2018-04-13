@@ -11,14 +11,15 @@ vp: vpc
 	@ls $(wildcard $(TM)/Makefile*)    > _vim/cscope.in0
 	@touch _vim/vim_file01.txt _vim/dir_01.txt 
 	@
-	@echo > _vim/cscope.in1
+	@echo -n > _vim/cscope.in1
 	@$(foreach ff1,$(strip $(shell cat   _vim/vim_file01.txt)),\
 		echo $(ff1)|sed -e 's/^ *//g' |sed -e '/^#.*$$/d' |sed -e 's/ *$$//g' |sed -e '/^$$/d' >> _vim/cscope.in1 $(EOL))
 	@
-	@echo > _vim/cscope.in2
+	@echo -n > _vim/cscope.in2
 	@$(foreach ff1,$(strip $(shell cat _vim/dir_01.txt \
-		|sed -e 's/^ *//g' |sed -e '/^#.*$$/d' |sed -e 's/ *$$//g' |sed -e '/^$$/d' |sort -u \
-		|xargs -n 1 -I '{}' find '{}' -maxdepth 1 -type f \
+		|sed -e 's/^ *//g' |sed -e '/^#.*$$/d' |sed -e 's/ *$$//g' |sed -e '/^$$/d' |sort -u )),\
+		$(if $(strip $(shell test -d $(ff1) && echo 1)),\
+		find $(ff1) -maxdepth 1 -type f \
 		-name "*.c" -o -name "*.s" -o -name "*.S" -o -name "*.h" -o -name "*.cpp" -o -name "*.hpp" \
 		-o -name "*.sh" -o -name "Makefile*" \
 		-o -name "*.v" -o -name "*ucf" \
@@ -26,9 +27,10 @@ vp: vpc
 		-o -name "*config.mk" \
 		-o -name "*.conf" \
 		|grep -v mod\\.c$$  \
-		|sort -u > _vim/cscope.in2
+		|sort -u >> _vim/cscope.in2\
+		$(EOL)))
 	@
-	@cat _vim/cscope.in? |sort -u > _vim/cscope.files
+	@cat _vim/cscope.in? |sort -u |grep -v '^ *$$' >_vim/cscope.files
 	@
 	@#rm -f _vim/cscope.in? cscope.out tags
 	@ctags -L _vim/cscope.files

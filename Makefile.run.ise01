@@ -1,6 +1,6 @@
 all: 
 
-CFGrunINCset1:=\
+CFGrunIseINCset1:=\
 Makefile.3032.xst.compile.verilog    \
 Makefile.3034.ngdbuild.decompress_to_fpga_base_gate    \
 Makefile.3036.map.to.specified.fpga    \
@@ -19,7 +19,12 @@ Makefile.3062.impact.burn.now    \
 Makefile.3071.beautifyBase    \
 Makefile.3072.beautifyVerilog    \
 
-CFGrunINCset9:=$(foreach aa1,$(CFGrunINCset1),$(TM)/$(aa1))
+CFGrunIseINCset2:=$(foreach aa1,$(CFGrunIseINCset1),$(TM)/$(aa1))
+
+CFGanalyzeIseINCset1:=\
+	Makefile.3101.analyzeIse\
+
+CFGanalyzeIseINCset2:=$(foreach aa1,$(CFGanalyzeIseINCset1),$(TM)/$(aa1))
 
 VerilogRunINCset:=$(wildcard src?/*.v)
 
@@ -105,10 +110,15 @@ endef
 $(call genVimWithFileList,showSourceCodeTEXT,$(VerilogRunINCset),vv)
 
 
-$(eval $(foreach aa2,$(CFGrunINCset9),$(call tryINCmustExist,$(aa2),db1873103)))
+$(eval $(foreach aa2,$(CFGrunIseINCset2),$(call tryINCmustExist,$(aa2),db1873103)))
 
 aaa:=compile_verilog_by_ise_and_run_it
 $(aaa):=ct co rx rn rm rp rb rr rs ur
 aaa: $($(aaa))
 
 showRunHelpList += aaa
+
+ifdef AnalyzeIseTopDir
+showAnalyzeIseHelpList:= 
+$(eval $(foreach aa2,$(CFGanalyzeIseINCset2),$(call tryINCmustExist,$(aa2),db1873103)))
+endif
