@@ -23,7 +23,7 @@ ss:
 
 $(call CallExpandHelpAll,showHelpTEXT,so sml srh )
 
-showOptionList += so h srh ss
+showOptionList += so h srh ss sml
 $(call CallExpandHelpAll,showOptionTEXT,$(showOptionList))
 
 

@@ -1,9 +1,12 @@
+all:
 
-vim_prepare_clean :
+vpc:=vim_prepare_clean
+vpc :
 	@mkdir -p _vim/
 	@rm -f _vim/cscope.out       _vim/cscope.in?     _vim/tags
 
-vp vim_prepare1 : vim_prepare_clean
+vp:=vim_prepare1
+vp: vpc
 	mkdir -p _vim src1 src2 src3 src9
 	@ls $(wildcard ../scriptX/Makefile*)    > _vim/cscope.in0
 	@touch _vim/vim_file01.txt _vim/dir_01.txt 
