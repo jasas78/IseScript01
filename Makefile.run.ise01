@@ -69,14 +69,18 @@ export LDso641
 export RUNpath
 export topModule
 
+PROJname:=proj_$(topModule)
+export PROJname
+
 ttUCF?=$(TT)/$(firstword $(wildcard src9/*.ucf) $(wildcard config/*.ucf) $(wildcard src?/*.ucf))
 ttSRCfull?=$(foreach aa,$(wildcard src?/*.v),$(TT)/$(aa))
 
 create_tmp_dir:=$(shell [ -d  tmp/ ] || mkdir -p tmp/ )
 create_tmp_dir+=$(shell [ -d  out/ ] || mkdir -p out/ )
 
-c:= ct co
-c:$(c)
+c:=clean_all_tmp_files_during_ise_compile
+$(c):= ct co
+c:$($(c))
 
 ct:=clean_tmp
 $(ct):=clean_tmp_files
@@ -92,10 +96,9 @@ ll:
 	@ls -dl tmp/* ; echo ;ls -dl out/* ; 
 
 
-showRunHelpList += ct co ll
+showRunHelpList += ct co c ll
 
 define showRunHelpTEXText1
-    c      => ct co
 endef
 
 
@@ -104,7 +107,8 @@ $(call genVimWithFileList,showSourceCodeTEXT,$(VerilogRunINCset),vv)
 
 $(eval $(foreach aa2,$(CFGrunINCset9),$(call tryINCmustExist,$(aa2),db1873103)))
 
-aaa:=ct co rx rn rm rp rb rr rs ur
-aaa: $(aaa)
+aaa:=compile_verilog_by_ise_and_run_it
+$(aaa):=ct co rx rn rm rp rb rr rs ur
+aaa: $($(aaa))
 
 showRunHelpList += aaa
