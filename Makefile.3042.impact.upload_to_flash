@@ -26,6 +26,11 @@ endif
 FNuufIn1:=$(shell realpath $(firstword $(wildcard $(ufufufX) )))
 endif
 
+ifdef AnotherDST
+AnotherDSTuf:=$(shell realpath $(AnotherDST))
+else
+AnotherDSTuf:=$(shell realpath $(FNuufIn1))
+endif
 
 
 define SCRuuf1
@@ -33,7 +38,7 @@ setMode -bscan
 setCable -port auto
 Identify -inferir 
 identifyMPM 
-assignFile -p 2 -file $(FNuufIn1)
+assignFile -p 2 -file $(AnotherDSTuf)
 setAttribute -position 2 -attr packageName -value ""
 ReadIdcode -p 2 
 Program -p 2 -e -v 
@@ -46,9 +51,8 @@ ufo:=upload_to_flash_only
 $(ufo):=Makefile.3042.impact.upload_to_flash
 ufo :
 	@echo out/$(FNuufLog1) > out/loging.txt
-	@echo ;echo '---- $(uf) start --- out/$(FNuufLog1)'
-	@echo " --- $(FNuufIn1) --- "
-	@[ -f $(FNuufIn1) ] || ( echo ; echo ' file not found' ; echo ; exit 32 )
+	@echo ;echo '---- $(uf) start --- out/$(FNuufLog1) --- burn into flash --->> $(AnotherDSTuf) ' ; echo
+	@test -f $(AnotherDSTuf) 
 	@echo "$${SCRuuf1}" > out/$(FNuufScr1)
 	       cd tmp/ && $(LDso641) $(RUNpath)/impact -batch < ../out/$(FNuufScr1)  > ../out/$(FNuufLog1)
 	echo  "cd tmp/ && $(LDso641) $(RUNpath)/impact -batch < ../out/$(FNuufScr1)  > ../out/$(FNuufLog1)" > out/$(FNuufCmd1)
