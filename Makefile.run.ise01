@@ -26,7 +26,7 @@ CFGanalyzeIseINCset1:=\
 
 CFGanalyzeIseINCset2:=$(foreach aa1,$(CFGanalyzeIseINCset1),$(TM)/$(aa1))
 
-VerilogRunINCset:=$(wildcard src?/*.v)
+VerilogRunINCset:=$(sort $(wildcard src?/*.v))
 
 LOGing:=$(strip $(shell [ -f out/loging.txt ] && head -n 1 out/loging.txt||echo))
 
