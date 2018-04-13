@@ -15,6 +15,7 @@ Makefile.3043.iseAnalyze.report.resouce.usage    \
 Makefile.3051.partgen.gen_device_pin_info    \
 Makefile.3060.backupBase    \
 Makefile.3061.backupXilinxISE    \
+Makefile.3062.impact.burn.now    \
 Makefile.3071.beautifyBase    \
 Makefile.3072.beautifyVerilog    \
 
