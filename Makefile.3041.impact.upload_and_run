@@ -34,7 +34,7 @@ $(ur):=Makefile.3041.impact.upload_and_run
 ur :
 	@echo out/$(FNuurLog1) > out/loging.txt
 	@echo ;echo '---- $(ur) start --- burn to RAM and run ---->>   $(AnotherDSTur)'
-	@test -f $(AnotherDSTur)
+	[ -f $(AnotherDSTur) ]
 	@echo "$${SCRuur1}" > out/$(FNuurScr1)
 	       cd tmp/ && $(LDso641) $(RUNpath)/impact -batch < ../out/$(FNuurScr1)  > ../out/$(FNuurLog1)
 	echo  "cd tmp/ && $(LDso641) $(RUNpath)/impact -batch < ../out/$(FNuurScr1)  > ../out/$(FNuurLog1)" > out/$(FNuurCmd1)
