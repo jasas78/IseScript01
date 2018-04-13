@@ -10,11 +10,10 @@ anaTopIse:=$(AnalyzeIseTopDir)/$(AnalyzeIseTopXise)
 iseAnalyzeFileset00:=ana/ana.ise.fileset00.resort.$(AnalyzeIseTopXise).txt
 iseAnalyzeFileset01:=ana/ana.ise.fileset01.all.$(AnalyzeIseTopXise).txt
 iseAnalyzeFileset02:=ana/ana.ise.fileset02.verilog.$(AnalyzeIseTopXise).txt
-iseAnalyzeFileset03:=ana/ana.ise.fileset03.config.$(AnalyzeIseTopXise).txt
+iseAnalyzeFileset03:=ana/ana.ise.fileset03.simVerilog.$(AnalyzeIseTopXise).txt
+iseAnalyzeFileset04:=ana/ana.ise.fileset04.config.$(AnalyzeIseTopXise).txt
 
-an1:=iseAnalyzeFileset01
-an1:
-	cat $(anaTopIse) \
+iseSED01:=\
 		|dos2unix \
 		|tr -d '\r\n' \
 		|sed \
@@ -22,21 +21,46 @@ an1:
 		-e 's;> <association;><association;g' \
 		-e 's;> </file;></file;g' \
 		-e 's;> <;>\n<;g' \
-		|dos2unix \
+		|dos2unix 
+iseSED02:= |grep 'file xil_pn:name=' 
+iseSED03:= |grep    '"FILE_VERILOG"' |grep -v '"PostMapSimulation"'
+iseSED04:= |grep -v '"FILE_VERILOG"' 
+iseSED05:= |grep '"PostMapSimulation"'
+iseSED06:= \
+		|sed \
+		-e 's;^.*file xil_pn:name=\";;g' 		\
+		-e 's;\".*$$;;g' 
+
+an1:=iseAnalyzeFileset01
+an1:
+	cat $(anaTopIse) \
+		$(iseSED01) \
 		> $(iseAnalyzeFileset00)
 	cat $(iseAnalyzeFileset00) \
-		|grep 'file xil_pn:name=' \
+		$(iseSED02) \
 		> $(iseAnalyzeFileset01)
+	@
 	cat $(iseAnalyzeFileset01) \
-		|grep    '\.v$$' \
-		> $(iseAnalyzeFileset02);echo -n 
+		$(iseSED03) \
+		> $(iseAnalyzeFileset02)
 	cat $(iseAnalyzeFileset01) \
-		|grep -v '\.v$$' \
-		> $(iseAnalyzeFileset03);echo -n 
-	@wc ana/ana.ise.*.txt
-#		|sed \
-#		-e 's;^.*xil_pn:name=\";;g' 		\
-#		-e 's;\".*$$;;g' \
+		$(iseSED04) \
+		> $(iseAnalyzeFileset04)
+	cat $(iseAnalyzeFileset01) \
+		$(iseSED05) \
+		> $(iseAnalyzeFileset03)
+	@
+	cat $(iseAnalyzeFileset02) \
+		$(iseSED06) \
+		> $(iseAnalyzeFileset02).2
+	cat $(iseAnalyzeFileset03) \
+		$(iseSED06) \
+		> $(iseAnalyzeFileset03).2
+	cat $(iseAnalyzeFileset04) \
+		$(iseSED06) \
+		> $(iseAnalyzeFileset04).2
+	@
+	@wc ana/ana.ise.*.txt*
 
 $(iseAnalyzeFileset01):
 	make an1
@@ -52,7 +76,7 @@ an2: $(iseAnalyzeFileset01)
 
 cana:=clean_analyze_results
 cana:
-	rm -f ana/ana.ise.*.txt
+	rm -f ana/ana.ise.*.txt*
 
 showRunHelpList +=  cana an1 an2
 
