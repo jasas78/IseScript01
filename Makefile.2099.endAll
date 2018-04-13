@@ -13,11 +13,13 @@ h :
 	@echo "$${showHelpTEXT}"
 
 srh:=showRunHelp
+$(srh):=show_all_operation_can_be_done_by_this_project_______current_dir
 srh:
 	@[ -z "$${showRunHelpTEXText1}" ] || echo "$${showRunHelpTEXText1}" 
 	@echo "$${showRunHelpTEXT}"
 
 ss:=showSourceCode
+$(ss):=show_all_source_files_in_current_dir_for_vim_______current_dir
 ss:
 	@echo "$${showSourceCodeTEXT}"
 

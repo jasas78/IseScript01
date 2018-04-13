@@ -52,6 +52,7 @@ endef
 
 
 sml:=showVimMakefileList
+$(sml):=show_all_makefiles_in_script_dir_for_vim_______script_dir
 sml :
 	@echo "$${showVimMakefileListText}";echo
 
