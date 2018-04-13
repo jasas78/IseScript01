@@ -7,6 +7,7 @@ $(shell [ -d ana ] || mkdir ana)
 
 anaTopIse:=$(AnalyzeIseTopDir)/$(AnalyzeIseTopXise)
 
+iseAnalyzeFileset00:=ana/ana.ise.fileset00.resort.$(AnalyzeIseTopXise).txt
 iseAnalyzeFileset01:=ana/ana.ise.fileset01.all.$(AnalyzeIseTopXise).txt
 iseAnalyzeFileset02:=ana/ana.ise.fileset02.verilog.$(AnalyzeIseTopXise).txt
 iseAnalyzeFileset03:=ana/ana.ise.fileset03.config.$(AnalyzeIseTopXise).txt
@@ -15,8 +16,16 @@ an1:=iseAnalyzeFileset01
 an1:
 	cat $(anaTopIse) \
 		|dos2unix \
+		|tr -d '\r\n' \
+		|sed \
+		-e 's;  *; ;g' \
+		-e 's;> <association;><association;g' \
+		-e 's;> </file;></file;g' \
+		-e 's;> <;>\n<;g' \
+		|dos2unix \
+		> $(iseAnalyzeFileset00)
+	cat $(iseAnalyzeFileset00) \
 		|grep 'file xil_pn:name=' \
-		|sed -e 's;^.*xil_pn:name=\";;g' 		-e 's;\".*$$;;g' \
 		> $(iseAnalyzeFileset01)
 	cat $(iseAnalyzeFileset01) \
 		|grep    '\.v$$' \
@@ -25,6 +34,9 @@ an1:
 		|grep -v '\.v$$' \
 		> $(iseAnalyzeFileset03);echo -n 
 	@wc ana/ana.ise.*.txt
+#		|sed \
+#		-e 's;^.*xil_pn:name=\";;g' 		\
+#		-e 's;\".*$$;;g' \
 
 $(iseAnalyzeFileset01):
 	make an1
