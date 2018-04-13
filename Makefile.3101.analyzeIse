@@ -89,7 +89,7 @@ an2:=link_the_origin_verilog_to_src8
 an2: $(iseRTLverilogListFile)
 	[ -d src8 ] || mkdir -p src8
 	rm -f src8/*.v
-	@cd src8/ && ln -s $(foreach aa1,$(filter-out $(AnalyzeIseExcludeVerilog),$(shell cat $(iseRTLverilogListFile))),$(AnalyzeIseTopDir)/$(aa1)) ./
+	@cd src8/ && ln -s $(foreach aa1,$(filter-out $(AnalyzeIseExcludeVerilog),$(shell cat $(iseRTLverilogListFile))),../$(AnalyzeIseTopDir)/$(aa1)) ./
 	@ls src8/*.v|wc
 	@wc ana/ana.ise.*.txt
 
