@@ -161,10 +161,12 @@ endef
 export RUNxst23
 
 #/home/bootH/vm3/VMs/topVM/VM.jg1/virtFS.jg1/xilinx3s500e_example/demoXilinx3s500e/3S500E-Demo/verilog/LED/LED4.prj
+iseVerilogList:=$(wildcard $(foreach bb1,$(wildcard src?),$(bb1)/*.v))
+#$(info iseVerilogList $(iseVerilogList))
+
 define RUNxst42
-$(foreach bb1,\
-	$(shell ls src?/*.v)\
-	,verilog work ../$(bb1)$(EOL))
+$(foreach bb2,$(iseVerilogList),\
+	verilog work ../$(bb1)$(EOL))
 
 
 endef
