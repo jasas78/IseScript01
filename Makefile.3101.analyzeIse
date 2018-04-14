@@ -85,10 +85,8 @@ iseRTLverilogListFile=$(iseAnalyzeFileset02).2
 $(iseRTLverilogListFile):
 	make an1
 
-an2:=link_the_origin_verilog_to_src8
+an2:=link_the_origin_verilog_to_src8_ipcore_to_src2
 an2: $(iseRTLverilogListFile)
-	[ -d src8 ] || mkdir -p src8
-	rm -f src8/*.v
 	@cd src8/ && ln -s $(foreach aa1,$(filter-out $(AnalyzeIseExcludeVerilog),$(shell cat $(iseRTLverilogListFile))),../$(AnalyzeIseTopDir)/$(aa1)) ./
 	@ls src8/*.v|wc
 	@wc ana/ana.ise.*.txt
@@ -96,7 +94,11 @@ an2: $(iseRTLverilogListFile)
 
 cana:=clean_analyze_results
 cana:
+	[ -d ana  ] || mkdir -p ana 
+	[ -d src2 ] || mkdir -p src2
+	[ -d src8 ] || mkdir -p src8
 	rm -f ana/ana.ise.*.txt*
+	rm -f $(foreach aa1,src2 src8, $(foreach aa2,*.v *.ucf,$(aa1)/$(aa2)) )
 
 showRunHelpList +=  cana an1 an2
 
