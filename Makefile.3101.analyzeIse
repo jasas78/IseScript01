@@ -100,5 +100,9 @@ cana:
 	rm -f ana/ana.ise.*.txt*
 	rm -f $(foreach aa1,src2 src8, $(foreach aa2,*.v *.ucf,$(aa1)/$(aa2)) )
 
-showRunHelpList +=  cana an1 an2
+ann:=analyze_ise_all
+$(ann):= cana an1 an2 
+ana : $(ann)
+
+showRunHelpList +=  $($(ann)) ann
 
