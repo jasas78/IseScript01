@@ -77,7 +77,13 @@ export topModule
 PROJname:=proj_$(topModule)
 export PROJname
 
-ttUCF?=$(TT)/$(firstword $(wildcard src9/*.ucf) $(wildcard config/*.ucf) $(wildcard src?/*.ucf))
+ttUCF?=topModule
+ttUCF2:=$(firstword $(wildcard $(ttUCF) $(ttUCF).ucf config/$(ttUCF) config/$(ttUCF).ucf \
+	$(foreach aa1,9 8 7 6 5 4 3 2 1 0, src$(aa1)/$(ttUCF) src$(aa1)/$(ttUCF).ucf )))
+ifdef ttUCF2
+ttUCF3:=$(shell realpath $(ttUCF2))
+endif
+
 ttSRCfull?=$(foreach aa,$(wildcard src?/*.v),$(TT)/$(aa))
 
 create_tmp_dir:=$(shell [ -d  tmp/ ] || mkdir -p tmp/ )
