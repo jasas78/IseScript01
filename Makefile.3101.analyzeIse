@@ -13,6 +13,9 @@ iseAnalyzeFileset02:=ana/ana.ise.fileset02.verilog.$(AnalyzeIseTopXise).txt
 iseAnalyzeFileset03:=ana/ana.ise.fileset03.simVerilog.$(AnalyzeIseTopXise).txt
 iseAnalyzeFileset04:=ana/ana.ise.fileset04.config.$(AnalyzeIseTopXise).txt
 iseAnalyzeFileset05:=ana/ana.ise.fileset05.rtlTop.$(AnalyzeIseTopXise).txt
+iseAnalyzeFileset06:=ana/ana.ise.fileset06.ucf.$(AnalyzeIseTopXise).txt
+iseAnalyzeFileset07:=ana/ana.ise.fileset07.xaw.$(AnalyzeIseTopXise).txt
+iseAnalyzeFileset08:=ana/ana.ise.fileset08.xise.$(AnalyzeIseTopXise).txt
 
 iseSED000:=\
 		|dos2unix \
@@ -32,6 +35,9 @@ iseSED100:= \
 		-e 's;^.*file xil_pn:name=\";;g' 		\
 		-e 's;\".*$$;;g' 
 iseSED050:= |grep '"Implementation Top"'
+iseSED060:= |grep '"FILE_UCF"'
+iseSED070:= |grep '"FILE_XAW"'
+iseSED080:= |grep '"FILE_COREGENISE"'
 iseSED105:= \
 		|sed \
 		-e 's;^.*|;;g' 		\
@@ -58,6 +64,15 @@ an1:
 	cat $(iseAnalyzeFileset00) \
 		$(iseSED050) \
 		> $(iseAnalyzeFileset05)
+	cat $(iseAnalyzeFileset00) \
+		$(iseSED060) \
+		> $(iseAnalyzeFileset06)
+	cat $(iseAnalyzeFileset00) \
+		$(iseSED070) \
+		> $(iseAnalyzeFileset07)
+	cat $(iseAnalyzeFileset00) \
+		$(iseSED080) \
+		> $(iseAnalyzeFileset08)
 	@
 	cat $(iseAnalyzeFileset02) \
 		$(iseSED100) \
