@@ -10,9 +10,9 @@ anaTopIse:=$(AnalyzeIseTopDir)/$(AnalyzeIseTopXise)
 iseAnalyzeFileset00:=ana/ana.ise.fileset00.resort.$(AnalyzeIseTopXise).txt
 iseAnalyzeFileset01:=ana/ana.ise.fileset01.all.$(AnalyzeIseTopXise).txt
 iseAnalyzeFileset02:=ana/ana.ise.fileset02.verilog.$(AnalyzeIseTopXise).txt
-iseAnalyzeFileset03:=ana/ana.ise.fileset03.simVerilog.$(AnalyzeIseTopXise).txt
+iseAnalyzeFileset03:=ana/ana.ise.fileset03.testbenchVerilog.$(AnalyzeIseTopXise).txt
 iseAnalyzeFileset04:=ana/ana.ise.fileset04.config.$(AnalyzeIseTopXise).txt
-iseAnalyzeFileset05:=ana/ana.ise.fileset05.rtlTop.$(AnalyzeIseTopXise).txt
+iseAnalyzeFileset05:=ana/ana.ise.fileset05.rtlTopModuleName.$(AnalyzeIseTopXise).txt
 iseAnalyzeFileset06:=ana/ana.ise.fileset06.ucf.$(AnalyzeIseTopXise).txt
 iseAnalyzeFileset07:=ana/ana.ise.fileset07.xaw.$(AnalyzeIseTopXise).txt
 iseAnalyzeFileset08:=ana/ana.ise.fileset08.xise.$(AnalyzeIseTopXise).txt
@@ -34,14 +34,15 @@ iseSED100:= \
 		|sed \
 		-e 's;^.*file xil_pn:name=\";;g' 		\
 		-e 's;\".*$$;;g' 
-iseSED050:= |grep '"Implementation Top"'
-iseSED060:= |grep '"FILE_UCF"'
-iseSED070:= |grep '"FILE_XAW"'
-iseSED080:= |grep '"FILE_COREGENISE"'
 iseSED105:= \
 		|sed \
 		-e 's;^.*|;;g' 		\
 		-e 's;\".*$$;;g' 
+
+iseSED050:= |grep '"Implementation Top"'
+iseSED060:= |grep '"FILE_UCF"'
+iseSED070:= |grep '"FILE_XAW"'
+iseSED080:= |grep '"FILE_COREGENISE"'
 
 an1:=iseAnalyzeFileset01
 an1:
@@ -74,15 +75,16 @@ an1:
 		$(iseSED080) \
 		> $(iseAnalyzeFileset08)
 	@
-	cat $(iseAnalyzeFileset02) \
+	$(foreach aa1,\
+		iseAnalyzeFileset02 \
+		iseAnalyzeFileset03 \
+		iseAnalyzeFileset04 \
+		iseAnalyzeFileset06 \
+		iseAnalyzeFileset07 \
+		iseAnalyzeFileset08 \
+		,cat $($(aa1)) \
 		$(iseSED100) \
-		> $(iseAnalyzeFileset02).2
-	cat $(iseAnalyzeFileset03) \
-		$(iseSED100) \
-		> $(iseAnalyzeFileset03).2
-	cat $(iseAnalyzeFileset04) \
-		$(iseSED100) \
-		> $(iseAnalyzeFileset04).2
+		> $($(aa1)).2 $(EOL))
 	cat $(iseAnalyzeFileset05) \
 		$(iseSED105) \
 		> $(iseAnalyzeFileset05).2
@@ -101,22 +103,42 @@ $(iseRTLverilogListFile):
 	make an1
 
 an2:=link_the_origin_verilog_to_src8_ipcore_to_src2
+$(an2):=verilog_RTL
 an2: $(iseRTLverilogListFile)
 	@cd src8/ && ln -s $(foreach aa1,$(filter-out $(AnalyzeIseExcludeVerilog),$(shell cat $(iseRTLverilogListFile))),../$(AnalyzeIseTopDir)/$(aa1)) ./
 	@ls src8/*.v|wc
 	@wc ana/ana.ise.*.txt
 
+an3:=link_the_origin_UCF_to_src8_ipcore_to_src2
+$(an3):= UCF
+an3: $(iseRTLverilogListFile)
+	@cd src3/ && ln -s $(foreach aa1,$(shell cat $(iseAnalyzeFileset06).2 ),../$(AnalyzeIseTopDir)/$(aa1)) ./
+
+an4:=link_the_origin_XAW_to_src8_ipcore_to_src2
+$(an4):= XAW
+an4: $(iseRTLverilogListFile)
+	cd src4/ && ln -s $(foreach aa1,$(shell cat $(iseAnalyzeFileset07).2 ), $(patsubst %.xaw,%.v,../$(AnalyzeIseTopDir)/$(aa1)) ../$(AnalyzeIseTopDir)/$(aa1)) ./
+
+an5:=link_the_origin_XISE_to_src8_ipcore_to_src2
+$(an5):= XISE
+an5: $(iseRTLverilogListFile)
+	cd src5/ && ln -s $(foreach aa1,$(shell cat $(iseAnalyzeFileset08).2 ), $(patsubst %.xise,%.v,../$(AnalyzeIseTopDir)/$(aa1)) ) ./
+
 
 cana:=clean_analyze_results
 cana:
-	[ -d ana  ] || mkdir -p ana 
-	[ -d src2 ] || mkdir -p src2
-	[ -d src8 ] || mkdir -p src8
+	$(foreach aa1,ana \
+		src2 src3 src4 src5 src8, \
+		[ -d $(aa1) ] || mkdir $(aa1) $(EOL) )
 	rm -f ana/ana.ise.*.txt*
-	rm -f $(foreach aa1,src2 src8, $(foreach aa2,*.v *.ucf,$(aa1)/$(aa2)) )
+	rm -f $(foreach aa1,\
+		src2 src3 src4 src5 src8, \
+		$(foreach aa2,\
+		*.v *.xaw *.ucf,\
+		$(aa1)/$(aa2)) )
 
 ann:=analyze_ise_all
-$(ann):= cana an1 an2 
+$(ann):= cana an1 an2 an3 an4 an5
 ann: $($(ann))
 
 showRunHelpList +=  $($(ann)) ann
