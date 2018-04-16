@@ -102,7 +102,7 @@ cana:
 
 ann:=analyze_ise_all
 $(ann):= cana an1 an2 
-ana : $(ann)
+ann: $($(ann))
 
 showRunHelpList +=  $($(ann)) ann
 
