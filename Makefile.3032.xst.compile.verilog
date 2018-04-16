@@ -166,7 +166,7 @@ iseVerilogList:=$(wildcard $(foreach bb1,$(wildcard src?),$(bb1)/*.v))
 
 define RUNxst42
 $(foreach bb2,$(iseVerilogList),\
-	verilog work ../$(bb1)$(EOL))
+	verilog work ../$(bb2)$(EOL))
 
 
 endef

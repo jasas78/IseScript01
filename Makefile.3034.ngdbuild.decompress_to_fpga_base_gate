@@ -29,6 +29,7 @@ $(rn):=Makefile.3034.ngdbuild.decompress_to_fpga_base_gate
 rn :
 	@echo out/$(FNngdLog1) > out/loging.txt
 	@echo ;echo '---- $(rn) start --- out/$(FNngdLog1)'
+	[ -n "$(ttUCF)" -a -f "$(ttUCF)" ] || ( echo ' you should define the ttUCF as the top UCF file in Makefile.env and run again.' ; echo ; exit 22 )
 	       $(RUNngd)
 	@echo '$(RUNngd)'             > out/$(FNngdCMD1)
 	cp tmp/$(FNngdOut1NGD)    		out/$(FNngdOut1NGD).2
