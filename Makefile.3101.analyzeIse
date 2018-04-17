@@ -126,11 +126,13 @@ ifdef coreGenRomList
 	$(foreach aa1,$(coreGenRomList),\
 		@echo;echo '$(aa1) -> $($(aa1))  <<< === $@ parameter , from Makefile.env : you may do : make an5 ipcore_dir/ROM.xise=XXXyyy ' ;echo; \
 		$(EOL)\
-		mkdir -p src5/$$(basename $(aa1)) ;$(EOL) \
+		$(eval aa2:=$(shell basename $(aa1)))\
+		$(eval aa3:=$(shell realpath src5/$(aa2)))\
+		mkdir -p $(aa3) ;$(EOL) \
 		make \
 		coreGen \
 		-f $(TM)/Makefile.3801.runAlone.coreGen \
-		-C $$(realpath src5)/$$(basename $(aa1)) \
+		-C $(aa3) \
 		cgROMname=$$(realpath nowX/$(aa1)) \
 		cgROMcontent=$$(realpath $($(aa1))) \
 		$(EOL)\
