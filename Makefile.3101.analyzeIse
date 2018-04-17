@@ -122,8 +122,21 @@ an4: $(iseRTLverilogListFile)
 an5:=link_the_origin_XISE_to_src8_ipcore_to_src2
 $(an5):= XISE
 an5: $(iseRTLverilogListFile)
-	cd src5/ && ln -s $(foreach aa1,$(shell cat $(iseAnalyzeFileset08).2 ), $(patsubst %.xise,%.v 	, ../$(AnalyzeIseTopDir)/$(aa1))  ) ./
-	cd src5/ && ln -s $(foreach aa1,$(shell cat $(iseAnalyzeFileset08).2 ), $(patsubst %.xise,%.ngc , ../$(AnalyzeIseTopDir)/$(aa1))  ) ./
+	cd src5/ && ln -s $(foreach aa1,$(filter-out $(coreGenRomList),$(shell cat $(iseAnalyzeFileset08).2 )), $(patsubst %.xise,%.v 	, ../$(AnalyzeIseTopDir)/$(aa1))  ) ./
+	cd src5/ && ln -s $(foreach aa1,$(filter-out $(coreGenRomList),$(shell cat $(iseAnalyzeFileset08).2 )), $(patsubst %.xise,%.ngc , ../$(AnalyzeIseTopDir)/$(aa1))  ) ./
+ifdef coreGenRomList
+	$(foreach aa1,$(coreGenRomList),\
+		echo '$(aa1) -> $($(aa1))' ; \
+		$(EOL)\
+		make -f $(TM)/Makefile.3801.runAlone.coreGen \
+		cgDIR=$$(realpath src5) \
+		cgROMname=$$(realpath nowX/$(aa1)) \
+		cgROMcontent=$$(realpath $($(aa1))) \
+		$(EOL)\
+		)
+
+endif
+
 
 
 cann:=clean_analyze_results
