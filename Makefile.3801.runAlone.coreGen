@@ -1,13 +1,32 @@
 all:
 
-gen:
+cg:=coreGen
 
-$(eval $(foreach aa1,\
+cgDIR:=$(shell pwd)
+cgSRCdir:=$(shell dirname $(cgROMname))
+cgSRCname1:=$(shell basename $(cgROMname))
+cgSRCname2:=$(patsubst %.xise,%, $(cgSRCname1) )
+cgSRCname31:=$(cgSRCdir)/$(cgSRCname2).xco
+cgSRCname32:=$(cgSRCdir)/coregen.cgp
+cgLOADfile1:=$(shell realpath $(cgROMcontent) )
+
+$(eval \
+	$(info )\
+	$(foreach aa1,\
 	cgDIR \
 	cgROMname \
 	cgROMcontent\
+	cgSRCdir\
+	cgSRCname1\
+	cgSRCname2\
+	cgSRCname31\
+	cgSRCname32\
+	cgLOADfile1\
 	, \
-	$(iinfo $(aa1) -> $($(aa1)) \
+	$(info $(aa1) -> $($(aa1)) \
 	))\
+	$(info )\
 	)
 
+cg $(cg) :
+	cd 
