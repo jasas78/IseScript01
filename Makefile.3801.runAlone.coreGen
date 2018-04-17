@@ -28,5 +28,17 @@ $(eval \
 	$(info )\
 	)
 
-cg $(cg) :
-	cd 
+c clean :
+	rm -f          $(cgSRCname2).*  $(cgSRCname2)_flist.txt $(cgSRCname2)_xmdf.tcl \
+		coregen.cgp coregen.log coregen.cgc summary.log 
+	rm -fr         tmp/ $(cgSRCname2)/ xlnx_auto_?_xdb/
+	ls -l
+cg $(cg) : clean 
+	cp              $(cgSRCname31) $(cgSRCname32) ./
+	chmod 644       $(cgSRCname2).* coregen.*
+	dos2unix        $(cgSRCname2).* coregen.*
+	sed -i -e 's;^CSET *coe_file=.*$$;CSET coe_file=$(cgLOADfile1);g'  $(cgSRCname2).xco
+	ls -l
+	coregen         -p $${PWD}          -b ./$(cgSRCname2).xco
+	ln -s $(cgSRCname1)/$(cgSRCname2).v   ../
+	ln -s $(cgSRCname1)/$(cgSRCname2).ngc ../
