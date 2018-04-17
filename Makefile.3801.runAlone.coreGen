@@ -1,0 +1,13 @@
+all:
+
+gen:
+
+$(eval $(foreach aa1,\
+	cgDIR \
+	cgROMname \
+	cgROMcontent\
+	, \
+	$(iinfo $(aa1) -> $($(aa1)) \
+	))\
+	)
+
