@@ -122,7 +122,8 @@ an4: $(iseRTLverilogListFile)
 an5:=link_the_origin_XISE_to_src8_ipcore_to_src2
 $(an5):= XISE
 an5: $(iseRTLverilogListFile)
-	cd src5/ && ln -s $(foreach aa1,$(shell cat $(iseAnalyzeFileset08).2 ), $(patsubst %.xise,%.v,../$(AnalyzeIseTopDir)/$(aa1)) ) ./
+	cd src5/ && ln -s $(foreach aa1,$(shell cat $(iseAnalyzeFileset08).2 ), $(patsubst %.xise,%.v 	, ../$(AnalyzeIseTopDir)/$(aa1))  ) ./
+	cd src5/ && ln -s $(foreach aa1,$(shell cat $(iseAnalyzeFileset08).2 ), $(patsubst %.xise,%.ngc , ../$(AnalyzeIseTopDir)/$(aa1))  ) ./
 
 
 cann:=clean_analyze_results
@@ -134,7 +135,12 @@ cann:
 	rm -f $(foreach aa1,\
 		src2 src3 src4 src5 src8, \
 		$(foreach aa2,\
-		*.v *.xaw *.ucf,\
+		\
+		*.v \
+		*.xaw \
+		*.ucf \
+		*.ngc \
+		,\
 		$(aa1)/$(aa2)) )
 
 ann:=analyze_ise_all
