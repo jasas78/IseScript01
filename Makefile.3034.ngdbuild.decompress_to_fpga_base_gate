@@ -14,6 +14,7 @@ FNngdLog1:=log_$(FNngdEXT0).txt
 FNngdCMD1:=cmd_$(FNngdEXT0).txt
 
 define RUNngdPara
+	-sd ../src5 \
 	-sd ../src2 \
 	-nt timestamp  \
 	-uc $(ttUCF) 				\
