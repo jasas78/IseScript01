@@ -160,6 +160,7 @@ cann:
 		*.ngc \
 		,\
 		$(aa1)/$(aa2)) )
+	rm -fr src?/*.xise
 
 ann:=analyze_ise_all
 $(ann):= cann an1 an2 an3 an4 an5
