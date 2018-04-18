@@ -13,6 +13,7 @@ bk:= backup_the_bit_and_mcs_by_date
 bkOBJs=$(strip $(wildcard out/$(FNbitOut1) out/$(FNmcsOut1)))
 $(bk):=Makefile.3060.backupBase
 bk :
+	[ -d bkOBJsDIR ] || mkdir bkOBJsDIR
 	for aa1 in $(bkOBJs) ; do \
 		cp $${aa1}    bkOBJsDIR/$$(basename $${aa1}).$(time_called) || exit 32 ; \
 		ls -l bkOBJsDIR/$$(basename $${aa1}).$(time_called) ; \

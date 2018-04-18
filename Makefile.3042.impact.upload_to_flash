@@ -63,6 +63,8 @@ uf:=impact_upload_to_flash_and_backup
 $(uf):=ufo bk
 uf : $($(uf))
 
+## bk --> backup_the_bit_and_mcs_by_date -> see Makefile.3060.backupBase
+
 showRunHelpList +=ufo uf
 
 uf2:=$(uf)____use_the_$(FNmcsOut1).2.mcs
