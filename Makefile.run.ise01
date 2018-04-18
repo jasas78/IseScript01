@@ -122,6 +122,7 @@ aaa:=compile_verilog_by_ise_and_run_it
 $(aaa):=ct co rx rn rm rp rb rr rs ur
 aaa: $($(aaa))
 
+kkk:=renew_the
 showRunHelpList += aaa
 
 ifdef AnalyzeIseTopDir
