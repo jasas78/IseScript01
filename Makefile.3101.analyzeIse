@@ -136,6 +136,8 @@ ifdef coreGenRomList
 		cgROMname=$$(realpath nowX/$(aa1)) \
 		cgROMcontent=$$(realpath $($(aa1))) \
 		$(EOL)\
+		echo; md5sum $$(realpath $($(aa1))) ; echo \
+		$(EOL)\
 		)
 	@echo
 endif

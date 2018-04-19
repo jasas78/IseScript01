@@ -62,6 +62,7 @@ ufo :
 uf:=impact_upload_to_flash_and_backup
 $(uf):=ufo bk
 uf : $($(uf))
+	md5sum $$(realpath coe.now.coe)
 
 ## bk --> backup_the_bit_and_mcs_by_date -> see Makefile.3060.backupBase
 

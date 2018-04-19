@@ -23,7 +23,7 @@ $(eval \
 	cgSRCname32\
 	cgLOADfile1\
 	, \
-	$(info $(aa1) -> $($(aa1)) \
+	$(info $(aa1) -> $($(aa1)) -> $(shell cat $($(aa1)) |md5sum |awk '{print $$1}') \
 	))\
 	$(info )\
 	)
