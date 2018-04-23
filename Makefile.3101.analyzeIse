@@ -168,5 +168,15 @@ ann:=analyze_ise_all
 $(ann):= cann an1 an2 an3 an4 an5
 ann: $($(ann))
 
-showRunHelpList +=  $($(ann)) ann
+tt1:=gen_coe_and_burn_only
+$(tt1):=make ann && make aaa && make uf
+
+tt2:=gen_coe_and_burn_form_temp_cds
+$(tt2):=make tcds -C bkCDS/ && make ann && make aaa && make uf
+tt1:
+	$($(tt1))
+tt2:
+	$($(tt2))
+
+showRunHelpList +=  $($(ann)) ann tt1 tt2
 
