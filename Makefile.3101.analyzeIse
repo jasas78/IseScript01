@@ -61,7 +61,7 @@ an1:
 		> $(iseAnalyzeFileset04)
 	cat $(iseAnalyzeFileset01) \
 		$(iseSED030) \
-		> $(iseAnalyzeFileset03)
+		> $(iseAnalyzeFileset03) || echo "no simulation file Exist."
 	cat $(iseAnalyzeFileset00) \
 		$(iseSED050) \
 		> $(iseAnalyzeFileset05)
@@ -70,10 +70,10 @@ an1:
 		> $(iseAnalyzeFileset06)
 	cat $(iseAnalyzeFileset00) \
 		$(iseSED070) \
-		> $(iseAnalyzeFileset07)
+		> $(iseAnalyzeFileset07) || echo "no XAW file Exist."
 	cat $(iseAnalyzeFileset00) \
 		$(iseSED080) \
-		> $(iseAnalyzeFileset08)
+		> $(iseAnalyzeFileset08) || echo "no coreGen file Exist."
 	@
 	$(foreach aa1,\
 		iseAnalyzeFileset02 \
@@ -117,7 +117,10 @@ an3: $(iseRTLverilogListFile)
 an4:=link_the_origin_XAW_to_src8_ipcore_to_src2
 $(an4):= XAW
 an4: $(iseRTLverilogListFile)
-	cd src4/ && ln -s $(foreach aa1,$(shell cat $(iseAnalyzeFileset07).2 ), $(patsubst %.xaw,%.v,../$(AnalyzeIseTopDir)/$(aa1)) ../$(AnalyzeIseTopDir)/$(aa1)) ./
+an4: 
+	cd src4/ && ln -s $(foreach aa1,$(shell cat $(iseAnalyzeFileset07).2 ), \
+	$(patsubst %.xaw,%.v,../$(AnalyzeIseTopDir)/$(aa1)) ../$(AnalyzeIseTopDir)/$(aa1)) ./ \
+	|| echo "============ no XAW file exist."
 
 an5:=link_the_origin_XISE_to_src8_ipcore_to_src2
 $(an5):= XISE
@@ -141,8 +144,14 @@ ifdef coreGenRomList
 		)
 	@echo
 endif
-	cd src5/ && ln -s $(foreach aa1,$(filter-out $(coreGenRomList),$(shell cat $(iseAnalyzeFileset08).2 )), $(patsubst %.xise,%.v 	, ../$(AnalyzeIseTopDir)/$(aa1))  ) ./
-	cd src5/ && ln -s $(foreach aa1,$(filter-out $(coreGenRomList),$(shell cat $(iseAnalyzeFileset08).2 )), $(patsubst %.xise,%.ngc , ../$(AnalyzeIseTopDir)/$(aa1))  ) ./
+	cd src5/ && ln -s \
+		$(foreach aa1,$(filter-out $(coreGenRomList),$(shell cat $(iseAnalyzeFileset08).2 )), \
+		$(patsubst %.xise,%.v 	, ../$(AnalyzeIseTopDir)/$(aa1))  ) ./ \
+		|| echo "============ no XISE file exist 1 "
+	cd src5/ && ln -s \
+		$(foreach aa1,$(filter-out $(coreGenRomList),$(shell cat $(iseAnalyzeFileset08).2 )), \
+		$(patsubst %.xise,%.ngc , ../$(AnalyzeIseTopDir)/$(aa1))  ) ./ \
+		|| echo "============ no XISE file exist 2 "
 
 
 
@@ -172,7 +181,15 @@ tt1:=gen_coe_and_burn_only
 $(tt1):=make ann && make aaa && make uf
 
 tt2:=gen_coe_and_burn_form_temp_cds
-$(tt2):=make tcds -C bkCDS/ && make ann && make aaa && make uf
+$(tt2):=$(strip \
+	make tcds -C bkCDS/              && \
+	rm -f cds.now.cds coe.now.coe    && \
+	ln -s bkCDS/cds.now.cds     ./   && \
+	ln -s bkCDS/coe.now.coe     ./   && \
+	make ann                         && \
+	make aaa                         && \
+	make uf \
+	)
 tt1:
 	$($(tt1))
 tt2:

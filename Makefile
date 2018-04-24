@@ -12,3 +12,5 @@ $(error "173800 why      $(TM)/Makefile.00.env don't exist ?")
 endif
 include $(CFGmake00env)
 
+#$(info vvvv1->$(vvvv1))
+#$(info vvvv2->$(vvvv2))

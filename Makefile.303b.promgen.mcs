@@ -37,6 +37,8 @@ rs :
 	@echo "$(CMDmcsLine2)"   > out/$(FNmcsCmd1)
 	cp   tmp/$(FNmcsOut1)       out/$(FNmcsOut1).2
 	mv   tmp/$(FNmcsOut1)       out/$(FNmcsOut1)
+	rm -f                       mcs.now.mcs
+	ln -s out/$(FNmcsOut1)      mcs.now.mcs
 
 
 

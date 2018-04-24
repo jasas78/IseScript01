@@ -63,6 +63,8 @@ rb :
 	@echo "$(CMDbitLine2)"   > out/$(FNbitCmd1)
 	cp   tmp/$(FNbitOut1)		out/$(FNbitOut1).2
 	mv   tmp/$(FNbitOut1)		out/$(FNbitOut1)
+	rm -f                       bit.now.bit
+	ln -s out/$(FNbitOut1)      bit.now.bit
 
 showRunHelpList +=rb   
 

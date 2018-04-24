@@ -9,10 +9,10 @@ ifeq (,$(strip $(RAR1)))
 $(error 'why RAR not found ? $(RAR0)' )
 endif
 
-bk:= backup_the_bit_and_mcs_by_date
+bk1:=backup_the_bit_and_mcs_by_date_with_source
 bkOBJs=$(strip $(wildcard out/$(FNbitOut1) out/$(FNmcsOut1)))
-$(bk):=Makefile.3060.backupBase
-bk :
+$(bk1):=Makefile.3060.backupBase
+bk1 :
 	[ -d bkOBJsDIR ] || mkdir bkOBJsDIR
 	for aa1 in $(bkOBJs) ; do \
 		cp $${aa1}    bkOBJsDIR/$$(basename $${aa1}).$(time_called) || exit 32 ; \
@@ -25,8 +25,20 @@ bk :
 	ls -l \
 		bkOBJsDIR/$$(basename $${PWD}).$(time_called).rar 
 
+bk2:=backup_the_bit_and_mcs_by_date_with_cds_coe_for_release_only
+bkOBJs=$(strip $(wildcard out/$(FNbitOut1) out/$(FNmcsOut1)))
+$(bk2):=Makefile.3060.backupBase
+bk2 :
+	[ -d 111 ] || mkdir 111
+	/home/bootH/bin/rar a -m5 -s -hp1 -r- \
+		111/$$(basename $${PWD}).$(time_called).rar \
+		$$(realpath cds.now.cds coe.now.coe bit.now.bit mcs.now.mcs) 
+	ls -l \
+		111/*.$(time_called).rar 
+
+
 #$(error 'RAR1 now <$(RAR1)>')
 
 
-showRunHelpList += bk
+showRunHelpList += bk1 bk2
 

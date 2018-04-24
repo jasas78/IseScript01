@@ -1,15 +1,15 @@
 
 all:
 
-nr:=try_to_burn_the_fpga_with_the_tmp_file_named____into_ram___run_only_____bit.now.bit
+nr:=try_to_burn_the_fpga_with_the_tmp_file_named____into_ram___run_only_____bit.another.bit
 $(nr):= AnotherDST
-nr: bit.now.bit
+nr: bit.another.bit
 	       make ur AnotherDST=$^
 	@echo 'make ur AnotherDST=$^'
 
-nf:=try_to_burn_the_fpga_with_the_tmp_file_named____into_flash___forever______mcs.now.mcs
+nf:=try_to_burn_the_fpga_with_the_tmp_file_named____into_flash___forever______mcs.another.mcs
 $(nf):= AnotherDST
-nf: mcs.now.mcs
+nf: mcs.another.mcs
 	       make ufo AnotherDST=$^
 	@echo 'make ufo AnotherDST=$^'
 

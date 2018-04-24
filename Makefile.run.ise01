@@ -129,3 +129,8 @@ ifdef AnalyzeIseTopDir
 showAnalyzeIseHelpList:= 
 $(eval $(foreach aa2,$(CFGanalyzeIseINCset2),$(call tryINCmustExist,$(aa2),db8193912)))
 endif
+
+#$(info VerilogRunINCset -> $(VerilogRunINCset))
+btList01verilog += $(VerilogRunINCset)
+
+
