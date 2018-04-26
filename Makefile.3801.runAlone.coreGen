@@ -63,5 +63,5 @@ cg $(cg) : clean
 	cd .. && cp $(cgLOADfile1) used_coe_is_$$(echo $(cgLOADfile1)|sed -e 's;/;_;g').coe
 	ls -l
 	coregen         -p $${PWD}          -b ./$(cgSRCname2).xco
-	ln -s $(cgSRCname1)/$(cgSRCname2).v   ../
-	ln -s $(cgSRCname1)/$(cgSRCname2).ngc ../
+	ln -s $(cgSRCname1)_cDIR/$(cgSRCname2).v   ../
+	ln -s $(cgSRCname1)_cDIR/$(cgSRCname2).ngc ../

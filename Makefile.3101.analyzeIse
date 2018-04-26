@@ -130,7 +130,7 @@ ifdef coreGenRomList
 		@echo;echo '$(aa1) -> $($(aa1))  <<< === $@ parameter , from Makefile.env : you may do : make an5 ipcore_dir/ROM.xise=XXXyyy ' ;echo; \
 		$(EOL)\
 		$(eval aa2:=$(shell basename $(aa1)))\
-		$(eval aa3:=$(shell realpath src5/$(aa2)_DIR))\
+		$(eval aa3:=$(shell realpath src5/$(aa2)_cDIR))\
 		mkdir -p $(aa3) ;$(EOL) \
 		make \
 		coreGen \
@@ -140,7 +140,8 @@ ifdef coreGenRomList
 		cgROMcontent=$$(realpath $($(aa1))) \
 		|| exit 45 \
 		$(EOL)\
-		echo; md5sum $$(realpath $($(aa1))) ; echo \
+		echo; echo 'make coreGen end' ; \
+		md5sum $$(realpath $($(aa1))) ; echo \
 		$(EOL)\
 		)
 	@echo
@@ -170,9 +171,10 @@ cann:
 		*.xaw \
 		*.ucf \
 		*.ngc \
+		*.coe \
 		,\
 		$(aa1)/$(aa2)) )
-	rm -fr src?/*.xise
+	rm -fr src?/*.xise_DIR
 
 ann:=analyze_ise_all
 $(ann):= cann an1 an2 an3 an4 an5
