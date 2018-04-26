@@ -1,5 +1,10 @@
 all:
 
+define EOL
+
+
+endef
+
 cg:=coreGen
 
 cgDIR:=$(shell pwd)
@@ -10,25 +15,41 @@ cgSRCname31:=$(cgSRCdir)/$(cgSRCname2).xco
 cgSRCname32:=$(cgSRCdir)/coregen.cgp
 cgLOADfile1:=$(shell realpath $(cgROMcontent) )
 
-$(eval \
-	$(info )\
+#$(eval \
+#	$(info )\
+#	$(foreach aa1,\
+#	cgDIR \
+#	cgROMname \
+#	cgROMcontent\
+#	cgSRCdir\
+#	cgSRCname1\
+#	cgSRCname2\
+#	cgSRCname31\
+#	cgSRCname32\
+#	cgLOADfile1\
+#	, \
+#	$(info $(aa1) -> $($(aa1)) -> $(shell cat $($(aa1)) |md5sum |awk '{print $$1}') \
+#	))\
+#	$(info )\
+#	)
+
+cgInfo:
 	$(foreach aa1,\
 	cgDIR \
 	cgROMname \
-	cgROMcontent\
-	cgSRCdir\
-	cgSRCname1\
-	cgSRCname2\
-	cgSRCname31\
-	cgSRCname32\
-	cgLOADfile1\
+	cgROMcontent \
+	cgSRCdir \
+	cgSRCname1 \
+	cgSRCname2 \
+	cgSRCname31 \
+	cgSRCname32 \
+	cgLOADfile1 \
 	, \
-	$(info $(aa1) -> $($(aa1)) -> $(shell cat $($(aa1)) |md5sum |awk '{print $$1}') \
-	))\
-	$(info )\
-	)
+	@echo "$(aa1) -> $($(aa1)) -> $$( [ -f $($(aa1)) ] && (cat $($(aa1)) |md5sum |awk '{print $$1}' ) || echo ' no_a_file ' )" \
+	$(EOL))
 
-c clean :
+
+c clean : cgInfo
 	rm -f          $(cgSRCname2).*  $(cgSRCname2)_flist.txt $(cgSRCname2)_xmdf.tcl \
 		coregen.cgp coregen.log coregen.cgc summary.log 
 	rm -fr         tmp/ $(cgSRCname2)/ xlnx_auto_?_xdb/
@@ -38,6 +59,7 @@ cg $(cg) : clean
 	chmod 644       $(cgSRCname2).* coregen.*
 	dos2unix        $(cgSRCname2).* coregen.*
 	sed -i -e 's;^CSET *coe_file=.*$$;CSET coe_file=$(cgLOADfile1);g'  $(cgSRCname2).xco
+	cd .. && cp $(cgLOADfile1) used_coe_is_$$(echo $(cgLOADfile1)|sed -e 's;/;_;g').coe
 	ls -l
 	coregen         -p $${PWD}          -b ./$(cgSRCname2).xco
 	ln -s $(cgSRCname1)/$(cgSRCname2).v   ../
