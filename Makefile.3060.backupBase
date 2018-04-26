@@ -20,8 +20,8 @@ bk1 :
 		done
 	/home/bootH/bin/rar a -m5 -s -hp1 -r- \
 		bkOBJsDIR/$$(basename $${PWD}).$(time_called).rar \
-		src/*.v   src?/*.v   \
-		bkOBJsDIR/*.$(time_called)
+		bkOBJsDIR/*.$(time_called) \
+		$(foreach bb1, coe ucf v xaw ngc , $(wildcard src?/*.$(bb1) src/*.$(bb1) ))
 	ls -l \
 		bkOBJsDIR/$$(basename $${PWD}).$(time_called).rar 
 
