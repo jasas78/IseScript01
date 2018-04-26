@@ -55,6 +55,7 @@ c clean : cgInfo
 	rm -fr         tmp/ $(cgSRCname2)/ xlnx_auto_?_xdb/
 	ls -l
 cg $(cg) : clean 
+	[ -n "$(cgROMcontent)" -a -f "$(cgROMcontent)" ] || ( echo ; echo ' why no soruce file $$cgROMcontent ? ' ; echo ; exit 38 )
 	cp              $(cgSRCname31) $(cgSRCname32) ./
 	chmod 644       $(cgSRCname2).* coregen.*
 	dos2unix        $(cgSRCname2).* coregen.*
