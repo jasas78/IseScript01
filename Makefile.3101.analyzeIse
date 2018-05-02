@@ -154,6 +154,10 @@ endif
 		$(foreach aa1,$(filter-out $(coreGenRomList),$(shell cat $(iseAnalyzeFileset08).2 )), \
 		$(patsubst %.xise,%.ngc , ../$(AnalyzeIseTopDir)/$(aa1))  ) ./ \
 		|| echo "============ no XISE file exist 2 "
+ifdef OptionNoXiseThenUseNGC
+	$(foreach aa1,$(OptionNoXiseThenUseNGC), \
+		cd src5 && test -e $(shell basename $(aa1)) || ln -s ../nowX/$(aa1) ./ $(EOL) )
+endif
 
 
 
