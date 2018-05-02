@@ -174,7 +174,7 @@ cann:
 		*.coe \
 		,\
 		$(aa1)/$(aa2)) )
-	rm -fr src?/*.xise_DIR
+	rm -fr src?/*.xise_cDIR
 
 ann:=analyze_ise_all
 $(ann):= cann an1 an2 an3 an4 an5

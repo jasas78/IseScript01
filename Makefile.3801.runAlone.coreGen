@@ -60,7 +60,7 @@ cg $(cg) : clean
 	chmod 644       $(cgSRCname2).* coregen.*
 	dos2unix        $(cgSRCname2).* coregen.*
 	sed -i -e 's;^CSET *coe_file=.*$$;CSET coe_file=$(cgLOADfile1);g'  $(cgSRCname2).xco
-	cd .. && cp $(cgLOADfile1) used_coe_is_$$(echo $(cgLOADfile1)|sed -e 's;/;_;g').coe
+	cd .. && cp $(cgLOADfile1) used_coe_is_$$(cat $(cgLOADfile1)|md5sum|awk '{print $$1}')__$$(echo $(cgLOADfile1)|sed -e 's;/;_;g').coe
 	ls -l
 	coregen         -p $${PWD}          -b ./$(cgSRCname2).xco
 	ln -s $(cgSRCname1)_cDIR/$(cgSRCname2).v   ../
