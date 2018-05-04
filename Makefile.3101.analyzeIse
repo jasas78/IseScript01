@@ -146,14 +146,12 @@ ifdef coreGenRomList
 		)
 	@echo
 endif
-	cd src5/ && ln -s \
-		$(foreach aa1,$(filter-out $(coreGenRomList),$(shell cat $(iseAnalyzeFileset08).2 )), \
-		$(patsubst %.xise,%.v 	, ../$(AnalyzeIseTopDir)/$(aa1))  ) ./ \
-		|| echo "============ no XISE file exist 1 "
-	cd src5/ && ln -s \
-		$(foreach aa1,$(filter-out $(coreGenRomList),$(shell cat $(iseAnalyzeFileset08).2 )), \
-		$(patsubst %.xise,%.ngc , ../$(AnalyzeIseTopDir)/$(aa1))  ) ./ \
-		|| echo "============ no XISE file exist 2 "
+	$(foreach aa1,$(filter-out $(coreGenRomList),$(shell cat $(iseAnalyzeFileset08).2 )), \
+		cd src5/ && ln -s \
+		$(patsubst %.xise,%.v 	, ../$(AnalyzeIseTopDir)/$(aa1))  ./ || exit 42 ) 
+	$(foreach aa1,$(filter-out $(coreGenRomList),$(shell cat $(iseAnalyzeFileset08).2 )), \
+		cd src5/ && ln -s \
+		$(patsubst %.xise,%.ngc , ../$(AnalyzeIseTopDir)/$(aa1))  ./ || exit 42 $(EOL)) 
 ifdef OptionNoXiseThenUseNGC
 	$(foreach aa1,$(OptionNoXiseThenUseNGC), \
 		cd src5 && test -e $(shell basename $(aa1)) || ln -s ../nowX/$(aa1) ./ $(EOL) )
@@ -184,15 +182,17 @@ ann:=analyze_ise_all
 $(ann):= cann an1 an2 an3 an4 an5
 ann: $($(ann))
 
+tt0:=gen_coe_for_temp_cds
+$(tt0):=make tcds -C bkCDS/ && rm -f cds.now.cds coe.now.coe && ln -s bkCDS/cds.now.cds ./ && ln -s bkCDS/coe.now.coe ./ 
+tt0:
+	$($(tt0))
+
 tt1:=gen_coe_and_burn_only
 $(tt1):=make ann && make aaa && make uf
 
 tt2:=gen_coe_and_burn_form_temp_cds
 $(tt2):=$(strip \
-	make tcds -C bkCDS/              && \
-	rm -f cds.now.cds coe.now.coe    && \
-	ln -s bkCDS/cds.now.cds     ./   && \
-	ln -s bkCDS/coe.now.coe     ./   && \
+	make tt0                         && \
 	make ann                         && \
 	make aaa                         && \
 	make uf \
@@ -202,5 +202,5 @@ tt1:
 tt2:
 	$($(tt2))
 
-showRunHelpList +=  $($(ann)) ann tt1 tt2
+showRunHelpList +=  $($(ann)) ann tt0 tt1 tt2
 
