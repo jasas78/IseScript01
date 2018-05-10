@@ -71,7 +71,8 @@ ufo :
 uf:=impact_upload_to_flash_and_backup
 $(uf):=ufo bk1
 uf : $($(uf))
-	md5sum $$(realpath coe.now.coe)
+	(md5sum $$(realpath coe.now.coe cds.now.cds bit.now.bit) \
+		|sed -e 's;/.*/;;g' )|| echo -n ''
 
 ## bk1 --> backup_the_bit_and_mcs_by_date_with_source -> see Makefile.3060.backupBase
 

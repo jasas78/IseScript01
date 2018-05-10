@@ -191,7 +191,7 @@ tt1:=gen_coe_and_burn_only
 $(tt1):=make ann && make aaa && make uf
 
 tt2:=gen_coe_and_burn_form_temp_cds
-$(tt2):= make tt0 && make tt1 
+$(tt2):= make tt0 && make tt1 && make bk2
 
 tt1:
 	$($(tt1))

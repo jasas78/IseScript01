@@ -37,6 +37,9 @@ bk2 :
 	/home/bootH/bin/rar a -m5 -s -hp1 -r- \
 		111/$$(basename $${PWD}).$(time_called).rar \
 		$$(realpath cds.now.cds coe.now.coe bit.now.bit mcs.now.mcs) 
+	md5sum \
+		$$(realpath cds.now.cds coe.now.coe bit.now.bit mcs.now.mcs) \
+		|sed -e 's;/.*/;;g'
 	ls -l \
 		111/*.$(time_called).rar 
 
