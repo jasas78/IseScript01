@@ -62,6 +62,7 @@ ufo :
 	@echo out/$(FNuufLog1) > out/loging.txt
 	@echo ;echo '---- $(uf) start --- out/$(FNuufLog1) --- burn into flash --->> $(AnotherDSTuf) ' ; echo
 	[ -f $(AnotherDSTuf) ]
+	md5sum $(AnotherDSTuf) 
 	@echo "$${SCRuuf1}" > out/$(FNuufScr1)
 	       cd tmp/ && $(LDso641) $(RUNpath)/impact -batch < ../out/$(FNuufScr1)  > ../out/$(FNuufLog1)
 	echo  "cd tmp/ && $(LDso641) $(RUNpath)/impact -batch < ../out/$(FNuufScr1)  > ../out/$(FNuufLog1)" > out/$(FNuufCmd1)
