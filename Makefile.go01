@@ -1,0 +1,122 @@
+all: 
+
+CFGrunIseINCset1:=\
+Makefile.3071.beautifyBase    \
+Makefile.3073.beautifyGo    \
+Makefile.4001.go.lang.analyze    \
+
+CFGrunIseINCset2:=$(foreach aa1,$(CFGrunIseINCset1),$(TM)/$(aa1))
+
+CFGanalyzeIseINCset1:=\
+	Makefile.3101.analyzeIse\
+
+CFGanalyzeIseINCset2:=$(foreach aa1,$(CFGanalyzeIseINCset1),$(TM)/$(aa1))
+
+VerilogRunINCset:=$(sort $(wildcard src?/*.v src?/*.ucf ))
+
+LOGing:=$(strip $(shell [ -f out/loging.txt ] && head -n 1 out/loging.txt||echo))
+
+ve:=vim_error
+$(ve):=vim_error_report_file
+ve:
+	@$(if $(LOGing),vim $(LOGing), echo 'out/loging.txt do NOT exist.')
+
+
+define known_xilinxFpga_list
+spartan3adsp : xc3sd3400a-fg676-4
+spartan3e    : xc3s500e-pq208-4
+
+endef
+export known_xilinxFpga_list
+
+
+DEV01?=xc3s500e-pq208-4
+DEV02?=$(shell echo $(DEV01)|sed -e 's;[-_].*$$;;g')
+DEV11:=
+ifeq ($(DEV02),xc3s500e)
+DEV11:=spartan3e
+endif
+ifeq ($(DEV02),xc3sd3400a)
+DEV11:=spartan3adsp
+endif
+ifeq ($(strip $(DEV11)),)
+$(info )
+$(info $(known_xilinxFpga_list) )
+$(info )
+$(error )
+endif
+
+export DEV01
+export DEV02
+export DEV11
+
+include $(CFGmakeEnv)
+
+### you can pre-define the following envVARs
+LDso641?=LD_PRELOAD=/home/bootH/Xilinx/usb-driver/libusb-driver.so.64.so 
+RUNpath?=/e/eda2544/ise14.7xinlinx/14.7/ISE_DS/ISE/bin/lin64
+topModule?=LED4
+export LDso641
+export RUNpath
+export topModule
+
+PROJname:=proj_$(topModule)
+export PROJname
+
+ttUCF?=$(topModule)
+ttUCF2:=$(firstword $(wildcard $(ttUCF) $(ttUCF).ucf config/$(ttUCF) config/$(ttUCF).ucf \
+	$(foreach aa1,9 8 7 6 5 4 3 2 1 0, src$(aa1)/$(ttUCF) src$(aa1)/$(ttUCF).ucf )))
+ifdef ttUCF2
+ttUCF:=$(shell realpath $(ttUCF2))
+endif
+
+ttSRCfull?=$(foreach aa,$(wildcard src?/*.v),$(TT)/$(aa))
+
+create_tmp_dir:=$(shell [ -d  tmp/ ] || mkdir -p tmp/ )
+create_tmp_dir+=$(shell [ -d  out/ ] || mkdir -p out/ )
+
+c:=clean_all_tmp_files_during_ise_compile
+$(c):= ct co
+c:$($(c))
+
+ct:=clean_tmp
+$(ct):=clean_tmp_files
+ct:
+	rm -fr tmp/*
+co:=clean_output
+$(co):=clean_output_files
+co:
+	rm -fr out/*
+
+ll:=list_tmp_and_out_directory
+ll:
+	@ls -dl tmp/* ; echo ;ls -dl out/* ; 
+
+
+showRunHelpList += ct co c ll
+
+define showRunHelpTEXText1
+endef
+
+
+$(call genVimWithFileList,showSourceCodeTEXT,$(VerilogRunINCset),vv)
+
+
+$(eval $(foreach aa2,$(CFGrunIseINCset2),$(call tryINCmustExist,$(aa2),db8193911)))
+
+aaa:=compile_verilog_by_ise_and_run_it
+$(aaa):=ct co rx rn rm rp rb rr rs ur
+aaa: $($(aaa))
+
+kkk:=renew_the
+showRunHelpList += aaa
+
+ifdef AnalyzeIseTopDir
+showAnalyzeIseHelpList:= 
+$(eval $(foreach aa2,$(CFGanalyzeIseINCset2),$(call tryINCmustExist,$(aa2),db8193912)))
+endif
+
+#$(info VerilogRunINCset -> $(VerilogRunINCset))
+btList01verilog += $(VerilogRunINCset)
+
+
