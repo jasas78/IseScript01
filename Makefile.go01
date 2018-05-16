@@ -1,5 +1,13 @@
 all: 
 
+ifeq (,$(GoTOP))
+$(info )
+$(info ' go lang project , should has a VAR named GoTOP being defined in Makefile.env')
+$(info '                   as the end target name; ')
+$(info ' and the src files being put into the src?/*.go' )
+$(info )
+$(error )
+endif
 
 GoWinPre:= GOOS=windows GOARCH=386
 Wput_default :=wput -u -nc 
@@ -46,28 +54,29 @@ ll:
 
 bw:=build_go_lang_for_win
 bw:
-	$(foreach aa1,$(goVimFileSetS),\
-		$(GoWinPre) \
-		$(GObinNow) build  -o win/$(shell basename $(aa1)).win.exe $(aa1) $(EOL)\
-		echo strip win/$(shell basename $(aa1)).win.exe $(EOL)\
-		)
+	$(GoWinPre) \
+		$(GObinNow) \
+		build  -o win/$(GoTOP).win.exe $(goVimFileSetS) 
+	echo strip win/$(GoTOP).win.exe
 	ls -l win/* -d
 ifdef wputPATH
-	$(foreach aa1,$(goVimFileSetS),\
-		$(Wput_default) win/$(shell basename $(aa1)).win.exe $(wputPATH)/ $(EOL)\
-		)
+	$(Wput_default) win/$(GoTOP).win.exe $(wputPATH)/ 
 endif
 
 bl:=build_go_lang_for_linux
 bl:
-	$(foreach aa1,$(goVimFileSetS),\
-		$(GObinNow) build  -o lnx/$(shell basename $(aa1)).lnx.exe $(aa1) $(EOL)\
-		strip lnx/$(shell basename $(aa1)).lnx.exe $(EOL)\
-		)
+	$(GObinNow) \
+		build  -o lnx/$(GoTOP).lnx.exe $(goVimFileSetS) 
+	echo strip lnx/$(GoTOP).lnx.exe
 	ls -l lnx/* -d
 
+tt:=test
+$(tt):=lnx/$(GoTOP).lnx.exe
+tt:
+	$($(tt))
 
-showRunHelpList += cw cl c ll bw bl
+
+showRunHelpList += cw cl c ll bw bl tt
 
 define showRunHelpTEXText1
 endef
