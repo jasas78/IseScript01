@@ -6,7 +6,13 @@ vpc :
 	@rm -f _vim/cscope.out       _vim/cscope.in?     _vim/tags
 
 
-vFFset01:=*.c  *.s  *.S  *.h  *.cpp  *.hpp *.sh  Makefile*  *.v  *.ucf Kconfig* *config.mk *.conf *.ucf scr*.scr *.ncd
+vFFset01:=\
+	*.c  *.s  *.S  *.h  *.cpp  *.hpp \
+	*.sh  Makefile*  \
+	Kconfig* *config.mk *.conf \
+	*.v  *.ucf scr*.scr *.ncd \
+	*.go \
+
 vp:=vim_prepare1
 vp: vpc
 	@#mkdir -p _vim src1 src2 src3 src9
