@@ -198,5 +198,19 @@ tt1:
 tt2:
 	$($(tt2))
 
-showRunHelpList +=  $($(ann)) ann tt0 tt1 tt2
+tt3File:=111/nowFPGA.txt 
+mcsDIR:=$(strip $(shell test -f $(tt3File) && (cat $(tt3File) |head -n 1|awk '{print $$1}')))
+coeDIR:=$(mcsDIR)/ipcore_dir/rom_code/
+mcsPATH:=/now.mcs
+coePATH:=$(coeDIR)/now.coe
+ftpPATH:=ftp://coe:coe@192.168.1.93/
+
+tt3check:=[ -n "$(mcsDIR)" ] || ( echo ; echo 'you should put the fpga dir in the $(tt3File)' )
+tt31:=upload_the_coe_to_windows
+tt31:
+	$(tt3check)
+	wput -u -nc coe.now.coe $(ftpPATH)/$(coePATH)
+	@md5sum      coe.now.coe
+
+showRunHelpList +=  $($(ann)) ann tt0 tt1 tt2 tt31
 
