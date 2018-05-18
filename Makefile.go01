@@ -1,5 +1,12 @@
 all: 
 
+### /usr/bin/ld: skipping incompatible /usr/lib/gcc/x86_64-linux-gnu/7/libgcc.a when searching for -lgcc
+### if the above error met : apt install g++-multilib
+### or , if you are using a gcc package other than the default one (e.g. gcc-7), 
+### and you want small size ,
+### then you'll need to install the package for that specific version:
+### apt install g++-7-multilib
+
 ifeq (,$(GoTOP))
 $(info )
 $(info ' go lang project , should has a VAR named GoTOP being defined in Makefile.env')
@@ -10,6 +17,7 @@ $(error )
 endif
 
 GoWinPre:= GOOS=windows GOARCH=386
+Go386Pre:= GOOS=linux GOARCH=386
 Wput_default :=wput -u -nc 
 
 GobinPathList:=$${HOME}/go/BBgo/go
@@ -65,15 +73,17 @@ endif
 
 bl:=build_go_lang_for_linux
 bl:
-	$(GObinNow) \
+	$(Go386Pre) \
+		$(GObinNow) \
 		build  -o lnx/$(GoTOP).lnx.exe $(goVimFileSetS) 
-	echo strip lnx/$(GoTOP).lnx.exe
+	strip lnx/$(GoTOP).lnx.exe
 	ls -l lnx/* -d
 
 tt:=test
 $(tt):=lnx/$(GoTOP).lnx.exe
 tt:
 	$($(tt))
+	@reset
 
 
 showRunHelpList += cw cl c ll bw bl tt
