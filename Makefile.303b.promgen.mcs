@@ -8,11 +8,15 @@ endif
 FNmcsEXT0:=$(PROJname)_3b_8_mcs
 FNmcsOut0:=obj_$(FNmcsEXT0)
 FNmcsOut1:=$(FNmcsOut0).mcs
-FNmcsIn1:=$(FNbitOut1)
+FNmcsIn1:=../out/$(FNbitOut1)
 FNmcsLog1:=log_$(FNmcsEXT0).txt
 FNmcsCmd1:=cmd_$(FNmcsEXT0).txt
 FNmcsScr1:=scr_$(FNmcsEXT0).scr
 
+ifdef anotherBIT
+FNmcsIn1:=../$(anotherBIT)
+FNmcsOut1:=../$(anotherBIT).mcs
+endif
 
 define CMDmcsLine1
 $(RUNpath)/promgen                       \
@@ -20,7 +24,7 @@ $(RUNpath)/promgen                       \
 	-p mcs \
 	-o $(FNmcsOut1)  \
 	-u 0 \
-	../out/$(FNmcsIn1) \
+	$(FNmcsIn1) \
 
 endef
 CMDmcsLine2:= cd tmp/ && $(CMDmcsLine1) > ../out/$(FNmcsLog1)
@@ -35,10 +39,14 @@ rs :
 	echo "$${SCRmcs1}"     > out/$(FNmcsScr1)
 	       $(CMDmcsLine2)
 	@echo "$(CMDmcsLine2)"   > out/$(FNmcsCmd1)
+ifdef anotherBIT
+	@md5sum $(anotherBIT) $(anotherBIT).mcs
+else
 	cp   tmp/$(FNmcsOut1)       out/$(FNmcsOut1).2
 	mv   tmp/$(FNmcsOut1)       out/$(FNmcsOut1)
 	rm -f                       mcs.now.mcs
 	ln -s out/$(FNmcsOut1)      mcs.now.mcs
+endif
 
 
 

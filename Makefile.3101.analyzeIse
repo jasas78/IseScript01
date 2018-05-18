@@ -221,6 +221,16 @@ tt32:
 	@ls -l                            now.bit
 	@md5sum                           now.bit
 
+cdsNOWmd5:=$(shell md5sum cds.now.cds |awk '{printf $$1}'|sed -e 's;^.*\(......\)$$;\1;g')
+tt33:=get_another_mcs
+tt33:
+	make rs anotherBIT=now.bit
+	cat now.bit.mcs >            mcs.another.mcs
+	@md5sum                      mcs.another.mcs
+	cat now.bit.mcs >            111/1_$(cdsNOWmd5).mcs
+	@ls -l                       111/1_$(cdsNOWmd5).mcs
+	[ '780476' = `cat mcs.another.mcs|wc -c` ] && echo size ok.
 
-showRunHelpList +=  $($(ann)) ann tt0 tt1 tt2 tt31 tt32
+
+showRunHelpList +=  $($(ann)) ann tt0 tt1 tt2 tt31 tt32 tt33
 
