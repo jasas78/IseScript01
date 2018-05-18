@@ -204,13 +204,23 @@ coeDIR:=$(mcsDIR)/ipcore_dir/rom_code/
 mcsPATH:=/now.mcs
 coePATH:=$(coeDIR)/now.coe
 ftpPATH:=ftp://coe:coe@192.168.1.93/
+bitPATH:=$(mcsDIR)/fpga_top.bit
 
-tt3check:=[ -n "$(mcsDIR)" ] || ( echo ; echo 'you should put the fpga dir in the $(tt3File)' )
+tt3check:=[ -n "$(mcsDIR)" ] || ( echo ; echo 'you should put the fpga dir in the $(tt3File)' ; echo ; exit 22 )
 tt31:=upload_the_coe_to_windows
 tt31:
 	$(tt3check)
 	wput -u -nc coe.now.coe $(ftpPATH)/$(coePATH)
 	@md5sum      coe.now.coe
 
-showRunHelpList +=  $($(ann)) ann tt0 tt1 tt2 tt31
+tt32:=download_the_bit_file_from_windows
+tt32:
+	$(tt3check)
+	wget $(ftpPATH)/$(bitPATH) -O - > now.bit
+	[ "$$(cat now.bit|wc -c)" = 283886 ] 
+	@ls -l                            now.bit
+	@md5sum                           now.bit
+
+
+showRunHelpList +=  $($(ann)) ann tt0 tt1 tt2 tt31 tt32
 
