@@ -212,6 +212,7 @@ tt31:
 	$(tt3check)
 	wput -u -nc coe.now.coe $(ftpPATH)/$(coePATH)
 	@md5sum      coe.now.coe
+	@echo "the old now.bit md5sum is `md5sum now.bit`"
 
 tt32:=download_the_bit_file_from_windows
 tt32:
