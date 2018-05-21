@@ -213,6 +213,7 @@ tt31:
 	wput -u -nc coe.now.coe $(ftpPATH)/$(coePATH)
 	@md5sum      coe.now.coe
 	@echo "the old now.bit md5sum is `md5sum now.bit`"
+	-lftp -e "set ftp:passive-mode false;rm /$(mcsDIR)/fpga_top.bit;quit" ftp://coe:coe@192.168.1.93/
 
 tt32:=download_the_bit_file_from_windows
 tt32:
@@ -223,7 +224,7 @@ tt32:
 	@md5sum                           now.bit
 
 cdsNOWmd5:=$(shell md5sum cds.now.cds |awk '{printf $$1}'|sed -e 's;^.*\(......\)$$;\1;g')
-tt33:=get_another_mcs
+tt33:=gen_another_mcs_from_now.bit
 tt33:
 	make rs anotherBIT=now.bit
 	cat now.bit.mcs >            mcs.another.mcs
