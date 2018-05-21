@@ -82,12 +82,13 @@ $(sml):=show_all_makefiles_in_script_dir_for_vim_______script_dir
 sml :
 	@echo "$${showVimMakefileListText}";echo
 
+#$(eval                  $(3)$(gvIdx)    :$(EOL)	$(btCMD01) $(2) $(EOL)	vim $(2) )
 define genVimWithFile01
 $(iinfo 123,$1,$2,$3)
 $(eval gvList1+=$(3)$(gvIdx))
 
 $(eval $(1)+=$$(EOL)    $(3)$(gvIdx)    =>   $(2) )
-$(eval                  $(3)$(gvIdx)    :$(EOL)	$(btCMD01) $(2) $(EOL)	vim $(2) )
+$(eval                  $(3)$(gvIdx)    :$(EOL)	vim $(2) )
 
 $(eval gvMOD:=$$(shell echo "$$$$(($$(gvIdx) % 5))"))
 $(eval ifeq (0,$(gvMOD))$(EOL)$(1)+=$$(EOL)$(EOL)endif)
