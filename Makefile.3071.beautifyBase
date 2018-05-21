@@ -1,19 +1,13 @@
 all:
 
 #	-c 's;\s*$$;;g'  \
-#	-c '%s;^\s*;;g' \
+	#	-c '%s;^\s*;;g' \
 
-bt111:= astyle --suffix=none 
-bt111:= /usr/bin/vim \
-	-n -E \
-	-c ':argdo normal gg=G' \
-	-c ':retab' \
-	-c ':wq' 
 bt1:=beautified__the_source_verilog
-$(bt1):=Makefile.3071.beautifyBase $(EOL)                    $(bt111) 
+$(bt1):=Makefile.3071.beautifyBase $(EOL)                    $(btCMD01) 
 bt1:
 	@echo 
-	$(foreach aa1,$(btList01verilog), $(bt111) $(aa1) $(EOL))
+	$(foreach aa1,$(btList01verilog), $(btCMD01) $(aa1) $(EOL))
 	@echo 
 
 
