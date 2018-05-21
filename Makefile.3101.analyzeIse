@@ -233,6 +233,14 @@ tt33:
 	@ls -l                       111/1_$(cdsNOWmd5).mcs
 	[ '780476' = `cat mcs.another.mcs|wc -c` ] && echo size ok.
 
+tt41:=gen_coe_and_upload_to_win
+$(tt41):= make tt0 && make tt31
+tt41:
+	$($(tt41))
+tt42:=down_bit_and_gen_mcs_and_upload_to_flash
+$(tt42):= make tt32 && make tt33 && make nf
+tt42:
+	$($(tt42))
 
-showRunHelpList +=  $($(ann)) ann tt0 tt1 tt2 tt31 tt32 tt33
+showRunHelpList +=  $($(ann)) ann tt0 tt1 tt2 tt31 tt32 tt33 tt41 tt42
 
