@@ -73,16 +73,20 @@ endif
 
 bl:=build_go_lang_for_linux
 bl:
-	$(Go386Pre) \
+	$(foreach aa1,$(GoTOP),\
+		$(Go386Pre) \
 		$(GObinNow) \
-		build  -o lnx/$(GoTOP).lnx.exe $(goVimFileSetS) 
-	strip lnx/$(GoTOP).lnx.exe
+		build  -o lnx/$(aa1).lnx.exe \
+		$(if $($(aa1)),$(wildcard $($(aa1)) src?/$($(aa1)) src?/$($(aa1)).go ) \
+		,$(goVimFileSetS)) $(EOL)\
+		strip lnx/$(aa1).lnx.exe $(EOL)\
+		)
 	ls -l lnx/* -d
 
 tt:=test
-$(tt):=lnx/$(GoTOP).lnx.exe
+$(tt):=$(foreach aa1,$(GoTOP),lnx/$(aa1).lnx.exe )
 tt:
-	$($(tt))
+	$(foreach aa1,$(GoTOP),lnx/$(aa1).lnx.exe $(runPara_$(aa1)) $(EOL))
 	@reset
 
 
