@@ -1,14 +1,37 @@
 
 all:
 
-df1:=diff_win_linx__xst
-df1:
-	@cat nowX/FPGA_TOP.xst |unix2dos|dos2unix|sort \
+df11:=diff_win_linx__xst_para
+df11:
+	@cat nowX/FPGA_TOP.xst |unix2dos|dos2unix\
+		|sort \
 		> 1.txt
-	@cat out/$(FNxstSCR1) |unix2dos|dos2unix|sort \
+	@cat out/$(FNxstSCR1) |unix2dos|dos2unix\
+		|sort \
 		> 2.txt
 	@echo diff nowX/FPGA_TOP.xst out/$(FNxstSCR1) \
 		> 9.diff
 	diff 1.txt 2.txt \
 		>> 9.diff || echo -n
 	vim 9.diff
+
+df12:=diff_win_linx__verilog_file_list
+df12:
+	@cat nowX/FPGA_TOP.prj |unix2dos|dos2unix\
+		|awk '{print $$3}' \
+		|xargs -n 1 basename \
+		|sort \
+		> 1.txt
+	@cat out/$(FNxstSCR2) |unix2dos|dos2unix\
+		|awk '{print $$3}' \
+		|xargs -n 1 basename \
+		|sort \
+		> 2.txt
+	@echo diff nowX/FPGA_TOP.prj out/$(FNxstSCR2) \
+		> 9.diff
+	diff 1.txt 2.txt \
+		>> 9.diff || echo -n
+	vim 9.diff
+
+
+showRunHelpList += df11 df12
