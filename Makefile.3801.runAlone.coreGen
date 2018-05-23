@@ -65,3 +65,4 @@ cg $(cg) : clean
 	coregen         -p $${PWD}          -b ./$(cgSRCname2).xco
 	ln -s $(cgSRCname1)_cDIR/$(cgSRCname2).v   ../
 	ln -s $(cgSRCname1)_cDIR/$(cgSRCname2).ngc ../
+	ln -s $(cgSRCname1)_cDIR/$(cgSRCname2).veo ../

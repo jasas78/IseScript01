@@ -154,10 +154,26 @@ endif
 		$(patsubst %.xise,%.ngc , ../$(AnalyzeIseTopDir)/$(aa1))  ./ || exit 42 $(EOL)) 
 ifdef OptionNoXiseThenUseNGC
 	$(foreach aa1,$(OptionNoXiseThenUseNGC), \
-		cd src5 && test -e $(shell basename $(aa1)) || ln -s ../nowX/$(aa1) ./ $(EOL) )
+		cd src5 && test -e $(shell basename $(aa1)).ngc || ln -s ../nowX/$(aa1).ngc ./ $(EOL) \
+		cd src5 && test -e $(shell basename $(aa1)).veo || ln -s ../nowX/$(aa1).veo ./ $(EOL) \
+		cd src5 && test -e $(shell basename $(aa1)).v   || ln -s ../nowX/$(aa1).v   ./ $(EOL) \
+		)
 endif
 
 
+cannEXT:=\
+	v \
+	xaw \
+	ucf \
+	ngc \
+	coe \
+	asy \
+	gise \
+	ncf \
+	sym \
+	veo \
+	xco \
+	xise \
 
 cann:=clean_analyze_results
 cann:
@@ -169,11 +185,7 @@ cann:
 		src2 src3 src4 src5 src8, \
 		$(foreach aa2,\
 		\
-		*.v \
-		*.xaw \
-		*.ucf \
-		*.ngc \
-		*.coe \
+		$(foreach aa3,$(cannEXT), *.$(aa3)) \
 		,\
 		$(aa1)/$(aa2)) )
 	rm -fr src?/*.xise_cDIR
