@@ -19,10 +19,11 @@ FNparCmd1:=cmd_$(FNparEXT0).txt
 define CMDparLine1
 $(RUNpath)/par              \
 	-ol high    			\
-	-t  1    				\
+	-intstyle silent		\
+	-t 1					\
 	../out/$(FNparIn1)      \
 	$(FNparOut1)         	\
-	../out/$(FNparIn2)            \
+	../out/$(FNparIn2)      \
 
 endef
 CMDparLine2:= cd tmp/ && $(CMDparLine1) > ../out/$(FNparLog1)
