@@ -18,7 +18,11 @@ define CMDmapLine1
 $(RUNpath)/map 				\
 	-p $(DEV01) 			\
 	-detail 				\
-	-pr b 					\
+	-c 100 					\
+	-cm area 				\
+	-intstyle silent		\
+	-ir off           		\
+	-pr off 				\
 	-o $(FNmapOut1ncd) 		\
 	../out/$(FNmapIn1) 		\
 	$(FNmapOut2pcf) 			\
