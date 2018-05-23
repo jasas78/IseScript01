@@ -1,8 +1,8 @@
 
 all:
 
-df11:=diff_win_linx__xst_para
-df11:
+df321:=diff_win_linx__xst_para
+df321:
 	@cat nowX/FPGA_TOP.xst |unix2dos|dos2unix\
 		|sort \
 		> 1.txt
@@ -15,8 +15,8 @@ df11:
 		>> 9.diff || echo -n
 	vim 9.diff
 
-df12:=diff_win_linx__verilog_file_list
-df12:
+df322:=diff_win_linx__verilog_file_list
+df322:
 	@cat nowX/FPGA_TOP.prj |unix2dos|dos2unix\
 		|awk '{print $$3}' \
 		|xargs -n 1 basename \
@@ -33,8 +33,8 @@ df12:
 		>> 9.diff || echo -n
 	vim 9.diff
 
-df21:=diff_win_linx__ngdbuild_para
-df21:
+df34:=diff_win_linx__ngdbuild_para
+df34:
 	cat nowX/FPGA_TOP.cmd_log |unix2dos|dos2unix\
 		|grep ^'ngdbuild ' \
 		|tail -n 1 \
@@ -52,4 +52,4 @@ df21:
 	vim 9.diff
 
 
-showRunHelpList += df11 df12 df21 
+showRunHelpList += df321 df322 df34 
