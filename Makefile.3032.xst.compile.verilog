@@ -75,6 +75,7 @@ define RUNxst21
 -optimize_primitives NO
 
 endef
+export RUNxst21
 
 define RUNxst22
 run 
@@ -144,7 +145,8 @@ run
 -resource_sharing YES
 -async_to_sync NO
 -iobuf YES
--max_fanout 500
+-max_fanout 20
+-mult_style Auto
 -bufg 24
 -register_duplication YES
 -register_balancing No
@@ -184,6 +186,7 @@ ifdef HELP
 	$(foreach aa1,$(RUNxst12),$(eval aa2:=$(RUNxst11) -command $(aa1))$(call RUNxst14,$(aa2))$(EOL))
 	@echo >> out/$(FNxstCMD1)
 endif
+	echo "$${RUNxst21}" > out/$(FNxstSCR1)
 	echo "$${RUNxst22}" > out/$(FNxstSCR1)
 	echo "$${RUNxst23}" > out/$(FNxstSCR1)
 	echo "$${RUNxst42}" > out/$(FNxstSCR2)

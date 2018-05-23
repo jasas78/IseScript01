@@ -1,0 +1,14 @@
+
+all:
+
+df1:=diff_win_linx__xst
+df1:
+	@cat nowX/FPGA_TOP.xst |unix2dos|dos2unix|sort \
+		> 1.txt
+	@cat out/$(FNxstSCR1) |unix2dos|dos2unix|sort \
+		> 2.txt
+	@echo diff nowX/FPGA_TOP.xst out/$(FNxstSCR1) \
+		> 9.diff
+	diff 1.txt 2.txt \
+		>> 9.diff || echo -n
+	vim 9.diff

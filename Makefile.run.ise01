@@ -22,7 +22,8 @@ Makefile.3072.beautifyVerilog    \
 CFGrunIseINCset2:=$(foreach aa1,$(CFGrunIseINCset1),$(TM)/$(aa1))
 
 CFGanalyzeIseINCset1:=\
-	Makefile.3101.analyzeIse\
+	Makefile.3101.analyzeIse \
+	Makefile.3102.diffISEwinLinx \
 
 CFGanalyzeIseINCset2:=$(foreach aa1,$(CFGanalyzeIseINCset1),$(TM)/$(aa1))
 
