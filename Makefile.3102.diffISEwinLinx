@@ -33,5 +33,23 @@ df12:
 		>> 9.diff || echo -n
 	vim 9.diff
 
+df21:=diff_win_linx__ngdbuild_para
+df21:
+	cat nowX/FPGA_TOP.cmd_log |unix2dos|dos2unix\
+		|grep ^'ngdbuild ' \
+		|tail -n 1 \
+		|sed -e 's;\s-;\n-;g' \
+		|sort \
+		> 1.txt
+	@cat out/$(FNngdCMD1) |unix2dos|dos2unix\
+		|sed -e 's;\s-;\n-;g' \
+		|sort \
+		> 2.txt
+	@echo diff nowX/FPGA_TOP.cmd_log out/$(FNngdCMD1) \
+		> 9.diff
+	diff 1.txt 2.txt \
+		>> 9.diff || echo -n
+	vim 9.diff
 
-showRunHelpList += df11 df12
+
+showRunHelpList += df11 df12 df21 
