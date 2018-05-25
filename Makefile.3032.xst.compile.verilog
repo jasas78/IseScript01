@@ -100,12 +100,13 @@ endef
 export RUNxst22
 
 ### please note : the    RAM.v RAM.veo RAM.ngc    and    ROM.v RAM.veo RAM.ngc   must be in the search dir
-iseXstIpDirList:= -sd ../src5 -sd ../src2 
+### and note : only one search dir can be used.
+iseXstIpDirList:= ../src5 
 
 DSPonly:=-dsp_utilization_ratio 100 -use_dsp48 Auto
 define RUNxst23
 run
-$(iseXstIpDirList)
+-sd $(iseXstIpDirList)
 -ifn ../out/$(FNxstSCR2) 
 -ifmt mixed
 -ofn $(FNxstOutNGC)
