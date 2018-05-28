@@ -123,6 +123,20 @@ df371:
 		>> 9.diff || echo -n
 	vim 9.diff
 
+# nowX/FPGA_TOP.par out/log2_obj_proj_FPGA_TOP_37_4_par_outNCD.par
+# out/log2_$(FNparOut0).par
+df372:=diff_win_linx__par_report
+df372:
+	cat nowX/FPGA_TOP.par |unix2dos|dos2unix\
+		> 1.txt
+	@cat out/log2_$(FNparOut0).par |unix2dos|dos2unix\
+		> 2.txt
+	@echo diff nowX/FPGA_TOP.par out/log2_$(FNparOut0).par \
+		> 9.diff
+	diff 1.txt 2.txt \
+		>> 9.diff || echo -n
+	vim 9.diff
+
 df391:=diff_win_linx__bitgen_para
 df391:
 	cat nowX/FPGA_TOP.ut |unix2dos|dos2unix\
@@ -140,4 +154,4 @@ df391:
 	vim 9.diff
 
 
-showRunHelpList += df321 df322 df341 df342 df361 df362 df371 df391   
+showRunHelpList += df321 df322 df341 df342 df361 df362 df371 df372 df391   
