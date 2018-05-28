@@ -9,8 +9,6 @@ endif
 FNparEXT0:=$(PROJname)_37_4_par
 FNparOut0:=obj_$(FNparEXT0)_outNCD
 FNparOut1:=$(FNparOut0).ncd
-#FNparIn1:=obj_$(PROJname)_36_3_map.ncd
-#FNparIn2:=obj2_obj_$(PROJname)_36_3_map.pcf.2.pcf
 FNparIn1:=$(FNmapOut1ncd)
 FNparIn2:=$(FNmapOut2pcf)
 FNparLog1:=log_$(FNparEXT0).txt
