@@ -33,8 +33,8 @@ df322:
 		>> 9.diff || echo -n
 	vim 9.diff
 
-df34:=diff_win_linx__ngdbuild_para
-df34:
+df341:=diff_win_linx__ngdbuild_para
+df341:
 	cat nowX/FPGA_TOP.cmd_log |unix2dos|dos2unix\
 		|grep ^'ngdbuild ' \
 		|tail -n 1 \
@@ -51,8 +51,8 @@ df34:
 		>> 9.diff || echo -n
 	vim 9.diff
 
-df36:=diff_win_linx__map_para
-df36:
+df361:=diff_win_linx__map_para
+df361:
 	cat nowX/FPGA_TOP.cmd_log |unix2dos|dos2unix\
 		|grep ^'map ' \
 		|tail -n 1 \
@@ -69,8 +69,8 @@ df36:
 		>> 9.diff || echo -n
 	vim 9.diff
 
-df37:=diff_win_linx__par_para
-df37:
+df371:=diff_win_linx__par_para
+df371:
 	cat nowX/FPGA_TOP.cmd_log |unix2dos|dos2unix\
 		|grep ^'par ' \
 		|tail -n 1 \
@@ -87,8 +87,8 @@ df37:
 		>> 9.diff || echo -n
 	vim 9.diff
 
-df39:=diff_win_linx__bitgen_para
-df39:
+df391:=diff_win_linx__bitgen_para
+df391:
 	cat nowX/FPGA_TOP.ut |unix2dos|dos2unix\
 		|sed -e 's;\s-;\n-;g' \
 		|sort \
@@ -104,4 +104,4 @@ df39:
 	vim 9.diff
 
 
-showRunHelpList += df321 df322 df34 df36 df37 df39   
+showRunHelpList += df321 df322 df341 df361 df371 df391   

@@ -223,9 +223,10 @@ tt31:=upload_the_coe_to_windows
 tt31:
 	$(tt3check)
 	wput -u -nc coe.now.coe $(ftpPATH)/$(coePATH)
-	@md5sum      coe.now.coe
 	@echo "the old now.bit md5sum is `md5sum now.bit`"
 	-lftp -e "set ftp:passive-mode false;rm /$(mcsDIR)/fpga_top.bit;quit" ftp://coe:coe@192.168.1.93/
+	@md5sum      coe.now.coe
+	cat coe.now.coe > 111/coe.now.coe
 
 tt32:=download_the_bit_file_from_windows
 tt32:
