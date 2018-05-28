@@ -31,7 +31,8 @@ df322:
 		> 9.diff
 	diff 1.txt 2.txt \
 		>> 9.diff || echo -n
-	vim 9.diff
+	#vim 9.diff
+	vimdiff 1.txt 2.txt
 
 df341:=diff_win_linx__ngdbuild_para
 df341:
@@ -49,7 +50,24 @@ df341:
 		> 9.diff
 	diff 1.txt 2.txt \
 		>> 9.diff || echo -n
-	vim 9.diff
+	#vim 9.diff
+	vimdiff 1.txt 2.txt
+
+# diff tmp/obj_proj_FPGA_TOP_34_2_ngd_ngdbuild.xrpt nowX/FPGA_TOP_ngdbuild.xrpt |wc
+df342:=diff_win_linx__ngdbuild_para
+df342:
+	cat nowX/FPGA_TOP_ngdbuild.xrpt |unix2dos|dos2unix\
+		|sed -e '1,/NGDBUILD_REPORT/ d' \
+		> 1.txt
+	@cat tmp/obj_$(FNngdEXT0)_ngdbuild.xrpt |unix2dos|dos2unix\
+		|sed -e '1,/NGDBUILD_REPORT/ d' \
+		> 2.txt
+	@echo diff nowX/FPGA_TOP_ngdbuild.xrpt tmp/obj_$(FNngdEXT0)_ngdbuild.xrpt \
+		> 9.diff
+	diff 1.txt 2.txt \
+		>> 9.diff || echo -n
+	#vim 9.diff
+	vimdiff 1.txt 2.txt
 
 df361:=diff_win_linx__map_para
 df361:
@@ -104,4 +122,4 @@ df391:
 	vim 9.diff
 
 
-showRunHelpList += df321 df322 df341 df361 df371 df391   
+showRunHelpList += df321 df322 df341 df342 df361 df371 df391   

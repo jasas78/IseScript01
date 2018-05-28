@@ -16,7 +16,6 @@ FNngdCMD1:=cmd_$(FNngdEXT0).txt
 define RUNngdPara
     -intstyle silent \
 	-sd ../src5 \
-	-sd ../src2 \
 	-nt timestamp  \
 	-uc $(ttUCF) 				\
 	-p $(DEV01) 				\
