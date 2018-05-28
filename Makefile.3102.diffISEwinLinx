@@ -135,7 +135,8 @@ df372:
 		> 9.diff
 	diff 1.txt 2.txt \
 		>> 9.diff || echo -n
-	vim 9.diff
+	#vim 9.diff
+	vimdiff 1.txt 2.txt 
 
 df391:=diff_win_linx__bitgen_para
 df391:
