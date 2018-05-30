@@ -44,10 +44,11 @@ export SCRbit1
 
 define CMDbitLine1
 $(RUNpath)/bitgen              			\
-	    -f ../out/$(FNbitScr1)          \
-		../out/$(FNbitIn1)				\
-		$(FNbitOut1)					\
-		../out/$(FNmapOut2pcf) 			\
+	-b									\
+	-f ../out/$(FNbitScr1)          	\
+	../out/$(FNbitIn1)					\
+	$(FNbitOut1)						\
+	../out/$(FNmapOut2pcf) 				\
 
 endef
 
@@ -63,7 +64,7 @@ rb :
 	echo "$${SCRbit1}"     > out/$(FNbitScr1)
 	       $(CMDbitLineF2)
 	@echo "$(CMDbitLineF2)"   > out/$(FNbitCmd1)
-	cp   tmp/$(FNbitOut1)		out/$(FNbitOut1).2
+	cp   tmp/$(FNbitOut1)		out/$(FNbitOut1).39_2
 	mv   tmp/$(FNbitOut1)		out/$(FNbitOut1)
 	rm -f                       bit.now.bit
 	ln -s out/$(FNbitOut1)      bit.now.bit

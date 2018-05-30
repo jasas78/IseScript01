@@ -34,7 +34,7 @@ rr :
 	echo "$${SCRbin1}"     > out/$(FNbinScr1)
 	       $(CMDbinLine2)
 	@echo "$(CMDbinLine2)"   > out/$(FNbinCmd1)
-	cp   tmp/$(FNbinOut1)       out/$(FNbinOut1).2
+	cp   tmp/$(FNbinOut1)       out/$(FNbinOut1).3a_2
 	mv   tmp/$(FNbinOut1)       out/$(FNbinOut1)
 
 

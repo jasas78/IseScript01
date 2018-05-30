@@ -33,9 +33,9 @@ rn :
 	[ -n "$(ttUCF)" -a -f "$(ttUCF)" ] || ( echo ' you should define the ttUCF as the top UCF file in Makefile.env and run again.' ; echo ; exit 22 )
 	       $(RUNngd)
 	@echo '$(RUNngd)'             > out/$(FNngdCMD1)
-	cp tmp/$(FNngdOut1NGD)    		out/$(FNngdOut1NGD).2
+	cp tmp/$(FNngdOut1NGD)    		out/$(FNngdOut1NGD).34_2
 	mv tmp/$(FNngdOut1NGD)    		out/
-	cp tmp/$(FNngdOut2BLD)    		out/$(FNngdOut2BLD).2    
+	cp tmp/$(FNngdOut2BLD)    		out/$(FNngdOut2BLD).34_2    
 	mv tmp/$(FNngdOut2BLD)    		out/
 
 

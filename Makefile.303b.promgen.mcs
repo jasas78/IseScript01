@@ -42,7 +42,7 @@ rs :
 ifdef anotherBIT
 	@md5sum $(anotherBIT) $(anotherBIT).mcs
 else
-	cp   tmp/$(FNmcsOut1)       out/$(FNmcsOut1).2
+	cp   tmp/$(FNmcsOut1)       out/$(FNmcsOut1).3b_2
 	mv   tmp/$(FNmcsOut1)       out/$(FNmcsOut1)
 	rm -f                       mcs.now.mcs
 	ln -s out/$(FNmcsOut1)      mcs.now.mcs

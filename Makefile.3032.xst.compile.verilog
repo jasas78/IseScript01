@@ -195,7 +195,7 @@ endif
 	@echo "you should put the ipCores into the directory : $(iseXstIpDirList)"
 	       $(RUNxst20)
 	@echo '$(RUNxst20)' >> out/$(FNxstCMD1)
-	cp tmp/$(FNxstOutNGC)  out/$(FNxstOutNGC).2  
+	cp tmp/$(FNxstOutNGC)  out/$(FNxstOutNGC).32_2  
 	mv tmp/$(FNxstOutNGC)  out/
 
 
