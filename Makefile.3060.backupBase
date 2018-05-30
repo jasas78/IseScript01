@@ -11,16 +11,16 @@ endif
 
 bk1:=backup_the_bit_and_mcs_by_date_with_source
 bkMCS1=$(strip $(wildcard out/$(FNmcsOut1)))
-bkMCS2=$(FNmcsOut1).$(time_called)
+bkMCS2=$(FNmcsOut1).$(time_called).bk1_mcs
 bkBIT1=$(strip $(wildcard out/$(FNbitOut1)))
-bkBIT2=$(FNbitOut1).$(time_called)
+bkBIT2=$(FNbitOut1).$(time_called).bk1_bit
 $(bk1):=Makefile.3060.backupBase
 bk1 :
 	[ -d bkRAR ] || mkdir bkRAR 
 	[ -d bkMCS ] || mkdir bkMCS
 	[ -d bkBIT ] || mkdir bkBIT
-	[ -z "$(bkMCS1)" ] || cp $(bkMCS1)    bkMCS/$(bkMCS2) && ls bkMCS/$(bkMCS2)
-	[ -z "$(bkBIT1)" ] || cp $(bkBIT1)    bkBIT/$(bkBIT2) && ls bkBIT/$(bkBIT2)
+	[ -z "$(bkMCS1)" ] || ( cp $(bkMCS1)    bkMCS/$(bkMCS2) && ls bkMCS/$(bkMCS2) )
+	[ -z "$(bkBIT1)" ] || ( cp $(bkBIT1)    bkBIT/$(bkBIT2) && ls bkBIT/$(bkBIT2) )
 	/home/bootH/bin/rar a -m5 -s -hp1 -r- \
 		bkRAR/$$(basename $${PWD}).$(time_called).rar \
 		$(wildcard bkMCS/$(bkMCS2) ) \
