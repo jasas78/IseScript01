@@ -45,13 +45,14 @@ export SCRbit1
 define CMDbitLine1
 $(RUNpath)/bitgen              			\
 	    -f ../out/$(FNbitScr1)          \
-		../out/$(FNbitIn1)						\
+		../out/$(FNbitIn1)				\
 		$(FNbitOut1)					\
+		../out/$(FNmapOut2pcf) 			\
 
 endef
-CMDbitLine2:= cd tmp/ && $(CMDbitLine1) > ../out/$(FNbitLog1) \
-../out/$(FNmapOut2pcf)
-export CMDbitLine2
+
+CMDbitLineF2:= cd tmp/ && $(CMDbitLine1) > ../out/$(FNbitLog1) 
+export CMDbitLineF2
 
 
 rb:=run_bitgen
@@ -60,8 +61,8 @@ rb :
 	@echo out/$(FNbitLog1) > out/loging.txt
 	@echo ;echo '---- $(rb) start --- out/$(FNbitLog1)'
 	echo "$${SCRbit1}"     > out/$(FNbitScr1)
-	      $(CMDbitLine2)
-	@echo "$(CMDbitLine2)"   > out/$(FNbitCmd1)
+	       $(CMDbitLineF2)
+	@echo "$(CMDbitLineF2)"   > out/$(FNbitCmd1)
 	cp   tmp/$(FNbitOut1)		out/$(FNbitOut1).2
 	mv   tmp/$(FNbitOut1)		out/$(FNbitOut1)
 	rm -f                       bit.now.bit
