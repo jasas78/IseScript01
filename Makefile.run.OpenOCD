@@ -1,8 +1,10 @@
 all: 
 
-OCDrunPATH?=$(shell realpath openocd_run)
+OCDrunPATH?=openocd_run
 OCDrunPATH:=$(shell realpath $(OCDrunPATH))
-ifeq (22,$(shell test -n "$(OCDrunPATH)" -a -d "$(OCDrunPATH)" && echo 11 || echo 22))
+OCDrunBIN:=$(OCDrunPATH)/bin/openocd
+
+ifeq (22,$(shell test -n "$(OCDrunBIN)" -a -f "$(OCDrunBIN)" && echo 11 || echo 22))
 $(info )
 $(info ' openocd , need a dir named "openocd_run" to place the openocd execute-program ')
 $(info ' or , being defined in the Makefile.env ')
