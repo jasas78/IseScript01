@@ -223,7 +223,8 @@ ftpTT22:=$(ftpt1r)/$(t1wRM1)
 cdsTT22oo:=elan_tran01.cds
 cdsTT22:=$(ftpt1r)/cds/$(cdsTT22oo)
 startTT22:=tt21tmp/start.tt22.txt 
-#		wget -O $(startTT22) $(ftpTT22) &> /dev/null ; \
+errTT22:=tt21tmp/100_error_reason.txt 
+cdsTT22in:=tt21tmp/$(cdsTT22oo)
 
 tt211:
 	[ -d tt21tmp ] || mkdir tt21tmp
@@ -238,11 +239,23 @@ tt211:
 		done || echo -n 
 	LD_LIBRARY_PATH=/lib64:/usr/lib64 lftp -e "set ftp:passive-mode false;rm -r /tt21tmp/ ; rm /$(t1wRM1) ;quit" $(ftpt1w)
 	@echo "`date ` : makeing tt211 , $(ftpTT22) found. start ...." ; 
-	(cd tt21tmp && wget -q $(cdsTT22) ) \
-		&& make tt212 \
-		|| (echo ' $(cdsTT22oo) not found.' >> tt21tmp/100_error_reason.txt )
+	cd tt21tmp && wget -q $(cdsTT22) 
+	make tt212 \
+		|| (echo ' 99 : during the process , some error found .' >> $(errTT22) )
+	sleep 1
 	wput tt21tmp/ $(ftpt1w)
 tt212:
+	sleep 1
+	[ -n "$(cdsTT22in)" -a -f "$(cdsTT22in)" ] || ( \
+		echo ' 101 : not found $(cdsTT22in) ' >> $(errTT22) \
+		; exit 23 )
+	[ $$(cat $(cdsTT22in)|wc -c ) = 8268 ] || ( \
+		echo ' 102 : size error $(cdsTT22in) ' >> $(errTT22) \
+		; wc $(cdsTT22in) >> $(errTT22) \
+		; exit 23 )
+	md5sum $(cdsTT22in) >> tt21tmp/201_cds_md5_$$(md5sum $(cdsTT22in)|awk '{printf $$1}').txt
+	wc     $(cdsTT22in) >> tt21tmp/202_cds_size.txt
+	date                 > tt21tmp/999_all_ok.txt
 
 tt22:
 	while [ 1 ] ; do make tt211 || exit 32 ; sleep 5 ; done
