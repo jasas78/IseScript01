@@ -205,10 +205,14 @@ $(tt1):=make ann && make aaa && make uf
 tt2:=gen_coe_and_burn_form_temp_cds
 $(tt2):= make tt0 && make tt1 && make bk2
 
+tt22:=loop_the_tt2_by_ftp_automaticly
+#$(tt22):= make tt0 && make tt1 && make bk2
+
 tt1:
 	$($(tt1))
 tt2:
 	$($(tt2))
+tt22:
 
 tt3File:=111/nowFPGA.txt 
 mcsDIR:=$(strip $(shell test -f $(tt3File) && (cat $(tt3File) |head -n 1|awk '{print $$1}')))
@@ -255,5 +259,5 @@ $(tt42):= make tt32 && make tt33 && make nf
 tt42:
 	$($(tt42))
 
-showRunHelpList +=  $($(ann)) ann tt0 tt1 tt2 tt31 tt32 tt33 tt41 tt42
+showRunHelpList +=  $($(ann)) ann tt0 tt1 tt2 tt22 tt31 tt32 tt33 tt41 tt42
 
