@@ -246,6 +246,7 @@ tt211:
 	wput tt21tmp/ $(ftpt1w)
 tt212:
 	sleep 1
+	echo "`date +%s` `date`"      >  tt21tmp/100_start_time.txt
 	[ -n "$(cdsTT22in)" -a -f "$(cdsTT22in)" ] || ( \
 		echo ' 101 : not found $(cdsTT22in) ' >> $(errTT22) \
 		; exit 23 )
@@ -255,7 +256,30 @@ tt212:
 		; exit 23 )
 	md5sum $(cdsTT22in) >> tt21tmp/201_cds_md5_$$(md5sum $(cdsTT22in)|awk '{printf $$1}').txt
 	wc     $(cdsTT22in) >> tt21tmp/202_cds_size.txt
-	date                 > tt21tmp/999_all_ok.txt
+	cat    $(cdsTT22in) >  111/$(cdsTT22oo)
+	nohup make tt2      >  tt21tmp/301_building_log.txt
+	cat tt21tmp/301_building_log.txt > 111/301_building_log.txt
+	cat tt21tmp/301_building_log.txt \
+		|sed \
+		-e '1,/^Evaluation copy. Please register./ d' \
+		-e '1,/^Evaluation copy. Please register./ d' \
+		-e '1,/^Evaluation copy. Please register./ d' \
+		-e '1,/^Evaluation copy. Please register./ d' \
+		-e '1,/^Evaluation copy. Please register./ d' \
+		> tt21tmp/302_building_check.txt 
+	wc tt21tmp/302_building_check.txt  \
+		> tt21tmp/303_result.txt  
+	cat tt21tmp/301_building_log.txt \
+		| grep ^'Evaluation copy. Please register' \
+		|wc \
+		> tt21tmp/304_result.txt  
+	cnt1=$$(cat tt21tmp/304_result.txt  |awk '{printf $$1}') ; \
+		 [ $${cnt1} = 3 ] \
+		 && (echo $${cnt1} > tt21tmp/305_result.txt)  \
+		 || ( \
+		 echo ' 101 : not found $(cdsTT22in) ' >> $(errTT22) \
+		 ; exit 35 )
+	echo "`date +%s` `date`"      >  tt21tmp/999_all_ok.txt
 
 tt22:
 	while [ 1 ] ; do make tt211 || exit 32 ; sleep 5 ; done
