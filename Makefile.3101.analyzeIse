@@ -205,7 +205,7 @@ $(tt1):=make ann && make aaa && make uf
 tt2:=gen_coe_and_burn_form_temp_cds
 $(tt2):= make tt0 && make tt1 && make bk2
 
-tt21:=loop_the_tt2_by_ftp_automaticly_single_step
+tt211:=loop_the_tt2_by_ftp_automaticly_single_step
 #$(tt22):= make tt0 && make tt1 && make bk2
 
 tt22:=loop_the_tt2_by_ftp_automaticly_loop
@@ -220,10 +220,12 @@ t1wRM1:=/cds/start.tt22.txt
 ftpt1r:=ftp://t1:t1@192.168.1.93/
 ftpt1w:=ftp://t1w:t1w@192.168.1.93/
 ftpTT22:=$(ftpt1r)/$(t1wRM1)
+cdsTT22oo:=elan_tran01.cds
+cdsTT22:=$(ftpt1r)/cds/$(cdsTT22oo)
 startTT22:=tt21tmp/start.tt22.txt 
 #		wget -O $(startTT22) $(ftpTT22) &> /dev/null ; \
 
-tt21:
+tt211:
 	[ -d tt21tmp ] || mkdir tt21tmp
 	rm -f tt21tmp/*
 	# ' no no_tmp_md5_file_exist . exit.'
@@ -231,15 +233,19 @@ tt21:
 		rm -f tt21tmp/* ; \
 		( cd tt21tmp && wget -q $(ftpTT22) &>/dev/null ; sleep 1 ) ; \
 		test -f $(startTT22)  && grep -q ^tt22 $(startTT22) && break ; \
-		echo "`date ` : makeing tt21 , no $(ftpTT22) exist. wait 10 second... " ; \
+		echo "`date ` : makeing tt211 , no $(ftpTT22) exist. wait 10 second... " ; \
 		sleep 10 ; \
 		done || echo -n 
-	@LD_LIBRARY_PATH=/lib64:/usr/lib64 lftp -e "set ftp:passive-mode false;rm /tt21tmp/* ; rm /$(t1wRM1) ;quit" $(ftpt1w)
-	@echo "`date ` : makeing tt21 , $(ftpTT22) found. start ...." ; 
+	LD_LIBRARY_PATH=/lib64:/usr/lib64 lftp -e "set ftp:passive-mode false;rm -r /tt21tmp/ ; rm /$(t1wRM1) ;quit" $(ftpt1w)
+	@echo "`date ` : makeing tt211 , $(ftpTT22) found. start ...." ; 
+	(cd tt21tmp && wget -q $(cdsTT22) ) \
+		&& make tt212 \
+		|| (echo ' $(cdsTT22oo) not found.' >> tt21tmp/100_error_reason.txt )
 	wput tt21tmp/ $(ftpt1w)
+tt212:
 
 tt22:
-	while [ 1 ] ; do make tt21 || exit 32 ; sleep 5 ; done
+	while [ 1 ] ; do make tt211 || exit 32 ; sleep 5 ; done
 
 tt3File:=111/nowFPGA.txt 
 mcsDIR:=$(strip $(shell test -f $(tt3File) && (cat $(tt3File) |head -n 1|awk '{print $$1}')))
