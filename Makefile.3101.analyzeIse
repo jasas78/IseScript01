@@ -236,6 +236,7 @@ tt21:
 		done || echo -n 
 	@LD_LIBRARY_PATH=/lib64:/usr/lib64 lftp -e "set ftp:passive-mode false;rm /tt21tmp/* ; rm /$(t1wRM1) ;quit" $(ftpt1w)
 	@echo "`date ` : makeing tt21 , $(ftpTT22) found. start ...." ; 
+	wput tt21tmp/ $(ftpt1w)
 
 tt22:
 	while [ 1 ] ; do make tt21 || exit 32 ; sleep 5 ; done
