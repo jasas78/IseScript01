@@ -1,5 +1,9 @@
 all: 
 
+XD1:=$(shell realpath $(TM)/settings64.sh)
+XD2:=$(shell dirname  $(XD1))
+XDbin:=$(XD2)/ISE/bin/lin64
+
 CFGrunIseINCset1:=\
 Makefile.3032.xst.compile.verilog    \
 Makefile.3034.ngdbuild.decompress_to_fpga_base_gate    \
