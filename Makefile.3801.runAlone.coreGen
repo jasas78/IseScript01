@@ -4,7 +4,8 @@ awk:=$(env64) awk
 
 all:
 
-$(info ) $(info XDbin $(XDbin)) $(info ) $(error )
+#$(info ) $(info XDbin $(XDbin)) $(info ) $(error )
+coregen:=$(XDbin)/coregen
 
 define EOL
 
