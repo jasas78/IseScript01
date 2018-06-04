@@ -18,12 +18,12 @@ df321:
 df322:=diff_win_linx__verilog_file_list
 df322:
 	@cat nowX/FPGA_TOP.prj |unix2dos|dos2unix\
-		|awk '{print $$3}' \
+		|$(awk) '{print $$3}' \
 		|xargs -n 1 basename \
 		|sort \
 		> 1.txt
 	@cat out/$(FNxstSCR2) |unix2dos|dos2unix\
-		|awk '{print $$3}' \
+		|$(awk) '{print $$3}' \
 		|xargs -n 1 basename \
 		|sort \
 		> 2.txt

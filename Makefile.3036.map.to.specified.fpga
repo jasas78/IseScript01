@@ -48,7 +48,7 @@ rm :
 	@make check_io_standard
 cio:=check_io_standard
 cio:
-	echo ;  grep OUTPUT  out/log2_obj_ise10_36_3_map.mrp |awk -F \| '{print $$5 " " $$8 }' |sort -u ; echo
+	echo ;  grep OUTPUT  out/log2_obj_ise10_36_3_map.mrp |$(awk) -F \| '{print $$5 " " $$8 }' |sort -u ; echo
 
 showRunHelpList +=rm    cio
 

@@ -1,3 +1,7 @@
+env64:=LD_LIBRARY_PATH=/lib64:/usr/lib64
+env32:=LD_LIBRARY_PATH=/lib:/usr/lib:/lib32:/usr/lib32
+awk:=$(env64) awk
+
 all:
 
 File01?=$(shell realpath ./Makefile)

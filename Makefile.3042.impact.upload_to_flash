@@ -69,7 +69,7 @@ ufo :
 	@grep Programming out/$(FNuufLog1)
 	md5sum $(AnotherDSTuf) 
 	cp $(AnotherDSTuf) \
-		bkMCS/mcs_$(time_called)_$(shell md5sum $(AnotherDSTuf)|awk '{printf $$1}'||echo -n _noMD5_).mcs
+		bkMCS/mcs_$(time_called)_$(shell md5sum $(AnotherDSTuf)|$(awk) '{printf $$1}'||echo -n _noMD5_).mcs
 
 uf:=impact_upload_to_flash_and_backup
 $(uf):=ufo bk1

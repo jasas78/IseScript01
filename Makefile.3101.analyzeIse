@@ -227,8 +227,11 @@ errTT22:=tt21tmp/100_error_reason.txt
 cdsTT22in:=tt21tmp/$(cdsTT22oo)
 
 tt211:
-	[ -d tt21tmp ] || mkdir tt21tmp
-	rm -f tt21tmp/*
+	rm -fr tt21tmp.bak3
+	-mv tt21tmp.bak2 tt21tmp.bak3
+	-mv tt21tmp.bak1 tt21tmp.bak2
+	-mv tt21tmp tt21tmp.bak1
+	mkdir tt21tmp
 	# ' no no_tmp_md5_file_exist . exit.'
 	@while [ 1 ] ; do \
 		rm -f tt21tmp/* ; \
@@ -254,7 +257,7 @@ tt212:
 		echo ' 102 : size error $(cdsTT22in) ' >> $(errTT22) \
 		; wc $(cdsTT22in) >> $(errTT22) \
 		; exit 23 )
-	md5sum $(cdsTT22in) >> tt21tmp/201_cds_md5_$$(md5sum $(cdsTT22in)|awk '{printf $$1}').txt
+	md5sum $(cdsTT22in) >> tt21tmp/201_cds_md5_$$(md5sum $(cdsTT22in)|$(awk) '{printf $$1}').txt
 	wc     $(cdsTT22in) >> tt21tmp/202_cds_size.txt
 	cat    $(cdsTT22in) >  111/$(cdsTT22oo)
 	nohup make tt2      >  tt21tmp/301_building_log.txt
@@ -273,7 +276,7 @@ tt212:
 		| grep ^'Evaluation copy. Please register' \
 		|wc \
 		> tt21tmp/304_result.txt  
-	cnt1=$$(cat tt21tmp/304_result.txt  |awk '{printf $$1}') ; \
+	cnt1=$$(cat tt21tmp/304_result.txt  |$(awk) '{printf $$1}') ; \
 		 [ $${cnt1} = 3 ] \
 		 && (echo $${cnt1} > tt21tmp/305_result.txt)  \
 		 || ( \
@@ -285,7 +288,7 @@ tt22:
 	while [ 1 ] ; do make tt211 || exit 32 ; sleep 5 ; done
 
 tt3File:=111/nowFPGA.txt 
-mcsDIR:=$(strip $(shell test -f $(tt3File) && (cat $(tt3File) |head -n 1|awk '{print $$1}')))
+mcsDIR:=$(strip $(shell test -f $(tt3File) && (cat $(tt3File) |head -n 1|$(awk) '{print $$1}')))
 coeDIR:=$(mcsDIR)/ipcore_dir/rom_code/
 mcsPATH:=/now.mcs
 coePATH:=$(coeDIR)/now.coe
@@ -310,7 +313,7 @@ tt32:
 	@ls -l                            now.bit
 	@md5sum                           now.bit
 
-cdsNOWmd5:=$(shell md5sum cds.now.cds |awk '{printf $$1}'|sed -e 's;^.*\(......\)$$;\1;g')
+cdsNOWmd5:=$(shell md5sum cds.now.cds |$(awk) '{printf $$1}'|sed -e 's;^.*\(......\)$$;\1;g')
 tt33:=gen_another_mcs_from_now.bit
 tt33:
 	make rs anotherBIT=now.bit
