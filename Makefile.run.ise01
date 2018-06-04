@@ -73,7 +73,8 @@ include $(CFGmakeEnv)
 
 ### you can pre-define the following envVARs
 LDso641?=LD_PRELOAD=/home/bootH/Xilinx/usb-driver/libusb-driver.so.64.so 
-RUNpath?=/e/eda2544/ise14.7xinlinx/14.7/ISE_DS/ISE/bin/lin64
+RUNpath?=$(XDbin)
+#RUNpath?=/e/eda2544/ise14.7xinlinx/14.7/ISE_DS/ISE/bin/lin64
 topModule?=LED4
 export LDso641
 export RUNpath
