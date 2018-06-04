@@ -1,0 +1,1 @@
+/e/eda2544/ise14.7xinlinx/14.7/ISE_DS/settings64.sh
