@@ -22,5 +22,30 @@ define burn
 		 -I /lib/firmware/ixo-usb-jtag/usbjtag-saxo_l.hex -D /dev/bus/usb/001/123
 
 endef
-cfgLine:= -f cfgOpenOCD/ixo-usb-jtag.cfg -f cfgOpenOCD/promXCF04S.cfg -f cfgOpenOCD/xc3s500e.cfg
-$(info OCDrunBIN $(EOL) $(OCDrunBIN) $(cfgLine) )
+cfgLine:= \
+	-f cfgOpenOCD/ixo-usb-jtag-16c0-06ad.cfg \
+	-f cfgOpenOCD/promXCF04S.cfg \
+	-f cfgOpenOCD/xc3s500e.cfg
+
+load_openOCD_firmware:= \
+	/home/bootH/LogicAnalyzer/cyusb/fxload-2008_10_13/fxload \
+	-v -t fx2lp      \
+	-I /home/bootH/Xilinx/ixo-usb-jtag/usbjtag-xpcu_x.hex  \
+	-D /dev/bus/usb/001/122
+
+
+$(info ) 
+$(info  1st : load the ixo-usb-jtag : usbjtag-xpcu_x.hex for XILINX platform cable usb DLC9G with fpga(outside flash)  )
+$(info                             or usbjtag-xpcu_i.hex for XILINX platform cable usb DLC9G with cpld(inside  flash)  )
+$(info ) 
+$(info $(load_openOCD_firmware))
+$(info ) 
+$(info ) 
+$(info 2nd : then , use the openocd )
+$(info ) 
+$(info $(OCDrunBIN) $(cfgLine) )
+$(info ) 
+$(info 3rd : telnet 127.0.0.1 4444 )
+$(info       jtag init)
+$(info       scan_chain)
+$(info ) 
