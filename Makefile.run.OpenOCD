@@ -22,5 +22,5 @@ define burn
 		 -I /lib/firmware/ixo-usb-jtag/usbjtag-saxo_l.hex -D /dev/bus/usb/001/123
 
 endef
-cfgLine:= -f cfgOpenOCD/ixo-usb-jtag.cfg -f cfgOpenOCD/e500.cfg
+cfgLine:= -f cfgOpenOCD/ixo-usb-jtag.cfg -f cfgOpenOCD/promXCF04S.cfg -f cfgOpenOCD/xc3s500e.cfg
 $(info OCDrunBIN $(EOL) $(OCDrunBIN) $(cfgLine) )
