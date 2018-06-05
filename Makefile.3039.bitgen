@@ -1,7 +1,7 @@
 
 
-ifeq (,$(strip $(RUNpath)))
-$(error "you should define RUNpath and run again" )
+ifeq (,$(strip $(ISEbin)))
+$(error "you should define ISEbin and run again" )
 endif
 
 FNbitEXT0:=$(PROJname)_39_6_bit
@@ -43,7 +43,7 @@ export SCRbit1
 
 
 define CMDbitLine1
-$(RUNpath)/bitgen              			\
+$(ISEbin)/bitgen              			\
 	-b									\
 	-f ../out/$(FNbitScr1)          	\
 	../out/$(FNbitIn1)					\

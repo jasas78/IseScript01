@@ -1,7 +1,7 @@
 
 
-ifeq (,$(strip $(RUNpath)))
-$(error "you should define RUNpath and run again" )
+ifeq (,$(strip $(ISEbin)))
+$(error "you should define ISEbin and run again" )
 endif
 
 FNbinEXT0:=$(PROJname)_3a_7_bin
@@ -14,7 +14,7 @@ FNbinScr1:=scr_$(FNbinEXT0).scr
 
 
 define CMDbinLine1
-$(RUNpath)/promgen                       \
+$(ISEbin)/promgen                       \
 	-w \
 	-p bin \
 	-o $(FNbinOut1)  \

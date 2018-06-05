@@ -1,0 +1,46 @@
+
+
+ifeq (,$(strip $(ISEbin)))
+$(error "you should define ISEbin and run again" )
+endif
+
+define SCRsvfRUN
+
+setMode -bscan
+setCable -port svf -file "gen01.svf"
+addDevice -p 1 -part xc3s500e
+addDevice -p 2 -part xcf04s
+assignFile -p 1 -file "bit.now.bit"
+Program -p 1 
+exit
+
+endef
+export SCRsvfRUN
+
+
+svrUSAGE:=$(if $(SS),$(if $(DD),,33),22)
+
+
+svr:=gen_svf_for_run_in_fpga
+$(svr):=Makefile.3044.impact.gen_svf_for_run
+svr : $(if $(svrUSAGE),svrREAL,svrUSAGE)
+
+svrUSAGE:
+	@echo $@ runing
+svrREAL :
+	@echo $@ runing
+# 	@echo out/$(FNuufLog1) > out/loging.txt
+# 	@echo ;echo '---- $(uf) start --- out/$(FNuufLog1) --- burn into flash --->> $(AnotherDSTuf) ' ; echo
+# 	[ -f $(AnotherDSTuf) ]
+# 	md5sum $(AnotherDSTuf) 
+# 	@echo "$${SCRsvfRUN}" > out/$(FNuufScr1)
+# 	       cd tmp/ && $(LDso641) $(ISEbin)/impact -batch < ../out/$(FNuufScr1)  > ../out/$(FNuufLog1)
+# 	echo  "cd tmp/ && $(LDso641) $(ISEbin)/impact -batch < ../out/$(FNuufScr1)  > ../out/$(FNuufLog1)" > out/$(FNuufCmd1)
+# 	@grep Programming out/$(FNuufLog1)
+# 	md5sum $(AnotherDSTuf) 
+# 	cp $(AnotherDSTuf) \
+# 		bkMCS/mcs_$(time_called)_$(shell md5sum $(AnotherDSTuf)|$(awk) '{printf $$1}'||echo -n _noMD5_).mcs
+
+
+showRunHelpList +=svr 
+

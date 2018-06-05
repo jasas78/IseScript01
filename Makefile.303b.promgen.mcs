@@ -1,7 +1,7 @@
 
 
-ifeq (,$(strip $(RUNpath)))
-$(error "you should define RUNpath and run again" )
+ifeq (,$(strip $(ISEbin)))
+$(error "you should define ISEbin and run again" )
 endif
 
 
@@ -19,7 +19,7 @@ FNmcsOut1:=../$(anotherBIT).mcs
 endif
 
 define CMDmcsLine1
-$(RUNpath)/promgen                       \
+$(ISEbin)/promgen                       \
 	-w \
 	-p mcs \
 	-o $(FNmcsOut1)  \

@@ -1,7 +1,7 @@
 
 
-ifeq (,$(strip $(RUNpath)))
-$(error "you should define RUNpath and run again" )
+ifeq (,$(strip $(ISEbin)))
+$(error "you should define ISEbin and run again" )
 endif
 
 FNuurEXT0:=$(PROJname)_41_10_uur
@@ -36,8 +36,8 @@ ur :
 	@echo ;echo '---- $(ur) start --- burn to RAM and run ---->>   $(AnotherDSTur)'
 	[ -f $(AnotherDSTur) ]
 	@echo "$${SCRuur1}" > out/$(FNuurScr1)
-	       cd tmp/ && $(LDso641) $(RUNpath)/impact -batch < ../out/$(FNuurScr1)  > ../out/$(FNuurLog1)
-	echo  "cd tmp/ && $(LDso641) $(RUNpath)/impact -batch < ../out/$(FNuurScr1)  > ../out/$(FNuurLog1)" > out/$(FNuurCmd1)
+	       cd tmp/ && $(LDso641) $(ISEbin)/impact -batch < ../out/$(FNuurScr1)  > ../out/$(FNuurLog1)
+	echo  "cd tmp/ && $(LDso641) $(ISEbin)/impact -batch < ../out/$(FNuurScr1)  > ../out/$(FNuurLog1)" > out/$(FNuurCmd1)
 	md5sum $(AnotherDSTur) 
 
 showRunHelpList +=ur   

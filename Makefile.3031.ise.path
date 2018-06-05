@@ -1,0 +1,13 @@
+all: 
+
+XD1:=$(shell realpath $(TM)/settings64.sh)
+XD2:=$(shell dirname  $(XD1))
+XD3:=$(XD2)/ISE/bin/lin64
+
+### you can pre-define the following envVARs
+LDso641?=LD_PRELOAD=/home/bootH/Xilinx/usb-driver/libusb-driver.so.64.so 
+#ISEbin?=/e/eda2544/ise14.7xinlinx/14.7/ISE_DS/ISE/bin/lin64
+ISEbin?=$(XD3)
+export LDso641
+export ISEbin
+

@@ -1,7 +1,7 @@
 
 
-ifeq (,$(strip $(RUNpath)))
-$(error "you should define RUNpath and run again" )
+ifeq (,$(strip $(ISEbin)))
+$(error "you should define ISEbin and run again" )
 endif
 
 FNuufEXT0:=$(PROJname)_42_11_uuf
@@ -64,8 +64,8 @@ ufo :
 	[ -f $(AnotherDSTuf) ]
 	md5sum $(AnotherDSTuf) 
 	@echo "$${SCRuuf1}" > out/$(FNuufScr1)
-	       cd tmp/ && $(LDso641) $(RUNpath)/impact -batch < ../out/$(FNuufScr1)  > ../out/$(FNuufLog1)
-	echo  "cd tmp/ && $(LDso641) $(RUNpath)/impact -batch < ../out/$(FNuufScr1)  > ../out/$(FNuufLog1)" > out/$(FNuufCmd1)
+	       cd tmp/ && $(LDso641) $(ISEbin)/impact -batch < ../out/$(FNuufScr1)  > ../out/$(FNuufLog1)
+	echo  "cd tmp/ && $(LDso641) $(ISEbin)/impact -batch < ../out/$(FNuufScr1)  > ../out/$(FNuufLog1)" > out/$(FNuufCmd1)
 	@grep Programming out/$(FNuufLog1)
 	md5sum $(AnotherDSTuf) 
 	cp $(AnotherDSTuf) \

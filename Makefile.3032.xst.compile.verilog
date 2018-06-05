@@ -1,7 +1,7 @@
 
 
-ifeq (,$(strip $(RUNpath)))
-$(error "you should define RUNpath and run again" )
+ifeq (,$(strip $(ISEbin)))
+$(error "you should define ISEbin and run again" )
 endif
 
 
@@ -20,8 +20,8 @@ FNxstLOG2:=log_$(FNxstEXT0).txt
 RUNxst11:=help -arch $(DEV02) 
 RUNxst12:=  run set elaborate timing script time help memory
 
-RUNxst10=cd tmp/ && echo "$(1)" | $(RUNpath)/xst -intstyle silent -ofn ../out/$(FNxstLOG1)_$(IDXxst)_$(shell basename $(lastword $(1))).txt  
-RUNxst20=cd tmp/ && $(RUNpath)/xst -intstyle silent -ofn ../out/$(FNxstLOG2) -ifn ../out/$(FNxstSCR1)
+RUNxst10=cd tmp/ && echo "$(1)" | $(ISEbin)/xst -intstyle silent -ofn ../out/$(FNxstLOG1)_$(IDXxst)_$(shell basename $(lastword $(1))).txt  
+RUNxst20=cd tmp/ && $(ISEbin)/xst -intstyle silent -ofn ../out/$(FNxstLOG2) -ifn ../out/$(FNxstSCR1)
 IDXxst:=1
 define RUNxst14
        $(RUNxst10)

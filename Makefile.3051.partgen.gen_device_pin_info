@@ -1,7 +1,7 @@
 
 
-ifeq (,$(strip $(RUNpath)))
-$(error "you should define RUNpath and run again" )
+ifeq (,$(strip $(ISEbin)))
+$(error "you should define ISEbin and run again" )
 endif
 
 define PartGenPara
@@ -14,8 +14,8 @@ pg:=partgen_gen_device_info
 $(pg):=Makefile.3051.partgen.gen_device_pin_info
 pg :
 	@echo ;echo '---- $(pg) start --- out/$(FNpgLog1)'
-	      cd tmp/ && $(RUNpath)/partgen $(PartGenPara) > 51.txt
-	echo "cd tmp/ && $(RUNpath)/partgen $(PartGenPara) > 51.txt"     > out/cmd_51_partgen.txt
+	      cd tmp/ && $(ISEbin)/partgen $(PartGenPara) > 51.txt
+	echo "cd tmp/ && $(ISEbin)/partgen $(PartGenPara) > 51.txt"     > out/cmd_51_partgen.txt
 	@ls -l tmp/51.txt tmp/$(DEV02)*.pkg
 	cp  tmp/51.txt                              out/log_51_partgen_$(PROJname).txt
 	cat tmp/$(DEV02)*.pkg                     > out/$(DEV01).0.pkg

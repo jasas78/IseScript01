@@ -1,7 +1,7 @@
 
 
-ifeq (,$(strip $(RUNpath)))
-$(error "you should define RUNpath and run again" )
+ifeq (,$(strip $(ISEbin)))
+$(error "you should define ISEbin and run again" )
 endif
 
 # par -w -intstyle ise -ol high -t 1 LED4_map.ncd LED4.ncd LED4.pcf
@@ -15,7 +15,7 @@ FNparLog1:=log_$(FNparEXT0).txt
 FNparCmd1:=cmd_$(FNparEXT0).txt
 
 define CMDparLine1
-$(RUNpath)/par              \
+$(ISEbin)/par              \
 	-ol high    			\
 	-intstyle silent		\
 	-t 1					\

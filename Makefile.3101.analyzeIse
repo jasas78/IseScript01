@@ -139,7 +139,7 @@ ifdef coreGenRomList
 		cgROMname=$$(realpath nowX/$(aa1)) \
 		cgROMcontent=$$(realpath $($(aa1))) \
 		TM=$(TM) \
-		XDbin=$(XDbin) \
+		ISEbin=$(ISEbin) \
 		|| exit 45 \
 		$(EOL)\
 		echo; echo 'make coreGen end' ; \

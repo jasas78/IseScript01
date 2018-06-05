@@ -1,7 +1,7 @@
 
 
-ifeq (,$(strip $(RUNpath)))
-$(error "you should define RUNpath and run again" )
+ifeq (,$(strip $(ISEbin)))
+$(error "you should define ISEbin and run again" )
 endif
 
 # nowX/FPGA_TOP.cmd_log
@@ -18,7 +18,7 @@ FNtrceLog1:=log_$(FNtrceEXT0).txt
 FNtrceCmd1:=cmd_$(FNtrceEXT0).txt
 
 define CMDtrceLine1
-$(RUNpath)/trce             \
+$(ISEbin)/trce             \
 	-intstyle silent		\
 	-v 3    				\
 	-s 4					\

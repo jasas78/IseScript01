@@ -1,27 +1,24 @@
 all: 
 
-XD1:=$(shell realpath $(TM)/settings64.sh)
-XD2:=$(shell dirname  $(XD1))
-XDbin:=$(XD2)/ISE/bin/lin64
-
 CFGrunIseINCset1:=\
-Makefile.3032.xst.compile.verilog    \
-Makefile.3034.ngdbuild.decompress_to_fpga_base_gate    \
-Makefile.3036.map.to.specified.fpga    \
-Makefile.3037.par    \
-Makefile.3038.trc    \
-Makefile.3039.bitgen    \
-Makefile.303a.promgen.bin    \
-Makefile.303b.promgen.mcs    \
-Makefile.3041.impact.upload_and_run    \
-Makefile.3042.impact.upload_to_flash    \
-Makefile.3043.iseAnalyze.report.resouce.usage    \
-Makefile.3051.partgen.gen_device_pin_info    \
-Makefile.3060.backupBase    \
-Makefile.3061.backupXilinxISE    \
-Makefile.3062.impact.burn.now    \
-Makefile.3071.beautifyBase    \
-Makefile.3072.beautifyVerilog    \
+	Makefile.3031.ise.path		\
+	Makefile.3032.xst.compile.verilog    \
+	Makefile.3034.ngdbuild.decompress_to_fpga_base_gate    \
+	Makefile.3036.map.to.specified.fpga    \
+	Makefile.3037.par    \
+	Makefile.3038.trc    \
+	Makefile.3039.bitgen    \
+	Makefile.303a.promgen.bin    \
+	Makefile.303b.promgen.mcs    \
+	Makefile.3041.impact.upload_and_run    \
+	Makefile.3042.impact.upload_to_flash    \
+	Makefile.3043.iseAnalyze.report.resouce.usage    \
+	Makefile.3051.partgen.gen_device_pin_info    \
+	Makefile.3060.backupBase    \
+	Makefile.3061.backupXilinxISE    \
+	Makefile.3062.impact.burn.now    \
+	Makefile.3071.beautifyBase    \
+	Makefile.3072.beautifyVerilog    \
 
 CFGrunIseINCset2:=$(foreach aa1,$(CFGrunIseINCset1),$(TM)/$(aa1))
 
@@ -71,13 +68,7 @@ export DEV11
 
 include $(CFGmakeEnv)
 
-### you can pre-define the following envVARs
-LDso641?=LD_PRELOAD=/home/bootH/Xilinx/usb-driver/libusb-driver.so.64.so 
-RUNpath?=$(XDbin)
-#RUNpath?=/e/eda2544/ise14.7xinlinx/14.7/ISE_DS/ISE/bin/lin64
 topModule?=LED4
-export LDso641
-export RUNpath
 export topModule
 
 PROJname:=proj_$(topModule)

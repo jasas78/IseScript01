@@ -1,7 +1,7 @@
 
 
-ifeq (,$(strip $(RUNpath)))
-$(error "you should define RUNpath and run again" )
+ifeq (,$(strip $(ISEbin)))
+$(error "you should define ISEbin and run again" )
 endif
 
 # ngdbuild -intstyle ise -dd _ngo -nt timestamp -uc LED4.ucf -p xc3s500e-pq208-4 LED4.ngc LED4.ngd  
@@ -23,7 +23,7 @@ define RUNngdPara
 	$(FNngdOut1NGD) 				\
 
 endef
-RUNngd:=cd tmp/ && $(RUNpath)/ngdbuild $(RUNngdPara) > ../out/$(FNngdLog1)
+RUNngd:=cd tmp/ && $(ISEbin)/ngdbuild $(RUNngdPara) > ../out/$(FNngdLog1)
 
 rn:=run_ngdbuild_to_decompress_to_base_fpga_gates 
 $(rn):=Makefile.3034.ngdbuild.decompress_to_fpga_base_gate

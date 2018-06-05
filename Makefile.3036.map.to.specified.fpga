@@ -1,7 +1,7 @@
 
 
-ifeq (,$(strip $(RUNpath)))
-$(error "you should define RUNpath and run again" )
+ifeq (,$(strip $(ISEbin)))
+$(error "you should define ISEbin and run again" )
 endif
 
 # map -intstyle ise -p xc3s500e-pq208-4 -cm area -ir off -pr off -c 100 -o LED4_map.ncd LED4.ngd LED4.pcf
@@ -15,7 +15,7 @@ FNmapLog1:=log_$(FNmapEXT0).txt
 FNmapCmd1:=cmd_$(FNmapEXT0).txt
 
 define CMDmapLine1
-$(RUNpath)/map 				\
+$(ISEbin)/map 				\
 	-p $(DEV01) 			\
 	-detail 				\
 	-c 100 					\
