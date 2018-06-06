@@ -24,6 +24,7 @@ vp:=vim_prepare1
 vp: vpc
 	@#mkdir -p _vim src1 src2 src3 src9
 	@[ -d src9 ] || mkdir src9
+	@[ -d _vim ] || mkdir _vim
 	@ls $(wildcard $(TM)/Makefile*)    > _vim/cscope.in0
 	@touch _vim/vim_file01.txt _vim/dir_01.txt 
 	@
