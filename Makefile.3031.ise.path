@@ -11,3 +11,38 @@ ISEbin?=$(XD3)
 export LDso641
 export ISEbin
 
+
+
+
+
+define known_xilinxFpga_list
+spartan3adsp : xc3sd3400a-fg676-4
+spartan3e    : xc3s500e-pq208-4
+
+endef
+export known_xilinxFpga_list
+
+
+DEV01?=xc3s500e-pq208-4
+DEV02?=$(shell echo $(DEV01)|sed -e 's;[-_].*$$;;g')
+DEV11:=
+ifeq ($(DEV02),xc3s500e)
+DEV11:=spartan3e
+DEV21:=xcf4
+endif
+ifeq ($(DEV02),xc3sd3400a)
+DEV11:=spartan3adsp
+DEV21:=xcf4
+endif
+ifeq ($(strip $(DEV11)),)
+$(info )
+$(info $(known_xilinxFpga_list) )
+$(info )
+$(error )
+endif
+
+export DEV01
+export DEV02
+export DEV11
+export DEV21
+

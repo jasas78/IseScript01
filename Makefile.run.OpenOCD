@@ -1,5 +1,13 @@
 all: 
 
+CFGrunOpenocdINCset1:=\
+	Makefile.3031.ise.path		\
+
+CFGrunOpenocdINCset2:=$(foreach aa1,$(CFGrunOpenocdINCset1),$(TM)/$(aa1))
+
+$(eval $(foreach aa2,$(CFGrunOpenocdINCset2),$(call tryINCmustExist,$(aa2),db8193912)))
+
+
 OCDrunPATH?=openocd_run
 OCDrunPATH:=$(shell realpath $(OCDrunPATH))
 OCDrunBIN:=$(OCDrunPATH)/bin/openocd
