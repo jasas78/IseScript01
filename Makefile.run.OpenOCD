@@ -13,7 +13,7 @@ OCDrunPATH:=$(shell realpath $(OCDrunPATH))
 OCDbin:=$(OCDrunPATH)/bin
 openocd:=$(OCDbin)/openocd
 
-ifeq (22,$(shell -f $(openocd) && echo 11 || echo 22))
+ifneq (11,$(shell [ -f $(openocd) ] && echo 11 || echo 22))
 $(info )
 $(info ' openocd , need a dir named "openocd_run" to place the openocd execute-program ')
 $(info ' or , being defined in the Makefile.env ')
@@ -44,7 +44,7 @@ load_openOCD_firmware:= \
 	-D /dev/bus/usb/001/122
 
 
-define ocdUsage
+define showRunHelpTEXText1
 
  1st : load the ixo-usb-jtag : usbjtag-xpcu_x.hex for XILINX platform cable usb DLC9G with fpga(outside flash)   
                             or usbjtag-xpcu_i.hex for XILINX platform cable usb DLC9G with cpld(inside  flash)   
@@ -60,5 +60,8 @@ $(openocd) $(cfgLine)
       scan_chain 
   
 endef
+export showRunHelpTEXText1
 
+OCDcfgList:=$(sort $(wildcard cfgOpenOCD/*.cfg))
+$(call genVimWithFileList,showSourceCodeTEXT,$(OCDcfgList),vv)
 
