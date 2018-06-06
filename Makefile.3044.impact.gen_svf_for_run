@@ -48,11 +48,13 @@ $(svr):=Makefile.3044.impact.gen_svf_for_run
 
 svr :
 	[ -d tmp ] || mkdir tmp
-	rm -f tmp/_impactbatch.log tmp/$(FFsvrScr1) tmp/$(FFsvrLog1)
+	rm -f tmp/_impactbatch.log tmp/$(FFsvrScr1) tmp/$(FFsvrLog1) $(DDsvrXX)
+	ls -l tmp/
 	echo "$${SCRsvrScr1}" > tmp/$(FFsvrScr1)
 	md5sum $(SSsvrXX) 
 	cd tmp/ && $(LDso641) $(ISEbin)/impact \
 		-batch < $(FFsvrScr1)  > $(FFsvrLog1)
+	sed -i -e '/^\/\/ Date:/d' $(DDsvrXX)
 	md5sum $(DDsvrXX) 
 
 
