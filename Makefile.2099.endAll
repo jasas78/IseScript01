@@ -5,11 +5,13 @@ all:
 
 so:=showOption
 so :
+	@[ -z "$${showRunHelpTEXText4}" ] || echo "$${showRunHelpTEXText4}" 
 	@echo "$${showOptionTEXT}"
 
 h := help 
 $(h) := showHelp
 h :
+	@[ -z "$${showRunHelpTEXText2}" ] || echo "$${showRunHelpTEXText2}" 
 	@echo "$${showHelpTEXT}"
 
 srh:=showRunHelp
@@ -21,6 +23,7 @@ srh:
 ss:=showSourceCode
 $(ss):=show_all_source_files_in_current_dir_for_vim_______current_dir
 ss:
+	@[ -z "$${showRunHelpTEXText3}" ] || echo "$${showRunHelpTEXText3}" 
 	@echo "$${showSourceCodeTEXT}"
 
 $(call CallExpandHelpAll,showHelpTEXT,so sml srh )
@@ -37,6 +40,9 @@ else
 $(call CallExpandHelpAll,showRunHelpTEXT,$(showRunHelpList))
 export showSourceCodeTEXT
 export showRunHelpTEXText1
+export showRunHelpTEXText2
+export showRunHelpTEXText3
+export showRunHelpTEXText4
 export showRunHelpTEXT
 all: showSourceCode showOption showRunHelp
 #	echo kkk99000022

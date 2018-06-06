@@ -45,7 +45,7 @@ load_openOCD_firmware:= \
 	-D /dev/bus/usb/001/122
 
 
-define showRunHelpTEXText1
+define showRunHelpTEXText2
 
  1st : load the ixo-usb-jtag : usbjtag-xpcu_x.hex for XILINX platform cable usb DLC9G with fpga(outside flash)   
                             or usbjtag-xpcu_i.hex for XILINX platform cable usb DLC9G with cpld(inside  flash)   
@@ -61,7 +61,6 @@ $(openocd) $(cfgLine)
       scan_chain 
   
 endef
-export showRunHelpTEXText1
 
 OCDcfgList:=$(sort $(wildcard cfgOpenOCD/*.cfg))
 $(call genVimWithFileList,showSourceCodeTEXT,$(OCDcfgList),vv)

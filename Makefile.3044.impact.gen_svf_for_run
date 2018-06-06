@@ -4,6 +4,9 @@ ifeq (,$(strip $(ISEbin)))
 $(error "you should define ISEbin and run again" )
 endif
 
+SSsvr?=1/bit.now.bit
+DDsvr?=1/FPGA.run.svf
+
 define SCRsvfRUN
 
 setMode -bscan
@@ -17,18 +20,26 @@ exit
 endef
 export SCRsvfRUN
 
+define svrUsageTEXT
+
+make svr [SSsvr=$(SSsvr)] [DDsvr=$(DDsvr)] [JtagPart1=$(JtagPart1)] [JtagPart2=$(JtagPart2)] 
+note : you can define SSsvr & DDsvr & JtagPart1 & JtagPart2 in Makefile.env
+
+endef
+export svrUsageTEXT
 
 svrUSAGE:=$(if $(SS),$(if $(DD),,33),22)
 
 
 svr:=gen_svf_for_run_in_fpga
 $(svr):=Makefile.3044.impact.gen_svf_for_run
-svr : $(if $(svrUSAGE),svrREAL,svrUSAGE)
+svr : $(if $(svrUSAGE),svrUSAGE,svrREAL)
 
 svrUSAGE:
-	@echo $@ runing
+	@#echo $@ runing "<$(svrUSAGE)>"
+	@echo "$${svrUsageTEXT}"
 svrREAL :
-	@echo $@ runing
+	@echo $@ runing "<$(svrUSAGE)>"
 # 	@echo out/$(FNuufLog1) > out/loging.txt
 # 	@echo ;echo '---- $(uf) start --- out/$(FNuufLog1) --- burn into flash --->> $(AnotherDSTuf) ' ; echo
 # 	[ -f $(AnotherDSTuf) ]

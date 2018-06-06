@@ -28,11 +28,11 @@ DEV02?=$(shell echo $(DEV01)|sed -e 's;[-_].*$$;;g')
 DEV11:=
 ifeq ($(DEV02),xc3s500e)
 DEV11:=spartan3e
-DEV21:=xcf4
+DEV21:=xcf04s
 endif
 ifeq ($(DEV02),xc3sd3400a)
 DEV11:=spartan3adsp
-DEV21:=xcf4
+DEV21:=xcf04s
 endif
 ifeq ($(strip $(DEV11)),)
 $(info )
@@ -45,4 +45,9 @@ export DEV01
 export DEV02
 export DEV11
 export DEV21
+
+JtagPart1?=$(DEV02)
+JtagPart2?=$(DEV21)
+#addDevice -p 1 -part xc3s500e
+#addDevice -p 2 -part xcf04s
 
