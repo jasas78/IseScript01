@@ -28,17 +28,15 @@ note : you can define SSsvr & DDsvr & JtagPart1 & JtagPart2 in Makefile.env
 endef
 export svrUsageTEXT
 
-svrUSAGE:=$(if $(SS),$(if $(DD),,33),22)
-
+svrUSAGE:=gen_svf_for_FPGA_run
+$(svrUSAGE):=$(EOL)$(svrUsageTEXT)
+svrUSAGE:
+	@echo "$${svrUsageTEXT}"
 
 svr:=gen_svf_for_run_in_fpga
 $(svr):=Makefile.3044.impact.gen_svf_for_run
-svr : $(if $(svrUSAGE),svrUSAGE,svrREAL)
 
-svrUSAGE:
-	@#echo $@ runing "<$(svrUSAGE)>"
-	@echo "$${svrUsageTEXT}"
-svrREAL :
+svr :
 	@echo $@ runing "<$(svrUSAGE)>"
 # 	@echo out/$(FNuufLog1) > out/loging.txt
 # 	@echo ;echo '---- $(uf) start --- out/$(FNuufLog1) --- burn into flash --->> $(AnotherDSTuf) ' ; echo
@@ -54,4 +52,4 @@ svrREAL :
 
 
 showRunHelpList +=svr 
-
+## showRunHelpList +=svrUSAGE
