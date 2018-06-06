@@ -2,6 +2,7 @@ all:
 
 CFGrunOpenocdINCset1:=\
 	Makefile.3031.ise.path		\
+	Makefile.3044.impact.gen_svf_for_run		\
 
 CFGrunOpenocdINCset2:=$(foreach aa1,$(CFGrunOpenocdINCset1),$(TM)/$(aa1))
 
