@@ -7,18 +7,24 @@ endif
 SSsvr?=1/bit.now.bit
 DDsvr?=1/FPGA.run.svf
 
-define SCRsvfRUN
+SSsvrXX:=$(shell realpath $(SSsvr))
+DDsvrXX:=$(shell realpath $(DDsvr))
+
+FFsvrScr1:=scr_3044.impact.gen_svf_for_run.scr
+FFsvrLog1:=log_3044.impact.gen_svf_for_run.log
+
+define SCRsvrScr1
 
 setMode -bscan
-setCable -port svf -file "gen01.svf"
-addDevice -p 1 -part xc3s500e
-addDevice -p 2 -part xcf04s
-assignFile -p 1 -file "bit.now.bit"
+setCable -port svf -file "$(DDsvrXX)"
+addDevice -p 1 -part $(JtagPart1)
+addDevice -p 2 -part $(JtagPart2)
+assignFile -p 1 -file "$(SSsvrXX)"
 Program -p 1 
 exit
 
 endef
-export SCRsvfRUN
+export SCRsvrScr1
 
 define svrUsageTEXT
 
@@ -33,22 +39,21 @@ $(svrUSAGE):=$(EOL)$(svrUsageTEXT)
 svrUSAGE:
 	@echo "$${svrUsageTEXT}"
 
+
+
+
+
 svr:=gen_svf_for_run_in_fpga
 $(svr):=Makefile.3044.impact.gen_svf_for_run
 
 svr :
-	@echo $@ runing "<$(svrUSAGE)>"
-# 	@echo out/$(FNuufLog1) > out/loging.txt
-# 	@echo ;echo '---- $(uf) start --- out/$(FNuufLog1) --- burn into flash --->> $(AnotherDSTuf) ' ; echo
-# 	[ -f $(AnotherDSTuf) ]
-# 	md5sum $(AnotherDSTuf) 
-# 	@echo "$${SCRsvfRUN}" > out/$(FNuufScr1)
-# 	       cd tmp/ && $(LDso641) $(ISEbin)/impact -batch < ../out/$(FNuufScr1)  > ../out/$(FNuufLog1)
-# 	echo  "cd tmp/ && $(LDso641) $(ISEbin)/impact -batch < ../out/$(FNuufScr1)  > ../out/$(FNuufLog1)" > out/$(FNuufCmd1)
-# 	@grep Programming out/$(FNuufLog1)
-# 	md5sum $(AnotherDSTuf) 
-# 	cp $(AnotherDSTuf) \
-# 		bkMCS/mcs_$(time_called)_$(shell md5sum $(AnotherDSTuf)|$(awk) '{printf $$1}'||echo -n _noMD5_).mcs
+	[ -d tmp ] || mkdir tmp
+	rm -f tmp/_impactbatch.log tmp/$(FFsvrScr1) tmp/$(FFsvrLog1)
+	echo "$${SCRsvrScr1}" > tmp/$(FFsvrScr1)
+	md5sum $(SSsvrXX) 
+	cd tmp/ && $(LDso641) $(ISEbin)/impact \
+		-batch < $(FFsvrScr1)  > $(FFsvrLog1)
+	md5sum $(DDsvrXX) 
 
 
 showRunHelpList +=svr 
