@@ -29,7 +29,7 @@ export SCRsvrScr1
 define svrUsageTEXT
 
 make svr [SSsvr=$(SSsvr)] [DDsvr=$(DDsvr)] [JtagPart1=$(JtagPart1)] [JtagPart2=$(JtagPart2)] 
-note : you can define SSsvr & DDsvr & JtagPart1 & JtagPart2 in Makefile.env
+note : you can re-define SSsvr & DDsvr & JtagPart1 & JtagPart2 in Makefile.env or in command line
 
 endef
 export svrUsageTEXT

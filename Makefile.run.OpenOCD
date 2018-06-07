@@ -3,6 +3,7 @@ all:
 CFGrunOpenocdINCset1:=\
 	Makefile.3031.ise.path		\
 	Makefile.3044.impact.gen_svf_for_run		\
+	Makefile.3045.impact.gen_svf_for_burn_flash		\
 
 CFGrunOpenocdINCset2:=$(foreach aa1,$(CFGrunOpenocdINCset1),$(TM)/$(aa1))
 
@@ -65,4 +66,4 @@ endef
 OCDcfgList:=$(sort $(wildcard cfgOpenOCD/*.cfg))
 $(call genVimWithFileList,showSourceCodeTEXT,$(OCDcfgList),vv)
 
-showRunHelpList +=svrUSAGE
+showRunHelpList +=svrUSAGE svbUSAGE

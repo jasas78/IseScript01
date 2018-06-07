@@ -1,0 +1,62 @@
+
+
+ifeq (,$(strip $(ISEbin)))
+$(error "you should define ISEbin and run again" )
+endif
+
+SSsvb?=1/mcs.now.mcs
+DDsvb?=1/FPGA.flash.svf
+
+SSsvbXX:=$(shell realpath $(SSsvb))
+DDsvbXX:=$(shell realpath $(DDsvb))
+
+FFsvbScr1:=scr_3044.impact.gen_svf_for_run.scr
+FFsvbLog1:=log_3044.impact.gen_svf_for_run.log
+
+define SCRsvbScr1
+
+setMode -bscan
+setCable -port svf -file "$(DDsvbXX)"
+addDevice -p 1 -part $(JtagPart1)
+addDevice -p 2 -part $(JtagPart2)
+assignFile -p 2 -file "$(SSsvbXX)"
+Program -p 2 -e -v 
+exit
+
+endef
+export SCRsvbScr1
+
+define svbUsageTEXT
+
+make svb [SSsvb=$(SSsvb)] [DDsvb=$(DDsvb)] [JtagPart1=$(JtagPart1)] [JtagPart2=$(JtagPart2)] 
+note : you can re-define SSsvb & DDsvb & JtagPart1 & JtagPart2 in Makefile.env or in command line
+
+endef
+export svbUsageTEXT
+
+svbUSAGE:=gen_svf_for_FPGA_run
+$(svbUSAGE):=$(EOL)$(svbUsageTEXT)
+svbUSAGE:
+	@echo "$${svbUsageTEXT}"
+
+
+
+
+
+svb:=gen_svf_for_run_in_fpga
+$(svb):=Makefile.3044.impact.gen_svf_for_run
+
+svb :
+	[ -d tmp ] || mkdir tmp
+	rm -f tmp/_impactbatch.log tmp/$(FFsvbScr1) tmp/$(FFsvbLog1) $(DDsvbXX)
+	ls -l tmp/
+	echo "$${SCRsvbScr1}" > tmp/$(FFsvbScr1)
+	md5sum $(SSsvbXX) 
+	cd tmp/ && $(LDso641) $(ISEbin)/impact \
+		-batch < $(FFsvbScr1)  > $(FFsvbLog1)
+	sed -i -e '/^\/\/ Date:/d' $(DDsvbXX)
+	md5sum $(DDsvbXX) 
+
+
+showRunHelpList +=svb 
+## showRunHelpList +=svbUSAGE
