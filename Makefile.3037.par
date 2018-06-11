@@ -26,6 +26,7 @@ $(ISEbin)/par              \
 endef
 CMDparLine2:= cd tmp/ && $(CMDparLine1) > ../out/$(FNparLog1)
 export CMDparLine2
+CMDparLine3:= (echo ; echo "... error reason :" ; grep ^ERROR ../tmp/$(FNparOut0).par ; echo ; exit 37 )
 
 
 rp:=run_par_to_gen_the_last_ncd
@@ -33,7 +34,7 @@ $(rp):=Makefile.3037.par
 rp :
 	@echo out/$(FNparLog1) > out/loging_37.txt
 	@echo ;echo '---- $(rp) start --- out/$(FNparLog1)'
-	      $(CMDparLine2)
+	      $(CMDparLine2) || $(CMDparLine3) 
 	echo "$(CMDparLine2)" 	  > out/$(FNparCmd1)
 	cp tmp/$(FNparOut1)  		out/$(FNparOut1).37_2
 	mv tmp/$(FNparOut1)  		out/
