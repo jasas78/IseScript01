@@ -230,6 +230,8 @@ cdsTT22in:=tt21tmp/$(cdsTT22oo)
 
 MD5cds6=$(call M6,cds.now.cds)
 MD5cds8=$(call M8,cds.now.cds)
+MD5coe6=$(call M6,coe.now.coe)
+MD5coe8=$(call M8,coe.now.coe)
 MD5mcs6=$(call M6,mcs.now.mcs)
 MD5mcs8=$(call M8,mcs.now.mcs)
 
@@ -286,7 +288,9 @@ tt212:
 	nohup make tt2      >  tt21tmp/301_building_log.txt
 	cp mcs.now.mcs    tt21tmp/
 	cp cds.now.cds    tt21tmp/cds.$(MD5cds8).cds
+	cp coe.now.coe    tt21tmp/coe.$(MD5cds8)_$(MD5coe8).coe
 	cp mcs.now.mcs    tt21tmp/mcs.$(MD5cds8)_$(MD5mcs8).mcs
+	realpath nowX/  > tt21tmp/fpga_netlist_version_`realpath  nowX/|awk -F/ '{printf $$NF}'`.txt
 	cat tt21tmp/301_building_log.txt > 111/301_building_log.txt
 	cat tt21tmp/301_building_log.txt \
 		|sed \
@@ -309,6 +313,8 @@ tt212:
 		 echo ' 101 : not found $(cdsTT22in) ' >> $(errTT22) \
 		 ; exit 35 )
 	echo "`date +%s` `date`"      >  tt21tmp/999_all_ok.txt
+	$(RAR9) tt22.ok.$(time_called).rar tt21tmp/
+	mv      tt22.ok.$(time_called).rar tt21tmp/
 
 
 tt22:

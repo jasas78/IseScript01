@@ -1,14 +1,5 @@
 all:
 
-RAR0:=/home/bootH/bin/rar
-RAR1:=$(wildcard $(RAR0))
-ifeq (,$(strip $(RAR1)))
-RAR1:=$(wildcard $(shell which rar))
-endif
-ifeq (,$(strip $(RAR1)))
-$(error 'why RAR not found ? $(RAR0)' )
-endif
-
 bk1:=backup_the_bit_and_mcs_by_date_with_source
 bkMCS1=$(strip $(wildcard out/$(FNmcsOut1)))
 bkMCS2=$(FNmcsOut1).$(time_called).bk1_mcs

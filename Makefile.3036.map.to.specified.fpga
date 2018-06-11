@@ -34,7 +34,7 @@ export CMDmapLine2
 rm:=run_map_to_target_fapga
 $(rm):=Makefile.3036.map.to.specified.fpga
 rm :
-	@echo out/$(FNmapLog1) > out/loging.txt
+	echo out/$(FNmapLog1) > out/loging.txt
 	@echo ;echo '---- $(rm) start --- out/$(FNmapLog1)'
 	       $(CMDmapLine2)
 	@echo "$(CMDmapLine2)" > out/$(FNmapCmd1)
@@ -45,7 +45,7 @@ rm :
 	mv  tmp/$(FNmapOut0).map   	out/log2_36_$(FNmapOut0).map
 	mv  tmp/$(FNmapOut0).mrp   	out/log2_36_$(FNmapOut0).mrp
 	mv  tmp/$(FNmapOut0).ngm   	out/$(FNmapOut0).36_2.ngm
-	@make check_io_standard
+	make check_io_standard
 cio:=check_io_standard
 cio:
 	echo ;  grep OUTPUT  out/log2_obj_ise10_36_3_map.mrp |$(awk) -F \| '{print $$5 " " $$8 }' |sort -u ; echo
