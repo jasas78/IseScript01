@@ -34,8 +34,12 @@ define burn_basic
 
 endef
 
-cfgLine:= \
+cfgLine1:= \
 	-f cfgOpenOCD/ixo-usb-jtag-16c0-06ad.cfg \
+	-f cfgOpenOCD/promXCF04S.cfg \
+	-f cfgOpenOCD/xc3s500e.cfg
+cfgLine2:= \
+	-f cfgOpenOCD/altera-usb-blaster.cfg \
 	-f cfgOpenOCD/promXCF04S.cfg \
 	-f cfgOpenOCD/xc3s500e.cfg
 
@@ -55,7 +59,8 @@ $(load_openOCD_firmware)
   
 2nd : then , use the openocd  
   
-$(openocd) $(cfgLine)  
+$(openocd) $(cfgLine1)  
+$(openocd) $(cfgLine2)  
   
 3rd : telnet 127.0.0.1 4444  
       jtag init 

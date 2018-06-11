@@ -263,6 +263,7 @@ tt212:
 	wc     $(cdsTT22in) >> tt21tmp/202_cds_size.txt
 	cat    $(cdsTT22in) >  111/$(cdsTT22oo)
 	nohup make tt2      >  tt21tmp/301_building_log.txt
+	cp mcs.now.mcs    tt21tmp/
 	cat tt21tmp/301_building_log.txt > 111/301_building_log.txt
 	cat tt21tmp/301_building_log.txt \
 		|sed \
