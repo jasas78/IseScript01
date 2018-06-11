@@ -30,13 +30,14 @@ $(ISEbin)/map 				\
 endef
 CMDmapLine2:= cd tmp/ && $(CMDmapLine1) > ../out/$(FNmapLog1)
 export CMDmapLine2
+CMDmapLine3:= (echo ; echo "... error reason :" ; grep ^ERROR ../tmp/obj_proj_PCI_36_3_map.map ; echo ; exit 35 )
 
 rm:=run_map_to_target_fapga
 $(rm):=Makefile.3036.map.to.specified.fpga
 rm :
 	echo out/$(FNmapLog1) > out/loging.txt
 	@echo ;echo '---- $(rm) start --- out/$(FNmapLog1)'
-	       $(CMDmapLine2)
+	$(CMDmapLine2) || $(CMDmapLine3)
 	@echo "$(CMDmapLine2)" > out/$(FNmapCmd1)
 	cp  tmp/$(FNmapOut1ncd)   		out/$(FNmapOut1ncd).36_2
 	mv  tmp/$(FNmapOut1ncd)   		out/
