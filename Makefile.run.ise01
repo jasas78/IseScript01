@@ -90,11 +90,14 @@ $(call genVimWithFileList,showSourceCodeTEXT,$(VerilogRunINCset),vv)
 $(eval $(foreach aa2,$(CFGrunIseINCset2),$(call tryINCmustExist,$(aa2),db8193911)))
 
 aaa:=compile_verilog_by_ise_and_run_it
-$(aaa):=ct co rx rn rm rp rt rb rr rs ur
+$(aaa):=ct co rx rn rm rp rt rb rr rs svr svf ur
 aaa: $($(aaa))
 
-kkk:=renew_the
-showRunHelpList += aaa
+bbb:=compile_verilog_by_ise_and_run_it
+$(bbb):=ct co rx rn rm rp rt rb rr rs svr svf obr
+bbb: $($(bbb))
+
+showRunHelpList += aaa bbb
 
 ifdef AnalyzeIseTopDir
 showAnalyzeIseHelpList:= 
