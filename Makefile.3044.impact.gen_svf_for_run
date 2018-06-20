@@ -4,8 +4,8 @@ ifeq (,$(strip $(ISEbin)))
 $(error "you should define ISEbin and run again" )
 endif
 
-SSsvr?=1/bit.now.bit
-DDsvr?=1/FPGA.run.svf
+SSsvr?=bit.now.bit
+DDsvr?=svf.FPGA.run.svf
 
 SSsvrXX:=$(shell realpath $(SSsvr))
 DDsvrXX:=$(shell realpath $(DDsvr))
@@ -34,7 +34,7 @@ note : you can re-define SSsvr & DDsvr & JtagPart1 & JtagPart2 in Makefile.env o
 endef
 export svrUsageTEXT
 
-svrUSAGE:=gen_svf_for_FPGA_run
+svrUSAGE:=gen_svf_for_FPGA_run_only_USAGE
 $(svrUSAGE):=$(EOL)$(svrUsageTEXT)
 svrUSAGE:
 	@echo "$${svrUsageTEXT}"
@@ -43,7 +43,7 @@ svrUSAGE:
 
 
 
-svr:=gen_svf_for_run_in_fpga
+svr:=gen_svf_for_run_in_fpga_RAM_only
 $(svr):=Makefile.3044.impact.gen_svf_for_run
 
 svr :

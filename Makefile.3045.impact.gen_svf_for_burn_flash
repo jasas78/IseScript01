@@ -4,8 +4,8 @@ ifeq (,$(strip $(ISEbin)))
 $(error "you should define ISEbin and run again" )
 endif
 
-SSsvb?=1/mcs.now.mcs
-DDsvb?=1/FPGA.flash.svf
+SSsvb?=mcs.now.mcs
+DDsvb?=svf.FPGA.flash.svf
 
 SSsvbXX:=$(shell realpath $(SSsvb))
 DDsvbXX:=$(shell realpath $(DDsvb))
@@ -34,7 +34,7 @@ note : you can re-define SSsvb & DDsvb & JtagPart1 & JtagPart2 in Makefile.env o
 endef
 export svbUsageTEXT
 
-svbUSAGE:=gen_svf_for_FPGA_run
+svbUSAGE:=gen_svf_for_FPGA_flash_USAGE
 $(svbUSAGE):=$(EOL)$(svbUsageTEXT)
 svbUSAGE:
 	@echo "$${svbUsageTEXT}"
@@ -43,8 +43,8 @@ svbUSAGE:
 
 
 
-svb:=gen_svf_for_run_in_fpga
-$(svb):=Makefile.3044.impact.gen_svf_for_run
+svb:=gen_svf_for_burn_into_fpga_flash
+$(svb):=Makefile.3045.impact.gen_svf_for_burn_flash
 
 svb :
 	[ -d tmp ] || mkdir tmp
