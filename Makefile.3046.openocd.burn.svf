@@ -1,0 +1,81 @@
+all:
+
+$(if $(wildcard openocd_run),,$(shell ln -s $(TM)/openocd_run))
+
+OCDrunPATH?=openocd_run
+OCDrunPATH:=$(shell realpath $(OCDrunPATH))
+OCDbin:=$(OCDrunPATH)/bin
+openocd:=$(OCDbin)/openocd
+
+ifneq (11,$(shell [ -f $(openocd) ] && echo 11 || echo 22))
+$(info )
+$(info ' openocd , need a dir named "openocd_run" to place the openocd execute-program ')
+$(info ' or , being defined in the Makefile.env ')
+$(info )
+$(error )
+endif
+
+
+
+$(if $(wildcard cfgOpenOCD),,$(shell ln -s $(TM)/cfgOpenOCD))
+cfgOpenOCD:=$(wildcard cfgOpenOCD)
+
+cfgLine1xilinx:= \
+				time \
+				$(openocd)  \
+				-f $(cfgOpenOCD)/ixo-usb-jtag-16c0-06ad.cfg \
+				-f $(cfgOpenOCD)/promXCF04S.cfg \
+				-f $(cfgOpenOCD)/xc3s500e.cfg
+
+cfgLine2altera:= \
+				time \
+				$(openocd)  \
+				-f $(cfgOpenOCD)/altera-usb-blaster.cfg \
+				-f $(cfgOpenOCD)/promXCF04S.cfg \
+				-f $(cfgOpenOCD)/xc3s500e.cfg
+
+load_openOCD_firmware:= \
+				/home/bootH/LogicAnalyzer/cyusb/fxload-2008_10_13/fxload \
+				-v -t fx2lp      \
+				-I /home/bootH/Xilinx/ixo-usb-jtag/usbjtag-xpcu_x.hex  \
+				-D /dev/bus/usb/001/122
+
+
+############ obr # begin #######
+obrPara1?=svf.FPGA.run.svf
+define obrTEXT1 
+
+init 
+svf $(obrPara1)
+exit
+
+endef
+export obrTEXT1 
+
+obr:=openocd_burn_fpga_for_run
+obr:
+	echo "$${obrTEXT1}" > tmp/obr01.txt
+	$(cfgLine2altera)  -f tmp/obr01.txt
+
+showRunHelpList +=obr 
+############ obr # end #######
+
+############ obf # begin #######
+obfPara1?=svf.FPGA.flash.svf
+define obfTEXT1 
+
+init 
+svf $(obfPara1)
+exit
+
+endef
+export obfTEXT1 
+
+obf:=openocd_burn_fpga_for_run
+obf:
+	echo "$${obfTEXT1}" > tmp/obf01.txt
+	$(cfgLine2altera)  -f tmp/obf01.txt
+
+showRunHelpList +=obf 
+############ obf # end #######
+

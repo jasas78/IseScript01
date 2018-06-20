@@ -12,6 +12,7 @@ CFGrunIseINCset1:=\
 	Makefile.303b.promgen.mcs    \
 	Makefile.3044.impact.gen_svf_for_run		\
 	Makefile.3045.impact.gen_svf_for_burn_flash		\
+	Makefile.3046.openocd.burn.svf		\
 	Makefile.3041.impact.upload_and_run    \
 	Makefile.3042.impact.upload_to_flash    \
 	Makefile.3043.iseAnalyze.report.resouce.usage    \
