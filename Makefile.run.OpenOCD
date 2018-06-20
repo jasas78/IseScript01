@@ -37,11 +37,13 @@ endef
 $(if $(wildcard cfgOpenOCD),,$(shell ln -s $(TM)/cfgOpenOCD))
 cfgOpenOCD:=$(wildcard cfgOpenOCD)
 
-cfgLine1:= \
+cfgLine1xilinx:= \
+	$(openocd)  \
 	-f $(cfgOpenOCD)/ixo-usb-jtag-16c0-06ad.cfg \
 	-f $(cfgOpenOCD)/promXCF04S.cfg \
 	-f $(cfgOpenOCD)/xc3s500e.cfg
-cfgLine2:= \
+cfgLine2altera:= \
+	$(openocd)  \
 	-f $(cfgOpenOCD)/altera-usb-blaster.cfg \
 	-f $(cfgOpenOCD)/promXCF04S.cfg \
 	-f $(cfgOpenOCD)/xc3s500e.cfg
@@ -62,12 +64,17 @@ $(load_openOCD_firmware)
   
 2nd : then , use the openocd  
   
-$(openocd) $(cfgLine1)  
-$(openocd) $(cfgLine2)  
+$(cfgLine1xilinx)  
+$(cfgLine2altera)  
   
 3rd : telnet 127.0.0.1 4444  
       jtag init 
       scan_chain 
+
+4th : or , you can add "init", "svf XXX.svf", and "exit" into a file named cmd01.txt, then ,
+
+$(cfgLine2altera)  \
+	-f cmd01.txt
   
 endef
 
