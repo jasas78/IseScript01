@@ -34,14 +34,17 @@ define burn_basic
 
 endef
 
+$(if $(wildcard cfgOpenOCD),,$(shell ln -s $(TM)/cfgOpenOCD))
+cfgOpenOCD:=$(wildcard cfgOpenOCD)
+
 cfgLine1:= \
-	-f cfgOpenOCD/ixo-usb-jtag-16c0-06ad.cfg \
-	-f cfgOpenOCD/promXCF04S.cfg \
-	-f cfgOpenOCD/xc3s500e.cfg
+	-f $(cfgOpenOCD)/ixo-usb-jtag-16c0-06ad.cfg \
+	-f $(cfgOpenOCD)/promXCF04S.cfg \
+	-f $(cfgOpenOCD)/xc3s500e.cfg
 cfgLine2:= \
-	-f cfgOpenOCD/altera-usb-blaster.cfg \
-	-f cfgOpenOCD/promXCF04S.cfg \
-	-f cfgOpenOCD/xc3s500e.cfg
+	-f $(cfgOpenOCD)/altera-usb-blaster.cfg \
+	-f $(cfgOpenOCD)/promXCF04S.cfg \
+	-f $(cfgOpenOCD)/xc3s500e.cfg
 
 load_openOCD_firmware:= \
 	/home/bootH/LogicAnalyzer/cyusb/fxload-2008_10_13/fxload \
@@ -68,7 +71,7 @@ $(openocd) $(cfgLine2)
   
 endef
 
-OCDcfgList:=$(sort $(wildcard cfgOpenOCD/*.cfg))
+OCDcfgList:=$(sort $(wildcard $(cfgOpenOCD)/*.cfg))
 $(call genVimWithFileList,showSourceCodeTEXT,$(OCDcfgList),vv)
 
 showRunHelpList +=svrUSAGE svbUSAGE
