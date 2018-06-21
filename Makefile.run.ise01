@@ -90,11 +90,11 @@ $(call genVimWithFileList,showSourceCodeTEXT,$(VerilogRunINCset),vv)
 
 $(eval $(foreach aa2,$(CFGrunIseINCset2),$(call tryINCmustExist,$(aa2),db8193911)))
 
-aaa:=compile_verilog_by_ise_and_run_it
+aaa:=compile_verilog_by_ise_and_run_it_by_xilinx_DLC9G
 $(aaa):=ct co rx rn rm rp rt rb rr rs svr svf ur
 aaa: $($(aaa))
 
-bbb:=compile_verilog_by_ise_and_run_it
+bbb:=compile_verilog_by_ise_and_run_it_by_altera_blaster
 $(bbb):=ct co rx rn rm rp rt rb rr rs svr svf obr
 bbb: $($(bbb))
 
