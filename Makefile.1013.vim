@@ -40,6 +40,7 @@ vp: vpc
 		|tr ' ' '\n' \
 		|grep -v mod\\.c$$  \
 		|grep -v '^ *$$' \
+		|sed -e 's;//\+;/;g' \
 		|sort -u \
 		>> _vim/cscope.in2
 	@
