@@ -49,6 +49,6 @@ endef
 OCDcfgList:=$(sort $(wildcard $(cfgOpenOCD)/*.cfg))
 $(call genVimWithFileList,showSourceCodeTEXT,$(OCDcfgList),vv)
 
-showRunHelpList +=svrUSAGE svbUSAGE
+showRunHelpList +=gvrUSAGE gvfUSAGE
 
 

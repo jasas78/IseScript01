@@ -4,59 +4,59 @@ ifeq (,$(strip $(ISEbin)))
 $(error "you should define ISEbin and run again" )
 endif
 
-SSsvb?=mcs.now.mcs
-DDsvb?=svf.FPGA.flash.svf
+SSgvf?=mcs.now.mcs
+DDgvf?=svf.FPGA.flash.svf
 
-SSsvbXX:=$(shell realpath $(SSsvb))
-DDsvbXX:=$(shell realpath $(DDsvb))
+SSgvfXX:=$(shell realpath $(SSgvf))
+DDgvfXX:=$(shell realpath $(DDgvf))
 
-FFsvbScr1:=scr_3044.impact.gen_svf_for_run.scr
-FFsvbLog1:=log_3044.impact.gen_svf_for_run.log
+FFgvfScr1:=scr_3044.impact.gen_svf_for_run.scr
+FFgvfLog1:=log_3044.impact.gen_svf_for_run.log
 
-define SCRsvbScr1
+define SCRgvfScr1
 
 setMode -bscan
-setCable -port svf -file "$(DDsvbXX)"
+setCable -port svf -file "$(DDgvfXX)"
 addDevice -p 1 -part $(JtagPart1)
 addDevice -p 2 -part $(JtagPart2)
-assignFile -p 2 -file "$(SSsvbXX)"
+assignFile -p 2 -file "$(SSgvfXX)"
 Program -p 2 -e -v 
 exit
 
 endef
-export SCRsvbScr1
+export SCRgvfScr1
 
-define svbUsageTEXT
+define gvfUsageTEXT
 
-make svb [SSsvb=$(SSsvb)] [DDsvb=$(DDsvb)] [JtagPart1=$(JtagPart1)] [JtagPart2=$(JtagPart2)] 
-note : you can re-define SSsvb & DDsvb & JtagPart1 & JtagPart2 in Makefile.env or in command line
+make gvf [SSgvf=$(SSgvf)] [DDgvf=$(DDgvf)] [JtagPart1=$(JtagPart1)] [JtagPart2=$(JtagPart2)] 
+note : you can re-define SSgvf & DDgvf & JtagPart1 & JtagPart2 in Makefile.env or in command line
 
 endef
-export svbUsageTEXT
+export gvfUsageTEXT
 
-svbUSAGE:=gen_svf_for_FPGA_flash_USAGE
-$(svbUSAGE):=$(EOL)$(svbUsageTEXT)
-svbUSAGE:
-	@echo "$${svbUsageTEXT}"
-
-
+gvfUSAGE:=gen_svf_for_FPGA_flash_USAGE
+$(gvfUSAGE):=$(EOL)$(gvfUsageTEXT)
+gvfUSAGE:
+	@echo "$${gvfUsageTEXT}"
 
 
 
-svb:=gen_svf_for_burn_into_fpga_flash
-$(svb):=Makefile.3045.impact.gen_svf_for_burn_flash
 
-svb :
+
+gvf:=gen_svf_for_burn_into_fpga_flash
+$(gvf):=Makefile.3045.impact.gen_svf_for_burn_flash
+
+gvf :
 	[ -d tmp ] || mkdir tmp
-	rm -f tmp/_impactbatch.log tmp/$(FFsvbScr1) tmp/$(FFsvbLog1) $(DDsvbXX)
+	rm -f tmp/_impactbatch.log tmp/$(FFgvfScr1) tmp/$(FFgvfLog1) $(DDgvfXX)
 	ls -l tmp/
-	echo "$${SCRsvbScr1}" > tmp/$(FFsvbScr1)
-	md5sum $(SSsvbXX) 
+	echo "$${SCRgvfScr1}" > tmp/$(FFgvfScr1)
+	md5sum $(SSgvfXX) 
 	cd tmp/ && $(LDso641) $(ISEbin)/impact \
-		-batch < $(FFsvbScr1)  > $(FFsvbLog1)
-	sed -i -e '/^\/\/ Date:/d' $(DDsvbXX)
-	md5sum $(DDsvbXX) 
+		-batch < $(FFgvfScr1)  > $(FFgvfLog1)
+	sed -i -e '/^\/\/ Date:/d' $(DDgvfXX)
+	md5sum $(DDgvfXX) 
 
 
-showRunHelpList +=svb 
-## showRunHelpList +=svbUSAGE
+showRunHelpList +=gvf 
+## showRunHelpList +=gvfUSAGE

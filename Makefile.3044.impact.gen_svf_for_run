@@ -4,60 +4,60 @@ ifeq (,$(strip $(ISEbin)))
 $(error "you should define ISEbin and run again" )
 endif
 
-SSsvr?=bit.now.bit
-DDsvr?=svf.FPGA.run.svf
+SSgvr?=bit.now.bit
+DDgvr?=svf.FPGA.run.svf
 
-SSsvrXX:=$(shell realpath $(SSsvr))
-DDsvrXX:=$(shell realpath $(DDsvr))
+SSgvrXX:=$(shell realpath $(SSgvr))
+DDgvrXX:=$(shell realpath $(DDgvr))
 
-FFsvrScr1:=scr_3044.impact.gen_svf_for_run.scr
-FFsvrLog1:=log_3044.impact.gen_svf_for_run.log
+FFgvrScr1:=scr_3044.impact.gen_svf_for_run.scr
+FFgvrLog1:=log_3044.impact.gen_svf_for_run.log
 
-define SCRsvrScr1
+define SCRgvrScr1
 
 setMode -bscan
-setCable -port svf -file "$(DDsvrXX)"
+setCable -port svf -file "$(DDgvrXX)"
 addDevice -p 1 -part $(JtagPart1)
 addDevice -p 2 -part $(JtagPart2)
-assignFile -p 1 -file "$(SSsvrXX)"
+assignFile -p 1 -file "$(SSgvrXX)"
 Program -p 1 
 exit
 
 endef
-export SCRsvrScr1
+export SCRgvrScr1
 
-define svrUsageTEXT
+define gvrUsageTEXT
 
-make svr [SSsvr=$(SSsvr)] [DDsvr=$(DDsvr)] [JtagPart1=$(JtagPart1)] [JtagPart2=$(JtagPart2)] 
-note : you can re-define SSsvr & DDsvr & JtagPart1 & JtagPart2 in Makefile.env or in command line
+make gvr [SSgvr=$(SSgvr)] [DDgvr=$(DDgvr)] [JtagPart1=$(JtagPart1)] [JtagPart2=$(JtagPart2)] 
+note : you can re-define SSgvr & DDgvr & JtagPart1 & JtagPart2 in Makefile.env or in command line
 
 endef
-export svrUsageTEXT
+export gvrUsageTEXT
 
-svrUSAGE:=gen_svf_for_FPGA_run_only_USAGE
-$(svrUSAGE):=$(EOL)$(svrUsageTEXT)
-svrUSAGE:
-	@echo "$${svrUsageTEXT}"
-
-
+gvrUSAGE:=gen_svf_for_FPGA_run_only_USAGE
+$(gvrUSAGE):=$(EOL)$(gvrUsageTEXT)
+gvrUSAGE:
+	@echo "$${gvrUsageTEXT}"
 
 
 
-svr:=gen_svf_for_run_in_fpga_RAM_only
-$(svr):=Makefile.3044.impact.gen_svf_for_run
 
-svr :
+
+gvr:=gen_svf_for_run_in_fpga_RAM_only
+$(gvr):=Makefile.3044.impact.gen_svf_for_run
+
+gvr :
 	[ -d tmp ] || mkdir tmp
-	rm -f tmp/_impactbatch.log tmp/$(FFsvrScr1) tmp/$(FFsvrLog1) $(DDsvrXX)
+	rm -f tmp/_impactbatch.log tmp/$(FFgvrScr1) tmp/$(FFgvrLog1) $(DDgvrXX)
 	ls -l tmp/
-	echo "$${SCRsvrScr1}" > tmp/$(FFsvrScr1)
-	md5sum $(SSsvrXX) 
+	echo "$${SCRgvrScr1}" > tmp/$(FFgvrScr1)
+	md5sum $(SSgvrXX) 
 	cd tmp/ && $(LDso641) $(ISEbin)/impact \
-		-batch < $(FFsvrScr1)  > $(FFsvrLog1)
-	sed -i -e '/^\/\/ Date:/d' $(DDsvrXX)
-	md5sum $(DDsvrXX) 
+		-batch < $(FFgvrScr1)  > $(FFgvrLog1)
+	sed -i -e '/^\/\/ Date:/d' $(DDgvrXX)
+	md5sum $(DDgvrXX) 
 
 
-showRunHelpList +=svr 
-## showRunHelpList +=svrUSAGE
+showRunHelpList +=gvr 
+## showRunHelpList +=gvrUSAGE
 

@@ -52,7 +52,7 @@ exit
 endef
 export obrTEXT1 
 
-obr:=openocd_burn_fpga_for_run
+obr:=openocd_burn_fpga_for_run_in_RAM
 obr:
 	echo "$${obrTEXT1}" > tmp/obr01.txt
 	$(cfgLine2altera)  -f tmp/obr01.txt
@@ -71,7 +71,7 @@ exit
 endef
 export obfTEXT1 
 
-obf:=openocd_burn_fpga_for_run
+obf:=openocd_burn_fpga_for_flash
 obf:
 	echo "$${obfTEXT1}" > tmp/obf01.txt
 	$(cfgLine2altera)  -f tmp/obf01.txt
