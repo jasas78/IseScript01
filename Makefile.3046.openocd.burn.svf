@@ -70,12 +70,12 @@ export obrTEXT1
 obr:=openocd_burn_fpga_for_run_in_RAM
 obr:
 	echo "$${obrTEXT1}" > tmp/obr01.txt
-	aa1=1 ; while [ $${aa1} -lt 10 ] ; do nohup \
+	echo ; aa1=1 ; while [ $${aa1} -lt 10 ] ; do nohup \
 	$(cfgLine2altera)  -f tmp/obr01.txt \
 	> \
-	tmp/log_obr01.txt ; grep 'commands with 0 errors' \
-	tmp/log_obr01.txt && break ; aa1=$$(($${aa1}+1)) ; done ; \
-	[ $${aa1} != 10 ] || (echo ; echo 10 try failed. ;echo ; exit 44)
+	tmp/log_obr01.txt 2>&1 ; grep 'commands with 0 errors' \
+	tmp/log_obr01.txt && break ; aa1=$$(($${aa1}+1)) ; done ; echo ; \
+	[ $${aa1} -lt 10 ] && echo " trying $$((0+$${aa1})) time , then succceed." || (echo "10 try failed." ;echo ; exit 44)
 	@echo
 	@grep 'svf'              tmp/obr01.txt
 	@echo
