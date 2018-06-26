@@ -41,13 +41,28 @@ load_openOCD_firmware:= \
 				-D /dev/bus/usb/001/122
 
 
+#exit
+#jtag init
+#reset_config srst_only
+#jtag_reset 1 0
+#scan_chain
+#sleep 1000
+#reset_config trst_and_srst
+#sleep 100
+#jtag_reset 0 0
+#svf ../openOCD_x01/1/led4.01.FPGA.run.svf quiet
+#sleep 100
 ############ obr # begin #######
 obrPara1?=svf.FPGA.run.svf
 define obrTEXT1 
 
 init 
-svf $(obrPara1)
-exit
+scan_chain
+svf ../openOCD_x01/1/led4.01.FPGA.run.svf quiet
+sleep 100
+svf $(obrPara1) quiet
+sleep 100
+shutdown  33
 
 endef
 export obrTEXT1 
@@ -55,7 +70,15 @@ export obrTEXT1
 obr:=openocd_burn_fpga_for_run_in_RAM
 obr:
 	echo "$${obrTEXT1}" > tmp/obr01.txt
-	$(cfgLine2altera)  -f tmp/obr01.txt
+	aa1=1 ; while [ $${aa1} -lt 10 ] ; do nohup \
+	$(cfgLine2altera)  -f tmp/obr01.txt \
+	> \
+	tmp/log_obr01.txt ; grep 'commands with 0 errors' \
+	tmp/log_obr01.txt && break ; aa1=$$(($${aa1}+1)) ; done ; \
+	[ $${aa1} != 10 ] || (echo ; echo 10 try failed. ;echo ; exit 44)
+	@echo
+	@grep 'svf'              tmp/obr01.txt
+	@echo
 
 showRunHelpList +=obr 
 ############ obr # end #######
@@ -75,6 +98,9 @@ obf:=openocd_burn_fpga_for_flash
 obf:
 	echo "$${obfTEXT1}" > tmp/obf01.txt
 	$(cfgLine2altera)  -f tmp/obf01.txt
+	@echo
+	@grep 'svf'              tmp/obf01.txt
+	@echo
 
 showRunHelpList +=obf 
 ############ obf # end #######
