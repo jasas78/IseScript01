@@ -51,6 +51,7 @@ load_openOCD_firmware:= \
 #sleep 100
 #jtag_reset 0 0
 #svf ../openOCD_x01/1/led4.01.FPGA.run.svf quiet
+#svf cfgOpenOCD/led4.01.FPGA.run.svf
 #sleep 100
 ############ obr # begin #######
 obrPara1?=svf.FPGA.run.svf
@@ -58,7 +59,7 @@ define obrTEXT1
 
 init 
 scan_chain
-svf ../openOCD_x01/1/led4.01.FPGA.run.svf quiet
+svf $(cfgOpenOCD)/led4.01.FPGA.run.svf quiet
 sleep 100
 svf $(obrPara1) quiet
 sleep 100
