@@ -2,8 +2,8 @@ all:
 
 
 CFGrunSynopsysVcsINCset1:=\
+	Makefile.4010.synopsys.path \
 
-#	Makefile.3031.ise.path		\
 
 CFGrunSynopsysVcsINCset2:=$(foreach aa1,$(CFGrunSynopsysVcsINCset1),$(TM)/$(aa1))
 
