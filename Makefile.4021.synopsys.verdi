@@ -1,0 +1,71 @@
+all:
+
+$(if $(synopsysPATH),,$(error 'you should define the synopsysPATH and run again'))
+
+# LM_LICENSE_FILE
+#synopsysBIN:=$(shell 	realpath $(synopsysPATH)/bin)
+#VERDI_HOME:=$(shell     realpath $(synopsysPATH)/nowDIR.Verdi)
+#VCS_HOME:=$(shell       realpath $(synopsysPATH)/nowDIR.VCS)
+
+b1:=synopsys_VCS_build_only___withouth_Verdi_FSDB
+b1:
+	@echo
+	VCS_HOME=$(VCS_HOME) 			\
+			 $(synopsysBIN)/vcs  	\
+			 $(VCShdlList)
+	@echo
+
+vcsPara1:= -lca -debug_access+all
+#vcsPara1:= -debug_access+all
+
+b2:=synopsys_VCS_build___with_Verdi_FSDB
+b2:
+	@echo
+	VCS_HOME=$(VCS_HOME) 				\
+			 VERDI_HOME=$(VERDI_HOME) 	\
+			 PATH=$(synopsysPATH)/gcc4:$${PATH}     \
+			 $(synopsysBIN)/vcs  		\
+			 $(vcsPara1)   				\
+			 $(VCShdlList)
+	@echo
+
+
+cv:=clean_vcs_tmp_file
+cv:
+	rm -f \
+		opendatabase.log \
+		*.vcd \
+		*.vcd.vpd \
+		inter.vpd \
+		command.log \
+		verdi.fsdb			\
+		novas_dump.log			\
+		Simv simv ucli.key 
+	rm -fr \
+		DVEfiles \
+		simv.daidir/ \
+		csrc/
+
+tv1:=run_the_test_of_VCS___without_Verdi_FSDB
+tv1:
+	@echo
+	./simv
+	@echo
+
+tv2:=run_the_test_of_VCS___with_Verdi_FSDB
+tv2:
+	@echo
+	@rm -f verdi.fsdb
+	LD_LIBRARY_PATH=$(VERDI_HOME)/share/PLI/VCS/linux   \
+					./simv
+	@echo
+
+ww1:=all_vcs_without_Verdi_FSDB
+$(ww1):=cv b1 tv1
+ww1: $($(ww1))
+
+ww2:=all_vcs_with_Verdi_FSDB
+$(ww2):=cv b2 tv2
+ww2:$($(ww2))
+
+synopsysVCS_OpList:=cv b1 b2 tv1 tv2 ww1 ww2

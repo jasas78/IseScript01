@@ -16,7 +16,7 @@ b1:
 	@echo
 
 vcsPara1:= -lca -debug_access+all
-vcsPara1:= -debug_access+all
+#vcsPara1:= -debug_access+all
 
 b2:=synopsys_VCS_build___with_Verdi_FSDB
 b2:
@@ -68,4 +68,4 @@ ww2:=all_vcs_with_Verdi_FSDB
 $(ww2):=cv b2 tv2
 ww2:$($(ww2))
 
-showRunHelpList +=cv b1 b2 tv1 tv2 ww1 ww2
+synopsysVCS_OpList:=cv b1 b2 tv1 tv2 ww1 ww2
