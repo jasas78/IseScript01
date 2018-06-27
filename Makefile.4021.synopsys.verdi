@@ -2,6 +2,30 @@ all:
 
 $(if $(synopsysPATH),,$(error 'you should define the synopsysPATH and run again'))
 
+define veridiPlay01
+
+verdiSetPrefEnv -bDisplayWelcome "off"
+verdiWindowWorkMode -win $$_Verdi_1 -hardwareDebug
+verdiWindowBeWindow -win $$_nWave2
+wvResizeWindow -win $$_nWave2 0 28 1388 939
+
+srcDeselectAll -win $$_nTrace1
+srcSelect -signal "rst" -win $$_nTrace1
+srcAddSelectedToWave -win $$_nTrace1
+srcDeselectAll -win $$_nTrace1
+srcSelect -signal "clk" -win $$_nTrace1
+srcAddSelectedToWave -win $$_nTrace1
+srcDeselectAll -win $$_nTrace1
+srcSelect -signal "c" -win $$_nTrace1
+srcAddSelectedToWave -win $$_nTrace1
+
+wvZoomAll -win $$_nWave2
+
+
+endef
+export veridiPlay01
+
+
 cvv:=clean_verdi_tmp_file
 cvv:
 	rm -f 					\
@@ -15,6 +39,7 @@ cvv:
 		novas.conf			\
 		novas.rc			\
 		filelist.verdi.txt	\
+		verdi.play0?.txt	\
 		Simv simv ucli.key 
 	rm -fr 					\
 		work.lib++			\
@@ -37,9 +62,12 @@ tv1:=run_the_test_of_Verdi_FSDB
 tv1:
 	@echo
 	rm -f ./verdi.fsdb && cp srcSIM/verdi.fsdb ./
+	echo "$${veridiPlay01}" > verdi.play01.txt 
 	VERDI_HOME=$(VERDI_HOME) 			\
 			   $(VERDI_HOME)/bin/verdi 	\
 			   -ssf verdi.fsdb  		\
+			   -ba						\
+			   -play verdi.play01.txt	\
 			   -top $(VERDItop)
 	@echo
 
@@ -55,3 +83,4 @@ tv9:
 	@echo
 
 synopsysVerdi_OpList:=cvv bv1 tv1 tv9 
+
