@@ -30,7 +30,7 @@ tv1:=run_the_test_of_Verdi_FSDB
 tv1:
 	@echo
 	rm -f ./verdi.fsdb && cp srcSIM/verdi.fsdb ./
-	echo "$(VERDIhdlList)" > filelist.verdi.txt 
+	echo "$${VERDIhdlList}" |xargs -n 1 > filelist.verdi.txt 
 	VERDI_HOME=$(VERDI_HOME) 			\
 			   $(VERDI_HOME)/bin/verdi 	\
 			   -ssf verdi.fsdb  		\

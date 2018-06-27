@@ -5,6 +5,8 @@ VERDIhdlList:=$(filter-out $(VERDIfilterOutList),$(sort \
 	$(wildcard srcSIM/srcSYN/tbSrc?/*.v) \
 	))\
 	$(VERDIextSrcList)
+export VERDIhdlList
+
 $(call genVimWithFileList,showSourceCodeTEXT,$(VERDIhdlList),vv)
 
 
