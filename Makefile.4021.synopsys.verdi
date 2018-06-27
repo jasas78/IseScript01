@@ -26,10 +26,10 @@ cvv:
 		simv.daidir/ \
 		csrc/
 
-td1:=run_the_test_of_Verdi_FSDB
-td1:
+tv1:=run_the_test_of_Verdi_FSDB
+tv1:
 	@echo
 	./simv
 	@echo
 
-synopsysVerdi_OpList:=cvv bv1 td1 
+synopsysVerdi_OpList:=cvv bv1 tv1 
