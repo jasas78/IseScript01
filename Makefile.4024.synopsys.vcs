@@ -2,11 +2,6 @@ all:
 
 $(if $(synopsysPATH),,$(error 'you should define the synopsysPATH and run again'))
 
-# LM_LICENSE_FILE
-#synopsysBIN:=$(shell 	realpath $(synopsysPATH)/bin)
-#VERDI_HOME:=$(shell     realpath $(synopsysPATH)/nowDIR.Verdi)
-#VCS_HOME:=$(shell       realpath $(synopsysPATH)/nowDIR.VCS)
-
 b1:=synopsys_VCS_build_only___withouth_Verdi_FSDB
 b1:
 	@echo

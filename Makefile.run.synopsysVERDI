@@ -1,26 +1,26 @@
 all: 
 
-VCShdlList:=$(filter-out $(VCSfilterOutList),$(sort \
-	$(wildcard srcSYN/src?/*.v) \
-	$(wildcard srcSYN/tbSrc?/*.v) \
+VERDIhdlList:=$(filter-out $(VERDIfilterOutList),$(sort \
+	$(wildcard srcSIM/srcSYN/src?/*.v) \
+	$(wildcard srcSIM/srcSYN/tbSrc?/*.v) \
 	))\
-	$(VCSextSrcList)
-$(call genVimWithFileList,showSourceCodeTEXT,$(VCShdlList),vv)
+	$(VERDIextSrcList)
+$(call genVimWithFileList,showSourceCodeTEXT,$(VERDIhdlList),vv)
 
 
 
 
 
-CFGrunSynopsysVcsINCset1:=\
+CFGrunSynopsysVerdiINCset1:=\
 	Makefile.4010.synopsys.path 	\
-	Makefile.4024.synopsys.vcs		\
+	Makefile.4021.synopsys.verdi		\
 
 
-CFGrunSynopsysVcsINCset2:=$(foreach aa1,$(CFGrunSynopsysVcsINCset1),$(TM)/$(aa1))
+CFGrunSynopsysVerdiINCset2:=$(foreach aa1,$(CFGrunSynopsysVerdiINCset1),$(TM)/$(aa1))
 
-$(eval $(foreach aa2,$(CFGrunSynopsysVcsINCset2),$(call tryINCmustExist,$(aa2),db8193912)))
+$(eval $(foreach aa2,$(CFGrunSynopsysVerdiINCset2),$(call tryINCmustExist,$(aa2),db8193912)))
 
 
-showRunHelpList +=$(synopsysVCS_OpList)
+showRunHelpList +=$(synopsysVerdi_OpList)
 
 
