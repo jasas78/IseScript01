@@ -2,32 +2,49 @@ all:
 
 $(if $(synopsysPATH),,$(error 'you should define the synopsysPATH and run again'))
 
+cvv:=clean_verdi_tmp_file
+cvv:
+	rm -f 					\
+		opendatabase.log 	\
+		*.vcd 				\
+		*.vcd.vpd 			\
+		inter.vpd 			\
+		command.log 		\
+		verdi.fsdb			\
+		novas_dump.log		\
+		novas.conf			\
+		novas.rc			\
+		filelist.verdi.txt	\
+		Simv simv ucli.key 
+	rm -fr 					\
+		work.lib++			\
+		vericomLog			\
+		verdiLog    		\
+		DVEfiles 			\
+		simv.daidir/ 		\
+		csrc/
+
 bv1:=synopsys_compile_Verdi_FSDB_database
 bv1:
 	@echo
-	VCS_HOME=$(VCS_HOME) 			\
-			 $(synopsysBIN)/vcs  	\
-			 $(VCShdlList)
+	VERDI_HOME=$(VERDI_HOME) 			\
+			   $(VERDI_HOME)/bin/vericom 	\
+			   $${VERDIhdlList}
 	@echo
 
-cvv:=clean_verdi_tmp_file
-cvv:
-	rm -f \
-		opendatabase.log \
-		*.vcd \
-		*.vcd.vpd \
-		inter.vpd \
-		command.log \
-		verdi.fsdb			\
-		novas_dump.log			\
-		Simv simv ucli.key 
-	rm -fr \
-		DVEfiles \
-		simv.daidir/ \
-		csrc/
 
 tv1:=run_the_test_of_Verdi_FSDB
 tv1:
+	@echo
+	rm -f ./verdi.fsdb && cp srcSIM/verdi.fsdb ./
+	VERDI_HOME=$(VERDI_HOME) 			\
+			   $(VERDI_HOME)/bin/verdi 	\
+			   -ssf verdi.fsdb  		\
+			   -top $(VERDItop)
+	@echo
+
+tv9:=run_the_test_of_Verdi_FSDB
+tv9:
 	@echo
 	rm -f ./verdi.fsdb && cp srcSIM/verdi.fsdb ./
 	echo "$${VERDIhdlList}" |xargs -n 1 > filelist.verdi.txt 
@@ -37,4 +54,4 @@ tv1:
 			   -f filelist.verdi.txt 
 	@echo
 
-synopsysVerdi_OpList:=cvv bv1 tv1 
+synopsysVerdi_OpList:=cvv bv1 tv1 tv9 
