@@ -11,7 +11,26 @@ b1:=synopsys_VCS_build_only
 $(b1):=withouth Verdi FSDB
 b1:
 	@echo
-	VCS_HOME=$(VCS_HOME) $(synopsysBIN)/vcs  $(VCShdlList)
+	VCS_HOME=$(VCS_HOME) 			\
+			 $(synopsysBIN)/vcs  	\
+			 $(VCShdlList)
+	@echo
+
+vcsPara1:= -lca -debug_access+all
+vcsPara1:= -debug_access+all
+
+b2:=synopsys_VCS_build_only
+$(b2):=with Verdi FSDB
+b2:
+	@echo
+	VCS_HOME=$(VCS_HOME) 				\
+			 VERDI_HOME=$(VERDI_HOME) 	\
+			 PATH=$(synopsysPATH)/gcc4:$${PATH}     \
+			 $(synopsysBIN)/vcs  		\
+			 $(vcsPara1)   				\
+			 $(VCShdlList)
+	@echo
+
 
 cv:=clean_vcs_tmp_file
 cv:
@@ -27,4 +46,4 @@ cv:
 		simv.daidir/ \
 		csrc/
 
-showRunHelpList +=cv b1 
+showRunHelpList +=cv b1 b2 
