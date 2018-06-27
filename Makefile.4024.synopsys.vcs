@@ -55,12 +55,12 @@ ts2:
 					./simv
 	@echo
 
-ww1:=all_vcs_without_Verdi_FSDB
-$(ww1):=cvs bs1 ts1
-ww1: $($(ww1))
+ws1:=all_vcs_without_Verdi_FSDB
+$(ws1):=cvs bs1 ts1
+ws1: $($(ws1))
 
-ww2:=all_vcs_with_Verdi_FSDB
-$(ww2):=cvs bs2 ts2
-ww2:$($(ww2))
+ws2:=all_vcs_with_Verdi_FSDB
+$(ws2):=cvs bs2 ts2
+ws2:$($(ws2))
 
-synopsysVCS_OpList:=cvs bs1 bs2 ts1 ts2 ww1 ww2
+synopsysVCS_OpList:=cvs bs1 bs2 ts1 ts2 ws1 ws2
