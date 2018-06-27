@@ -1,0 +1,18 @@
+all: 
+
+
+CFGrunSynopsysVcsINCset1:=\
+
+#	Makefile.3031.ise.path		\
+
+CFGrunSynopsysVcsINCset2:=$(foreach aa1,$(CFGrunSynopsysVcsINCset1),$(TM)/$(aa1))
+
+$(eval $(foreach aa2,$(CFGrunSynopsysVcsINCset2),$(call tryINCmustExist,$(aa2),db8193912)))
+
+
+VCShdlList:=$(sort $(wildcard srcSYN/src?/*.v))
+$(call genVimWithFileList,showSourceCodeTEXT,$(VCShdlList),vv)
+
+#showRunHelpList +=gvrUSAGE gvfUSAGE
+
+
