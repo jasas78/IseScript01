@@ -1,0 +1,30 @@
+all:
+
+$(if $(synopsysPATH),,$(error 'you should define the synopsysPATH and run again'))
+
+# LM_LICENSE_FILE
+#synopsysBIN:=$(shell 	realpath $(synopsysPATH)/bin)
+#VERDI_HOME:=$(shell     realpath $(synopsysPATH)/nowDIR.Verdi)
+#VCS_HOME:=$(shell       realpath $(synopsysPATH)/nowDIR.VCS)
+
+b1:=synopsys_VCS_build_only
+$(b1):=withouth Verdi FSDB
+b1:
+	@echo
+	VCS_HOME=$(VCS_HOME) $(synopsysBIN)/vcs  $(VCShdlList)
+
+cv:=clean_vcs_tmp_file
+cv:
+	rm -f \
+		opendatabase.log \
+		*.vcd \
+		*.vcd.vpd \
+		inter.vpd \
+		command.log \
+		Simv simv ucli.key 
+	rm -fr \
+		DVEfiles \
+		simv.daidir/ \
+		csrc/
+
+showRunHelpList +=cv b1 
