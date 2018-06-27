@@ -8,6 +8,7 @@ verdiSetPrefEnv -bDisplayWelcome "off"
 verdiWindowWorkMode -win $$_Verdi_1 -hardwareDebug
 verdiWindowBeWindow -win $$_nWave2
 wvResizeWindow -win $$_nWave2 0 28 1388 939
+srcSignalView -on
 
 srcDeselectAll -win $$_nTrace1
 srcSelect -signal "rst" -win $$_nTrace1
@@ -18,6 +19,8 @@ srcAddSelectedToWave -win $$_nTrace1
 srcDeselectAll -win $$_nTrace1
 srcSelect -signal "c" -win $$_nTrace1
 srcAddSelectedToWave -win $$_nTrace1
+
+
 
 wvZoomAll -win $$_nWave2
 
