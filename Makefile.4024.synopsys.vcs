@@ -2,8 +2,8 @@ all:
 
 $(if $(synopsysPATH),,$(error 'you should define the synopsysPATH and run again'))
 
-b1:=synopsys_VCS_build_only___withouth_Verdi_FSDB
-b1:
+bs1:=synopsys_VCS_build_only___withouth_Verdi_FSDB
+bs1:
 	@echo
 	VCS_HOME=$(VCS_HOME) 			\
 			 $(synopsysBIN)/vcs  	\
@@ -13,8 +13,8 @@ b1:
 vcsPara1:= -lca -debug_access+all
 #vcsPara1:= -debug_access+all
 
-b2:=synopsys_VCS_build___with_Verdi_FSDB
-b2:
+bs2:=synopsys_VCS_build___with_Verdi_FSDB
+bs2:
 	@echo
 	VCS_HOME=$(VCS_HOME) 				\
 			 VERDI_HOME=$(VERDI_HOME) 	\
@@ -25,8 +25,8 @@ b2:
 	@echo
 
 
-cv:=clean_vcs_tmp_file
-cv:
+cvs:=clean_vcs_tmp_file
+cvs:
 	rm -f \
 		opendatabase.log \
 		*.vcd \
@@ -41,26 +41,26 @@ cv:
 		simv.daidir/ \
 		csrc/
 
-tv1:=run_the_test_of_VCS___without_Verdi_FSDB
-tv1:
+ts1:=run_the_test_of_VCS___without_Verdi_FSDB
+ts1:
 	@echo
 	./simv
 	@echo
 
-tv2:=run_the_test_of_VCS___with_Verdi_FSDB
-tv2:
+ts2:=run_the_test_of_VCS___with_Verdi_FSDB
+ts2:
 	@echo
-	@rm -f verdi.fsdb
+	rm -f verdi.fsdb
 	LD_LIBRARY_PATH=$(VERDI_HOME)/share/PLI/VCS/linux   \
 					./simv
 	@echo
 
 ww1:=all_vcs_without_Verdi_FSDB
-$(ww1):=cv b1 tv1
+$(ww1):=cvs bs1 ts1
 ww1: $($(ww1))
 
 ww2:=all_vcs_with_Verdi_FSDB
-$(ww2):=cv b2 tv2
+$(ww2):=cvs bs2 ts2
 ww2:$($(ww2))
 
-synopsysVCS_OpList:=cv b1 b2 tv1 tv2 ww1 ww2
+synopsysVCS_OpList:=cvs bs1 bs2 ts1 ts2 ww1 ww2
