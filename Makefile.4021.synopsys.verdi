@@ -85,5 +85,12 @@ tv9:
 			   -f filelist.verdi.txt 
 	@echo
 
-synopsysVerdi_OpList:=cvv bv1 tv1 tv9 
+wv1:=group_run_the_verdi1
+$(wv1):=cvv bv1 tv1
+wv1: $($(wv1))
+
+synopsysVerdi_OpList:=		\
+	cvv bv1 tv1 			\
+	tv9 					\
+	wv1						\
 
