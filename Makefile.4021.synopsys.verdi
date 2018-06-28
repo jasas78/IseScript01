@@ -15,10 +15,12 @@ $(if $(synopsysPATH),,$(error 'you should define the synopsysPATH and run again'
 define veridiPlay01
 
 verdiSetPrefEnv -bDisplayWelcome "off"
+
 verdiWindowWorkMode -win $$_Verdi_1 -hardwareDebug
+srcSignalView -on
+
 verdiWindowBeWindow -win $$_nWave2
 wvResizeWindow -win $$_nWave2 20 28 1800 980
-srcSignalView -on
 
 
 
