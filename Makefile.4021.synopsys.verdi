@@ -12,6 +12,8 @@ $(if $(synopsysPATH),,$(error 'you should define the synopsysPATH and run again'
 # srcSelect -signal "c" -win $$_nTrace1
 # srcAddSelectedToWave -win $$_nTrace1
 
+waveAddLine?= wvAddAllSignals -win $$_nWave2
+
 define veridiPlay01
 
 verdiSetPrefEnv -bDisplayWelcome "off"
@@ -22,6 +24,7 @@ srcSignalView -on
 verdiWindowBeWindow -win $$_nWave2
 wvResizeWindow -win $$_nWave2 20 28 1800 980
 
+$(waveAddLine)
 
 
 
