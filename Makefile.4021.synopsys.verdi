@@ -2,23 +2,24 @@ all:
 
 $(if $(synopsysPATH),,$(error 'you should define the synopsysPATH and run again'))
 
+# srcDeselectAll -win $$_nTrace1
+# srcSelect -signal "rst" -win $$_nTrace1
+# srcAddSelectedToWave -win $$_nTrace1
+# srcDeselectAll -win $$_nTrace1
+# srcSelect -signal "clk" -win $$_nTrace1
+# srcAddSelectedToWave -win $$_nTrace1
+# srcDeselectAll -win $$_nTrace1
+# srcSelect -signal "c" -win $$_nTrace1
+# srcAddSelectedToWave -win $$_nTrace1
+
 define veridiPlay01
 
 verdiSetPrefEnv -bDisplayWelcome "off"
 verdiWindowWorkMode -win $$_Verdi_1 -hardwareDebug
 verdiWindowBeWindow -win $$_nWave2
-wvResizeWindow -win $$_nWave2 0 28 1388 939
+wvResizeWindow -win $$_nWave2 20 28 1800 980
 srcSignalView -on
 
-srcDeselectAll -win $$_nTrace1
-srcSelect -signal "rst" -win $$_nTrace1
-srcAddSelectedToWave -win $$_nTrace1
-srcDeselectAll -win $$_nTrace1
-srcSelect -signal "clk" -win $$_nTrace1
-srcAddSelectedToWave -win $$_nTrace1
-srcDeselectAll -win $$_nTrace1
-srcSelect -signal "c" -win $$_nTrace1
-srcAddSelectedToWave -win $$_nTrace1
 
 
 
