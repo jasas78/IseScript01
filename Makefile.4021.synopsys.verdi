@@ -77,7 +77,7 @@ tv1:
 			   -ssf verdi.fsdb  		\
 			   -ba						\
 			   -play verdi.play01.txt	\
-			   -top $(VERDItop)
+			   -top $(VERDItb)
 	@echo
 
 tv9:=run_the_test_of_Verdi_FSDB
