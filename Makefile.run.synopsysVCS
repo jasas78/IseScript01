@@ -4,13 +4,13 @@ RTLhdlList:=$(filter-out $(VCSfilterOutList),$(sort \
 	$(wildcard srcSYN/src?/*.v) \
 	))\
 	$(VCSextSrcList)
-$(call genVimWithFileList,showSourceCodeTEXT,$(RTLhdlList),vv)
+
 
 TBhdlList:=$(filter-out $(VCSfilterOutList),$(sort \
 	$(wildcard srcSYN/tbSrc?/*.v) \
 	))\
 	$(VCSextSrcList)
-$(call genVimWithFileList,showSourceCodeTEXT,$(TBhdlList),vv)
+$(call genVimWithFileList,showSourceCodeTEXT,$(RTLhdlList) $(TBhdlList),vv)
 
 
 
