@@ -7,7 +7,7 @@ bs1:
 	@echo
 	VCS_HOME=$(VCS_HOME) 			\
 			 $(synopsysBIN)/vcs  	\
-			 $(VCShdlList)
+			 $(RTLhdlList)
 	@echo
 
 vcsPara1:= -lca -debug_access+all
@@ -21,7 +21,7 @@ bs2:
 			 PATH=$(synopsysPATH)/gcc4:$${PATH}     \
 			 $(synopsysBIN)/vcs  		\
 			 $(vcsPara1)   				\
-			 $(VCShdlList)
+			 $(RTLhdlList)
 	@echo
 
 
