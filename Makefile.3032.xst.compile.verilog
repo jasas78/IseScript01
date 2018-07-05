@@ -4,6 +4,7 @@ ifeq (,$(strip $(ISEbin)))
 $(error "you should define ISEbin and run again" )
 endif
 
+### XSTdefine
 
 FNxstEXT0:=$(PROJname)_32_1_xst
 FNxstEXT1:=$(FNxstEXT0)_scr1_load
@@ -34,70 +35,70 @@ endef
 
 # /home/bootH/vm3/VMs/topVM/VM.jg1/virtFS.jg1/xilinx3s500e_example/demoXilinx3s500e/3S500E-Demo/verilog/LED/LED4.xst
 
-define RUNxst21
--iuc NO
--keep_hierarchy No
--netlist_hierarchy As_Optimized
--rtlview Yes
--glob_opt AllClockNets
--read_cores YES
--write_timing_constraints NO
--cross_clock_analysis NO
--hierarchy_separator /
--bus_delimiter <>
--case Maintain
--slice_utilization_ratio 100
--bram_utilization_ratio 100
--verilog2001 YES
--fsm_extract YES -fsm_encoding Auto
--safe_implementation No
--fsm_style LUT
--ram_extract Yes
--ram_style Auto
--rom_extract Yes
--mux_style Auto
--decoder_extract YES
--priority_extract Yes
--shreg_extract YES
--shift_extract YES
--xor_collapse YES
--rom_style Auto
--auto_bram_packing NO
--mux_extract Yes
--resource_sharing YES
--async_to_sync NO
--mult_style Auto
--max_fanout 500
--bufg 24
--register_duplication YES
--register_balancing No
--slice_packing YES
--optimize_primitives NO
+# define RUNxst21
+# -iuc NO
+# -keep_hierarchy No
+# -netlist_hierarchy As_Optimized
+# -rtlview Yes
+# -glob_opt AllClockNets
+# -read_cores YES
+# -write_timing_constraints NO
+# -cross_clock_analysis NO
+# -hierarchy_separator /
+# -bus_delimiter <>
+# -case Maintain
+# -slice_utilization_ratio 100
+# -bram_utilization_ratio 100
+# -verilog2001 YES
+# -fsm_extract YES -fsm_encoding Auto
+# -safe_implementation No
+# -fsm_style LUT
+# -ram_extract Yes
+# -ram_style Auto
+# -rom_extract Yes
+# -mux_style Auto
+# -decoder_extract YES
+# -priority_extract Yes
+# -shreg_extract YES
+# -shift_extract YES
+# -xor_collapse YES
+# -rom_style Auto
+# -auto_bram_packing NO
+# -mux_extract Yes
+# -resource_sharing YES
+# -async_to_sync NO
+# -mult_style Auto
+# -max_fanout 500
+# -bufg 24
+# -register_duplication YES
+# -register_balancing No
+# -slice_packing YES
+# -optimize_primitives NO
+# 
+# endef
+# export RUNxst21
 
-endef
-export RUNxst21
-
-define RUNxst22
-run 
--p $(DEV01) 
--ifmt mixed 
--ofmt ngc 
--top $(topModule) 
--ifn ../out/$(FNxstSCR2) 
--ofn $(FNxstOutNGC)
--opt_mode Speed
--opt_level 1
--iobuf YES
--use_clock_enable Yes
--use_sync_set Yes
--use_sync_reset Yes
--iob Auto
--slice_utilization_ratio_maxmargin 5
--equivalent_register_removal YES
-$(RUNxst21xxxxx)
-
-endef
-export RUNxst22
+# define RUNxst22
+# run 
+# -p $(DEV01) 
+# -ifmt mixed 
+# -ofmt ngc 
+# -top $(topModule) 
+# -ifn ../out/$(FNxstSCR2) 
+# -ofn $(FNxstOutNGC)
+# -opt_mode Speed
+# -opt_level 1
+# -iobuf YES
+# -use_clock_enable Yes
+# -use_sync_set Yes
+# -use_sync_reset Yes
+# -iob Auto
+# -slice_utilization_ratio_maxmargin 5
+# -equivalent_register_removal YES
+# $(RUNxst21xxxxx)
+# 
+# endef
+# export RUNxst22
 
 ### please note : the    RAM.v RAM.veo RAM.ngc    and    ROM.v RAM.veo RAM.ngc   must be in the search dir
 ### and note : only one search dir can be used.
@@ -106,6 +107,7 @@ iseXstIpDirList:= ../src5
 DSPonly:=-dsp_utilization_ratio 100 -use_dsp48 Auto
 define RUNxst23
 run
+$(XSTdefine)
 -sd $(iseXstIpDirList)
 -ifn ../out/$(FNxstSCR2) 
 -ifmt mixed
@@ -188,8 +190,8 @@ ifdef HELP
 	$(foreach aa1,$(RUNxst12),$(eval aa2:=$(RUNxst11) -command $(aa1))$(call RUNxst14,$(aa2))$(EOL))
 	@echo >> out/$(FNxstCMD1)
 endif
-	echo "$${RUNxst21}" > out/$(FNxstSCR1)
-	echo "$${RUNxst22}" > out/$(FNxstSCR1)
+	@#echo "$${RUNxst21}" > out/$(FNxstSCR1)
+	@#echo "$${RUNxst22}" > out/$(FNxstSCR1)
 	echo "$${RUNxst23}" > out/$(FNxstSCR1)
 	echo "$${RUNxst42}" > out/$(FNxstSCR2)
 	@echo "you should put the ipCores into the directory : $(iseXstIpDirList)"
