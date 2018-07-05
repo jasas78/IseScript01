@@ -105,7 +105,17 @@ $(ccc):=$($(aaa)) ur
 ccc: $($(ccc))
 	@echo ; echo " make $@ end." ; echo
 
-showRunHelpList += aaa bbb ccc 
+ddd:=compile_verilog_by_ise_then_flash_it_by_altera_blaster
+$(ddd):=$($(aaa)) obf
+ddd: $($(ddd))
+	@echo ; echo " make $@ end." ; echo
+
+eee:=compile_verilog_by_ise_then_flash_it_by_xilinx_DLC9G
+$(eee):=$($(aaa)) uf
+eee: $($(eee))
+	@echo ; echo " make $@ end." ; echo
+
+showRunHelpList += aaa bbb ccc ddd eee
 
 ifdef AnalyzeIseTopDir
 showAnalyzeIseHelpList:= 
