@@ -106,12 +106,12 @@ ccc: $($(ccc))
 	@echo ; echo " make $@ end." ; echo
 
 ddd:=compile_verilog_by_ise_then_flash_it_by_altera_blaster
-$(ddd):=$($(aaa)) obf
+$(ddd):=$($(aaa)) obf obr
 ddd: $($(ddd))
 	@echo ; echo " make $@ end." ; echo
 
 eee:=compile_verilog_by_ise_then_flash_it_by_xilinx_DLC9G
-$(eee):=$($(aaa)) uf
+$(eee):=$($(aaa)) uf ur
 eee: $($(eee))
 	@echo ; echo " make $@ end." ; echo
 
