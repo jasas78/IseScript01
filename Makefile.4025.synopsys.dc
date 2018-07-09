@@ -7,62 +7,73 @@ $(if $(synopsysPATH),,$(error 'you should define the synopsysPATH and run again'
 # setenv PATH ${XACT}/bin/sparc:${PATH}
 # .synopsys_dc.setup
 
-define DCconfig
-designer = "NAME" ;
-company  = "UBC EE";
-plot_command = "lpr -P PRINTER" ;
+define DCconfig01
 
-search_path = { . \
-			  /usr/applic/XSI/synopsys/libraries/syn \
-			  /usr/applic/synopsys/libraries/syn }
+set_app_var designer 		"dyn" ;
+set_app_var company  		"C-matrixtech_Zhuhai_China";
+set 		plot_command 	"lpr -P PRINTER" ;
 
-link_library = { "*" xprim_4003-6.db xprim_4000-6.db xgen_4000.db \
-			   xio_4000a-6.db xfpga_4000-6.db }
+set_app_var search_path { .  $(DC_HOME)/libraries/syn \
+			  }
 
-target_library = { xprim_4003-6.db xprim_4000-6.db xgen_4000.db \
-				 xio_4000a-6.db xfpga_4000-6.db }
+set_app_var link_library { \
+			   "*" \
+			   gtech.db \
+			   }
 
-symbol_library = { xc4000.sdb }
+set_app_var target_library { \
+				 gtech.db \
+				 }
 
-synthetic_library = { xblox_4000.sldb }
+set_app_var symbol_library { \
+				 generic.sdb \
+				 }
 
-define_design_lib xblox_4000 -path \
-	/usr/applic/XSI/synopsys/libraries/dw/lib/fpga/xc4000
+set_app_var synthetic_library { \
+					dw_foundation.sldb \
+					}
 
-define_design_lib WORK -path ./WORK
 
-compile_fix_multiple_port_nets = true
+define_design_lib dcWORK -path ./dcWORK
 
-bus_naming_style = "%s<%d>"
-bus_dimension_separator_style = "><"
-bus_inference_style = "%s<%d>"
+set_app_var compile_fix_multiple_port_nets 		true
 
-xnfout_library_version = "2.0.0"
+set_app_var bus_naming_style 					"%s<%d>"
+set_app_var bus_dimension_separator_style 		"><"
+set_app_var bus_inference_style 				"%s<%d>"
+
+set 		xnfout_library_version 				"2.0.0"
 
 endef
-export DCconfig
+export DCconfig01
 
 define DCscript01
-read -f vhdl asg3.vhd
+
+check_library
+
+$(foreach aa1,$(RTLhdlList),\
+	analyze -format verilog $(aa1)$(EOL))
 
 set_port_is_pad "*"
 insert_pads
 
 compile
 
-report_fpga
-report_timing
+#report_fpga
+#report_timing
 
-replace_fpga
+#replace_fpga
 
-create_schematic
-plot
+#create_schematic
+#plot
 
-write -format xnf -hierarchy -output asg3.sxnf
+#write -format xnf -hierarchy -output asg3.sxnf
 
-echo "now , you can exit DC and run : xmake -P 4003APC84-6 asg3 "
+#echo "now , you can exit DC and run : xmake -P 4003APC84-6 asg3 "
 
-exit
+#exit
+
+quit
 
 endef
 export DCscript01
@@ -78,10 +89,16 @@ cvd:
 bd1:=synopsys_DC_check_only
 bd1:
 	@echo
-	DC_HOME=$(DC_HOME) 				\
-	DESIGNCOMPILER=$(DC_HOME) 		\
-			 $(synopsysBIN)/dc  	\
-			 $(RTLhdlList) 
+	echo "$${DCconfig01}" > .synopsys_dc.setup
+	echo "$${DCscript01}" > dc.script01.scr
+	DC_HOME=$(DC_HOME) 						\
+	DESIGNCOMPILER=$(DC_HOME) 				\
+	nohup								\
+	$(synopsysBIN)/dc_shell-xg-t  		\
+	-f dc.script01.scr					\
+	> log.dc.log01.txt
+	cat log.dc.log01.txt |grep -i error 	|| echo 'no error'
+	cat log.dc.log01.txt |grep -i Warning 	|| echo 'no Warning'
 	@echo
 
 synopsysDC_OpList:=cvd bd1
