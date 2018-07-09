@@ -34,7 +34,7 @@ set_app_var synthetic_library { \
 					}
 
 
-define_design_lib dcWORK -path ./dcWORK
+define_design_lib WORK -path ./dcWORK
 
 set_app_var compile_fix_multiple_port_nets 		true
 
@@ -73,35 +73,72 @@ compile
 
 #exit
 
-quit
 
 endef
 export DCscript01
 
+define DCscript02
+
+quit
+
+endef
+export DCscript02
+
 
 cvd:=clean_dc_tmp_file
 cvd:
-	#rm -f \
+	rm -f \
+		.synopsys_dc.setup  	\
+		command.log  			\
+		dc.script01.scr  		\
+		default.svf  			\
+		filenames.log			\
+		log.dc.log??.txt  		\
+		\
+		*.pvl *.syn *.mr \
 
-	#rm -fr \
+	rm -fr \
+		dcWORK	
 
 
-bd1:=synopsys_DC_check_only
+bd1:=synopsys_DC_open_and_wait_for_cmd
 bd1:
 	@echo
 	echo "$${DCconfig01}" > .synopsys_dc.setup
 	echo "$${DCscript01}" > dc.script01.scr
 	DC_HOME=$(DC_HOME) 						\
 	DESIGNCOMPILER=$(DC_HOME) 				\
-	nohup								\
 	$(synopsysBIN)/dc_shell-xg-t  		\
 	-f dc.script01.scr					\
-	> log.dc.log01.txt
+	-output_log_file log.dc.log01.txt
 	cat log.dc.log01.txt |grep -i error 	|| echo 'no error'
 	cat log.dc.log01.txt |grep -i Warning 	|| echo 'no Warning'
 	@echo
 
-synopsysDC_OpList:=cvd bd1
+bd2:=synopsys_DC_check_then_quit
+bd2:
+	@echo
+	echo "$${DCconfig01}" > 	.synopsys_dc.setup
+	echo "$${DCscript01}" > 	dc.script02.scr
+	echo "$${DCscript02}" >> 	dc.script02.scr
+	DC_HOME=$(DC_HOME) 						\
+	DESIGNCOMPILER=$(DC_HOME) 				\
+	nohup								\
+	$(synopsysBIN)/dc_shell-xg-t  		\
+	-f dc.script02.scr					\
+	> log.dc.log02.txt
+	cat log.dc.log02.txt |grep -i error 	|| echo 'no error'
+	cat log.dc.log02.txt |grep -i Warning 	|| echo 'no Warning'
+	@echo
+
+wd1:=clean_then__$(bd1)
+wd2:=clean_then__$(bd2)
+$(wd1):=cvd bd1
+$(wd2):=cvd bd2
+wd1:$($(wd1))
+wd2:$($(wd2))
+
+synopsysDC_OpList:=cvd bd2 wd1 wd2
 
 define DChelp
 
