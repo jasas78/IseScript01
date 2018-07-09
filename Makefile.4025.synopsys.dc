@@ -51,8 +51,7 @@ define DCscript01
 
 check_library
 
-$(foreach aa1,$(RTLhdlList),\
-	analyze -format verilog $(aa1)$(EOL))
+ $(foreach aa1,$(RTLhdlList),analyze -format verilog $(DCdefine) $(aa1)$(EOL))
 
 set_port_is_pad "*"
 insert_pads
@@ -90,7 +89,7 @@ cvd:
 	rm -f \
 		.synopsys_dc.setup  	\
 		command.log  			\
-		dc.script01.scr  		\
+		scr_dc.script??.scr  	\
 		default.svf  			\
 		filenames.log			\
 		log.dc.log??.txt  		\
@@ -105,11 +104,11 @@ bd1:=synopsys_DC_open_and_wait_for_cmd
 bd1:
 	@echo
 	echo "$${DCconfig01}" > .synopsys_dc.setup
-	echo "$${DCscript01}" > dc.script01.scr
+	echo "$${DCscript01}" > scr_dc.script01.scr
 	DC_HOME=$(DC_HOME) 						\
 	DESIGNCOMPILER=$(DC_HOME) 				\
 	$(synopsysBIN)/dc_shell-xg-t  		\
-	-f dc.script01.scr					\
+	-f scr_dc.script01.scr					\
 	-output_log_file log.dc.log01.txt
 	cat log.dc.log01.txt |grep -i error 	|| echo 'no error'
 	cat log.dc.log01.txt |grep -i Warning 	|| echo 'no Warning'
@@ -119,13 +118,13 @@ bd2:=synopsys_DC_check_then_quit
 bd2:
 	@echo
 	echo "$${DCconfig01}" > 	.synopsys_dc.setup
-	echo "$${DCscript01}" > 	dc.script02.scr
-	echo "$${DCscript02}" >> 	dc.script02.scr
+	echo "$${DCscript01}" > 	scr_dc.script02.scr
+	echo "$${DCscript02}" >> 	scr_dc.script02.scr
 	DC_HOME=$(DC_HOME) 						\
 	DESIGNCOMPILER=$(DC_HOME) 				\
 	nohup								\
 	$(synopsysBIN)/dc_shell-xg-t  		\
-	-f dc.script02.scr					\
+	-f scr_dc.script02.scr					\
 	> log.dc.log02.txt
 	cat log.dc.log02.txt |grep -i error 	|| echo 'no error'
 	cat log.dc.log02.txt |grep -i Warning 	|| echo 'no Warning'
