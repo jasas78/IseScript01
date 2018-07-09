@@ -2,7 +2,70 @@ all:
 
 $(if $(synopsysPATH),,$(error 'you should define the synopsysPATH and run again'))
 
+# http://www.ece.ubc.ca/~edc/464/xilinx.html
+# setenv XACT /usr/applic/XSI
+# setenv PATH ${XACT}/bin/sparc:${PATH}
+# .synopsys_dc.setup
 
+define DCconfig
+designer = "NAME" ;
+company  = "UBC EE";
+plot_command = "lpr -P PRINTER" ;
+
+search_path = { . \
+			  /usr/applic/XSI/synopsys/libraries/syn \
+			  /usr/applic/synopsys/libraries/syn }
+
+link_library = { "*" xprim_4003-6.db xprim_4000-6.db xgen_4000.db \
+			   xio_4000a-6.db xfpga_4000-6.db }
+
+target_library = { xprim_4003-6.db xprim_4000-6.db xgen_4000.db \
+				 xio_4000a-6.db xfpga_4000-6.db }
+
+symbol_library = { xc4000.sdb }
+
+synthetic_library = { xblox_4000.sldb }
+
+define_design_lib xblox_4000 -path \
+	/usr/applic/XSI/synopsys/libraries/dw/lib/fpga/xc4000
+
+define_design_lib WORK -path ./WORK
+
+compile_fix_multiple_port_nets = true
+
+bus_naming_style = "%s<%d>"
+bus_dimension_separator_style = "><"
+bus_inference_style = "%s<%d>"
+
+xnfout_library_version = "2.0.0"
+
+endef
+export DCconfig
+
+define DCscript01
+read -f vhdl asg3.vhd
+
+set_port_is_pad "*"
+insert_pads
+
+compile
+
+report_fpga
+report_timing
+
+replace_fpga
+
+create_schematic
+plot
+
+write -format xnf -hierarchy -output asg3.sxnf
+
+echo "now , you can exit DC and run : xmake -P 4003APC84-6 asg3 "
+
+exit
+
+endef
+export DCscript01
 
 
 cvd:=clean_dc_tmp_file
