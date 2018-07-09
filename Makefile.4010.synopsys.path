@@ -20,6 +20,7 @@ endif
 synopsysBIN:=$(shell 	realpath $(synopsysPATH)/bin)
 VERDI_HOME:=$(shell     realpath $(synopsysPATH)/nowDIR.Verdi)
 VCS_HOME:=$(shell       realpath $(synopsysPATH)/nowDIR.VCS)
+DC_HOME:=$(shell       realpath $(synopsysPATH)/nowDIR.DC)
 
 
 ifdef V
