@@ -1,15 +1,17 @@
 all: 
 
+$(if $(wildcard srcSYN),,$(shell ln -s ../ srcSYN))
+
 RTLhdlList:=$(filter-out $(DCfilterOutList),$(sort \
 	$(wildcard srcSYN/src?/*.v) \
 	))\
 	$(DCextSrcList)
 
 
-TBhdlList:=$(filter-out $(DCfilterOutList),$(sort \
-	$(wildcard srcSYN/tbSrc?/*.v) \
-	))\
-	$(DCextSrcList)
+#TBhdlList:=$(filter-out $(DCfilterOutList),$(sort \
+#	$(wildcard srcSYN/tbSrc?/*.v) \
+#	))\
+#	$(DCextSrcList)
 $(call genVimWithFileList,showSourceCodeTEXT,$(RTLhdlList) $(TBhdlList),vv)
 
 

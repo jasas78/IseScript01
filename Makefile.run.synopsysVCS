@@ -1,5 +1,7 @@
 all: 
 
+$(if $(wildcard srcSYN),,$(shell ln -s ../ srcSYN))
+
 RTLhdlList:=$(filter-out $(VCSfilterOutList),$(sort \
 	$(wildcard srcSYN/src?/*.v) \
 	))\
