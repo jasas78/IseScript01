@@ -178,6 +178,8 @@ $(foreach bb2,$(iseVerilogList),\
 endef
 export RUNxst42
 
+FILTERxst23:=sed -e 's;^\s*;;g'|grep -v ^$$
+
 rx:=run_xst_to_compile_the_verilog
 $(rx):=_add_the_"HELP=1"_can_generate_the_help_of_xst Makefile.3032.xst.compile.verilog
 rx :
@@ -192,8 +194,8 @@ ifdef HELP
 endif
 	@#echo "$${RUNxst21}" > out/$(FNxstSCR1)
 	@#echo "$${RUNxst22}" > out/$(FNxstSCR1)
-	echo "$${RUNxst23}" > out/$(FNxstSCR1)
-	echo "$${RUNxst42}" > out/$(FNxstSCR2)
+	echo "$${RUNxst23}" |$(FILTERxst23) > out/$(FNxstSCR1)
+	echo "$${RUNxst42}" |$(FILTERxst23) > out/$(FNxstSCR2)
 	@echo "you should put the ipCores into the directory : $(iseXstIpDirList)"
 	       $(RUNxst20)
 	@echo '$(RUNxst20)' >> out/$(FNxstCMD1)
