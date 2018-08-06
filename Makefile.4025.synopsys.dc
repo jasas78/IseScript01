@@ -141,6 +141,8 @@ $(wd2):=cvd bd2
 wd1:$($(wd1))
 wd2:$($(wd2))
 
+dcCheck : wd2
+
 synopsysDC_OpList:=cvd bd2 wd1 wd2
 
 define DChelp
