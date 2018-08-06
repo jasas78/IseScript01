@@ -18,15 +18,15 @@ set_app_var search_path { .  $(DC_HOME)/libraries/syn \
 
 set_app_var link_library { \
 			   "*" \
-			   gtech.db \
+			   class.db \
 			   }
 
 set_app_var target_library { \
-				 gtech.db \
+				 class.db \
 				 }
 
 set_app_var symbol_library { \
-				 generic.sdb \
+				 class.sdb \
 				 }
 
 set_app_var synthetic_library { \
@@ -70,18 +70,18 @@ set_wire_load_mode           						top
 
 #set_operating_conditions WORST
 
-create_clock -period 33 -waveform [list 0 16.5] 	clk50mhz
-set_clock_latency 2.0 								[get_clocks clk50mhz]
+create_clock -period 33 -waveform [list 0 16.5] 	$(topClk)
+set_clock_latency 2.0 								[get_clocks $(topClk)]
 
-set_clock_uncertainty -setup 3.0 					[get_clocks clk50mhz]
-set_clock_transition 0.1							[get_clocks clk50mhz]
-set_dont_touch_network								[list clk50mhz]
+set_clock_uncertainty -setup 3.0 					[get_clocks $(topClk)]
+set_clock_transition 0.1							[get_clocks $(topClk)]
+set_dont_touch_network								[list $(topClk)]
 
 #set_driving_cell -cell BUFF1X -pin Z 				[all_inputs]
-set_drive 0 										[list clk50mhz]
+set_drive 0 										[list $(topClk)]
 
-set_input_delay		20.0	-clock clk50mhz -max 	[all_inputs]
-set_output_delay	10.0	-clock clk50mhz -max 	[all_outputs]
+set_input_delay		20.0	-clock $(topClk) -max 	[all_inputs]
+set_output_delay	10.0	-clock $(topClk) -max 	[all_outputs]
 
 set_max_area 0
 set_fix_multiple_port_nets	-buffer_constants -all
