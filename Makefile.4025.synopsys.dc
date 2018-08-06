@@ -49,7 +49,7 @@ export DCconfig01
 
 define DCscript01
 
-check_library
+#check_library
 
  $(foreach aa1,$(RTLhdlList),analyze -format verilog $(DCdefine) $(aa1)$(EOL))
 
@@ -59,6 +59,34 @@ elaborate $(topModule)
 #insert_pads
 
 current_design $(topModule)
+
+link
+
+uniquify
+
+#set_wire_load_model 								-name SMALL
+#set_wire_load_mode           						$(topModule)
+set_wire_load_mode           						top
+
+#set_operating_conditions WORST
+
+create_clock -period 33 -waveform [list 0 16.5] 	clk50mhz
+set_clock_latency 2.0 								[get_clocks clk50mhz]
+
+set_clock_uncertainty -setup 3.0 					[get_clocks clk50mhz]
+set_clock_transition 0.1							[get_clocks clk50mhz]
+set_dont_touch_network								[list clk50mhz]
+
+#set_driving_cell -cell BUFF1X -pin Z 				[all_inputs]
+set_drive 0 										[list clk50mhz]
+
+set_input_delay		20.0	-clock clk50mhz -max 	[all_inputs]
+set_output_delay	10.0	-clock clk50mhz -max 	[all_outputs]
+
+set_max_area 0
+set_fix_multiple_port_nets	-buffer_constants -all
+
+
 
 compile
 
@@ -129,9 +157,9 @@ bd2:
 	nohup								\
 	$(synopsysBIN)/dc_shell-xg-t  		\
 	-f scr_dc.script02.scr					\
-	> log.dc.log02.txt
-	cat log.dc.log02.txt |grep -i error 	|| echo 'no error'
-	cat log.dc.log02.txt |grep -i Warning 	|| echo 'no Warning'
+	> log.dc.log02.txt ; echo
+	echo ;cat log.dc.log02.txt |grep -i error 	|| echo 'no error' ; echo
+	echo ;cat log.dc.log02.txt |grep -i Warning 	|| echo 'no Warning'
 	@echo
 
 wd1:=clean_then__$(bd1)
