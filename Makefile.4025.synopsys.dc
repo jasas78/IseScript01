@@ -53,8 +53,12 @@ check_library
 
  $(foreach aa1,$(RTLhdlList),analyze -format verilog $(DCdefine) $(aa1)$(EOL))
 
-set_port_is_pad "*"
-insert_pads
+elaborate $(topModule)
+
+#set_port_is_pad "*"
+#insert_pads
+
+current_design $(topModule)
 
 compile
 
