@@ -16,6 +16,7 @@ set 		plot_command 	"lpr -P PRINTER" ;
 set_app_var search_path { \
 	.  \
 	$(DC_HOME)/libraries/syn \
+	$(RTLhdlSearch) \
 	}
 
 set_app_var link_library { \

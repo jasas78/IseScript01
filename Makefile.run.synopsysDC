@@ -2,6 +2,10 @@ all:
 
 $(if $(wildcard srcSYN),,$(shell ln -s ../ srcSYN))
 
+RTLhdlSearch:=$(foreach aa1,\
+	$(sort $(wildcard srcSYN/src?)),\
+	$(aa1))
+
 RTLhdlList:=$(filter-out $(DCfilterOutList),$(sort \
 	$(wildcard srcSYN/src?/*.v) \
 	))\
