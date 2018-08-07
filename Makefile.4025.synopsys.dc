@@ -109,7 +109,8 @@ report_clock_tree
 # report_design_lib
 report_design
 report_area
-report_power
+#report_power
+###### check_design
 report_port
 report_hierarchy
 report_synthetic 
