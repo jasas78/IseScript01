@@ -49,7 +49,7 @@ export DCconfig01
 
 define DCscript01
 
-#check_library
+check_library
 
  $(foreach aa1,$(RTLhdlList),analyze -format verilog $(DCdefine) $(aa1)$(EOL))
 
@@ -75,7 +75,7 @@ set_clock_latency 2.0 								[get_clocks $(topClk)]
 
 set_clock_uncertainty -setup 3.0 					[get_clocks $(topClk)]
 set_clock_transition 0.1							[get_clocks $(topClk)]
-set_dont_touch_network								[list $(topClk)]
+#set_dont_touch_network								[list $(topClk)]
 
 #set_driving_cell -cell BUFF1X -pin Z 				[all_inputs]
 set_drive 0 										[list $(topClk)]
