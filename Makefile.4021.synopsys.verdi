@@ -63,7 +63,8 @@ bv1:
 	@echo
 	VERDI_HOME=$(VERDI_HOME) 				\
 			   $(VERDI_HOME)/bin/vericom 	\
-			   $(VERICOMdefine)					\
+			   $(VERICOMdefine)				\
+			   $${VERDIhdlSearch}			\
 			   $${VERDIhdlList}
 	@echo
 
@@ -85,7 +86,8 @@ tv9:=run_the_test_of_Verdi_FSDB
 tv9:
 	@echo
 	rm -f ./verdi.fsdb && cp srcSIM/verdi.fsdb ./
-	echo "$${VERDIhdlList}" |xargs -n 1 > filelist.verdi.txt 
+	echo "$${VERDIhdlSearch}" 	|xargs -n 1 >  filelist.verdi.txt 
+	echo "$${VERDIhdlList}" 	|xargs -n 1 >> filelist.verdi.txt 
 	VERDI_HOME=$(VERDI_HOME) 			\
 			   $(VERDI_HOME)/bin/verdi 	\
 			   -ssf verdi.fsdb  		\
