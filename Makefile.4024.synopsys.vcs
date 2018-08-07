@@ -5,8 +5,9 @@ $(if $(synopsysPATH),,$(error 'you should define the synopsysPATH and run again'
 bs1:=synopsys_VCS_build_only___withouth_Verdi_FSDB
 bs1:
 	@echo
-	VCS_HOME=$(VCS_HOME) 			\
-			 $(synopsysBIN)/vcs  	\
+	VCS_HOME=$(VCS_HOME) 				\
+			 $(synopsysBIN)/vcs  		\
+			 $(RTLhdlSearch)			\
 			 $(TBhdlList) $(RTLhdlList) 
 	@echo
 
@@ -24,6 +25,7 @@ bs2:
 			 $(synopsysBIN)/vcs  		\
 			 $(vcsPara1)   				\
 			 $(VCSdefine)   			\
+			 $(RTLhdlSearch)			\
 			 $(TBhdlList) $(RTLhdlList) 
 	@echo
 
