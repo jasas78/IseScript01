@@ -170,8 +170,9 @@ bd1:
 	$(synopsysBIN)/dc_shell-xg-t  		\
 	-f scr_dc.script01.scr					\
 	-output_log_file log.dc.log01.txt
-	cat log.dc.log01.txt |grep -i error 	|| echo 'no error'
-	cat log.dc.log01.txt |grep -i Warning 	|| echo 'no Warning'
+	echo ;cat log.dc.log01.txt |grep -i error 	|| echo 'no error'
+	echo ;cat log.dc.log01.txt |grep -i Warning 	|| echo 'no Warning'
+	echo ;cat log.dc.log01.txt |grep ' Count:' 
 	@echo
 
 bd2:=synopsys_DC_check_then_quit
@@ -190,6 +191,7 @@ bd2:
 	> log.dc.log02.txt ; echo
 	echo ;cat log.dc.log02.txt |grep -i error 	|| echo 'no error' ; echo
 	echo ;cat log.dc.log02.txt |grep -i Warning 	|| echo 'no Warning'
+	echo ;cat log.dc.log02.txt |grep ' Count:' 
 	@echo
 
 wd1:=clean_then__$(bd1)
