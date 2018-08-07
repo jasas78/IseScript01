@@ -13,25 +13,29 @@ set_app_var designer 		"dyn" ;
 set_app_var company  		"C-matrixtech_Zhuhai_China";
 set 		plot_command 	"lpr -P PRINTER" ;
 
-set_app_var search_path { .  $(DC_HOME)/libraries/syn \
-			  }
+set_app_var search_path { \
+	.  \
+	$(DC_HOME)/libraries/syn \
+	}
 
 set_app_var link_library { \
-			   "*" \
-			   class.db \
-			   }
+	"*" \
+	dw_foundation.sldb \
+	class.db \
+	}
 
 set_app_var target_library { \
-				 class.db \
-				 }
+	class.db \
+	}
 
 set_app_var symbol_library { \
-				 class.sdb \
-				 }
+	class.sdb \
+	}
 
 set_app_var synthetic_library { \
-					dw_foundation.sldb \
-					}
+	standard.sldb \
+	dw_foundation.sldb \
+	}
 
 
 define_design_lib WORK -path ./dcWORK
@@ -47,9 +51,14 @@ set 		xnfout_library_version 				"2.0.0"
 endef
 export DCconfig01
 
+define DCconfig02
+$(DCconfig01)
+endef
+export DCconfig02
+
 define DCscript01
 
-check_library
+#check_library
 
  $(foreach aa1,$(RTLhdlList),analyze -format verilog $(DCdefine) $(aa1)$(EOL))
 
@@ -88,6 +97,7 @@ set_fix_multiple_port_nets	-buffer_constants -all
 
 
 
+#check_library
 compile
 
 #report_fpga
@@ -135,8 +145,10 @@ cvd:
 bd1:=synopsys_DC_open_and_wait_for_cmd
 bd1:
 	@echo
-	echo "$${DCconfig01}" > .synopsys_dc.setup
-	echo "$${DCscript01}" > scr_dc.script01.scr
+	@#echo "$${DCconfig01}" 	> 	.synopsys_dc.setup
+	@echo -n 				> 	.synopsys_dc.setup
+	echo "$${DCconfig02}" 	> 	scr_dc.script01.scr
+	echo "$${DCscript01}" 	>>	scr_dc.script01.scr
 	DC_HOME=$(DC_HOME) 						\
 	DESIGNCOMPILER=$(DC_HOME) 				\
 	$(synopsysBIN)/dc_shell-xg-t  		\
@@ -149,9 +161,11 @@ bd1:
 bd2:=synopsys_DC_check_then_quit
 bd2:
 	@echo
-	echo "$${DCconfig01}" > 	.synopsys_dc.setup
-	echo "$${DCscript01}" > 	scr_dc.script02.scr
-	echo "$${DCscript02}" >> 	scr_dc.script02.scr
+	@#echo "$${DCconfig01}" 	> 	.synopsys_dc.setup
+	@echo -n 				> 	.synopsys_dc.setup
+	echo "$${DCconfig02}" 	> 	scr_dc.script02.scr
+	echo "$${DCscript01}" 	>>	scr_dc.script02.scr
+	echo "$${DCscript02}" 	>>	scr_dc.script02.scr
 	DC_HOME=$(DC_HOME) 						\
 	DESIGNCOMPILER=$(DC_HOME) 				\
 	nohup								\

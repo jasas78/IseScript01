@@ -115,12 +115,17 @@ $(eee):=$($(aaa)) uf ur
 eee: $($(eee))
 	@echo ; echo " make $@ end." ; echo
 
-dc:=run_dc_check_the_rtl_files
-dc:
-	make -C topDC  dcCheck 
-	@ls -l topDC/log.dc.log02.txt 
+dc1:=run_dc_check_the_rtl_files1
+dc2:=run_dc_check_the_rtl_files2
 
-showRunHelpList += aaa bbb ccc ddd eee dc
+dc1:
+	make -C topDC  wd1 
+	@echo ; ls -l topDC/log.dc.log02.txt 
+dc2:
+	make -C topDC  wd2 
+	@echo ; ls -l topDC/log.dc.log02.txt 
+
+showRunHelpList += aaa bbb ccc ddd eee dc1 dc2
 
 ifdef AnalyzeIseTopDir
 showAnalyzeIseHelpList:= 
