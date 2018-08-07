@@ -21,15 +21,15 @@ set_app_var search_path { \
 set_app_var link_library { \
 	"*" \
 	dw_foundation.sldb \
-	class_fpga.db \
+	lsi_10k.db \
 	}
 
 set_app_var target_library { \
-	class_fpga.db \
+	lsi_10k.db \
 	}
 
 set_app_var symbol_library { \
-	class_fpga.sdb \
+	lsi_10k.sdb \
 	}
 
 set_app_var synthetic_library { \
