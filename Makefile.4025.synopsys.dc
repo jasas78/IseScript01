@@ -100,6 +100,9 @@ set_fix_multiple_port_nets	-buffer_constants -all
 #check_library
 compile
 
+current_design
+report_units
+
 #report_fpga
 #report_timing
 
