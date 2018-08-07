@@ -101,7 +101,20 @@ set_fix_multiple_port_nets	-buffer_constants -all
 compile
 
 current_design
-report_units
+
+#report_units
+report_clocks
+report_clock_tree
+# report_design_lib
+report_design
+report_area
+report_power
+report_port
+report_hierarchy
+report_synthetic 
+# report_synthetic *
+# report_synthetic */*
+report_qor
 
 #report_fpga
 #report_timing
