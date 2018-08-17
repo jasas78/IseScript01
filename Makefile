@@ -8,6 +8,7 @@ File01?=$(shell realpath ./Makefile)
 export File01
 TT:=$(shell realpath .)
 TM:=$(shell dirname $(File01))
+TN:=$(shell realpath $(TT)/script.NOW)
 
 
 CFGmake00env:=$(wildcard $(TM)/Makefile.00.env)
