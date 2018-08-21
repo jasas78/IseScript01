@@ -80,9 +80,9 @@ add table ip6 tbBlockIp6
 #### ####     queue   statements : num <value> <scheduler>
 
 
-add chain ip6 tbBlockIp6 chBlockIp6input	{ type filter hook input   priority 0 ; policy drop ; }
-add chain ip6 tbBlockIp6 chBlockIp6forward	{ type filter hook forward priority 0 ; policy drop ; }
-add chain ip6 tbBlockIp6 chBlockIp6output	{ type filter hook output  priority 0 ; policy drop ; }
+add chain ip6 tbBlockIp6 chBlockIp6input    { type filter hook input   priority 0 ; policy drop ; }
+add chain ip6 tbBlockIp6 chBlockIp6forward  { type filter hook forward priority 0 ; policy drop ; }
+add chain ip6 tbBlockIp6 chBlockIp6output   { type filter hook output  priority 0 ; policy drop ; }
 
 endef
 export nf1_TEXT

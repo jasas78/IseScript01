@@ -1,0 +1,32 @@
+all:
+
+#$(NFTbin)     
+
+define nf31_TEXT
+
+add table ip tbLocalIpv4         
+
+
+
+add chain ip tbLocalIpv4 chLocalIp4input    { type filter hook input   priority 0 ; policy accept ; }
+add chain ip tbLocalIpv4 chLocalIp4forward  { type filter hook forward priority 0 ; policy accept ; }
+add chain ip tbLocalIpv4 chLocalIp4output   { type filter hook output  priority 0 ; policy accept ; }
+
+add table ip tbNatIpv4         
+add chain ip tbNatIpv4         chLocalIp4input    { type filter hook input   priority 0 ; policy accept ; }
+
+endef
+export nf31_TEXT
+
+#$(nf31):=ws2 wv1
+#nf31: $($(nf31))
+
+nf31:=deal_with_local_machine_packages_ipv4
+nf31: 
+	echo "$${nf31_TEXT}"                  >> $(NFTfile)
+	@wc                                     $(NFTfile)
+
+linuxNft_OpList+=		\
+	nf31						\
+
+

@@ -4,7 +4,7 @@ all:
 # nf1_TEXT
 
 ng1:=genGroup01
-$(ng1):=nc1 nf1
+$(ng1):=nc1 nf1 nf31 
 ng1: $($(ng1))
 
 #$(ng1):=make vm38 && make nc1 nf1
