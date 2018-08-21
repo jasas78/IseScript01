@@ -1,5 +1,10 @@
 all:
 
+NFTbin:=$(shell which nft)
+NFTbin?=/usr/sbin/nft
+
+NFTfile:=/tmp/nft.rule
+
 define nh1_TEXT
 
 nft     list      ruleset
@@ -13,6 +18,14 @@ nft    -f    /tmp/nft.rule
 endef
 export nh1_TEXT
 
+define nc1_TEXT
+#$(NFTbin) -f
+
+flush     ruleset
+
+endef
+export nc1_TEXT
+
 #$(nh1):=ws2 wv1
 #nh1: $($(nh1))
 
@@ -20,7 +33,13 @@ nh1:=nft_base_usage
 nh1: 
 	@echo "$${nh1_TEXT}"                  
 
+nc1:=nft_step_1_clean_all_old_ruleS
+nc1: 
+	@echo "$${nc1_TEXT}"                     > $(NFTfile)
+	@wc                                        $(NFTfile)
+
 linuxNft_OpList+=		\
 	nh1						\
+	nc1						\
 
 

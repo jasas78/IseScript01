@@ -1,6 +1,11 @@
 all:
 
+#$(NFTbin)     
+
 define nf1_TEXT
+
+add table ip6 blockIp6
+
 endef
 export nf1_TEXT
 
@@ -9,8 +14,8 @@ export nf1_TEXT
 
 nf1:=BlockAllipv6Package
 nf1: 
-	echo "$${nf1_TEXT}"                  >> /tmp/nft.rule
-	@wc                                     /tmp/nft.rule
+	echo "$${nf1_TEXT}"                  >> $(NFTfile)
+	@wc                                     $(NFTfile)
 
 linuxNft_OpList+=		\
 	nf1						\

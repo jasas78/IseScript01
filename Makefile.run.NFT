@@ -53,6 +53,7 @@ touch        /tmp/nft.rule
 chmod  777   /tmp/nft.rule
 
 nft    -f    /tmp/nft.rule
+nft    -f    /tmp/nft.rule && nft     list      ruleset
 
 
 endef
