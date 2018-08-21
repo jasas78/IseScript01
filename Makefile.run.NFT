@@ -19,6 +19,7 @@ $(call genVimWithFileList,showSourceCodeTEXT,$(NFTruleList),vn)
 
 
 CFGrunLinuxNftINCset1:=\
+	Makefile.5000.linuxNft.base \
 	Makefile.5001.linuxNft.blockIpv6 \
 
 #	Makefile.4010.synopsys.path 	\

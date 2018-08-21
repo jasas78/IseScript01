@@ -1,0 +1,26 @@
+all:
+
+define nh1_TEXT
+
+nft     list      ruleset
+nft     flush     ruleset
+
+touch        /tmp/nft.rule
+chmod  777   /tmp/nft.rule
+
+nft    -f    /tmp/nft.rule
+
+endef
+export nh1_TEXT
+
+#$(nh1):=ws2 wv1
+#nh1: $($(nh1))
+
+nh1:=nft_base_usage
+nh1: 
+	@echo "$${nh1_TEXT}"                  
+
+linuxNft_OpList+=		\
+	nh1						\
+
+

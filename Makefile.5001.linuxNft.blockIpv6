@@ -12,7 +12,7 @@ nf1:
 	echo "$${nf1_TEXT}"                  >> /tmp/nft.rule
 	@wc                                     /tmp/nft.rule
 
-linuxNft_OpList:=		\
+linuxNft_OpList+=		\
 	nf1						\
 
 
