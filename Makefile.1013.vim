@@ -47,6 +47,7 @@ vp: vpc
 	@cat _vim/cscope.in? \
 		|sort -u \
 		|xargs -n 10 realpath \
+		|sort -u \
 		>_vim/cscope.files
 	@
 	@#rm -f _vim/cscope.in? cscope.out tags

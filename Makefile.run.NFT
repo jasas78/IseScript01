@@ -32,4 +32,13 @@ $(eval $(foreach aa2,$(CFGrunSynopsysVerdiINCset2),$(call tryINCmustExist,$(aa2)
 
 showRunHelpList +=$(synopsysVerdi_OpList)
 
+define rootShowTEXT
+
+as root , you can run the following command manually ONLY.
+
+rm     -f    /tmp/nft.rule
+
+nft    -f    /tmp/nft.rule
+
+endef
 
