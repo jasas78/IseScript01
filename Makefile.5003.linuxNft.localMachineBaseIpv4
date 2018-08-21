@@ -1,6 +1,8 @@
 all:
 
 #$(NFTbin)     
+# nf1_TEXT
+# Makefile.5001
 
 define nf31_TEXT
 
@@ -9,11 +11,23 @@ add table ip tbLocalIpv4
 
 
 add chain ip tbLocalIpv4 chLocalIp4input    { type filter hook input   priority 0 ; policy accept ; }
+
+add chain ip tbLocalIpv4 chLocalIp4cardLO   { type filter hook input   priority 1 ; policy accept ; }
+#add chain ip tbLocalIpv4 chLocalIp4cardLO   { priority 0 ; policy accept ; }
+
 add chain ip tbLocalIpv4 chLocalIp4forward  { type filter hook forward priority 0 ; policy accept ; }
 add chain ip tbLocalIpv4 chLocalIp4output   { type filter hook output  priority 0 ; policy accept ; }
 
+
 add table ip tbNatIpv4         
 add chain ip tbNatIpv4         chLocalIp4input    { type filter hook input   priority 0 ; policy accept ; }
+
+add rule  ip tbLocalIpv4 chLocalIp4input    iif lo ip saddr 127.0.0.1/8 counter packets 0 bytes 0 accept
+add rule  ip tbLocalIpv4 chLocalIp4input    iif lo counter packets 0 bytes 0 drop
+add rule  ip tbLocalIpv4 chLocalIp4input    ip saddr 127.0.0.1/8 counter packets 0 bytes 0 drop
+
+add rule  ip tbLocalIpv4 chLocalIp4cardLO    iif lo counter packets 0 bytes 0
+add rule  ip tbLocalIpv4 chLocalIp4cardLO    iif lo counter packets 0 bytes 0 accept
 
 endef
 export nf31_TEXT
