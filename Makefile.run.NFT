@@ -19,6 +19,7 @@ $(call genVimWithFileList,showSourceCodeTEXT,$(NFTruleList),vn)
 
 
 CFGrunLinuxNftINCset1:=\
+	Makefile.5001.linuxNft.blockIpv6 \
 
 #	Makefile.4010.synopsys.path 	\
 #	Makefile.4021.synopsys.verdi		\
@@ -29,7 +30,7 @@ CFGrunLinuxNftINCset2:=$(foreach aa1,$(CFGrunLinuxNftINCset1),$(TM)/$(aa1))
 $(eval $(foreach aa2,$(CFGrunLinuxNftINCset2),$(call tryINCmustExist,$(aa2),db8193912)))
 
 
-showRunHelpList +=$(synopsysNft_OpList)
+showRunHelpList +=$(linuxNft_OpList)
 
 
 ifdef rootShowTEXT

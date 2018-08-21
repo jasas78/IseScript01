@@ -1,0 +1,18 @@
+all:
+
+define nf1_TEXT
+endef
+export nf1_TEXT
+
+#$(nf1):=ws2 wv1
+#nf1: $($(nf1))
+
+nf1:=BlockAllipv6Package
+nf1: 
+	echo "$${nf1_TEXT}"                  >> /tmp/nft.rule
+	@wc                                     /tmp/nft.rule
+
+linuxNft_OpList:=		\
+	nf1						\
+
+
