@@ -4,7 +4,32 @@ all:
 
 define nf1_TEXT
 
-add table ip6 blockIp6
+####### "ip6" is family : ip ip6 inet arp bridge inet netdev
+add table ip6 tbBlockIp6         
+
+####### "filter" is type : filter route nat 
+####### "input"  is hook : 
+################ hoo for ip / ip6 / inet : preroouting input forward output postrouting 
+################ hoo for arp             : input output 
+################ hoo for bridge          : ..... ( none ) 
+################ hoo for netdev          : ingress
+####### "policy"  can be : accept drop queue continue return
+####### "priority_value" can be : 
+# NF_IP_PRI_CONNTRACK_DEFRAG           (-400)
+# NF_IP_PRI_RAW                        (-300)
+# NF_IP_PRI_SELINUX_FIRST              (-225)
+# NF_IP_PRI_CONNTRACK                  (-200)
+# NF_IP_PRI_MANGLE                     (-150)
+# NF_IP_PRI_NAT_DST                    (-100)
+# NF_IP_PRI_FILTER                     (0)
+# NF_IP_PRI_SECURITY                   (50)
+# NF_IP_PRI_NAT_SRC                    (100)
+# NF_IP_PRI_SELINUX_LAST               (225)
+# NF_IP_PRI_CONNTRACK_HELPER           (300)
+
+add chain ip6 tbBlockIp6 chBlockIp6input	{ type filter hook input   priority 0 ; policy drop ; }
+add chain ip6 tbBlockIp6 chBlockIp6forward	{ type filter hook forward priority 0 ; policy drop ; }
+add chain ip6 tbBlockIp6 chBlockIp6output	{ type filter hook output  priority 0 ; policy drop ; }
 
 endef
 export nf1_TEXT
