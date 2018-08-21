@@ -93,6 +93,7 @@ $(eval gvList1+=$(3)$(gvIdx))
 
 $(eval $(1)+=$$(EOL)    $(3)$(gvIdx)    =>   $(2) )
 $(eval                  $(3)$(gvIdx)    :$(EOL)	vim $(2) )
+$(eval                  $(3)$(gvIdx):=$$(shell basename $(2)))
 
 $(eval gvMOD:=$$(shell echo "$$$$(($$(gvIdx) % 5))"))
 $(eval ifeq (0,$(gvMOD))$(EOL)$(1)+=$$(EOL)$(EOL)endif)

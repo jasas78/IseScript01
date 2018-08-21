@@ -1,0 +1,25 @@
+all:
+
+
+# nf1_TEXT
+
+ng1:=genGroup01
+$(ng1):=nc1 nf1
+ng1: $($(ng1))
+
+#$(ng1):=make vm38 && make nc1 nf1
+
+tg1_DST:=vm39
+tg1:=modifi_then_gen_the_test_group__$(tg1_DST)
+$(tg1):= $($(tg1_DST)) $($(ng1))
+tg1:
+	make $(tg1_DST)
+	make $(ng1)
+	
+
+
+linuxNft_OpList+=		\
+	ng1						\
+	tg1						\
+
+
