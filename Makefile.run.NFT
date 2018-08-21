@@ -1,44 +1,57 @@
 all: 
 
-VERDIhdlSearch:=$(foreach aa1,\
-	$(sort $(wildcard srcSIM/srcSYN/src?)),\
-    +incdir+$(aa1))
-export VERDIhdlSearch
+#NFTruleSearch:=$(foreach aa1,\
+#	$(sort $(wildcard srcSIM/srcSYN/src?)),\
+#    +incdir+$(aa1))
+#export NFTruleSearch
 
 
-VERDIhdlList:=$(filter-out $(VERDIfilterOutList),$(sort \
-	$(wildcard srcSIM/srcSYN/src?/*.v) \
-	$(wildcard srcSIM/srcSYN/tbSrc?/*.v) \
+NFTruleList:=$(filter-out $(NFTfilterOutList),$(sort \
+	$(wildcard src?/*.rule) \
 	))\
-	$(VERDIextSrcList)
-export VERDIhdlList
+	$(NFTextSrcList)
+export NFTruleList
 
-$(call genVimWithFileList,showSourceCodeTEXT,$(VERDIhdlList),vv)
-
-
+$(call genVimWithFileList,showSourceCodeTEXT,$(NFTruleList),vn)
 
 
 
-CFGrunSynopsysVerdiINCset1:=\
+
+
+CFGrunLinuxNftINCset1:=\
 
 #	Makefile.4010.synopsys.path 	\
 #	Makefile.4021.synopsys.verdi		\
 
 
-CFGrunSynopsysVerdiINCset2:=$(foreach aa1,$(CFGrunSynopsysVerdiINCset1),$(TM)/$(aa1))
+CFGrunLinuxNftINCset2:=$(foreach aa1,$(CFGrunLinuxNftINCset1),$(TM)/$(aa1))
 
-$(eval $(foreach aa2,$(CFGrunSynopsysVerdiINCset2),$(call tryINCmustExist,$(aa2),db8193912)))
+$(eval $(foreach aa2,$(CFGrunLinuxNftINCset2),$(call tryINCmustExist,$(aa2),db8193912)))
 
 
-showRunHelpList +=$(synopsysVerdi_OpList)
+showRunHelpList +=$(synopsysNft_OpList)
+
+
+ifdef rootShowTEXT
+$(info )
+$(info why rootShowTEXT being redefined ? )
+$(info )
+$(error )
+endif
 
 define rootShowTEXT
 
 as root , you can run the following command manually ONLY.
 
-rm     -f    /tmp/nft.rule
+nft     list      ruleset
+nft     flush     ruleset
+nft               --interactive
+
+touch        /tmp/nft.rule
+chmod  777   /tmp/nft.rule
 
 nft    -f    /tmp/nft.rule
+
 
 endef
 

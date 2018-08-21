@@ -19,6 +19,7 @@ vFFset01:=\
 	Kconfig* *config.mk *.conf \
 	*.v  *.ucf scr*.scr *.ncd \
 	*.go \
+	*.rule \
 
 vp:=vim_prepare1
 vp: vpc
