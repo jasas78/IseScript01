@@ -13,7 +13,7 @@ add table ip tbLocalIpv4
 $(foreach aa1,$(NFTgroupCard_x_ALL),$(EOL)add chain ip tbLocalIpv4 chLocalIp4Card_$(aa1)_11_checkDstIp )
 $(foreach aa1,$(NFTgroupCard_x_Src),$(EOL)add chain ip tbLocalIpv4 chLocalIp4Card_$(aa1)_13_checkSrcIp )
 $(foreach aa1,$(NFTgroupCard_x_ALL),$(EOL)add chain ip tbLocalIpv4 chLocalIp4Card_$(aa1)_15_checkProtocol_tcp )
-$(foreach aa1,$(NFTgroupCard_x_ALL),$(EOL)add chain ip tbLocalIpv4 chLocalIp4Card_$(aa1)_16_checkTcpDstPort )
+$(foreach aa1,$(NFTgroupCard_x_ALL),$(EOL)add chain ip tbLocalIpv4 chLocalIp4Card_$(aa1)_16_checkTcpDstPortNew )
 $(foreach aa1,$(NFTgroupCard_x_ALL),$(EOL)add chain ip tbLocalIpv4 chLocalIp4Card_$(aa1)_17_checkProtocol_udp )
 $(foreach aa1,$(NFTgroupCard_x_ALL),$(EOL)add chain ip tbLocalIpv4 chLocalIp4Card_$(aa1)_18_checkUdpDstPort )
 $(foreach aa1,$(NFTgroupCard_x_ALL),$(EOL)add chain ip tbLocalIpv4 chLocalIp4Card_$(aa1)_19_checkProtocol_icmp )
@@ -57,12 +57,16 @@ $(EOL)add rule ip tbLocalIpv4 chLocalIp4Card_$(aa1)_13_checkSrcIp ip saddr $(aa2
 $(EOL)add rule ip tbLocalIpv4 chLocalIp4Card_$(aa1)_13_checkSrcIp  $(NFTcnt) drop \
 )
 
-# _15_checkProtocol_tcp --> _16_checkTcpDstPort , _17_checkProtocol_udp 
+# _15_checkProtocol_tcp --> _16_checkTcpDstPortNew , _17_checkProtocol_udp 
 $(foreach aa1,$(NFTgroupCard_x_ALL)  ,\
 $(EOL)add rule ip tbLocalIpv4 chLocalIp4Card_$(aa1)_15_checkProtocol_tcp ip protocol != tcp $(NFTcnt) goto chLocalIp4Card_$(aa1)_17_checkProtocol_udp \
 $(EOL)add rule ip tbLocalIpv4 chLocalIp4Card_$(aa1)_15_checkProtocol_tcp ct state { established, related } $(NFTcnt) accept \
-$(EOL)add rule ip tbLocalIpv4 chLocalIp4Card_$(aa1)_15_checkProtocol_tcp ct state { new } $(NFTcnt) accept \
+$(EOL)add rule ip tbLocalIpv4 chLocalIp4Card_$(aa1)_15_checkProtocol_tcp ct state { new } $(NFTcnt) goto chLocalIp4Card_$(aa1)_16_checkTcpDstPortNew \
 $(EOL)add rule ip tbLocalIpv4 chLocalIp4Card_$(aa1)_15_checkProtocol_tcp $(NFTcnt) drop \
+)
+$(foreach aa1,$(NFTgroupCard_x_ALL)  ,\
+$(EOL)add rule ip tbLocalIpv4 chLocalIp4Card_$(aa1)_16_checkTcpDstPortNew $(NFTcnt) accept \
+$(EOL)add rule ip tbLocalIpv4 chLocalIp4Card_$(aa1)_16_checkTcpDstPortNew $(NFTcnt) drop \
 )
 
 
