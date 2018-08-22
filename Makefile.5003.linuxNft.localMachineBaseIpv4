@@ -16,7 +16,8 @@ $(foreach aa1,$(NFTgroupCard_x_ALL),$(EOL)add chain ip tbLocalIpv4 chLocalIp4Car
 $(foreach aa1,$(NFTgroupCard_x_ALL),$(EOL)add chain ip tbLocalIpv4 chLocalIp4Card_$(aa1)_16_checkTcpDstPortNew )
 $(foreach aa1,$(NFTgroupCard_x_ALL),$(EOL)add chain ip tbLocalIpv4 chLocalIp4Card_$(aa1)_17_checkProtocol_udp )
 $(foreach aa1,$(NFTgroupCard_x_ALL),$(EOL)add chain ip tbLocalIpv4 chLocalIp4Card_$(aa1)_18_checkUdpDstPort )
-$(foreach aa1,$(NFTgroupCard_x_ALL),$(EOL)add chain ip tbLocalIpv4 chLocalIp4Card_$(aa1)_19_checkProtocol_icmp )
+$(foreach aa1,$(NFTgroupCard_x_ALL),$(EOL)add chain ip tbLocalIpv4 chLocalIp4Card_$(aa1)_21_checkProtocol_icmp )
+$(foreach aa1,$(NFTgroupCard_x_ALL),$(EOL)add chain ip tbLocalIpv4 chLocalIp4Card_$(aa1)_23_unknown )
 
 add chain ip tbLocalIpv4 chLocalIp4input    { type filter hook input   priority 0 ; policy accept ; }
 
@@ -69,7 +70,30 @@ $(EOL)add rule ip tbLocalIpv4 chLocalIp4Card_$(aa1)_16_checkTcpDstPortNew $(NFTc
 $(EOL)add rule ip tbLocalIpv4 chLocalIp4Card_$(aa1)_16_checkTcpDstPortNew $(NFTcnt) drop \
 )
 
+# _17_checkProtocol_udp -> _18_checkUdpDstPort , _21_checkProtocol_icmp 
+$(foreach aa1,$(NFTgroupCard_x_ALL)  ,\
+$(EOL)add rule ip tbLocalIpv4 chLocalIp4Card_$(aa1)_17_checkProtocol_udp ip protocol != udp $(NFTcnt) goto chLocalIp4Card_$(aa1)_21_checkProtocol_icmp \
+$(EOL)add rule ip tbLocalIpv4 chLocalIp4Card_$(aa1)_17_checkProtocol_udp ct state { established, related } $(NFTcnt) accept \
+$(EOL)add rule ip tbLocalIpv4 chLocalIp4Card_$(aa1)_17_checkProtocol_udp ct state { new } $(NFTcnt) goto chLocalIp4Card_$(aa1)_18_checkUdpDstPort \
+$(EOL)add rule ip tbLocalIpv4 chLocalIp4Card_$(aa1)_17_checkProtocol_udp $(NFTcnt) drop \
+)
+$(foreach aa1,$(NFTgroupCard_x_ALL)  ,\
+$(EOL)add rule ip tbLocalIpv4 chLocalIp4Card_$(aa1)_18_checkUdpDstPort $(NFTcnt) accept \
+$(EOL)add rule ip tbLocalIpv4 chLocalIp4Card_$(aa1)_18_checkUdpDstPort $(NFTcnt) drop \
+)
 
+# _21_checkProtocol_icmp -> _23_unknown 
+$(foreach aa1,$(NFTgroupCard_x_ALL)  ,\
+$(EOL)add rule ip tbLocalIpv4 chLocalIp4Card_$(aa1)_21_checkProtocol_icmp ip protocol != icmp $(NFTcnt) goto chLocalIp4Card_$(aa1)_23_unknown \
+$(EOL)add rule ip tbLocalIpv4 chLocalIp4Card_$(aa1)_21_checkProtocol_icmp icmp type { echo-reply   } $(NFTcnt) accept \
+$(EOL)add rule ip tbLocalIpv4 chLocalIp4Card_$(aa1)_21_checkProtocol_icmp icmp type { echo-request } $(NFTcnt) accept \
+$(EOL)add rule ip tbLocalIpv4 chLocalIp4Card_$(aa1)_21_checkProtocol_icmp $(NFTcnt) drop \
+)
+
+# _23_unknown  ->
+$(foreach aa1,$(NFTgroupCard_x_ALL)  ,\
+$(EOL)add rule ip tbLocalIpv4 chLocalIp4Card_$(aa1)_23_unknown $(NFTcnt) accept \
+)
 
 endef
 export nf31_TEXT
