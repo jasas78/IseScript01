@@ -40,6 +40,7 @@ NFTgroupCard_x_ALL:= lo lan vpn
 NFTgroupCard_x_Src:= lo vpn
 NFTgroupCard_x_Dst:= lo vpn
 NFTgroupCard_x_Block:= lan
+
 $(foreach aa1,$(NFTgroupCard_x_ALL),\
 	$(eval NFTgroupCard_y2_$(aa1):=$(foreach bb1,$(NFTgroupCard_x_$(aa1)),$(foreach bb2,$(NFTcardS_$(bb1)),$(NetCard_ip2_$(bb2)))))\
 	$(eval NFTgroupCard_y3_$(aa1):=$(foreach bb1,$(NFTgroupCard_x_$(aa1)),$(foreach bb2,$(NFTcardS_$(bb1)),$(NetCard_ip3_$(bb2)))))\
