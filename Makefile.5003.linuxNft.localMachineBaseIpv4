@@ -2,6 +2,7 @@ all:
 
 #$(NFTbin)     
 # nf1_TEXT
+# Makefile.5000
 # Makefile.5001
 
 define nf31_TEXT
@@ -26,13 +27,16 @@ add chain ip tbNatIpv4         chLocalIp4postrouting    { type filter hook postr
 
 ### ruleS begin :
 
-#add rule  ip tbLocalIpv4 chLocalIp4input    iif lo ip saddr 127.0.0.1/8 counter packets 0 bytes 0 accept
-add rule  ip tbLocalIpv4 chLocalIp4input    iif lo $(NFTcnt) goto chLocalIp4Card_lo
-add rule  ip tbLocalIpv4 chLocalIp4input    iif lo counter packets 0 bytes 0 drop
-add rule  ip tbLocalIpv4 chLocalIp4input    ip saddr 127.0.0.1/8 counter packets 0 bytes 0 drop
+#add rule  ip tbLocalIpv4 chLocalIp4input    iif lo $(NFTcnt) goto chLocalIp4Card_lo
+$(foreach aa1,$(NFTgroupCard_x_ALL),
+$(foreach aa2,$(NFTgroupCard_x_$(aa1)),\
+$(foreach aa3,$(NFTcardS_$(aa2)),\
+	$(EOL)add rule ip tbLocalIpv4 chLocalIp4input    iif $(aa3) $(NFTcnt) goto chLocalIp4Card_$(aa1))))
 
-add rule  ip tbLocalIpv4 chLocalIp4Card_lo    iif lo counter packets 0 bytes 0
-add rule  ip tbLocalIpv4 chLocalIp4Card_lo    iif lo counter packets 0 bytes 0 accept
+add rule  ip tbLocalIpv4 chLocalIp4input    $(NFTcnt) drop
+
+add rule  ip tbLocalIpv4 chLocalIp4Card_lo    iif lo $(NFTcnt)
+add rule  ip tbLocalIpv4 chLocalIp4Card_lo    iif lo $(NFTcnt) accept
 
 endef
 export nf31_TEXT
