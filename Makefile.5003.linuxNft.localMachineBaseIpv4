@@ -46,6 +46,12 @@ $(EOL)add rule ip tbLocalIpv4 chLocalIp4Card_$(aa1)_11_checkDstIp  ip daddr $(aa
 $(EOL)add rule ip tbLocalIpv4 chLocalIp4Card_$(aa1)_11_checkDstIp  $(NFTcnt) drop \
 )
 
+$(foreach aa1,$(NFTgroupCard_x_Src)  ,$(foreach aa2,$(NFTgroupCard_y5_$(aa1)),\
+$(EOL)add rule ip tbLocalIpv4 chLocalIp4Card_$(aa1)_12_checkSrcIp ip saddr $(aa2) \
+   $(NFTcnt) goto chLocalIp4Card_$(aa1)_13_checkDstPort \
+   )\
+$(EOL)add rule ip tbLocalIpv4 chLocalIp4Card_$(aa1)_12_checkSrcIp  $(NFTcnt) drop \
+)
 
 
 
