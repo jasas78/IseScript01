@@ -5,21 +5,30 @@ NFTbin?=/usr/sbin/nft
 
 NFTfile:=/tmp/nft.rule
 
-NFTcardSall:=$(sort $(shell ls /sys/class/net/))
-NFTcardSloX:=$(filter lo%,$(NFTcardSall))
-NFTcardSethX:=$(filter eth%,$(NFTcardSall))
-NFTcardSwlanX:=$(filter wlan% wan%,$(NFTcardSall))
-NFTcardSbrX:=$(filter br%,$(NFTcardSall))
-NFTcardStunX:=$(filter tun%,$(NFTcardSall))
-NFTcardStapX:=$(filter tap%,$(NFTcardSall))
+NFTkeyworD_lo     := lo 
+NFTkeyworD_eth    := eth 
+NFTkeyworD_wlan   := wlan  wan 
+NFTkeyworD_br     := br 
+NFTkeyworD_tun    := tun 
+NFTkeyworD_tap    := tap 
 
-NFTcardSETs:=NFTcardSall NFTcardSloX NFTcardSethX NFTcardSwlanX NFTcardSbrX NFTcardStunX NFTcardStapX 
-$(foreach aa1,$(NFTcardSall),$(eval NetCard_ip0_$(aa1):=$$(shell ip a show $(aa1)|grep inet)))
-$(foreach aa1,$(NFTcardSall),$(eval NetCard_ip1_$(aa1):=$$(shell ip a show $(aa1)|grep inet|awk '{printf $$$$2}')))
-$(foreach aa1,$(NFTcardSall),$(eval NetCard_ip2_$(aa1):=$$(shell ip a show $(aa1)|grep inet|awk '{printf $$$$2}'|awk -F/ '{printf $$$$1}')))
-$(foreach aa1,$(NFTcardSall),$(eval NetCard_ip3_$(aa1):=$$(shell ip a show $(aa1)|grep inet|awk '{printf $$$$2}'|awk -F/ '{printf $$$$2}')))
-$(foreach aa1,$(NFTcardSall),$(eval NetCard_ip4_$(aa1):=$$(shell ip a show $(aa1)|grep inet|awk '{printf $$$$4}')))
-$(foreach aa1,$(NFTcardSall),$(eval \
+NFTkeyworD_ALL:= lo eth wlan br tun tap 
+
+NFTcardS_ALL   :=$(sort $(shell ls /sys/class/net/))
+NFTcardS_lo    :=$(filter lo%,$(NFTcardS_ALL))
+NFTcardS_eth   :=$(filter eth%,$(NFTcardS_ALL))
+NFTcardS_wlan  :=$(filter wlan% wan%,$(NFTcardS_ALL))
+NFTcardS_br    :=$(filter br%,$(NFTcardS_ALL))
+NFTcardS_tun   :=$(filter tun%,$(NFTcardS_ALL))
+NFTcardS_tap   :=$(filter tap%,$(NFTcardS_ALL))
+
+NFTcardSETs:=$(foreach aa1,ALL $(NFTkeyworD_ALL),NFTcardS_$(aa1))
+$(foreach aa1,$(NFTcardS_ALL),$(eval NetCard_ip0_$(aa1):=$$(shell ip a show $(aa1)|grep inet)))
+$(foreach aa1,$(NFTcardS_ALL),$(eval NetCard_ip1_$(aa1):=$$(shell ip a show $(aa1)|grep inet|awk '{printf $$$$2}')))
+$(foreach aa1,$(NFTcardS_ALL),$(eval NetCard_ip2_$(aa1):=$$(shell ip a show $(aa1)|grep inet|awk '{printf $$$$2}'|awk -F/ '{printf $$$$1}')))
+$(foreach aa1,$(NFTcardS_ALL),$(eval NetCard_ip3_$(aa1):=$$(shell ip a show $(aa1)|grep inet|awk '{printf $$$$2}'|awk -F/ '{printf $$$$2}')))
+$(foreach aa1,$(NFTcardS_ALL),$(eval NetCard_ip4_$(aa1):=$$(shell ip a show $(aa1)|grep inet|awk '{printf $$$$4}')))
+$(foreach aa1,$(NFTcardS_ALL),$(eval \
 	NetCard_ip_ALL+=\
 $$(EOL)NetCard_ip0_$(aa1) 2,3,4 --- 1,0 = \
  $(NetCard_ip2_$(aa1)),\
@@ -28,6 +37,9 @@ $$(EOL)NetCard_ip0_$(aa1) 2,3,4 --- 1,0 = \
  _=_ $(NetCard_ip1_$(aa1)),\
  _=_ $(strip $(NetCard_ip0_$(aa1)))\
 	))
+
+
+
 
 define NFTcardINFO
 $(foreach aa1,$(NFTcardSETs),$(EOL)$(aa1)    : $($(aa1)))
