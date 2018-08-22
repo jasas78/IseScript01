@@ -10,8 +10,9 @@ define nf31_TEXT
 add table ip tbLocalIpv4         
 
 
-#add chain ip tbLocalIpv4 chLocalIp4Card_lo   ;
 $(foreach aa1,$(NFTgroupCard_x_ALL),$(EOL)add chain ip tbLocalIpv4 chLocalIp4Card_$(aa1)_11_checkDstIp )
+$(foreach aa1,$(NFTgroupCard_x_Src),$(EOL)add chain ip tbLocalIpv4 chLocalIp4Card_$(aa1)_12_checkSrcIp )
+$(foreach aa1,$(NFTgroupCard_x_ALL),$(EOL)add chain ip tbLocalIpv4 chLocalIp4Card_$(aa1)_13_checkDstPort )
 
 add chain ip tbLocalIpv4 chLocalIp4input    { type filter hook input   priority 0 ; policy accept ; }
 
@@ -27,14 +28,11 @@ add chain ip tbNatIpv4         chLocalIp4postrouting    { type filter hook postr
 
 ### ruleS begin :
 
-#add rule  ip tbLocalIpv4 chLocalIp4input    iif lo $(NFTcnt) goto chLocalIp4Card_lo
 $(foreach aa1,$(NFTgroupCard_x_ALL),$(foreach aa2,$(NFTgroupCard_x_$(aa1)),$(foreach aa3,$(NFTcardS_$(aa2)),\
 $(EOL)add rule ip tbLocalIpv4 chLocalIp4input    iif $(aa3) $(NFTcnt) goto chLocalIp4Card_$(aa1)_11_checkDstIp )))
 
 add rule  ip tbLocalIpv4 chLocalIp4input    $(NFTcnt) drop
 
-#add rule  ip tbLocalIpv4 chLocalIp4Card_lo    iif lo $(NFTcnt)
-#add rule  ip tbLocalIpv4 chLocalIp4Card_lo    iif lo $(NFTcnt) accept
 
 endef
 export nf31_TEXT
