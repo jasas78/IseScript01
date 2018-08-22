@@ -38,12 +38,17 @@ NFTgroupCard_x_lan:= eth wlan br
 NFTgroupCard_x_vpn:= tun tap
 NFTgroupCard_x_ALL:= lo lan vpn
 $(foreach aa1,$(NFTgroupCard_x_ALL),\
-	$(eval NFTgroupCard_y2_$(aa1):=$(foreach bb1,$(NFTgroupCard_x_$(aa1)),zz_$(aa1)_$(bb1)__$(NetCard_ip2_$(bb1))))\
+	$(eval NFTgroupCard_y2_$(aa1):=$(foreach bb1,$(NFTgroupCard_x_$(aa1)),$(foreach bb2,$(NFTcardS_$(bb1)),$(NetCard_ip2_$(bb2)))))\
+	$(eval NFTgroupCard_y3_$(aa1):=$(foreach bb1,$(NFTgroupCard_x_$(aa1)),$(foreach bb2,$(NFTcardS_$(bb1)),$(NetCard_ip3_$(bb2)))))\
+	$(eval NFTgroupCard_y4_$(aa1):=$(foreach bb1,$(NFTgroupCard_x_$(aa1)),$(foreach bb2,$(NFTcardS_$(bb1)),$(NetCard_ip4_$(bb2)))))\
+	$(eval NFTgroupCard_y5_$(aa1):=$(foreach bb1,$(NFTgroupCard_x_$(aa1)),$(foreach bb2,$(NFTcardS_$(bb1)),$(NetCard_ip1_$(bb2)))))\
 	)
 
-NetCard_ip_ALL+=\
-$(foreach aa1,$(NFTgroupCard_x_ALL),\
-$(EOL)NFTgroupCard_y2_$(aa1):=$(NFTgroupCard_y2_$(aa1)))
+NetCard_ip_ALL+=$(EOL)NFTgroupCard_x_ALL:=$(NFTgroupCard_x_ALL)
+#NetCard_ip_ALL+=$(foreach aa1,$(NFTgroupCard_x_ALL),$(EOL)NFTgroupCard_y2_$(aa1):=$(NFTgroupCard_y2_$(aa1)))
+#NetCard_ip_ALL+=$(foreach aa1,$(NFTgroupCard_x_ALL),$(EOL)NFTgroupCard_y3_$(aa1):=$(NFTgroupCard_y3_$(aa1)))
+#NetCard_ip_ALL+=$(foreach aa1,$(NFTgroupCard_x_ALL),$(EOL)NFTgroupCard_y4_$(aa1):=$(NFTgroupCard_y4_$(aa1)))
+NetCard_ip_ALL+=$(foreach aa1,$(NFTgroupCard_x_ALL),$(EOL)NFTgroupCard_y5_$(aa1):=$(NFTgroupCard_y5_$(aa1)))
 
 
 
