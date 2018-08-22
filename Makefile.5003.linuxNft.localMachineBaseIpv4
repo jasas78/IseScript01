@@ -11,10 +11,10 @@ add table ip tbLocalIpv4
 
 
 $(foreach aa1,$(NFTgroupCard_x_ALL),$(EOL)add chain ip tbLocalIpv4 chLocalIp4Card_$(aa1)_11_checkDstIp )
-$(foreach aa1,$(NFTgroupCard_x_Src),$(EOL)add chain ip tbLocalIpv4 chLocalIp4Card_$(aa1)_12_checkSrcIp )
-$(foreach aa1,$(NFTgroupCard_x_ALL),$(EOL)add chain ip tbLocalIpv4 chLocalIp4Card_$(aa1)_13_checkProtocol_tcp )
-$(foreach aa1,$(NFTgroupCard_x_ALL),$(EOL)add chain ip tbLocalIpv4 chLocalIp4Card_$(aa1)_14_checkProtocol_udp )
-$(foreach aa1,$(NFTgroupCard_x_ALL),$(EOL)add chain ip tbLocalIpv4 chLocalIp4Card_$(aa1)_15_checkProtocol_icmp )
+$(foreach aa1,$(NFTgroupCard_x_Src),$(EOL)add chain ip tbLocalIpv4 chLocalIp4Card_$(aa1)_13_checkSrcIp )
+$(foreach aa1,$(NFTgroupCard_x_ALL),$(EOL)add chain ip tbLocalIpv4 chLocalIp4Card_$(aa1)_15_checkProtocol_tcp )
+$(foreach aa1,$(NFTgroupCard_x_ALL),$(EOL)add chain ip tbLocalIpv4 chLocalIp4Card_$(aa1)_17_checkProtocol_udp )
+$(foreach aa1,$(NFTgroupCard_x_ALL),$(EOL)add chain ip tbLocalIpv4 chLocalIp4Card_$(aa1)_19_checkProtocol_icmp )
 
 add chain ip tbLocalIpv4 chLocalIp4input    { type filter hook input   priority 0 ; policy accept ; }
 
@@ -37,22 +37,22 @@ $(EOL)add rule ip tbLocalIpv4 chLocalIp4input    $(NFTcnt) drop
 
 $(foreach aa1,$(NFTgroupCard_x_Src)  ,$(foreach aa2,$(NFTgroupCard_y2_$(aa1)),\
 $(EOL)add rule ip tbLocalIpv4 chLocalIp4Card_$(aa1)_11_checkDstIp  ip daddr $(aa2) \
-   $(NFTcnt) goto chLocalIp4Card_$(aa1)_12_checkSrcIp \
+   $(NFTcnt) goto chLocalIp4Card_$(aa1)_13_checkSrcIp \
    )\
 $(EOL)add rule ip tbLocalIpv4 chLocalIp4Card_$(aa1)_11_checkDstIp  $(NFTcnt) drop \
 )
 $(foreach aa1,$(NFTgroupCard_x_Block),$(foreach aa2,$(NFTgroupCard_y2_$(aa1)),\
 $(EOL)add rule ip tbLocalIpv4 chLocalIp4Card_$(aa1)_11_checkDstIp  ip daddr $(aa2) \
-   $(NFTcnt) goto chLocalIp4Card_$(aa1)_13_checkProtocol_tcp \
+   $(NFTcnt) goto chLocalIp4Card_$(aa1)_15_checkProtocol_tcp \
    )\
 $(EOL)add rule ip tbLocalIpv4 chLocalIp4Card_$(aa1)_11_checkDstIp  $(NFTcnt) drop \
 )
 
 $(foreach aa1,$(NFTgroupCard_x_Src)  ,$(foreach aa2,$(NFTgroupCard_y5_$(aa1)),\
-$(EOL)add rule ip tbLocalIpv4 chLocalIp4Card_$(aa1)_12_checkSrcIp ip saddr $(aa2) \
-   $(NFTcnt) goto chLocalIp4Card_$(aa1)_13_checkProtocol_tcp \
+$(EOL)add rule ip tbLocalIpv4 chLocalIp4Card_$(aa1)_13_checkSrcIp ip saddr $(aa2) \
+   $(NFTcnt) goto chLocalIp4Card_$(aa1)_15_checkProtocol_tcp \
    )\
-$(EOL)add rule ip tbLocalIpv4 chLocalIp4Card_$(aa1)_12_checkSrcIp  $(NFTcnt) drop \
+$(EOL)add rule ip tbLocalIpv4 chLocalIp4Card_$(aa1)_13_checkSrcIp  $(NFTcnt) drop \
 )
 
 
