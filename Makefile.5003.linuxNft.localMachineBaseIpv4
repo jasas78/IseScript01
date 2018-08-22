@@ -23,7 +23,11 @@ add table ip tbNatIpv4
 add chain ip tbNatIpv4         chLocalIp4prerouting     { type filter hook prerouting    priority 0 ; policy accept ; }
 add chain ip tbNatIpv4         chLocalIp4postrouting    { type filter hook postrouting   priority 0 ; policy accept ; }
 
-add rule  ip tbLocalIpv4 chLocalIp4input    iif lo ip saddr 127.0.0.1/8 counter packets 0 bytes 0 accept
+
+### ruleS begin :
+
+#add rule  ip tbLocalIpv4 chLocalIp4input    iif lo ip saddr 127.0.0.1/8 counter packets 0 bytes 0 accept
+add rule  ip tbLocalIpv4 chLocalIp4input    iif lo $(NFTcnt) goto chLocalIp4Card_lo
 add rule  ip tbLocalIpv4 chLocalIp4input    iif lo counter packets 0 bytes 0 drop
 add rule  ip tbLocalIpv4 chLocalIp4input    ip saddr 127.0.0.1/8 counter packets 0 bytes 0 drop
 

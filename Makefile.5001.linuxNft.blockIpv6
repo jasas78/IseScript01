@@ -1,6 +1,7 @@
 all:
 
 #$(NFTbin)     
+NFTcnt:= counter packets 0 bytes 0 
 
 define nf1_TEXT
 
