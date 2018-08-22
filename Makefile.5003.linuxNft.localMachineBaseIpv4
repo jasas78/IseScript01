@@ -97,6 +97,15 @@ $(foreach aa1,$(NFTgroupCard_x_ALL)  ,\
 $(EOL)add rule ip tbLocalIpv4 chLocalIp4Card_$(aa1)_23_unknown $(NFTcnt) accept \
 )
 
+#### forward rule :
+add rule ip tbLocalIpv4 chLocalIp4forward  $(NFTcnt) accept
+#### output rule :
+add rule ip tbLocalIpv4 chLocalIp4output   $(NFTcnt) accept
+
+#### Nat rule :
+add rule ip tbNatIpv4         chLocalIp4prerouting     $(NFTcnt) accept
+add rule ip tbNatIpv4         chLocalIp4postrouting    $(NFTcnt) accept
+
 endef
 export nf31_TEXT
 

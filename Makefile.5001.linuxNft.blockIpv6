@@ -85,6 +85,10 @@ add chain ip6 tbBlockIp6 chBlockIp6input    { type filter hook input   priority 
 add chain ip6 tbBlockIp6 chBlockIp6forward  { type filter hook forward priority 0 ; policy drop ; }
 add chain ip6 tbBlockIp6 chBlockIp6output   { type filter hook output  priority 0 ; policy drop ; }
 
+add rule  ip6 tbBlockIp6 chBlockIp6input        $(NFTcnt) drop
+add rule  ip6 tbBlockIp6 chBlockIp6forward      $(NFTcnt) drop
+add rule  ip6 tbBlockIp6 chBlockIp6output       $(NFTcnt) drop
+
 endef
 export nf1_TEXT
 
