@@ -38,6 +38,12 @@ $(EOL)add rule ip tbLocalIpv4 chLocalIp4Card_$(aa1)_11_checkDstIp  ip daddr $(Ne
    ))\
 $(EOL)add rule ip tbLocalIpv4 chLocalIp4Card_$(aa1)_11_checkDstIp  $(NFTcnt) drop \
 )
+$(foreach aa1,$(NFTgroupCard_x_Block),$(foreach aa2,$(NFTgroupCard_x_$(aa1)),$(foreach aa3,$(NFTcardS_$(aa2)),\
+$(EOL)add rule ip tbLocalIpv4 chLocalIp4Card_$(aa1)_11_checkDstIp  ip daddr $(aa3)__$(NetCard_ip2_$(aa3))/32 \
+   $(NFTcnt) goto chLocalIp4Card_$(aa1)_13_checkDstPort \
+   ))\
+$(EOL)add rule ip tbLocalIpv4 chLocalIp4Card_$(aa1)_11_checkDstIp  $(NFTcnt) drop \
+)
 
 #$(foreach aa1,$(NFTgroupCard_x_Block),$(foreach aa2,$(NFTgroupCard_x_$(aa1)),$(foreach aa3,$(NFTcardS_$(aa2)),\
 #$(EOL)add rule ip tbLocalIpv4 chLocalIp4input    iif $(aa3) $(NFTcnt) goto chLocalIp4Card_$(aa1)_11_checkDstIp )))
