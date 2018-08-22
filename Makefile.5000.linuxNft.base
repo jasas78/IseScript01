@@ -21,11 +21,12 @@ $(foreach aa1,$(NFTcardSall),$(eval NetCard_ip3_$(aa1):=$$(shell ip a show $(aa1
 $(foreach aa1,$(NFTcardSall),$(eval NetCard_ip4_$(aa1):=$$(shell ip a show $(aa1)|grep inet|awk '{printf $$$$4}')))
 $(foreach aa1,$(NFTcardSall),$(eval \
 	NetCard_ip_ALL+=\
-$$(EOL)NetCard_ip0_$(aa1) = $(NetCard_ip0_$(aa1))\
-$$(EOL)NetCard_ip1_$(aa1) = $(NetCard_ip1_$(aa1))\
-$$(EOL)NetCard_ip2_$(aa1) = $(NetCard_ip2_$(aa1))\
-$$(EOL)NetCard_ip3_$(aa1) = $(NetCard_ip3_$(aa1))\
-$$(EOL)NetCard_ip4_$(aa1) = $(NetCard_ip4_$(aa1))\
+$$(EOL)NetCard_ip0_$(aa1) 2,3,4 --- 1,0 = \
+ $(NetCard_ip2_$(aa1)),\
+ $(NetCard_ip3_$(aa1)),\
+ $(NetCard_ip4_$(aa1))\
+ _=_ $(NetCard_ip1_$(aa1)),\
+ _=_ $(strip $(NetCard_ip0_$(aa1)))\
 	))
 
 define NFTcardINFO
