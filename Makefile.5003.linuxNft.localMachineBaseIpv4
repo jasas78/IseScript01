@@ -12,7 +12,7 @@ add table ip tbLocalIpv4
 
 $(foreach aa1,$(NFTgroupCard_x_ALL),$(EOL)add chain ip tbLocalIpv4 chLocalIp4Card_$(aa1)_11_checkDstIp )
 $(foreach aa1,$(NFTgroupCard_x_Src),$(EOL)add chain ip tbLocalIpv4 chLocalIp4Card_$(aa1)_12_checkSrcIp )
-$(foreach aa1,$(NFTgroupCard_x_ALL),$(EOL)add chain ip tbLocalIpv4 chLocalIp4Card_$(aa1)_13_checkDstPort )
+$(foreach aa1,$(NFTgroupCard_x_ALL),$(EOL)add chain ip tbLocalIpv4 chLocalIp4Card_$(aa1)_13_checkProtocol_tcp )
 
 add chain ip tbLocalIpv4 chLocalIp4input    { type filter hook input   priority 0 ; policy accept ; }
 
@@ -41,14 +41,14 @@ $(EOL)add rule ip tbLocalIpv4 chLocalIp4Card_$(aa1)_11_checkDstIp  $(NFTcnt) dro
 )
 $(foreach aa1,$(NFTgroupCard_x_Block),$(foreach aa2,$(NFTgroupCard_y2_$(aa1)),\
 $(EOL)add rule ip tbLocalIpv4 chLocalIp4Card_$(aa1)_11_checkDstIp  ip daddr $(aa2) \
-   $(NFTcnt) goto chLocalIp4Card_$(aa1)_13_checkDstPort \
+   $(NFTcnt) goto chLocalIp4Card_$(aa1)_13_checkProtocol_tcp \
    )\
 $(EOL)add rule ip tbLocalIpv4 chLocalIp4Card_$(aa1)_11_checkDstIp  $(NFTcnt) drop \
 )
 
 $(foreach aa1,$(NFTgroupCard_x_Src)  ,$(foreach aa2,$(NFTgroupCard_y5_$(aa1)),\
 $(EOL)add rule ip tbLocalIpv4 chLocalIp4Card_$(aa1)_12_checkSrcIp ip saddr $(aa2) \
-   $(NFTcnt) goto chLocalIp4Card_$(aa1)_13_checkDstPort \
+   $(NFTcnt) goto chLocalIp4Card_$(aa1)_13_checkProtocol_tcp \
    )\
 $(EOL)add rule ip tbLocalIpv4 chLocalIp4Card_$(aa1)_12_checkSrcIp  $(NFTcnt) drop \
 )
@@ -62,7 +62,7 @@ export nf31_TEXT
 #nf31: $($(nf31))
 
 nf31:=deal_with_local_machine_packages_ipv4
-nf31: 
+nf31:
 	echo "$${nf31_TEXT}"                  >> $(NFTfile)
 	@wc                                     $(NFTfile)
 
