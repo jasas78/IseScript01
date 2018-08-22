@@ -13,6 +13,8 @@ add table ip tbLocalIpv4
 $(foreach aa1,$(NFTgroupCard_x_ALL),$(EOL)add chain ip tbLocalIpv4 chLocalIp4Card_$(aa1)_11_checkDstIp )
 $(foreach aa1,$(NFTgroupCard_x_Src),$(EOL)add chain ip tbLocalIpv4 chLocalIp4Card_$(aa1)_12_checkSrcIp )
 $(foreach aa1,$(NFTgroupCard_x_ALL),$(EOL)add chain ip tbLocalIpv4 chLocalIp4Card_$(aa1)_13_checkProtocol_tcp )
+$(foreach aa1,$(NFTgroupCard_x_ALL),$(EOL)add chain ip tbLocalIpv4 chLocalIp4Card_$(aa1)_14_checkProtocol_udp )
+$(foreach aa1,$(NFTgroupCard_x_ALL),$(EOL)add chain ip tbLocalIpv4 chLocalIp4Card_$(aa1)_15_checkProtocol_icmp )
 
 add chain ip tbLocalIpv4 chLocalIp4input    { type filter hook input   priority 0 ; policy accept ; }
 
