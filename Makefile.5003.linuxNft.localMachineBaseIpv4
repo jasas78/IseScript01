@@ -125,7 +125,13 @@ $(call ip4inRuleAA1,_21_checkProtocol_udp, $(NFTcnt) drop) \
 
 # _23_checkUdpDstPort
 $(foreach aa1,$(NFTgroupCard_x_ALL)  ,\
-$(call ip4inRuleAA1,_23_checkUdpDstPort, $(NFTcnt) accept #__$(aa1)__) \
+	$(if $(filter lo,$(aa1)),\
+	  $(if $(NFTdebug),$(call ip4inRuleAA1,_23_checkUdpDstPort, meta nftrace set 1) )\
+	  $(call ip4inRuleAA1,_23_checkUdpDstPort, $(NFTcnt) accept #__$(aa1)__) ,\
+	  $(foreach aa2,$(NFudpIN_$(aa1))  ,\
+	    $(call ip4inRuleAA1,_23_checkUdpDstPort, udp dport $(aa2) $(NFTcnt) accept #__$(aa1)__$(aa2)__)  \
+	  )\
+	)
 $(call ip4inRuleAA1,_23_checkUdpDstPort, $(NFTcnt) drop) \
 )
 
