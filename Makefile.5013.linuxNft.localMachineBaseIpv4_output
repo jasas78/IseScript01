@@ -72,6 +72,7 @@ $(call ip4inRuleAA1,_43_OOcheckDstIp, $(NFTcnt) goto chLocalIp4Card_$(aa1)_45_OO
 )
 
 $(foreach aa1,$(NFTgroupCard_x_ALL), \
+  $(call ip4inRuleAA1,_43_OOcheckDstIp, ip daddr 239.0.0.0/8 $(NFTcnt) drop #__$(aa1)__$(aa2)__8 )  \
   $(call ip4inRuleAA1,_43_OOcheckDstIp, $(NFTcnt) meta nftrace set 1) \
   $(call ip4inRuleAA1,_43_OOcheckDstIp, $(NFTcnt) drop) \
 )
@@ -111,9 +112,7 @@ $(call ip4inRuleAA1,_51_OOcheckProtocol_udp, $(NFTcnt) drop) \
 
 # _53_OOcheckUdpDstPort
 $(foreach aa1,lan,\
-  $(foreach aa2,$(call sortN, 239.0.0.0/8 ),\
-    $(call ip4inRuleAA1,_53_OOcheckUdpDstPort, ip daddr $(aa2) $(NFTcnt) drop #__$(aa1)__$(aa2)__0 )  \
-  )\
+  $(call ip4inRuleAA1,_53_OOcheckUdpDstPort, ip daddr 239.0.0.0/8 $(NFTcnt) drop #__$(aa1)__$(aa2)__0 )  \
 )
 $(foreach aa1,$(NFTgroupCard_x_ALL),\
   $(foreach aa2,$(call sortN,$(NFTudpOUT_allow) $(NFTudpIN_$(aa1)) ),\
