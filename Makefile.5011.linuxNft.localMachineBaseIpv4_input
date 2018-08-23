@@ -24,6 +24,7 @@ ip4inRule111=$(EOL)add rule ip tbLocalIpv4                      $(1) $(2)
 
 define NFTtext_11_ipv4_input
 
+# NFTtext_11_ipv4_input : begin
 add table ip tbLocalIpv4         
 
 
@@ -157,5 +158,6 @@ $(call ip4inRule111,chLocalIp4output, $(NFTcnt) accept)
 add rule ip tbNatIpv4         chLocalIp4prerouting     $(NFTcnt) accept
 add rule ip tbNatIpv4         chLocalIp4postrouting    $(NFTcnt) accept
 
+# NFTtext_11_ipv4_input : end
 endef
 

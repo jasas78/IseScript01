@@ -3,6 +3,7 @@ all:
 
 nf31_TEXT:=\
 	$(NFTtext_11_ipv4_input) \
+	$(NFTtext_13_ipv4_output) \
 
 export nf31_TEXT
 
