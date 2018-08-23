@@ -1,0 +1,17 @@
+
+all:
+
+nf31_TEXT:=\
+	$(NFTtext_11_ipv4_input) \
+
+export nf31_TEXT
+
+nf31:=deal_with_local_machine_packages_ipv4
+nf31:
+	echo "$${nf31_TEXT}"  $(NFTsed1)     >> $(NFTfile)
+	@wc                                     $(NFTfile)
+
+linuxNft_OpList+=		\
+	nf31						\
+
+
