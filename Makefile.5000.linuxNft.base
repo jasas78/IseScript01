@@ -72,7 +72,7 @@ NFTtcpOUT_allow_jg1:= 55044
 NFTtcpOUT_allow:=80 443 21 22 $(NFTtcpOUT_allow_$(HOSTNAME))
 
 NFTudpOUT_allow_jg1:= 51044 51028 51052
-NFTtcpOUT_allow:=53 $(NFTudpOUT_allow_$(HOSTNAME))
+NFTudpOUT_allow:=53 67 68 69 5353 $(NFTudpOUT_allow_$(HOSTNAME))
 
 NFTtcpIN_ssh:=55522 33221 22225
 
