@@ -21,7 +21,10 @@ $(call genVimWithFileList,showSourceCodeTEXT,$(NFTruleList),vn)
 CFGrunLinuxNftINCset1:=\
 	Makefile.5000.linuxNft.base \
 	Makefile.5001.linuxNft.blockIpv6 \
-	Makefile.5003.linuxNft.localMachineBaseIpv4 \
+	Makefile.5011.linuxNft.localMachineBaseIpv4_input \
+	Makefile.5013.linuxNft.localMachineBaseIpv4_output \
+    Makefile.5015.linuxNft.localMachineBaseIpv4_forward \
+    Makefile.5021.linuxNft.localMachineBaseIpv4_nat \
 	Makefile.5099.linuxNft.groupS \
 
 #	Makefile.4010.synopsys.path 	\

@@ -22,7 +22,7 @@ ip4inRuleAA1=$(EOL)add rule ip tbLocalIpv4 chLocalIp4Card_$(aa1)$(1) $(2)
 ip4inRule111=$(EOL)add rule ip tbLocalIpv4                      $(1) $(2)
 
 
-define nf31_TEXT
+define NFTtext_11_ipv4_input
 
 add table ip tbLocalIpv4         
 
@@ -158,10 +158,11 @@ add rule ip tbNatIpv4         chLocalIp4prerouting     $(NFTcnt) accept
 add rule ip tbNatIpv4         chLocalIp4postrouting    $(NFTcnt) accept
 
 endef
-export nf31_TEXT
 
-#$(nf31):=ws2 wv1
-#nf31: $($(nf31))
+nf31_TEXT:=\
+	$(NFTtext_11_ipv4_input) \
+
+export nf31_TEXT
 
 nf31:=deal_with_local_machine_packages_ipv4
 nf31:
