@@ -10,6 +10,7 @@ ng1: $($(ng1))
 #$(ng1):=make vm38 && make nc1 nf1
 
 tg1_DST:=vm39
+tg1_DST:=vm40
 tg1:=modifi_then_gen_the_test_group__$(tg1_DST)
 $(tg1):= $($(tg1_DST)) $($(ng1))
 tg1:
