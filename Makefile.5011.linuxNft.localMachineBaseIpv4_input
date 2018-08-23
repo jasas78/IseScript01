@@ -39,14 +39,6 @@ $(EOL)add chain ip tbLocalIpv4 chLocalIp4Card_$(aa1)$(aa2)\
 add chain ip tbLocalIpv4 chLocalIp4input    { type filter hook input   priority 0 ; policy accept ; }
 
 
-add chain ip tbLocalIpv4 chLocalIp4forward  { type filter hook forward priority 0 ; policy accept ; }
-add chain ip tbLocalIpv4 chLocalIp4output   { type filter hook output  priority 0 ; policy accept ; }
-
-
-add table ip tbNatIpv4         
-add chain ip tbNatIpv4         chLocalIp4prerouting     { type filter hook prerouting    priority 0 ; policy accept ; }
-add chain ip tbNatIpv4         chLocalIp4postrouting    { type filter hook postrouting   priority 0 ; policy accept ; }
-
 
 ### ruleS begin :
 
@@ -148,15 +140,6 @@ $(call ip4inRuleAA1,_25_IIcheckProtocol_icmp, $(NFTcnt) drop) \
 $(foreach aa1,$(NFTgroupCard_x_ALL)  ,\
 $(call ip4inRuleAA1,_29_IIunknown, $(NFTcnt) accept) \
 )
-
-#### forward rule :
-$(call ip4inRule111,chLocalIp4forward, $(NFTcnt) accept)
-#### output rule :
-$(call ip4inRule111,chLocalIp4output, $(NFTcnt) accept)
-
-#### Nat rule :
-add rule ip tbNatIpv4         chLocalIp4prerouting     $(NFTcnt) accept
-add rule ip tbNatIpv4         chLocalIp4postrouting    $(NFTcnt) accept
 
 # NFTtext_11_ipv4_input : end
 endef

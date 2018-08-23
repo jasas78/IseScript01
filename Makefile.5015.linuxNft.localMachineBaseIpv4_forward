@@ -1,0 +1,5 @@
+all:
+#add chain ip tbLocalIpv4 chLocalIp4forward  { type filter hook forward priority 0 ; policy accept ; }
+#### forward rule :
+#$(call ip4inRule111,chLocalIp4forward, $(NFTcnt) accept)
+
