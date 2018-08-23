@@ -94,15 +94,15 @@ $(call ip4inRuleAA1,_16_checkTcpDstPortNew, $(NFTcnt) drop) \
 
 # _17_checkProtocol_udp -> _18_checkUdpDstPort , _21_checkProtocol_icmp 
 $(foreach aa1,$(NFTgroupCard_x_ALL)  ,\
-$(EOL)add rule ip tbLocalIpv4 chLocalIp4Card_$(aa1)_17_checkProtocol_udp ip protocol != udp $(NFTcnt) goto chLocalIp4Card_$(aa1)_21_checkProtocol_icmp \
-$(EOL)add rule ip tbLocalIpv4 chLocalIp4Card_$(aa1)_17_checkProtocol_udp ct state { established } $(NFTcnt) accept \
-$(EOL)add rule ip tbLocalIpv4 chLocalIp4Card_$(aa1)_17_checkProtocol_udp ct state { related     } $(NFTcnt) accept \
-$(EOL)add rule ip tbLocalIpv4 chLocalIp4Card_$(aa1)_17_checkProtocol_udp ct state { new } $(NFTcnt) goto chLocalIp4Card_$(aa1)_18_checkUdpDstPort \
-$(EOL)add rule ip tbLocalIpv4 chLocalIp4Card_$(aa1)_17_checkProtocol_udp $(NFTcnt) drop \
+$(call ip4inRuleAA1,_17_checkProtocol_udp, ip protocol != udp $(NFTcnt) goto chLocalIp4Card_$(aa1)_21_checkProtocol_icmp) \
+$(call ip4inRuleAA1,_17_checkProtocol_udp, ct state { established } $(NFTcnt) accept) \
+$(call ip4inRuleAA1,_17_checkProtocol_udp, ct state { related     } $(NFTcnt) accept) \
+$(call ip4inRuleAA1,_17_checkProtocol_udp, ct state { new } $(NFTcnt) goto chLocalIp4Card_$(aa1)_18_checkUdpDstPort) \
+$(call ip4inRuleAA1,_17_checkProtocol_udp, $(NFTcnt) drop) \
 )
 $(foreach aa1,$(NFTgroupCard_x_ALL)  ,\
-$(EOL)add rule ip tbLocalIpv4 chLocalIp4Card_$(aa1)_18_checkUdpDstPort $(NFTcnt) accept \
-$(EOL)add rule ip tbLocalIpv4 chLocalIp4Card_$(aa1)_18_checkUdpDstPort $(NFTcnt) drop \
+$(call ip4inRuleAA1,_18_checkUdpDstPort, $(NFTcnt) accept) \
+$(call ip4inRuleAA1,_18_checkUdpDstPort, $(NFTcnt) drop) \
 )
 
 # _21_checkProtocol_icmp -> _23_unknown 
