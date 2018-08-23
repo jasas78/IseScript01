@@ -4,11 +4,12 @@ all:
 # nf1_TEXT
 # Makefile.5000
 # Makefile.5001
+# Makefile.5011
 
-NFTdebug:=111
+# NFTdebug:=
 
 
-my_tbLocalIpv4_chainALL :=   \
+my_tbLocalIpv4_OOchainALL :=   \
 _41_OOcheckDstIp               \
 _43_OOcheckSrcIp               \
 _45_OOcheckProtocol_tcp        \
@@ -23,13 +24,13 @@ define NFTtext_13_ipv4_output
 # NFTtext_13_ipv4_output begin
 
 
-# add my_tbLocalIpv4_chainALL : begin
+# add my_tbLocalIpv4_OOchainALL : begin
 $(foreach aa1,$(NFTgroupCard_x_ALL),\
-$(foreach aa2,$(my_tbLocalIpv4_chainALL),\
+$(foreach aa2,$(my_tbLocalIpv4_OOchainALL),\
 $(EOL)add chain ip tbLocalIpv4 chLocalIp4Card_$(aa1)$(aa2)\
 ))
 
-# add my_tbLocalIpv4_chainALL : end
+# add my_tbLocalIpv4_OOchainALL : end
 
 add chain ip tbLocalIpv4 chLocalIp4input    { type filter hook input   priority 0 ; policy accept ; }
 
