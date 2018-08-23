@@ -64,7 +64,7 @@ NetCard_ip_ALL+=$(foreach aa1,$(NFTgroupCard_x_ALL),$(EOL)NFTgroupCard_y5_$(aa1)
 
 
 
-NFtcpIN_ssh:=55522
+NFtcpIN_ssh:=55522 33221 22225
 
 # go_ginuerzh__g
 NFtcpIN_vpn_acceptPort:=55050
