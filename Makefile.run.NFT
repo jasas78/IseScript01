@@ -50,6 +50,7 @@ as root , you can run the following command manually ONLY.
 nft     list      ruleset
 nft     list      ruleset -s/--stateless ## Omit stateful information of ruleset.
 nft     list      ruleset -a/--handle    ## Output rule handle
+nft     list      ruleset -a -s 
 nft     flush     ruleset
 nft               -i/--interactive       ## Read input from interactive CLI
 nft               -c/--check             ## Check commands validity without actually applying the changes
