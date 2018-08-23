@@ -10,8 +10,8 @@ all:
 
 
 my_tbLocalIpv4_OOchainALL :=   \
-_41_OOcheckDstIp               \
-_43_OOcheckSrcIp               \
+_41_OOcheckSrcIp               \
+_43_OOcheckDstIp               \
 _45_OOcheckProtocol_tcp        \
 _47_OOcheckTcpDstPortNew       \
 _51_OOcheckProtocol_udp        \
@@ -39,50 +39,27 @@ add chain ip tbLocalIpv4 chLocalIp4output   { type filter hook output  priority 
 ### chLocalIp4output : begin 
 
 $(foreach aa1,$(NFTgroupCard_x_ALL),$(foreach aa2,$(NFTgroupCard_x_$(aa1)),$(foreach aa3,$(NFTcardS_$(aa2)),\
-$(call ip4inRule111,chLocalIp4output, oif $(aa3) $(NFTcnt) goto chLocalIp4Card_$(aa1)_41_OOcheckDstIp) \
+$(call ip4inRule111,chLocalIp4output, oif $(aa3) $(NFTcnt) goto chLocalIp4Card_$(aa1)_41_OOcheckSrcIp) \
 )))
 $(call ip4inRule111,chLocalIp4output, $(NFTcnt) drop)
 ### chLocalIp4output : end
 
 
-### _41_OOcheckDstIp
-$(foreach aa1,$(NFTgroupCard_x_Src)  , $(foreach aa2,$(NFTgroupCard_y2_$(aa1)),\
-$(call ip4inRuleAA1,_41_OOcheckDstIp, ip daddr $(aa2) $(NFTcnt) goto chLocalIp4Card_$(aa1)_43_OOcheckSrcIp) \
+### _41_OOcheckSrcIp
+$(foreach aa1,$(NFTgroupCard_x_ALL), $(foreach aa2,$(NFTgroupCard_y2_$(aa1)),\
+$(call ip4inRuleAA1,_41_OOcheckSrcIp, ip saddr $(aa2) $(NFTcnt) goto chLocalIp4Card_$(aa1)_43_OOcheckDstIp) \
 )\
-$(call ip4inRuleAA1,_41_OOcheckDstIp, ip daddr 224.0.0.0/8 $(NFTcnt) drop)\
-                                       $(foreach aa2,$(NFTgroupCard_x_$(aa1)),$(foreach aa3,$(NFTcardS_$(aa2)),$(if $(NetCard_ip4_$(aa3)),\
-$(call ip4inRuleAA1,_41_OOcheckDstIp, ip daddr $(NetCard_ip4_$(aa3)) ip saddr $(NetCard_ip1_$(aa3)) ip protocol udp $(NFTcnt) accept)\
-$(call ip4inRuleAA1,_41_OOcheckDstIp, ip daddr 255.255.255.255       ip saddr $(NetCard_ip1_$(aa3)) ip protocol udp $(NFTcnt) accept)\
-)))\
-                    $(if $(filter lo,$(aa1)),$(foreach aa2,$(NFTgroupCard_y2_lan) $(NFTgroupCard_y2_vpn),\
-$(call ip4inRuleAA1,_41_OOcheckDstIp, iif lo ip saddr $(aa2) ip saddr $(aa2) $(NFTcnt) accept)\
-))\
-                    $(if $(filter lo,$(aa1)),,\
-$(call ip4inRuleAA1,_41_OOcheckDstIp, ip daddr 255.255.255.255       $(NFTcnt) drop)\
-)\
-$(if $(NFTdebug),$(call ip4inRuleAA1,_41_OOcheckDstIp, meta nftrace set 1) )\
-$(call ip4inRuleAA1,_41_OOcheckDstIp, $(NFTcnt) drop) \
+$(if $(NFTdebug),$(call ip4inRuleAA1,_41_OOcheckSrcIp, meta nftrace set 1) )\
+$(call ip4inRuleAA1,_41_OOcheckSrcIp, $(NFTcnt) drop) \
 )
 
-$(foreach aa1,$(NFTgroupCard_x_Block), $(foreach aa2,$(NFTgroupCard_y2_$(aa1)),\
-$(call ip4inRuleAA1,_41_OOcheckDstIp, ip daddr $(aa2) $(NFTcnt) goto chLocalIp4Card_$(aa1)_45_OOcheckProtocol_tcp) \
-)\
-$(call ip4inRuleAA1,_41_OOcheckDstIp, ip daddr 224.0.0.0/8 $(NFTcnt) drop)\
-                                       $(foreach aa2,$(NFTgroupCard_x_$(aa1)),$(foreach aa3,$(NFTcardS_$(aa2)),$(if $(NetCard_ip4_$(aa3)),\
-$(call ip4inRuleAA1,_41_OOcheckDstIp, ip daddr $(NetCard_ip4_$(aa3)) ip saddr $(NetCard_ip1_$(aa3)) ip protocol udp $(NFTcnt) accept)\
-$(call ip4inRuleAA1,_41_OOcheckDstIp, ip daddr 255.255.255.255       ip saddr $(NetCard_ip1_$(aa3)) ip protocol udp $(NFTcnt) accept)\
-)))\
-$(call ip4inRuleAA1,_41_OOcheckDstIp, ip daddr 255.255.255.255       $(NFTcnt) drop)\
-$(if $(NFTdebug), $(call ip4inRuleAA1,_41_OOcheckDstIp, meta nftrace set 1) )\
-$(call ip4inRuleAA1,_41_OOcheckDstIp, $(NFTcnt) drop) \
-)
 
-### _43_OOcheckSrcIp
-$(foreach aa1,$(NFTgroupCard_x_Src)  ,$(foreach aa2,$(NFTgroupCard_y5_$(aa1)),\
-$(call ip4inRuleAA1,_43_OOcheckSrcIp, ip saddr $(aa2) $(NFTcnt) goto chLocalIp4Card_$(aa1)_45_OOcheckProtocol_tcp) \
+### _43_OOcheckDstIp
+$(foreach aa1,$(NFTgroupCard_x_Dst)  ,$(foreach aa2,$(NFTgroupCard_y5_$(aa1)),\
+$(call ip4inRuleAA1,_43_OOcheckDstIp, ip saddr $(aa2) $(NFTcnt) goto chLocalIp4Card_$(aa1)_45_OOcheckProtocol_tcp) \
    )\
-$(call ip4inRuleAA1,_43_OOcheckSrcIp, $(NFTcnt) drop) \
 )
+$(foreach aa1,$(NFTgroupCard_x_All), $(call ip4inRuleAA1,_43_OOcheckDstIp, $(NFTcnt) drop) )
 
 # _45_OOcheckProtocol_tcp --> _47_OOcheckTcpDstPortNew , _51_OOcheckProtocol_udp 
 $(foreach aa1,$(NFTgroupCard_x_ALL)  ,\

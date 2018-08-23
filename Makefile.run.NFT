@@ -71,8 +71,7 @@ nft    -f    /tmp/nft.rule && rm -f b2.txt && (nft     list      ruleset -a -s >
 nft     list      ruleset       |less
 nft     list      ruleset -s -a |less
 
-nft     list      ruleset |sed -e '/policy drop/ d' -e '/counter packets 0 bytes 0\b/ d' |grep drop
-nft     list      ruleset |sed -e '/policy drop/ d' -e '/counter packets 0 bytes 0\b/ d' |less
+nft     list      ruleset|grep -n drop |sed -e '/policy drop/ d' -e '/counter packets 0 bytes 0\b/ d'
 
 (ns|grep ^tcp)|grep LISTEN |sort -k4
 

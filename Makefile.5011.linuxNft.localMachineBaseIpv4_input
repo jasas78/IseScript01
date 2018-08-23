@@ -85,8 +85,8 @@ $(call ip4inRuleAA1,_11_IIcheckDstIp, $(NFTcnt) drop) \
 $(foreach aa1,$(NFTgroupCard_x_Src)  ,$(foreach aa2,$(NFTgroupCard_y5_$(aa1)),\
 $(call ip4inRuleAA1,_13_IIcheckSrcIp, ip saddr $(aa2) $(NFTcnt) goto chLocalIp4Card_$(aa1)_15_IIcheckProtocol_tcp) \
    )\
-$(call ip4inRuleAA1,_13_IIcheckSrcIp, $(NFTcnt) drop) \
 )
+$(foreach aa1,$(NFTgroupCard_x_ALL), $(call ip4inRuleAA1,_13_IIcheckSrcIp, $(NFTcnt) drop) )
 
 # _15_IIcheckProtocol_tcp --> _17_IIcheckTcpDstPortNew , _21_IIcheckProtocol_udp 
 $(foreach aa1,$(NFTgroupCard_x_ALL)  ,\
