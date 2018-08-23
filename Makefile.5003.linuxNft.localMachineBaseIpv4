@@ -5,6 +5,8 @@ all:
 # Makefile.5000
 # Makefile.5001
 
+NFTdebug:=111
+
 define nf31_TEXT
 
 add table ip tbLocalIpv4         
@@ -38,19 +40,25 @@ $(EOL)add rule ip tbLocalIpv4 chLocalIp4input    iif $(aa3) $(NFTcnt) goto chLoc
 $(EOL)add rule ip tbLocalIpv4 chLocalIp4input    $(NFTcnt) drop
 
 
+### _11_checkDstIp
 $(foreach aa1,$(NFTgroupCard_x_Src)  ,$(foreach aa2,$(NFTgroupCard_y2_$(aa1)),\
 $(EOL)add rule ip tbLocalIpv4 chLocalIp4Card_$(aa1)_11_checkDstIp  ip daddr $(aa2) \
    $(NFTcnt) goto chLocalIp4Card_$(aa1)_13_checkSrcIp \
    )\
+$(if $(NFTdebug),\
+$(EOL)add rule ip tbLocalIpv4 chLocalIp4Card_$(aa1)_11_checkDstIp  meta nftrace set 1) \
 $(EOL)add rule ip tbLocalIpv4 chLocalIp4Card_$(aa1)_11_checkDstIp  $(NFTcnt) drop \
 )
 $(foreach aa1,$(NFTgroupCard_x_Block),$(foreach aa2,$(NFTgroupCard_y2_$(aa1)),\
 $(EOL)add rule ip tbLocalIpv4 chLocalIp4Card_$(aa1)_11_checkDstIp  ip daddr $(aa2) \
    $(NFTcnt) goto chLocalIp4Card_$(aa1)_15_checkProtocol_tcp \
    )\
+$(if $(NFTdebug),\
+$(EOL)add rule ip tbLocalIpv4 chLocalIp4Card_$(aa1)_11_checkDstIp  meta nftrace set 1) \
 $(EOL)add rule ip tbLocalIpv4 chLocalIp4Card_$(aa1)_11_checkDstIp  $(NFTcnt) drop \
 )
 
+### _13_checkSrcIp
 $(foreach aa1,$(NFTgroupCard_x_Src)  ,$(foreach aa2,$(NFTgroupCard_y5_$(aa1)),\
 $(EOL)add rule ip tbLocalIpv4 chLocalIp4Card_$(aa1)_13_checkSrcIp ip saddr $(aa2) \
    $(NFTcnt) goto chLocalIp4Card_$(aa1)_15_checkProtocol_tcp \
