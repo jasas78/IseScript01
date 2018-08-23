@@ -39,7 +39,7 @@ add chain ip tbLocalIpv4 chLocalIp4output   { type filter hook output  priority 
 ### chLocalIp4output : begin 
 
 $(foreach aa1,$(NFTgroupCard_x_ALL),$(foreach aa2,$(NFTgroupCard_x_$(aa1)),$(foreach aa3,$(NFTcardS_$(aa2)),\
-$(call ip4inRule111,chLocalIp4output, iif $(aa3) $(NFTcnt) goto chLocalIp4Card_$(aa1)_41_OOcheckDstIp) \
+$(call ip4inRule111,chLocalIp4output, oif $(aa3) $(NFTcnt) goto chLocalIp4Card_$(aa1)_41_OOcheckDstIp) \
 )))
 $(call ip4inRule111,chLocalIp4output, $(NFTcnt) drop)
 ### chLocalIp4output : end
