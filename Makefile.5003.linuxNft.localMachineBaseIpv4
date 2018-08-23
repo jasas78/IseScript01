@@ -105,8 +105,13 @@ $(call ip4inRuleAA1,_15_checkProtocol_tcp, $(NFTcnt) drop) \
 
 # _17_checkTcpDstPortNew
 $(foreach aa1,$(NFTgroupCard_x_ALL)  ,\
-$(call ip4inRuleAA1,_17_checkTcpDstPortNew, $(NFTcnt) accept) \
-$(call ip4inRuleAA1,_17_checkTcpDstPortNew, $(NFTcnt) drop) \
+  $(if $(filter lo,$(aa1)),\
+    $(call ip4inRuleAA1,_17_checkTcpDstPortNew, $(NFTcnt) accept) ,\
+    $(foreach aa2,$(NFtcpIN_$(aa1))  ,\
+      $(call ip4inRuleAA1,_17_checkTcpDstPortNew, tcp dport $(aa2) $(NFTcnt) accept)  \
+    )\
+  )\
+  $(call ip4inRuleAA1,_17_checkTcpDstPortNew, $(NFTcnt) drop) \
 )
 
 # _21_checkProtocol_udp -> _23_checkUdpDstPort , _25_checkProtocol_icmp 
