@@ -32,6 +32,9 @@ $$(EOL)NetCard_ip0_$(aa1) 2,3,4 --- 1,0 = \
  _=_ $(NetCard_ip1_$(aa1)),\
  _=_ $(strip $(NetCard_ip0_$(aa1)))\
 	))
+ifeq (host,$(NetCard_ip4_lo))
+NetCard_ip4_lo:=127.255.255.255
+endif
 
 NFTgroupCard_x_lo:= lo
 NFTgroupCard_x_lan:= eth wlan br
