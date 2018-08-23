@@ -73,5 +73,7 @@ nft     list      ruleset |sed -e '/policy drop/ d' -e '/counter packets 0 bytes
 
 (ns|grep ^tcp)|grep LISTEN |sort -k4
 
+nft monitor trac
+
 endef
 
