@@ -104,8 +104,13 @@ nc1:
 	@echo "$${nc1_TEXT}"       $(NFTsed1)    > $(NFTfile)
 	@wc                                        $(NFTfile)
 
+ss1:=nft_show_ruleset_with_less
+ss1: 
+	nft     list      ruleset | less
+
 linuxNft_OpList+=		\
 	nh1						\
 	nc1						\
+	ss1						\
 
 

@@ -67,9 +67,13 @@ $(call ip4inRuleAA1,_11_checkDstIp, ip daddr 255.255.255.255       ip saddr $(Ne
                     $(if $(filter lo,$(aa1)),$(foreach aa2,$(NFTgroupCard_y2_lan) $(NFTgroupCard_y2_vpn),\
 $(call ip4inRuleAA1,_11_checkDstIp, iif lo ip saddr $(aa2) ip saddr $(aa2) $(NFTcnt) accept)\
 ))\
+                    $(if $(filter lo,$(aa1)),,\
+$(call ip4inRuleAA1,_11_checkDstIp, ip daddr 255.255.255.255       $(NFTcnt) drop)\
+)\
 $(if $(NFTdebug),$(call ip4inRuleAA1,_11_checkDstIp, meta nftrace set 1) )\
 $(call ip4inRuleAA1,_11_checkDstIp, $(NFTcnt) drop) \
 )
+
 $(foreach aa1,$(NFTgroupCard_x_Block), $(foreach aa2,$(NFTgroupCard_y2_$(aa1)),\
 $(call ip4inRuleAA1,_11_checkDstIp, ip daddr $(aa2) $(NFTcnt) goto chLocalIp4Card_$(aa1)_15_checkProtocol_tcp) \
 )\
@@ -78,6 +82,7 @@ $(call ip4inRuleAA1,_11_checkDstIp, ip daddr 224.0.0.0/8 $(NFTcnt) drop)\
 $(call ip4inRuleAA1,_11_checkDstIp, ip daddr $(NetCard_ip4_$(aa3)) ip saddr $(NetCard_ip1_$(aa3)) ip protocol udp $(NFTcnt) accept)\
 $(call ip4inRuleAA1,_11_checkDstIp, ip daddr 255.255.255.255       ip saddr $(NetCard_ip1_$(aa3)) ip protocol udp $(NFTcnt) accept)\
 )))\
+$(call ip4inRuleAA1,_11_checkDstIp, ip daddr 255.255.255.255       $(NFTcnt) drop)\
 $(if $(NFTdebug), $(call ip4inRuleAA1,_11_checkDstIp, meta nftrace set 1) )\
 $(call ip4inRuleAA1,_11_checkDstIp, $(NFTcnt) drop) \
 )
