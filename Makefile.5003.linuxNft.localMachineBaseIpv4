@@ -122,8 +122,10 @@ $(call ip4inRuleAA1,_21_checkProtocol_udp, ct state { related     } $(NFTcnt) ac
 $(call ip4inRuleAA1,_21_checkProtocol_udp, ct state { new } $(NFTcnt) goto chLocalIp4Card_$(aa1)_23_checkUdpDstPort) \
 $(call ip4inRuleAA1,_21_checkProtocol_udp, $(NFTcnt) drop) \
 )
+
+# _23_checkUdpDstPort
 $(foreach aa1,$(NFTgroupCard_x_ALL)  ,\
-$(call ip4inRuleAA1,_23_checkUdpDstPort, $(NFTcnt) accept) \
+$(call ip4inRuleAA1,_23_checkUdpDstPort, __$(aa1)__$(NFTcnt) accept) \
 $(call ip4inRuleAA1,_23_checkUdpDstPort, $(NFTcnt) drop) \
 )
 
