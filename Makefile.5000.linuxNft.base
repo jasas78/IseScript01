@@ -1,5 +1,8 @@
 all:
 
+HOSTNAME?=$(shell hostname)
+export HOSTNAME
+
 NFTbin:=$(shell which nft)
 NFTbin?=/usr/sbin/nft
 
@@ -75,6 +78,7 @@ NFtcpIN_vpn:=$(strip $(sort $(NFtcpIN_lan) $(NFtcpIN_vpn_dns) $(NFtcpIN_vpn_squi
 NFtcpIN_lo:=
 
 NetCard_ip_ALL+=$(foreach aa1,$(NFTgroupCard_x_ALL),$(EOL)NFtcpIN_$(aa1):=$(NFtcpIN_$(aa1)))
+NetCard_ip_ALL+=$(EOL) HOSTNAME=$(HOSTNAME)
 
 
 
