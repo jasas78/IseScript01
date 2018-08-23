@@ -80,10 +80,11 @@ NFtcpIN_lo:=
 NFudpIN_vpn_acceptPort:=38034 40948 40956 40972
 
 NFudpIN_dhcpclient:=68
+NFudpIN_dns:=53
 
-NFudpIN_lan:=$(strip $(shell echo $(NFudpIN_vpn_acceptPort) $(NFudpIN_dhcpclient)|xargs -n 1|sort -n ))
-NFudpIN_vpn:=$(strip $(shell echo $(NFudpIN_lan) |xargs -n 1|sort -n))
-NFudpIN_lo:=
+NFudpIN_lan:=$(strip $(shell echo $(NFudpIN_dns) $(NFudpIN_vpn_acceptPort) $(NFudpIN_dhcpclient)|xargs -n 1|sort -n ))
+NFudpIN_vpn:=$(NFudpIN_lan)
+NFudpIN_lo:=$(strip $(shell echo $(NFudpIN_dns) |xargs -n 1|sort -n))
 
 
 
