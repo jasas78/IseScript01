@@ -5,6 +5,8 @@ NFTbin?=/usr/sbin/nft
 
 NFTfile:=/tmp/nft.rule
 
+NFTsed1:=|sed -e 's;^ *;;g' -e 's; *$$;;g' -e 's;\s\s\+; ;g'
+
 NFTkeyworD_lo     := lo 
 NFTkeyworD_eth    := eth 
 NFTkeyworD_wlan   := wlan  wan 
@@ -95,11 +97,11 @@ export nc1_TEXT
 
 nh1:=nft_base_usage
 nh1: 
-	@echo "$${nh1_TEXT}"                  
+	@echo "$${nh1_TEXT}"       $(NFTsed1)              
 
 nc1:=nft_step_1_clean_all_old_ruleS
 nc1: 
-	@echo "$${nc1_TEXT}"                     > $(NFTfile)
+	@echo "$${nc1_TEXT}"       $(NFTsed1)    > $(NFTfile)
 	@wc                                        $(NFTfile)
 
 linuxNft_OpList+=		\

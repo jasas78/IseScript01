@@ -97,7 +97,7 @@ export nf1_TEXT
 
 nf1:=BlockAllipv6Package
 nf1: 
-	echo "$${nf1_TEXT}"                  >> $(NFTfile)
+	echo "$${nf1_TEXT}"  $(NFTsed1)      >> $(NFTfile)
 	@wc                                     $(NFTfile)
 
 linuxNft_OpList+=		\

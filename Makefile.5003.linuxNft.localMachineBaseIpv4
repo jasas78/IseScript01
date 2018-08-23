@@ -64,6 +64,7 @@ $(call ip4inRuleAA1,_11_checkDstIp, ip daddr 224.0.0.0/8 $(NFTcnt) drop)\
 $(call ip4inRuleAA1,_11_checkDstIp, ip daddr $(NetCard_ip4_$(aa3)) ip saddr $(NetCard_ip1_$(aa3)) ip protocol udp $(NFTcnt) accept)\
 $(call ip4inRuleAA1,_11_checkDstIp, ip daddr 255.255.255.255       ip saddr $(NetCard_ip1_$(aa3)) ip protocol udp $(NFTcnt) accept)\
 )))\
+$(if $(filter lo,$(aa1)),__$(NFTgroupCard_y2_lan)__$(NFTgroupCard_y2_vpn)__)\
 $(if $(NFTdebug),$(call ip4inRuleAA1,_11_checkDstIp, meta nftrace set 1) )\
 $(call ip4inRuleAA1,_11_checkDstIp, $(NFTcnt) drop) \
 )
@@ -142,7 +143,7 @@ export nf31_TEXT
 
 nf31:=deal_with_local_machine_packages_ipv4
 nf31:
-	echo "$${nf31_TEXT}"                  >> $(NFTfile)
+	echo "$${nf31_TEXT}"  $(NFTsed1)     >> $(NFTfile)
 	@wc                                     $(NFTfile)
 
 linuxNft_OpList+=		\
