@@ -60,7 +60,10 @@ chmod  777   /tmp/nft.rule
 
 nft    -f    /tmp/nft.rule
 nft    -f    /tmp/nft.rule && nft     list      ruleset
+nft    -f    /tmp/nft.rule && rm -f b2.txt && (nft     list      ruleset -a -s > b2.txt) && cat b2.txt
 
+nft     list      ruleset       |less
+nft     list      ruleset -s -a |less
 
 endef
 
