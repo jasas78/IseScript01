@@ -71,7 +71,10 @@ $(call ip4inRuleAA1,_43_OOcheckDstIp, ip daddr $(aa2) $(NFTcnt) drop) \
 $(call ip4inRuleAA1,_43_OOcheckDstIp, $(NFTcnt) goto chLocalIp4Card_$(aa1)_45_OOcheckProtocol_tcp) \
 )
 
-$(foreach aa1,$(NFTgroupCard_x_ALL), $(call ip4inRuleAA1,_43_OOcheckDstIp, $(NFTcnt) drop) )
+$(foreach aa1,$(NFTgroupCard_x_ALL), \
+  $(call ip4inRuleAA1,_43_OOcheckDstIp, $(NFTcnt) meta nftrace set 1) \
+  $(call ip4inRuleAA1,_43_OOcheckDstIp, $(NFTcnt) drop) \
+)
 
 # _45_OOcheckProtocol_tcp --> _47_OOcheckTcpDstPortNew , _51_OOcheckProtocol_udp 
 $(foreach aa1,$(NFTgroupCard_x_ALL)  ,\
