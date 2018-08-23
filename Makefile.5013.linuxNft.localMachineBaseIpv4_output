@@ -86,7 +86,7 @@ $(call ip4inRuleAA1,_45_OOcheckProtocol_tcp, $(NFTcnt) drop) \
 $(foreach aa1,$(NFTgroupCard_x_ALL)  ,\
   $(if $(filter lo,$(aa1)),\
     $(call ip4inRuleAA1,_47_OOcheckTcpDstPortNew, $(NFTcnt) accept) ,\
-    $(foreach aa2,$(NFtcpIN_$(aa1))  ,\
+    $(foreach aa2,$(shell echo $(NFtcpOUT_allow) $(NFtcpIN_$(aa1))|xargs -n 1|sort -u -n) ,\
       $(call ip4inRuleAA1,_47_OOcheckTcpDstPortNew, tcp dport $(aa2) $(NFTcnt) accept)  \
     )\
   )\

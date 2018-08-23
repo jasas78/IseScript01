@@ -65,6 +65,8 @@ NetCard_ip_ALL+=$(foreach aa1,$(NFTgroupCard_x_ALL),$(EOL)NFTgroupCard_y5_$(aa1)
 
 NFTblackHoleIP:=$(strip 127.0.0.0/8 192.168.0.0/16 10.0.0.0/8)
 
+NFtcpOUT_allow:=80 443 21 22
+
 NFtcpIN_ssh:=55522 33221 22225
 
 # go_ginuerzh__g
@@ -74,8 +76,8 @@ NFtcpIN_vpn_dns:=53 953
 NFtcpIN_vpn_squid_jg1:= 20014 20022 20025 20026 20061 30014 30022 30025 30026 30061
 NFtcpIN_vpn_squid__:=$(NFtcpIN_vpn_squid_$(HOSTNAME))
 
-NFtcpIN_lan:=$(strip $(shell echo $(NFtcpIN_vpn_acceptPort) $(NFtcpIN_ssh)|xargs -n 1|sort -n ))
-NFtcpIN_vpn:=$(strip $(shell echo $(NFtcpIN_lan) $(NFtcpIN_vpn_dns) $(NFtcpIN_vpn_squid__)|xargs -n 1|sort -n ))
+NFtcpIN_lan:=$(strip $(shell echo $(NFtcpIN_vpn_acceptPort) $(NFtcpIN_ssh)|xargs -n 1|sort -u -n ))
+NFtcpIN_vpn:=$(strip $(shell echo $(NFtcpIN_lan) $(NFtcpIN_vpn_dns) $(NFtcpIN_vpn_squid__)|xargs -n 1|sort -u -n ))
 NFtcpIN_lo:=
 
 NFudpIN_vpn_acceptPort:=38034 40948 40956 40972
@@ -83,9 +85,9 @@ NFudpIN_vpn_acceptPort:=38034 40948 40956 40972
 NFudpIN_dhcpclient:=68
 NFudpIN_dns:=53
 
-NFudpIN_lan:=$(strip $(shell echo $(NFudpIN_dns) $(NFudpIN_vpn_acceptPort) $(NFudpIN_dhcpclient)|xargs -n 1|sort -n ))
+NFudpIN_lan:=$(strip $(shell echo $(NFudpIN_dns) $(NFudpIN_vpn_acceptPort) $(NFudpIN_dhcpclient)|xargs -n 1|sort -u -n ))
 NFudpIN_vpn:=$(NFudpIN_lan)
-NFudpIN_lo:=$(strip $(shell echo $(NFudpIN_dns) |xargs -n 1|sort -n))
+NFudpIN_lo:=$(strip $(shell echo $(NFudpIN_dns) |xargs -n 1|sort -u -n))
 
 
 
