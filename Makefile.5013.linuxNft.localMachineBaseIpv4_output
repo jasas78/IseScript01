@@ -107,6 +107,11 @@ $(call ip4inRuleAA1,_51_OOcheckProtocol_udp, $(NFTcnt) drop) \
 )
 
 # _53_OOcheckUdpDstPort
+$(foreach aa1,lan,\
+  $(foreach aa2,$(call sortN, 239.0.0.0/8 ),\
+    $(call ip4inRuleAA1,_53_OOcheckUdpDstPort, ip daddr $(aa2) $(NFTcnt) drop #__$(aa1)__$(aa2)__0 )  \
+  )\
+)
 $(foreach aa1,$(NFTgroupCard_x_ALL),\
   $(foreach aa2,$(call sortN,$(NFTudpOUT_allow) $(NFTudpIN_$(aa1)) ),\
     $(call ip4inRuleAA1,_53_OOcheckUdpDstPort, udp dport $(aa2) $(NFTcnt) accept #__$(aa1)__$(aa2)__1 )  \
