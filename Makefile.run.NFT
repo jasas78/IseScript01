@@ -72,6 +72,7 @@ nft     list      ruleset       |less
 nft     list      ruleset -s -a |less
 
 nft     list      ruleset|grep -n drop |sed -e '/policy drop/ d' -e '/counter packets 0 bytes 0\b/ d'
+nft     list      ruleset       > 1.txt ; vim 1.txt
 
 (ns|grep ^tcp)|grep LISTEN |sort -k4
 
