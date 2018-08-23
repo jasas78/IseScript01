@@ -101,7 +101,7 @@ $(call ip4inRuleAA1,_15_IIcheckProtocol_tcp, $(NFTcnt) drop) \
 $(foreach aa1,$(NFTgroupCard_x_ALL)  ,\
   $(if $(filter lo,$(aa1)),\
     $(call ip4inRuleAA1,_17_IIcheckTcpDstPortNew, $(NFTcnt) accept) ,\
-    $(foreach aa2,$(NFtcpIN_$(aa1))  ,\
+    $(foreach aa2,$(NFTtcpIN_$(aa1))  ,\
       $(call ip4inRuleAA1,_17_IIcheckTcpDstPortNew, tcp dport $(aa2) $(NFTcnt) accept)  \
     )\
   )\
@@ -119,7 +119,7 @@ $(call ip4inRuleAA1,_21_IIcheckProtocol_udp, $(NFTcnt) drop) \
 
 # _23_IIcheckUdpDstPort
 $(foreach aa1,$(NFTgroupCard_x_ALL)  ,\
-	$(foreach aa2,$(NFudpIN_$(aa1))  ,\
+	$(foreach aa2,$(NFTudpIN_$(aa1))  ,\
 	  $(call ip4inRuleAA1,_23_IIcheckUdpDstPort, udp dport $(aa2) $(NFTcnt) accept #__$(aa1)__$(aa2)__)  \
 	)\
 	$(if $(filter lo,$(aa1)),\

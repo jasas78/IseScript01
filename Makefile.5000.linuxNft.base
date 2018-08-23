@@ -68,35 +68,38 @@ NetCard_ip_ALL+=$(foreach aa1,$(NFTgroupCard_x_ALL),$(EOL)NFTgroupCard_y5_$(aa1)
 
 NFTblackHoleIP:=$(strip 127.0.0.0/8 192.168.0.0/16 10.0.0.0/8)
 
-NFtcpOUT_allow_jg1:= 55044
-NFtcpOUT_allow:=80 443 21 22 $(NFtcpOUT_allow_$(HOSTNAME))
+NFTtcpOUT_allow_jg1:= 55044
+NFTtcpOUT_allow:=80 443 21 22 $(NFTtcpOUT_allow_$(HOSTNAME))
 
-NFtcpIN_ssh:=55522 33221 22225
+NFTudpOUT_allow_jg1:= 51044 51028 51052
+NFTtcpOUT_allow:=53 $(NFTudpOUT_allow_$(HOSTNAME))
+
+NFTtcpIN_ssh:=55522 33221 22225
 
 # go_ginuerzh__g
-NFtcpIN_vpn_acceptPort:=55050
+NFTtcpIN_vpn_acceptPort:=55050
 
-NFtcpIN_vpn_dns:=53 953
-NFtcpIN_vpn_squid_jg1:= 20014 20022 20025 20026 20061 30014 30022 30025 30026 30061
-NFtcpIN_vpn_squid__:=$(NFtcpIN_vpn_squid_$(HOSTNAME))
+NFTtcpIN_vpn_dns:=53 953
+NFTtcpIN_vpn_squid_jg1:= 20014 20022 20025 20026 20061 30014 30022 30025 30026 30061
+NFTtcpIN_vpn_squid__:=$(NFTtcpIN_vpn_squid_$(HOSTNAME))
 
-NFtcpIN_lan:=$(strip $(shell echo $(NFtcpIN_vpn_acceptPort) $(NFtcpIN_ssh)|xargs -n 1|sort -u -n ))
-NFtcpIN_vpn:=$(strip $(shell echo $(NFtcpIN_lan) $(NFtcpIN_vpn_dns) $(NFtcpIN_vpn_squid__)|xargs -n 1|sort -u -n ))
-NFtcpIN_lo:=
+NFTtcpIN_lan:=$(strip $(shell echo $(NFTtcpIN_vpn_acceptPort) $(NFTtcpIN_ssh)|xargs -n 1|sort -u -n ))
+NFTtcpIN_vpn:=$(strip $(shell echo $(NFTtcpIN_lan) $(NFTtcpIN_vpn_dns) $(NFTtcpIN_vpn_squid__)|xargs -n 1|sort -u -n ))
+NFTtcpIN_lo:=
 
-NFudpIN_vpn_acceptPort:=38034 40948 40956 40972
+NFTudpIN_vpn_acceptPort:=38034 40948 40956 40972
 
-NFudpIN_dhcpclient:=68
-NFudpIN_dns:=53
+NFTudpIN_dhcpclient:=68
+NFTudpIN_dns:=53
 
-NFudpIN_lan:=$(strip $(shell echo $(NFudpIN_dns) $(NFudpIN_vpn_acceptPort) $(NFudpIN_dhcpclient)|xargs -n 1|sort -u -n ))
-NFudpIN_vpn:=$(NFudpIN_lan)
-NFudpIN_lo:=$(strip $(shell echo $(NFudpIN_dns) |xargs -n 1|sort -u -n))
+NFTudpIN_lan:=$(strip $(shell echo $(NFTudpIN_dns) $(NFTudpIN_vpn_acceptPort) $(NFTudpIN_dhcpclient)|xargs -n 1|sort -u -n ))
+NFTudpIN_vpn:=$(NFTudpIN_lan)
+NFTudpIN_lo:=$(strip $(shell echo $(NFTudpIN_dns) |xargs -n 1|sort -u -n))
 
 
 
-NetCard_ip_ALL+=$(foreach aa1,$(NFTgroupCard_x_ALL),$(EOL)NFtcpIN_$(aa1):=$(NFtcpIN_$(aa1)))
-NetCard_ip_ALL+=$(foreach aa1,$(NFTgroupCard_x_ALL),$(EOL)NFudpIN_$(aa1):=$(NFudpIN_$(aa1)))
+NetCard_ip_ALL+=$(foreach aa1,$(NFTgroupCard_x_ALL),$(EOL)NFTtcpIN_$(aa1):=$(NFTtcpIN_$(aa1)))
+NetCard_ip_ALL+=$(foreach aa1,$(NFTgroupCard_x_ALL),$(EOL)NFTudpIN_$(aa1):=$(NFTudpIN_$(aa1)))
 NetCard_ip_ALL+=$(EOL) HOSTNAME=$(HOSTNAME)
 
 
