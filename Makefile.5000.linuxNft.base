@@ -77,7 +77,7 @@ NFTudpOUT_allow:=53 67 68 69 123 5353 $(NFTudpOUT_allow_$(HOSTNAME))
 NFTtcpIN_ssh:=55522 33221 22225
 
 # go_ginuerzh__g
-NFTtcpIN_vpn_acceptPort:=55050 55028    5555-5585
+NFTtcpIN_vpn_acceptPort:=55050 55028    
 
 NFTtcpIN_vpn_dns:=53 953
 NFTtcpIN_vpn_squid_jg1:= 20014 20022 20025 20026 20061 30014 30022 30025 30026 30061
