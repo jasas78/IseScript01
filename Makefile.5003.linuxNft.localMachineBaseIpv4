@@ -18,6 +18,9 @@ _18_checkUdpDstPort          \
 _21_checkProtocol_icmp       \
 _23_unknown                  \
 
+#$(EOL)add rule ip tbLocalIpv4 chLocalIp4Card_$(aa1)_11_checkDstIp  ip daddr 224.0.0.0/8 $(NFTcnt) drop
+ip4inRule=$(EOL)add rule ip tbLocalIpv4 chLocalIp4Card_$(aa1)$(1) $(2)
+
 
 define nf31_TEXT
 
@@ -56,7 +59,7 @@ $(foreach aa1,$(NFTgroupCard_x_Src)  ,$(foreach aa2,$(NFTgroupCard_y2_$(aa1)),\
 $(EOL)add rule ip tbLocalIpv4 chLocalIp4Card_$(aa1)_11_checkDstIp  ip daddr $(aa2) \
    $(NFTcnt) goto chLocalIp4Card_$(aa1)_13_checkSrcIp \
    )\
-$(EOL)add rule ip tbLocalIpv4 chLocalIp4Card_$(aa1)_11_checkDstIp  ip daddr 224.0.0.0/8 $(NFTcnt) drop\
+$(call ip4inRule,_11_checkDstIp, ip daddr 224.0.0.0/8 $(NFTcnt) drop)\
 $(if $(NFTdebug),\
 $(EOL)add rule ip tbLocalIpv4 chLocalIp4Card_$(aa1)_11_checkDstIp  meta nftrace set 1) \
 $(EOL)add rule ip tbLocalIpv4 chLocalIp4Card_$(aa1)_11_checkDstIp  $(NFTcnt) drop \
@@ -65,7 +68,7 @@ $(foreach aa1,$(NFTgroupCard_x_Block),$(foreach aa2,$(NFTgroupCard_y2_$(aa1)),\
 $(EOL)add rule ip tbLocalIpv4 chLocalIp4Card_$(aa1)_11_checkDstIp  ip daddr $(aa2) \
    $(NFTcnt) goto chLocalIp4Card_$(aa1)_15_checkProtocol_tcp \
    )\
-$(EOL)add rule ip tbLocalIpv4 chLocalIp4Card_$(aa1)_11_checkDstIp  ip daddr 224.0.0.0/8 $(NFTcnt) drop\
+$(call ip4inRule,_11_checkDstIp, ip daddr 224.0.0.0/8 $(NFTcnt) drop)\
 $(if $(NFTdebug),\
 $(EOL)add rule ip tbLocalIpv4 chLocalIp4Card_$(aa1)_11_checkDstIp  meta nftrace set 1) \
 $(EOL)add rule ip tbLocalIpv4 chLocalIp4Card_$(aa1)_11_checkDstIp  $(NFTcnt) drop \
