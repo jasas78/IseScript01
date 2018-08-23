@@ -98,13 +98,18 @@ $(call ip4inRuleAA1,_15_IIcheckProtocol_tcp, $(NFTcnt) drop) \
 )
 
 # _17_IIcheckTcpDstPortNew
-$(foreach aa1,$(NFTgroupCard_x_ALL)  ,\
-  $(if $(filter lo,$(aa1)),\
-    $(call ip4inRuleAA1,_17_IIcheckTcpDstPortNew, $(NFTcnt) accept) ,\
-    $(foreach aa2,$(NFTtcpIN_$(aa1))  ,\
-      $(call ip4inRuleAA1,_17_IIcheckTcpDstPortNew, tcp dport $(aa2) $(NFTcnt) accept)  \
-    )\
+$(foreach aa1,$(NFTgroupCard_x_ALL)  , $(foreach aa2,$(NFTtcpIN_$(aa1))  ,\
+    $(call ip4inRuleAA1,_17_IIcheckTcpDstPortNew, tcp dport $(aa2) $(NFTcnt) accept)  \
   )\
+)
+
+$(foreach aa1,lo ,\
+  $(call ip4inRuleAA1,_17_IIcheckTcpDstPortNew, $(NFTcnt) meta nftrace set 1) \
+  $(call ip4inRuleAA1,_17_IIcheckTcpDstPortNew, $(NFTcnt) accept) \
+)
+
+$(foreach aa1,$(NFTgroupCard_x_ALL)  ,\
+  $(call ip4inRuleAA1,_17_IIcheckTcpDstPortNew, $(NFTcnt) meta nftrace set 1) \
   $(call ip4inRuleAA1,_17_IIcheckTcpDstPortNew, $(NFTcnt) drop) \
 )
 
