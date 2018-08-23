@@ -107,15 +107,15 @@ $(call ip4inRuleAA1,_18_checkUdpDstPort, $(NFTcnt) drop) \
 
 # _21_checkProtocol_icmp -> _23_unknown 
 $(foreach aa1,$(NFTgroupCard_x_ALL)  ,\
-$(EOL)add rule ip tbLocalIpv4 chLocalIp4Card_$(aa1)_21_checkProtocol_icmp ip protocol != icmp $(NFTcnt) goto chLocalIp4Card_$(aa1)_23_unknown \
-$(EOL)add rule ip tbLocalIpv4 chLocalIp4Card_$(aa1)_21_checkProtocol_icmp icmp type { echo-reply   } $(NFTcnt) accept \
-$(EOL)add rule ip tbLocalIpv4 chLocalIp4Card_$(aa1)_21_checkProtocol_icmp icmp type { echo-request } $(NFTcnt) accept \
-$(EOL)add rule ip tbLocalIpv4 chLocalIp4Card_$(aa1)_21_checkProtocol_icmp $(NFTcnt) drop \
+$(call ip4inRuleAA1,_21_checkProtocol_icmp, ip protocol != icmp $(NFTcnt) goto chLocalIp4Card_$(aa1)_23_unknown) \
+$(call ip4inRuleAA1,_21_checkProtocol_icmp, icmp type { echo-reply   } $(NFTcnt) accept) \
+$(call ip4inRuleAA1,_21_checkProtocol_icmp, icmp type { echo-request } $(NFTcnt) accept) \
+$(call ip4inRuleAA1,_21_checkProtocol_icmp, $(NFTcnt) drop) \
 )
 
 # _23_unknown  ->
 $(foreach aa1,$(NFTgroupCard_x_ALL)  ,\
-$(EOL)add rule ip tbLocalIpv4 chLocalIp4Card_$(aa1)_23_unknown $(NFTcnt) accept \
+$(call ip4inRuleAA1,_23_unknown, $(NFTcnt) accept) \
 )
 
 #### forward rule :
