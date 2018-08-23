@@ -138,15 +138,6 @@ $(foreach aa1,$(NFTgroupCard_x_ALL)  ,\
 $(call ip4inRuleAA1,_59_OOunknown, $(NFTcnt) accept) \
 )
 
-#### forward rule :
-$(call ip4inRule111,chLocalIp4forward, $(NFTcnt) accept)
-#### output rule :
-$(call ip4inRule111,chLocalIp4output, $(NFTcnt) accept)
-
-#### Nat rule :
-add rule ip tbNatIpv4         chLocalIp4prerouting     $(NFTcnt) accept
-add rule ip tbNatIpv4         chLocalIp4postrouting    $(NFTcnt) accept
-
 # NFTtext_13_ipv4_output end
 endef
 
