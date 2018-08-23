@@ -102,6 +102,8 @@ $(call ip4inRuleAA1,_15_checkProtocol_tcp, ct state { related     } $(NFTcnt) ac
 $(call ip4inRuleAA1,_15_checkProtocol_tcp, ct state { new } $(NFTcnt) goto chLocalIp4Card_$(aa1)_17_checkTcpDstPortNew) \
 $(call ip4inRuleAA1,_15_checkProtocol_tcp, $(NFTcnt) drop) \
 )
+
+# _17_checkTcpDstPortNew
 $(foreach aa1,$(NFTgroupCard_x_ALL)  ,\
 $(call ip4inRuleAA1,_17_checkTcpDstPortNew, $(NFTcnt) accept) \
 $(call ip4inRuleAA1,_17_checkTcpDstPortNew, $(NFTcnt) drop) \
