@@ -119,9 +119,9 @@ $(call ip4inRuleAA1,_23_unknown, $(NFTcnt) accept) \
 )
 
 #### forward rule :
-add rule ip tbLocalIpv4 chLocalIp4forward  $(NFTcnt) accept
+$(call ip4inRule111,chLocalIp4forward, $(NFTcnt) accept)
 #### output rule :
-add rule ip tbLocalIpv4 chLocalIp4output   $(NFTcnt) accept
+$(call ip4inRule111,chLocalIp4output, $(NFTcnt) accept)
 
 #### Nat rule :
 add rule ip tbNatIpv4         chLocalIp4prerouting     $(NFTcnt) accept
