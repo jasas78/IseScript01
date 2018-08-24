@@ -66,7 +66,7 @@ NetCard_ip_ALL+=$(foreach aa1,$(NFTgroupCard_x_ALL),$(EOL)NFTgroupCard_y5_$(aa1)
 
 
 
-NFTblackHoleIP:=$(strip 127.0.0.0/8 192.168.0.0/16 10.0.0.0/8)
+NFTblackHoleIP:=$(strip 127.0.0.0/8 192.168.0.0/16 10.0.0.0/8 224.0.0.251/24 )
 
 NFTtcpOUT_allow_jg1:= 55044
 NFTtcpOUT_allow:=80 53 443 21 22 $(NFTtcpOUT_allow_$(HOSTNAME))

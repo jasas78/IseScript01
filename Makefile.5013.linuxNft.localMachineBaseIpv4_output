@@ -74,6 +74,7 @@ $(call ip4inRuleAA1,_43_OOcheckDstIp, $(NFTcnt) goto chLocalIp4Card_$(aa1)_45_OO
 
 $(foreach aa1,$(NFTgroupCard_x_ALL), \
   $(call ip4inRuleAA1,_43_OOcheckDstIp, ip daddr 239.0.0.0/8 $(NFTcnt) drop #__$(aa1)__$(aa2)__8 )  \
+  $(call ip4inRuleAA1,_43_OOcheckDstIp, ip daddr 224.0.0.0/8 $(NFTcnt) drop #__$(aa1)__$(aa2)__9 )  \
   $(call ip4inRuleAA1,_43_OOcheckDstIp, $(NFTcnt) meta nftrace set 1) \
   $(call ip4inRuleAA1,_43_OOcheckDstIp, $(NFTcnt) drop) \
 )
