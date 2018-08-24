@@ -55,8 +55,8 @@ $(call ip4inRuleAA1,_11_IIcheckDstIp, ip daddr $(aa2) $(NFTcnt) goto chLocalIp4C
 )\
 $(call ip4inRuleAA1,_11_IIcheckDstIp, ip daddr 224.0.0.0/8 $(NFTcnt) drop)\
                                        $(foreach aa2,$(NFTgroupCard_x_$(aa1)),$(foreach aa3,$(NFTcardS_$(aa2)),$(if $(NetCard_ip4_$(aa3)),\
-$(call ip4inRuleAA1,_11_IIcheckDstIp, ip daddr $(NetCard_ip4_$(aa3)) ip saddr $(NetCard_ip1_$(aa3)) ip protocol udp $(NFTcnt) accept)\
-$(call ip4inRuleAA1,_11_IIcheckDstIp, ip daddr 255.255.255.255       ip saddr $(NetCard_ip1_$(aa3)) ip protocol udp $(NFTcnt) accept)\
+$(call ip4inRuleAA1,_11_IIcheckDstIp, ip daddr $(NetCard_ip4_$(aa3)) $(NFTcnt) goto chLocalIp4Card_$(aa1)_13_IIcheckSrcIp)\
+$(call ip4inRuleAA1,_11_IIcheckDstIp, ip daddr 255.255.255.255       $(NFTcnt) goto chLocalIp4Card_$(aa1)_13_IIcheckSrcIp)\
 )))\
                     $(if $(filter lo,$(aa1)),$(foreach aa2,$(NFTgroupCard_y2_lan) $(NFTgroupCard_y2_vpn),\
 $(call ip4inRuleAA1,_11_IIcheckDstIp, iif lo ip saddr $(aa2) ip saddr $(aa2) $(NFTcnt) accept)\
