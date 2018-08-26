@@ -14,8 +14,11 @@ _41_OOcheckSrcIp               \
 _43_OOcheckDstIp               \
 _45_OOcheckProtocol_tcp        \
 _47_OOcheckTcpDstPortNew       \
+_48_OOcheckTcpNew_ipHttpS      \
+_49_OOcheckTcpNew_ipDNS        \
 _51_OOcheckProtocol_udp        \
 _53_OOcheckUdpDstPort          \
+_54_OOcheckUdp_ipDNS           \
 _55_OOcheckProtocol_icmp       \
 _57_OOcheckProtocol_igmp       \
 _59_OOunknown                  \
