@@ -104,7 +104,7 @@ $(foreach aa1,$(NFTgroupCard_x_ALL)  , $(foreach aa2,$(NFTtcpIN_$(aa1))  ,\
 )
 
 $(foreach aa1,lo ,\
-  $(foreach aa2,$(call sortN, $(NFTtcpIN_lan) $(NFTtcpIN_vpn) 5555-5585 ),\
+  $(foreach aa2,$(call sortN, $(NFTtcpIN_lan) $(NFTtcpIN_vpn) 5555-5585 $(NFTtcpOUT_allow_jg1) ),\
     $(call ip4inRuleAA1,_17_IIcheckTcpDstPortNew, tcp dport $(aa2) $(NFTcnt) accept)  \
   )\
   $(call ip4inRuleAA1,_17_IIcheckTcpDstPortNew, $(NFTcnt) meta nftrace set 1) \
