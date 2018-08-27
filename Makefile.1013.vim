@@ -61,7 +61,9 @@ _vim/cscope.files : vp
 
 
 define CallExpandHelpOne
-$(1)         => $($(1))$(if $($($(1))),        =>> $($($(1))))
+$(if $(strip $(filter $(1),space)),$(EOL1),\
+$(1)         => $($(1))$(if $($($(1))),        =>> $($($(1))))\
+)
 
 endef
 
