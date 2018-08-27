@@ -1,0 +1,170 @@
+all:
+
+#$(NFTbin)     
+# nf1_TEXT
+# Makefile.5000
+# Makefile.5001
+# Makefile.5011
+# Makefile.5013
+# Makefile.5015
+
+# NFTdebug:=
+
+
+my_tbLocalIpv4_NATchainALL :=   \
+_81_NATcheckSrcIp               \
+_83_NATcheckDstIp               \
+_85_NATcheckProtocol_tcp        \
+_87_NATcheckTcpDstPortNew       \
+_91_NATcheckProtocol_udp        \
+_93_NATcheckUdpDstPort          \
+_95_NATcheckProtocol_icmp       \
+_97_NATcheckProtocol_igmp       \
+_99_NATunknown                  \
+
+define NFTtext_21_ipv4_nat
+
+# NFTtext_21_ipv4_nat begin
+
+
+# add my_tbLocalIpv4_NATchainALL : begin
+$(foreach aa1,$(NFTgroupCard_x_ALL),\
+$(foreach aa2,$(my_tbLocalIpv4_NATchainALL),\
+$(EOL)add chain ip tbLocalIpv4 chLocalIp4Card_$(aa1)$(aa2)\
+))
+
+# add my_tbLocalIpv4_NATchainALL : end
+
+add chain ip tbLocalIpv4 chLocalIp4natPre   { type nat hook prerouting  priority 0 ; policy accept ; }
+add chain ip tbLocalIpv4 chLocalIp4natPost  { type nat hook prerouting  priority 100 ; policy accept ; }
+
+
+
+### chLocalIp4nat : begin 
+
+$(foreach aa1,$(NFTgroupCard_x_ALL),\
+  $(foreach aa2,$(NFTgroupCard_x_$(aa1)),$(foreach aa3,$(NFTcardS_$(aa2)),\
+    $(call ip4inRule111,chLocalIp4natPre  , iif $(aa3) $(NFTcnt) accept) \
+    $(call ip4inRule111,chLocalIp4natPre  , iif $(aa3) $(NFTcnt) accept) \
+  ))\
+)
+$(ccall ip4inRule111,chLocalIp4natPre  , $(NFTcnt) $(NFTset_1))
+$(ccall ip4inRule111,chLocalIp4natPost , $(NFTcnt) $(NFTset_1))
+$(call ip4inRule111,chLocalIp4natPre  , $(NFTcnt) accept)
+$(call ip4inRule111,chLocalIp4natPost , $(NFTcnt) accept)
+### chLocalIp4nat : end
+
+
+### _81_NATcheckSrcIp
+$(foreach aa1,$(NFTgroupCard_x_ALL), $(foreach aa2,$(NFTgroupCard_y2_$(aa1)),\
+$(call ip4inRuleAA1,_81_NATcheckSrcIp, ip saddr $(aa2) $(NFTcnt) goto chLocalIp4Card_$(aa1)_83_NATcheckDstIp) \
+))
+
+$(foreach aa1,lo, $(foreach aa2,$(NFTgroupCard_y2_lan) $(NFTgroupCard_y2_vpn),\
+$(call ip4inRuleAA1,_81_NATcheckSrcIp, ip saddr $(aa2) ip daddr $(aa2) $(NFTcnt) accept) \
+))
+
+$(foreach aa1,$(NFTgroupCard_x_ALL), \
+	$(if $(NFTdebug),$(call ip4inRuleAA1,_81_NATcheckSrcIp, meta nftrace set 1) )\
+	$(call ip4inRuleAA1,_81_NATcheckSrcIp, $(NFTcnt) drop) \
+	)
+
+
+### _83_NATcheckDstIp
+$(foreach aa1,$(NFTgroupCard_x_ALL)  ,$(foreach aa2,$(NFTgroupCard_y5_$(aa1)),\
+$(call ip4inRuleAA1,_83_NATcheckDstIp, ip daddr $(aa2) $(NFTcnt) goto chLocalIp4Card_$(aa1)_85_NATcheckProtocol_tcp) \
+))
+
+$(foreach aa1,lan  ,$(foreach aa2,$(NFTblackHoleIP),\
+$(call ip4inRuleAA1,_83_NATcheckDstIp, ip daddr $(aa2) $(NFTcnt) drop) \
+)\
+$(call ip4inRuleAA1,_83_NATcheckDstIp, $(NFTcnt) goto chLocalIp4Card_$(aa1)_85_NATcheckProtocol_tcp) \
+)
+
+$(foreach aa1,$(NFTgroupCard_x_ALL), \
+  $(call ip4inRuleAA1,_83_NATcheckDstIp, ip daddr 239.0.0.0/8 $(NFTcnt) drop #__$(aa1)__$(aa2)__8 )  \
+  $(call ip4inRuleAA1,_83_NATcheckDstIp, ip daddr 224.0.0.0/8 $(NFTcnt) drop #__$(aa1)__$(aa2)__9 )  \
+  $(call ip4inRuleAA1,_83_NATcheckDstIp, $(NFTcnt) meta nftrace set 1) \
+  $(call ip4inRuleAA1,_83_NATcheckDstIp, $(NFTcnt) drop) \
+)
+
+# _85_NATcheckProtocol_tcp --> _87_NATcheckTcpDstPortNew , _91_NATcheckProtocol_udp 
+$(foreach aa1,$(NFTgroupCard_x_ALL)  ,\
+$(call ip4inRuleAA1,_85_NATcheckProtocol_tcp, ip protocol != tcp $(NFTcnt) goto chLocalIp4Card_$(aa1)_91_NATcheckProtocol_udp) \
+$(call ip4inRuleAA1,_85_NATcheckProtocol_tcp, ct state { established } $(NFTcnt) accept) \
+$(call ip4inRuleAA1,_85_NATcheckProtocol_tcp, ct state { related     } $(NFTcnt) accept) \
+$(call ip4inRuleAA1,_85_NATcheckProtocol_tcp, ct state { new } $(NFTcnt) goto chLocalIp4Card_$(aa1)_87_NATcheckTcpDstPortNew) \
+$(call ip4inRuleAA1,_85_NATcheckProtocol_tcp, $(NFTcnt) drop) \
+)
+
+# _87_NATcheckTcpDstPortNew
+$(foreach aa1,$(NFTgroupCard_x_ALL)  ,\
+  $(if $(filter lo,$(aa1)),\
+    $(call ip4inRuleAA1,_87_NATcheckTcpDstPortNew, $(NFTcnt) accept) ,\
+    $(foreach aa2,$(call sortUN, $(NFTtcpOUT_allow) $(NFTtcpIN_$(aa1))), \
+      $(call ip4inRuleAA1,_87_NATcheckTcpDstPortNew, tcp dport $(aa2) $(NFTcnt) accept)  \
+    )\
+  )\
+  $(if $(filter lan,$(aa1)), \
+    $(foreach aa2,$(call sortUU, $(NFTgroupCard_y5_lan) ), \
+      $(call ip4inRuleAA1,_87_NATcheckTcpDstPortNew, ip daddr $(aa2) $(NFTcnt) accept) ))\
+  $(call ip4inRuleAA1,_87_NATcheckTcpDstPortNew, $(NFTcnt) meta nftrace set 1) \
+  $(call ip4inRuleAA1,_87_NATcheckTcpDstPortNew, $(NFTcnt) drop) \
+)
+
+# _91_NATcheckProtocol_udp -> _93_NATcheckUdpDstPort , _95_NATcheckProtocol_icmp 
+$(foreach aa1,$(NFTgroupCard_x_ALL)  ,\
+$(call ip4inRuleAA1,_91_NATcheckProtocol_udp, ip protocol != udp $(NFTcnt) goto chLocalIp4Card_$(aa1)_95_NATcheckProtocol_icmp) \
+$(call ip4inRuleAA1,_91_NATcheckProtocol_udp, ct state { established } $(NFTcnt) accept) \
+$(call ip4inRuleAA1,_91_NATcheckProtocol_udp, ct state { related     } $(NFTcnt) accept) \
+$(call ip4inRuleAA1,_91_NATcheckProtocol_udp, ct state { new } $(NFTcnt) goto chLocalIp4Card_$(aa1)_93_NATcheckUdpDstPort) \
+$(call ip4inRuleAA1,_91_NATcheckProtocol_udp, $(NFTcnt) drop) \
+)
+
+# _93_NATcheckUdpDstPort
+$(foreach aa1,lan,\
+  $(call ip4inRuleAA1,_93_NATcheckUdpDstPort, ip daddr 239.0.0.0/8 $(NFTcnt) drop #__$(aa1)__$(aa2)__0 )  \
+)
+$(foreach aa1,$(NFTgroupCard_x_ALL),\
+  $(foreach aa2,$(call sortUN,$(NFTudpOUT_allow) $(NFTudpIN_$(aa1)) ),\
+    $(call ip4inRuleAA1,_93_NATcheckUdpDstPort, udp dport $(aa2) $(NFTcnt) accept #__$(aa1)__$(aa2)__1 )  \
+  )\
+)
+
+$(foreach aa1,lo ,\
+    $(call ip4inRuleAA1,_93_NATcheckUdpDstPort, $(NFTcnt) accept #__$(aa1)__$(aa2)__2 )  \
+)
+
+$(foreach aa1,$(NFTgroupCard_x_ALL)  ,\
+  $(call ip4inRuleAA1,_93_NATcheckUdpDstPort, $(NFTcnt) meta nftrace set 1) \
+  $(call ip4inRuleAA1,_93_NATcheckUdpDstPort, $(NFTcnt) drop) \
+)
+
+# _95_NATcheckProtocol_icmp -> _97_NATcheckProtocol_igmp 
+$(foreach aa1,$(NFTgroupCard_x_ALL)  ,\
+$(call ip4inRuleAA1,_95_NATcheckProtocol_icmp, ip protocol != icmp $(NFTcnt) goto chLocalIp4Card_$(aa1)_97_NATcheckProtocol_igmp) \
+$(call ip4inRuleAA1,_95_NATcheckProtocol_icmp, icmp type { echo-reply   } $(NFTcnt) accept) \
+$(call ip4inRuleAA1,_95_NATcheckProtocol_icmp, icmp type { echo-request } $(NFTcnt) accept) \
+$(call ip4inRuleAA1,_95_NATcheckProtocol_icmp, icmp type { destination-unreachable } $(NFTcnt) drop) \
+$(call ip4inRuleAA1,_95_NATcheckProtocol_icmp, $(NFTcnt) meta nftrace set 1) \
+$(call ip4inRuleAA1,_95_NATcheckProtocol_icmp, $(NFTcnt) drop) \
+)
+
+# _97_NATcheckProtocol_igmp -> _99_NATunknown 
+$(foreach aa1,$(NFTgroupCard_x_ALL)  ,\
+$(call ip4inRuleAA1,_97_NATcheckProtocol_igmp, ip protocol != igmp $(NFTcnt) goto chLocalIp4Card_$(aa1)_99_NATunknown) \
+$(call ip4inRuleAA1,_97_NATcheckProtocol_igmp, ip daddr 224.0.0.22 $(NFTcnt) drop) \
+$(call ip4inRuleAA1,_97_NATcheckProtocol_igmp, $(NFTcnt) meta nftrace set 1) \
+$(call ip4inRuleAA1,_97_NATcheckProtocol_igmp, $(NFTcnt) drop) \
+)
+
+# _99_NATunknown  ->
+$(foreach aa1,$(NFTgroupCard_x_ALL)  ,\
+$(call ip4inRuleAA1,_99_NATunknown, $(NFTcnt) meta nftrace set 1) \
+$(call ip4inRuleAA1,_99_NATunknown, $(NFTcnt) accept) \
+)
+
+# NFTtext_21_ipv4_nat end
+endef
+
+

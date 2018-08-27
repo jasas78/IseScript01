@@ -28,7 +28,7 @@ linuxNft_OpList+=		\
 #	tg1						\
 #	tg2						\
 	
-tgDST_ALL:=vm37 vm39 vm40 vm41 vm42 
+tgDST_ALL:=vm37 vm39 vm40 vm41 vm42 vm43
 
 tgDST_idx=1
 

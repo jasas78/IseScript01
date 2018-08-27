@@ -5,7 +5,8 @@ nf31_TEXT:=\
 	$(NFTtext_11_ipv4_input) \
 	$(NFTtext_13_ipv4_output) \
 	$(NFTtext_15_ipv4_forward) \
-	$(NFTtext_21_ipv4_nat) \
+	$(NFTtext_21_ipv4_natPre) \
+	$(NFTtext_23_ipv4_natPost) \
 
 export nf31_TEXT
 
