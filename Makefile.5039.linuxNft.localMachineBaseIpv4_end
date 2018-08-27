@@ -7,6 +7,9 @@ nf31_TEXT:=\
 	NFTtext_15_ipv4_forward \
 	NFTtext_21_ipv4_natPre \
 	NFTtext_23_ipv4_natPost \
+	NFTtext_25_ipv4_natInPut \
+	NFTtext_27_ipv4_natOutPut \
+	NFTtext_29_ipv4_natForward \
 
 #$(foreach aa1,$(nf31_TEXT),\
 #  $(eval export $(aa1) )	\
