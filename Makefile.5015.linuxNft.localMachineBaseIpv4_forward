@@ -60,7 +60,7 @@ $(call ip4inRuleAA1,_61_FFcheckSrcIp, ip saddr $(aa2) ip daddr $(aa2) $(NFTcnt) 
 ))
 
 $(foreach aa1,$(NFTgroupCard_x_ALL), \
-	$(if $(NFTdebug),$(call ip4inRuleAA1,_61_FFcheckSrcIp, meta nftrace set 1) )\
+	$(if $(NFTdebug),$(call ip4inRuleAA1,_61_FFcheckSrcIp, $(NFTset_1),1) )\
 	$(call ip4inRuleAA1,_61_FFcheckSrcIp, $(NFTcnt) drop) \
 	)
 
@@ -79,7 +79,7 @@ $(call ip4inRuleAA1,_63_FFcheckDstIp, $(NFTcnt) goto chLocalIp4Card_$(aa1)_65_FF
 $(foreach aa1,$(NFTgroupCard_x_ALL), \
   $(call ip4inRuleAA1,_63_FFcheckDstIp, ip daddr 239.0.0.0/8 $(NFTcnt) drop #__$(aa1)__$(aa2)__8 )  \
   $(call ip4inRuleAA1,_63_FFcheckDstIp, ip daddr 224.0.0.0/8 $(NFTcnt) drop #__$(aa1)__$(aa2)__9 )  \
-  $(call ip4inRuleAA1,_63_FFcheckDstIp, $(NFTcnt) meta nftrace set 1) \
+  $(call ip4inRuleAA1,_63_FFcheckDstIp, $(NFTcnt) $(NFTset_1),1) \
   $(call ip4inRuleAA1,_63_FFcheckDstIp, $(NFTcnt) drop) \
 )
 
@@ -103,7 +103,7 @@ $(foreach aa1,$(NFTgroupCard_x_ALL)  ,\
   $(if $(filter lan,$(aa1)), \
     $(foreach aa2,$(call sortUU, $(NFTgroupCard_y5_lan) ), \
       $(call ip4inRuleAA1,_67_FFcheckTcpDstPortNew, ip daddr $(aa2) $(NFTcnt) accept) ))\
-  $(call ip4inRuleAA1,_67_FFcheckTcpDstPortNew, $(NFTcnt) meta nftrace set 1) \
+  $(call ip4inRuleAA1,_67_FFcheckTcpDstPortNew, $(NFTcnt) $(NFTset_1),1) \
   $(call ip4inRuleAA1,_67_FFcheckTcpDstPortNew, $(NFTcnt) drop) \
 )
 
@@ -131,7 +131,7 @@ $(foreach aa1,lo ,\
 )
 
 $(foreach aa1,$(NFTgroupCard_x_ALL)  ,\
-  $(call ip4inRuleAA1,_73_FFcheckUdpDstPort, $(NFTcnt) meta nftrace set 1) \
+  $(call ip4inRuleAA1,_73_FFcheckUdpDstPort, $(NFTcnt) $(NFTset_1),1) \
   $(call ip4inRuleAA1,_73_FFcheckUdpDstPort, $(NFTcnt) drop) \
 )
 
@@ -141,7 +141,7 @@ $(call ip4inRuleAA1,_75_FFcheckProtocol_icmp, ip protocol != icmp $(NFTcnt) goto
 $(call ip4inRuleAA1,_75_FFcheckProtocol_icmp, icmp type { echo-reply   } $(NFTcnt) accept) \
 $(call ip4inRuleAA1,_75_FFcheckProtocol_icmp, icmp type { echo-request } $(NFTcnt) accept) \
 $(call ip4inRuleAA1,_75_FFcheckProtocol_icmp, icmp type { destination-unreachable } $(NFTcnt) drop) \
-$(call ip4inRuleAA1,_75_FFcheckProtocol_icmp, $(NFTcnt) meta nftrace set 1) \
+$(call ip4inRuleAA1,_75_FFcheckProtocol_icmp, $(NFTcnt) $(NFTset_1),1) \
 $(call ip4inRuleAA1,_75_FFcheckProtocol_icmp, $(NFTcnt) drop) \
 )
 
@@ -149,14 +149,14 @@ $(call ip4inRuleAA1,_75_FFcheckProtocol_icmp, $(NFTcnt) drop) \
 $(foreach aa1,$(NFTgroupCard_x_ALL)  ,\
 $(call ip4inRuleAA1,_77_FFcheckProtocol_igmp, ip protocol != igmp $(NFTcnt) goto chLocalIp4Card_$(aa1)_79_FFunknown) \
 $(call ip4inRuleAA1,_77_FFcheckProtocol_igmp, ip daddr 224.0.0.22 $(NFTcnt) drop) \
-$(call ip4inRuleAA1,_77_FFcheckProtocol_igmp, $(NFTcnt) meta nftrace set 1) \
+$(call ip4inRuleAA1,_77_FFcheckProtocol_igmp, $(NFTcnt) $(NFTset_1),1) \
 $(call ip4inRuleAA1,_77_FFcheckProtocol_igmp, $(NFTcnt) drop) \
 )
 
 # _79_FFunknown  ->
 $(foreach aa1,$(NFTgroupCard_x_ALL)  ,\
-$(call ip4inRuleAA1,_79_FFunknown, $(NFTcnt) meta nftrace set 1) \
-$(call ip4inRuleAA1,_79_FFunknown, $(NFTcnt) accept) \
+$(call ip4inRuleAA1,_79_FFunknown, $(NFTcnt) $(NFTset_1),1 ) \
+$(call ip4inRuleAA1,_79_FFunknown, $(NFTcnt) accept ) \
 )
 
 # NFTtext_15_ipv4_forward end
