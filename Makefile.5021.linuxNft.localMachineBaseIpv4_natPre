@@ -44,8 +44,8 @@ add chain ip tbLocalIpv4 chLocalIp4natPost  { type nat hook prerouting  priority
 
 $(foreach aa1,$(NFTgroupCard_x_ALL),\
   $(foreach aa2,$(NFTgroupCard_x_$(aa1)),$(foreach aa3,$(NFTcardS_$(aa2)),\
-    $(call ip4inRule111,chLocalIp4natPre  , iif $(aa3) $(NFTcnt) accept) \
-    $(call ip4inRule111,chLocalIp4natPre  , iif $(aa3) $(NFTcnt) accept) \
+    $(call ip4inRule111,chLocalIp4natPre   , iif $(aa3) $(NFTcnt) accept) \
+    $(call ip4inRule111,chLocalIp4natPost  , iif $(aa3) $(NFTcnt) accept) \
   ))\
 )
 $(ccall ip4inRule111,chLocalIp4natPre  , $(NFTcnt) $(NFTset_1))
