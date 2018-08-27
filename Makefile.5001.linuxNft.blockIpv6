@@ -2,6 +2,7 @@ all:
 
 #$(NFTbin)     
 NFTcnt:= counter packets 0 bytes 0 
+NFTset_1:=meta nftrace set 1
 
 define nf1_TEXT
 

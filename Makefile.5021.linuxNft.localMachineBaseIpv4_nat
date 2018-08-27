@@ -35,16 +35,23 @@ $(EOL)add chain ip tbLocalIpv4 chLocalIp4Card_$(aa1)$(aa2)\
 
 # add my_tbLocalIpv4_NATchainALL : end
 
-add chain ip tbLocalIpv4 chLocalIp4nat   { type filter hook forward  priority 0 ; policy accept ; }
+add chain ip tbLocalIpv4 chLocalIp4natPre   { type nat hook prerouting  priority 0 ; policy accept ; }
+add chain ip tbLocalIpv4 chLocalIp4natPost  { type nat hook prerouting  priority 100 ; policy accept ; }
 
 
 
 ### chLocalIp4nat : begin 
 
-$(foreach aa1,$(NFTgroupCard_x_ALL),$(foreach aa2,$(NFTgroupCard_x_$(aa1)),$(foreach aa3,$(NFTcardS_$(aa2)),\
-$(call ip4inRule111,chLocalIp4nat, oif $(aa3) $(NFTcnt) goto chLocalIp4Card_$(aa1)_81_NATcheckSrcIp) \
-)))
-$(call ip4inRule111,chLocalIp4nat, $(NFTcnt) drop)
+$(foreach aa1,$(NFTgroupCard_x_ALL),\
+  $(foreach aa2,$(NFTgroupCard_x_$(aa1)),$(foreach aa3,$(NFTcardS_$(aa2)),\
+    $(call ip4inRule111,chLocalIp4natPre  , oif $(aa3) $(NFTcnt) accept) \
+    $(call ip4inRule111,chLocalIp4natPre  , oif $(aa3) $(NFTcnt) accept) \
+  ))\
+)
+$(call ip4inRule111,chLocalIp4natPre  , $(NFTcnt) $(NFTset_1))
+$(call ip4inRule111,chLocalIp4natPost , $(NFTcnt) $(NFTset_1))
+$(call ip4inRule111,chLocalIp4natPre  , $(NFTcnt) drop)
+$(call ip4inRule111,chLocalIp4natPost , $(NFTcnt) drop)
 ### chLocalIp4nat : end
 
 
