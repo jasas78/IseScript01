@@ -72,7 +72,10 @@ NFTtcpOUT_allow_port__jg1:= 55044 55052
 NFTtcpOUT_allow_port__ssh:=80 443 21 23
 NFTtcpOUT_allow_port__httpS:=80 443 21 23
 NFTtcpOUT_allow_port__dns:=53
-NFTtcpOUT_allow_ip__httpS:=
+
+NFTtcpOUT_allow_ip__httpS:= 91.189.91.26 91.189.91.23 # us.archive.ubuntu.com cn.archive.ubuntu.com
+NFTtcpOUT_allow_ip__httpS+= 91.189.91.23 91.189.88.149 91.189.88.161 91.189.88.152 91.189.91.26 91.189.88.162 # security.ubuntu.com      
+
 NFTtcpOUT_allow_ip__dns:=114.114.114.114
 
 NFTtcpOUT_allow:=$(NFTtcpOUT_allow_port__$(HOSTNAME)) \
