@@ -36,7 +36,7 @@ $(foreach aa1,$(NFTgroupCard_x_ALL),\
 
 # add my_tbLocalIpv4_N3chainALL : end
 
-add chain ip tbLocalIpv4 chLocalIp4natPre   { type nat hook prerouting  priority 0 ; policy accept ; }
+add chain ip tbLocalIpv4 chLocalIp4natPost   { type nat hook prerouting  priority 0 ; policy accept ; }
 
 
 
@@ -44,11 +44,11 @@ add chain ip tbLocalIpv4 chLocalIp4natPre   { type nat hook prerouting  priority
 
 $(foreach aa1,$(NFTgroupCard_x_ALL),\
   $(foreach aa2,$(NFTgroupCard_x_$(aa1)),$(foreach aa3,$(NFTcardS_$(aa2)),\
-    $(call ip4inRule111,chLocalIp4natPre   , iif $(aa3) $(NFTcnt) accept) \
+    $(call ip4inRule111,chLocalIp4natPost   , iif $(aa3) $(NFTcnt) accept) \
   ))\
 )
-$(ccall ip4inRule111,chLocalIp4natPre  , $(NFTcnt) $(NFTset_1))
-$(call ip4inRule111,chLocalIp4natPre  , $(NFTcnt) accept)
+$(ccall ip4inRule111,chLocalIp4natPost  , $(NFTcnt) $(NFTset_1))
+$(call ip4inRule111,chLocalIp4natPost  , $(NFTcnt) accept)
 ### chLocalIp4nat : end
 
 
