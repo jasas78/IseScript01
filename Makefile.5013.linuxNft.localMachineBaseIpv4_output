@@ -92,18 +92,44 @@ $(call ip4inRuleAA1,_45_OOcheckProtocol_tcp, $(NFTcnt) drop) \
 )
 
 # _47_OOcheckTcpDstPortNew
-$(foreach aa1,$(NFTgroupCard_x_ALL)  ,\
-  $(if $(filter lo,$(aa1)),\
-    $(call ip4inRuleAA1,_47_OOcheckTcpDstPortNew, $(NFTcnt) accept) ,\
-    $(foreach aa2,$(call sortN, $(NFTtcpOUT_allow) $(NFTtcpIN_$(aa1))), \
+#	$(NFTtcpOUT_allow_port__httpS) $(NFTtcpOUT_allow_port__ssh) $(NFTtcpOUT_allow_port__dns)
+$(foreach aa1,lo  ,\
+    $(call ip4inRuleAA1,_47_OOcheckTcpDstPortNew, $(NFTcnt) accept) 
+)
+$(foreach aa1,vpn  ,\
+    $(foreach aa2,$(call sortN, $(NFTgroupCard_y5_lan) ), \
+      $(call ip4inRuleAA1,_47_OOcheckTcpDstPortNew, ip daddr $(aa2) $(NFTcnt) accept)  \
+    )\
+    $(foreach aa2,$(call sortN, $(NFTtcpOUT_allow) $(NFTtcpIN_$(aa1)) ), \
       $(call ip4inRuleAA1,_47_OOcheckTcpDstPortNew, tcp dport $(aa2) $(NFTcnt) accept)  \
     )\
-  )\
-  $(if $(filter lan,$(aa1)), \
-    $(foreach aa2,$(call sortN, $(NFTgroupCard_y5_lan) ), \
-      $(call ip4inRuleAA1,_47_OOcheckTcpDstPortNew, ip daddr $(aa2) $(NFTcnt) accept) ))\
+)
+$(foreach aa1,lan  ,\
+    $(foreach aa2,$(call sortN, $($(NFTtcpOUT_allow_port__$(HOSTNAME)) $(NFTtcpOUT_allow_port__ssh)) ), \
+      $(call ip4inRuleAA1,_47_OOcheckTcpDstPortNew, tcp dport $(aa2) $(NFTcnt) accept)  \
+    )\
+    $(foreach aa2,$(call sortN, $(NFTtcpOUT_allow_port__httpS) ), \
+      $(call ip4inRuleAA1,_47_OOcheckTcpDstPortNew, tcp dport $(aa2) $(NFTcnt) goto chLocalIp4Card_$(aa1)_48_OOcheckTcpNew_ipHttpS )  \
+    )\
+    $(foreach aa2,$(call sortN, $(NFTtcpOUT_allow_port__dns) ), \
+      $(call ip4inRuleAA1,_47_OOcheckTcpDstPortNew, tcp dport $(aa2) $(NFTcnt) goto chLocalIp4Card_$(aa1)_49_OOcheckTcpNew_ipDNS )  \
+    )\
+)
+$(foreach aa1,$(NFTgroupCard_x_ALL)  ,\
   $(call ip4inRuleAA1,_47_OOcheckTcpDstPortNew, $(NFTcnt) meta nftrace set 1) \
   $(call ip4inRuleAA1,_47_OOcheckTcpDstPortNew, $(NFTcnt) drop) \
+)
+
+# _48_OOcheckTcpNew_ipHttpS
+$(foreach aa1,$(NFTgroupCard_x_ALL)  ,\
+  $(call ip4inRuleAA1,_48_OOcheckTcpNew_ipHttpS, $(NFTcnt) meta nftrace set 1) \
+  $(call ip4inRuleAA1,_48_OOcheckTcpNew_ipHttpS, $(NFTcnt) drop) \
+)
+
+# _49_OOcheckTcpNew_ipDNS
+$(foreach aa1,$(NFTgroupCard_x_ALL)  ,\
+  $(call ip4inRuleAA1,_48_OOcheckTcpNew_ipHttpS, $(NFTcnt) meta nftrace set 1) \
+  $(call ip4inRuleAA1,_48_OOcheckTcpNew_ipHttpS, $(NFTcnt) drop) \
 )
 
 # _51_OOcheckProtocol_udp -> _53_OOcheckUdpDstPort , _55_OOcheckProtocol_icmp 
