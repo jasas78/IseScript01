@@ -97,9 +97,6 @@ $(foreach aa1,lo  ,\
     $(call ip4inRuleAA1,_47_OOcheckTcpDstPortNew, $(NFTcnt) accept) 
 )
 $(foreach aa1,vpn  ,\
-    $(foreach aa2,$(call sortN, $(NFTgroupCard_y5_lan) ), \
-      $(call ip4inRuleAA1,_47_OOcheckTcpDstPortNew, ip daddr $(aa2) $(NFTcnt) accept)  \
-    )\
     $(foreach aa2,$(call sortN, $(NFTtcpOUT_allow) $(NFTtcpIN_$(aa1)) ), \
       $(call ip4inRuleAA1,_47_OOcheckTcpDstPortNew, tcp dport $(aa2) $(NFTcnt) accept)  \
     )\
@@ -107,6 +104,9 @@ $(foreach aa1,vpn  ,\
 $(foreach aa1,lan  ,\
     $(foreach aa2,$(call sortN, $($(NFTtcpOUT_allow_port__$(HOSTNAME)) $(NFTtcpOUT_allow_port__ssh)) ), \
       $(call ip4inRuleAA1,_47_OOcheckTcpDstPortNew, tcp dport $(aa2) $(NFTcnt) accept)  \
+    )\
+    $(foreach aa2,$(call sortN, $(NFTgroupCard_y5_lan) ), \
+      $(call ip4inRuleAA1,_47_OOcheckTcpDstPortNew, ip daddr $(aa2) $(NFTcnt) accept)  \
     )\
     $(foreach aa2,$(call sortN, $(NFTtcpOUT_allow_port__httpS) ), \
       $(call ip4inRuleAA1,_47_OOcheckTcpDstPortNew, tcp dport $(aa2) $(NFTcnt) goto chLocalIp4Card_$(aa1)_48_OOcheckTcpNew_ipHttpS )  \
