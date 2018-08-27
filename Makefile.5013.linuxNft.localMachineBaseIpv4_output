@@ -103,17 +103,17 @@ $(foreach aa1,vpn  ,\
     )\
 )
 $(foreach aa1,lan  ,\
-    $(foreach aa2,$(call sortUU, $(NFTgroupCard_y5_lan) ), \
-      $(call ip4inRuleAA1,_47_OOcheckTcpDstPortNew, ip daddr $(aa2) $(NFTcnt) accept)  \
-    )\
     $(foreach aa2,$(call sortUN, $(NFTtcpOUT_allow_port__httpS) ), \
       $(call ip4inRuleAA1,_47_OOcheckTcpDstPortNew, tcp dport $(aa2) $(NFTcnt) goto chLocalIp4Card_$(aa1)_48_OOcheckTcpNew_ipHttpS )  \
     )\
     $(foreach aa2,$(call sortUN, $(NFTtcpOUT_allow_port__dns) ), \
       $(call ip4inRuleAA1,_47_OOcheckTcpDstPortNew, tcp dport $(aa2) $(NFTcnt) goto chLocalIp4Card_$(aa1)_49_OOcheckTcpNew_ipDNS )  \
     )\
-    $(foreach aa2,$(call sortUN, $(NFTtcpOUT_allow_port__ALL) ), \
+    $(foreach aa2,$(call sortUN, $(filter-out  $(NFTtcpOUT_allow_port__httpS) $(NFTtcpOUT_allow_port__dns) , $(NFTtcpOUT_allow_port__ALL)) ), \
       $(call ip4inRuleAA1,_47_OOcheckTcpDstPortNew, tcp dport $(aa2) $(NFTcnt) accept)  \
+    )\
+    $(foreach aa2,$(call sortUU, $(NFTgroupCard_y5_lan) ), \
+      $(call ip4inRuleAA1,_47_OOcheckTcpDstPortNew, ip daddr $(aa2) $(NFTcnt) accept)  \
     )\
 )
 $(foreach aa1,$(NFTgroupCard_x_ALL)  ,\
