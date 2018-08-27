@@ -75,17 +75,18 @@ nft    -f    /tmp/nft.rule && rm -f c2.txt && (nft     list      ruleset    -s >
 
 nft     list      ruleset       |less
 nft     list      ruleset -s -a |less
-
-nft     list      ruleset|grep -n drop      |sed -e '/policy / d' -e '/counter packets 0 bytes 0\b/ d'
-nft     list      ruleset|grep -n accept    |sed -e '/policy / d' -e '/counter packets 0 bytes 0\b/ d'
-nft     list      ruleset|grep -n accept    |sed -e '/counter packets 0 bytes 0\b/ d'|grep ':\s*counter'
-nft     list      ruleset|grep -n '\biif\b' |sed -e '/counter packets 0 bytes 0\b/ d'
-nft     list      ruleset|grep -n '\boif\b' |sed -e '/counter packets 0 bytes 0\b/ d'
 nft     list      ruleset       > 1.txt ; vim 1.txt
+nft     list      ruleset       > 1.txt 
 
-nft     list      ruleset|grep -n comment  |grep counter |grep -v ' packets 0 bytes 0 '|grep ' goto '
-nft     list      ruleset|grep -n comment  |grep counter |grep -v ' packets 0 bytes 0 '|grep ' accept '
-nft     list      ruleset|grep -n comment  |grep counter |grep -v ' packets 0 bytes 0 '|grep ' drop '
+cat 1.txt|grep -n drop      |sed -e '/policy / d' -e '/counter packets 0 bytes 0\b/ d'
+cat 1.txt|grep -n accept    |sed -e '/policy / d' -e '/counter packets 0 bytes 0\b/ d'
+cat 1.txt|grep -n accept    |sed -e '/counter packets 0 bytes 0\b/ d'|grep ':\s*counter'
+cat 1.txt|grep -n '\biif\b' |sed -e '/counter packets 0 bytes 0\b/ d'
+cat 1.txt|grep -n '\boif\b' |sed -e '/counter packets 0 bytes 0\b/ d'
+
+cat 1.txt|grep -n comment  |grep counter |grep -v ' packets 0 bytes 0 '|grep ' goto '
+cat 1.txt|grep -n comment  |grep counter |grep -v ' packets 0 bytes 0 '|grep ' accept '
+cat 1.txt|grep -n comment  |grep counter |grep -v ' packets 0 bytes 0 '|grep ' drop '
 
 (ns|grep ^tcp)|grep LISTEN |sort -k4
 
