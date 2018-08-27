@@ -49,6 +49,9 @@ linuxNft_OpList+=		\
 	tg$(tgDST_idx)						\
 
 
+#$$(eval linuxNft_OpList += __$$(shell echo -n $$$$(($$(tgDST_idx) % 3 )) )__ )
+$$(eval linuxNft_OpList += $$(if $(strip $$(shell [ $$$$(($$(tgDST_idx) % 3 )) = 2 ] && echo -n 111 )),space) )
+
 $$(eval tgDST_idx:=$$(strip $$(shell echo -n $$$$(($$(tgDST_idx)+1)))))
 
 endef
