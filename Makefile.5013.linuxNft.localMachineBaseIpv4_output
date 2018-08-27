@@ -97,21 +97,21 @@ $(foreach aa1,lo  ,\
     $(call ip4inRuleAA1,_47_OOcheckTcpDstPortNew, $(NFTcnt) accept) 
 )
 $(foreach aa1,vpn  ,\
-    $(foreach aa2,$(call sortN, $(NFTtcpOUT_allow) $(NFTtcpIN_$(aa1)) ), \
+    $(foreach aa2,$(call sortUN, $(NFTtcpOUT_allow) $(NFTtcpIN_$(aa1)) ), \
       $(call ip4inRuleAA1,_47_OOcheckTcpDstPortNew, tcp dport $(aa2) $(NFTcnt) accept)  \
     )\
 )
 $(foreach aa1,lan  ,\
-    $(foreach aa2,$(call sortN, $($(NFTtcpOUT_allow_port__$(HOSTNAME)) $(NFTtcpOUT_allow_port__ssh)) ), \
+    $(foreach aa2,$(call sortUN, $($(NFTtcpOUT_allow_port__$(HOSTNAME)) $(NFTtcpOUT_allow_port__ssh)) ), \
       $(call ip4inRuleAA1,_47_OOcheckTcpDstPortNew, tcp dport $(aa2) $(NFTcnt) accept)  \
     )\
-    $(foreach aa2,$(call sortN, $(NFTgroupCard_y5_lan) ), \
+    $(foreach aa2,$(call sortUU, $(NFTgroupCard_y5_lan) ), \
       $(call ip4inRuleAA1,_47_OOcheckTcpDstPortNew, ip daddr $(aa2) $(NFTcnt) accept)  \
     )\
-    $(foreach aa2,$(call sortN, $(NFTtcpOUT_allow_port__httpS) ), \
+    $(foreach aa2,$(call sortUN, $(NFTtcpOUT_allow_port__httpS) ), \
       $(call ip4inRuleAA1,_47_OOcheckTcpDstPortNew, tcp dport $(aa2) $(NFTcnt) goto chLocalIp4Card_$(aa1)_48_OOcheckTcpNew_ipHttpS )  \
     )\
-    $(foreach aa2,$(call sortN, $(NFTtcpOUT_allow_port__dns) ), \
+    $(foreach aa2,$(call sortUN, $(NFTtcpOUT_allow_port__dns) ), \
       $(call ip4inRuleAA1,_47_OOcheckTcpDstPortNew, tcp dport $(aa2) $(NFTcnt) goto chLocalIp4Card_$(aa1)_49_OOcheckTcpNew_ipDNS )  \
     )\
 )
@@ -128,7 +128,11 @@ $(foreach aa1,lan  ,\
   $(foreach aa2,$(NFTtcpOUT_allow_ip__httpS)  ,\
     $(call ip4inRuleAA1,_48_OOcheckTcpNew_ipHttpS, ip daddr $(aa2) $(NFTcnt) accept ) \
   )\
+  $(foreach aa2,$(call sortUU, $(NFTgroupCard_y5_$(aa1)) ), \
+    $(call ip4inRuleAA1,_48_OOcheckTcpNew_ipHttpS, ip daddr $(aa2) $(NFTcnt) accept ) \
+  )\
 )
+
 $(foreach aa1,$(NFTgroupCard_x_ALL)  ,\
     $(call ip4inRuleAA1,_48_OOcheckTcpNew_ipHttpS, $(NFTcnt) meta nftrace set 1) \
     $(call ip4inRuleAA1,_48_OOcheckTcpNew_ipHttpS, $(NFTcnt) drop) \
@@ -154,7 +158,7 @@ $(foreach aa1,lan,\
   $(call ip4inRuleAA1,_53_OOcheckUdpDstPort, ip daddr 239.0.0.0/8 $(NFTcnt) drop #__$(aa1)__$(aa2)__0 )  \
 )
 $(foreach aa1,$(NFTgroupCard_x_ALL),\
-  $(foreach aa2,$(call sortN,$(NFTudpOUT_allow) $(NFTudpIN_$(aa1)) ),\
+  $(foreach aa2,$(call sortUN,$(NFTudpOUT_allow) $(NFTudpIN_$(aa1)) ),\
     $(call ip4inRuleAA1,_53_OOcheckUdpDstPort, udp dport $(aa2) $(NFTcnt) accept #__$(aa1)__$(aa2)__1 )  \
   )\
 )

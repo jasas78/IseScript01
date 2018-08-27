@@ -3,8 +3,9 @@ all:
 HOSTNAME?=$(shell hostname)
 export HOSTNAME
 
-sortN=$(strip $(shell echo $* |xargs -n 1|sort -u -n))
-sortN=$(strip $(shell echo $1 $2 $3 $4 $5 $6 $7 $8 $9 |xargs -n 1|sort -u -n))
+sortUN=$(strip $(shell echo $1 $2 $3 $4 $5 $6 $7 $8 $9 |xargs -n 1|sort -u -n))
+sortUU=$(strip $(shell echo $1 $2 $3 $4 $5 $6 $7 $8 $9 |xargs -n 1|sort -u))
+sortNN=$(strip $(shell echo $1 $2 $3 $4 $5 $6 $7 $8 $9 |xargs -n 1|sort -n))
 
 NFTbin:=$(shell which nft)
 NFTbin?=/usr/sbin/nft
