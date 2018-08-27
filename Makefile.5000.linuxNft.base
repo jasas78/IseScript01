@@ -126,7 +126,7 @@ NFTtcpIN_vpn_squid__:=$(NFTtcpIN_vpn_squid_$(HOSTNAME))
 
 NFTtcpIN_lan:=$(strip $(shell echo $(NFTtcpIN_vpn_acceptPort) $(NFTtcpIN_ssh)|xargs -n 1|sort -u -n ))
 NFTtcpIN_vpn:=$(strip $(shell echo $(NFTtcpIN_lan) $(NFTtcpIN_vpn_dns) $(NFTtcpIN_vpn_squid__)|xargs -n 1|sort -u -n ))
-NFTtcpIN_lo:=
+NFTtcpIN_lo:=5037 # android adb
 
 NFTudpIN_vpn_acceptPort:=38034 40948 40956 40972
 
