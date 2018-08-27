@@ -21,8 +21,8 @@ _29_IIunknown                  \
 
 NFTnowTable:=tbLocalIpv4input
 
-ip4inRuleAA1=$(EOL)add rule ip $(NFTnowTable) chLocalIp4Card_$(aa1)$(1) $(2)
-ip4inRule111=$(EOL)add rule ip $(NFTnowTable)                      $(1) $(2)
+ip4inRuleAA1=$(EOL)add rule ip $(NFTnowTable) chLocalIp4Card_$(aa1)$(1) $(2) $(if $(strip $(3)),comment "$(aa1) $(1) $(3)")
+ip4inRule111=$(EOL)add rule ip $(NFTnowTable)                      $(1) $(2) $(if $(strip $(3)),comment "$(aa1) $(1) $(3)")
 
 
 define NFTtext_11_ipv4_input
