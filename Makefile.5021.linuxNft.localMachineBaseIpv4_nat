@@ -48,10 +48,10 @@ $(foreach aa1,$(NFTgroupCard_x_ALL),\
     $(call ip4inRule111,chLocalIp4natPre  , iif $(aa3) $(NFTcnt) accept) \
   ))\
 )
-$(call ip4inRule111,chLocalIp4natPre  , $(NFTcnt) $(NFTset_1))
-$(call ip4inRule111,chLocalIp4natPost , $(NFTcnt) $(NFTset_1))
-$(call ip4inRule111,chLocalIp4natPre  , $(NFTcnt) drop)
-$(call ip4inRule111,chLocalIp4natPost , $(NFTcnt) drop)
+$(ccall ip4inRule111,chLocalIp4natPre  , $(NFTcnt) $(NFTset_1))
+$(ccall ip4inRule111,chLocalIp4natPost , $(NFTcnt) $(NFTset_1))
+$(call ip4inRule111,chLocalIp4natPre  , $(NFTcnt) accept)
+$(call ip4inRule111,chLocalIp4natPost , $(NFTcnt) accept)
 ### chLocalIp4nat : end
 
 
