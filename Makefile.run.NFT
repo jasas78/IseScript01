@@ -80,6 +80,10 @@ nft     list      ruleset|grep -n '\biif\b' |sed -e '/counter packets 0 bytes 0\
 nft     list      ruleset|grep -n '\boif\b' |sed -e '/counter packets 0 bytes 0\b/ d'
 nft     list      ruleset       > 1.txt ; vim 1.txt
 
+nft     list      ruleset|grep -n comment  |grep counter |grep -v ' packets 0 bytes 0 '|grep ' goto '
+nft     list      ruleset|grep -n comment  |grep counter |grep -v ' packets 0 bytes 0 '|grep ' accept '
+nft     list      ruleset|grep -n comment  |grep counter |grep -v ' packets 0 bytes 0 '|grep ' drop '
+
 (ns|grep ^tcp)|grep LISTEN |sort -k4
 
 nft monitor trac
