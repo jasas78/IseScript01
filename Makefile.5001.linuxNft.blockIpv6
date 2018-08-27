@@ -4,7 +4,7 @@ all:
 NFTcnt:= counter packets 0 bytes 0 
 NFTset_1:=meta nftrace set 1
 
-define nf1_TEXT
+define NFtext_blockIpv6
 
 ####### "ip6" is family : ip ip6 inet arp bridge inet netdev
 add table ip6 tbBlockIp6         
@@ -91,14 +91,14 @@ add rule  ip6 tbBlockIp6 chBlockIp6forward      $(NFTcnt) drop
 add rule  ip6 tbBlockIp6 chBlockIp6output       $(NFTcnt) drop
 
 endef
-export nf1_TEXT
+export NFtext_blockIpv6:=$(NFtext_blockIpv6)
 
 #$(nf1):=ws2 wv1
 #nf1: $($(nf1))
 
 nf1:=BlockAllipv6Package
 nf1: 
-	echo "$${nf1_TEXT}"  $(NFTsed1)      >> $(NFTfile)
+	echo "$${NFtext_blockIpv6}"  $(NFTsed1)      >> $(NFTfile)
 	@wc                                     $(NFTfile)
 
 linuxNft_OpList+=		\

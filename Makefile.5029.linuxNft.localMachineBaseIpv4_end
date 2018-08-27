@@ -8,9 +8,9 @@ nf31_TEXT:=\
 	NFTtext_21_ipv4_natPre \
 	NFTtext_23_ipv4_natPost \
 
-$(foreach aa1,$(nf31_TEXT),\
-  $(eval export $(aa1) )	\
-)
+#$(foreach aa1,$(nf31_TEXT),\
+#  $(eval export $(aa1) )	\
+#)
 
 nf31:=deal_with_local_machine_packages_ipv4
 nf31:

@@ -1,7 +1,7 @@
 all:
 
 #$(NFTbin)     
-# nf1_TEXT
+# NFtext_blockIpv6
 # Makefile.5000
 # Makefile.5001
 # Makefile.5011
@@ -200,4 +200,5 @@ $(call ip4inRuleAA1,_59_OOunknown, $(NFTcnt) accept) \
 
 # NFTtext_13_ipv4_output end
 endef
+export NFTtext_13_ipv4_output:=$(NFTtext_13_ipv4_output)
 

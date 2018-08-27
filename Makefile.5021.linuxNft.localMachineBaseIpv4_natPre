@@ -1,7 +1,7 @@
 all:
 
 #$(NFTbin)     
-# nf1_TEXT
+# NFtext_blockIpv6
 # Makefile.5000
 # Makefile.5001
 # Makefile.5011
@@ -10,6 +10,7 @@ all:
 
 # NFTdebug:=
 
+NFTnowTable:=tbLocalIpv4napPre
 
 my_tbLocalIpv4_N1chainALL :=   \
 _c1_N1checkSrcIp               \
@@ -25,18 +26,19 @@ _d9_N1unknown                  \
 define NFTtext_21_ipv4_natPre
 
 # NFTtext_21_ipv4_natPre begin
+add table ip $(NFTnowTable)         
 
 
 # add my_tbLocalIpv4_N1chainALL : begin
 $(foreach aa1,$(NFTgroupCard_x_ALL),\
   $(foreach aa2,$(my_tbLocalIpv4_N1chainALL),\
-    $(EOL)add chain ip tbLocalIpv4 chLocalIp4Card_$(aa1)$(aa2)\
+    $(EOL)add chain ip $(NFTnowTable) chLocalIp4Card_$(aa1)$(aa2)\
   )\
 )
 
 # add my_tbLocalIpv4_N1chainALL : end
 
-add chain ip tbLocalIpv4 chLocalIp4natPre   { type nat hook prerouting  priority 0 ; policy accept ; }
+add chain ip $(NFTnowTable) chLocalIp4natPre   { type nat hook prerouting  priority 0 ; policy accept ; }
 
 
 
@@ -163,5 +165,6 @@ $(call ip4inRuleAA1,_d9_N1unknown, $(NFTcnt) accept) \
 
 # NFTtext_21_ipv4_natPre end
 endef
+export NFTtext_21_ipv4_natPre:=$(NFTtext_21_ipv4_natPre)
 
 

@@ -1,7 +1,7 @@
 all:
 
 
-# nf1_TEXT
+# NFtext_blockIpv6
 
 ng1:=genGroup01
 $(ng1):=nc1 nf1 nf31 

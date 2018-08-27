@@ -1,7 +1,7 @@
 all:
 
 #$(NFTbin)     
-# nf1_TEXT
+# NFtext_blockIpv6
 # Makefile.5000
 # Makefile.5001
 
@@ -180,4 +180,5 @@ $(foreach aa1,$(NFTgroupCard_x_ALL)  ,\
 
 # NFTtext_11_ipv4_input : end
 endef
+export NFTtext_11_ipv4_input:=$(NFTtext_11_ipv4_input)
 
