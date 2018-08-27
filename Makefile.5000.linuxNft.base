@@ -33,8 +33,14 @@ $(foreach aa1,$(NFTcardS_ALL),$(eval NetCard_ip2_$(aa1):=$$(strip $$(shell ip a 
 	'{print $$$$2}'|awk -F/ '{print $$$$1}'))))
 $(foreach aa1,$(NFTcardS_ALL),$(eval NetCard_ip3_$(aa1):=$$(strip $$(shell ip a show $(aa1)|grep inet|awk \
 	'{print $$$$2}'|awk -F/ '{print $$$$2}'))))
-$(foreach aa1,$(NFTcardS_ALL),$(eval NetCard_ip4_$(aa1):=$$(strip $$(shell ip a show $(aa1)|grep inet|awk \
+#$(foreach aa1,$(NFTcardS_ALL),$(eval NetCard_ip4_$(aa1):=$$(strip $$(shell ip a show $(aa1)|grep inet|awk \
 	'{print $$$$4}'))))
+$(foreach aa1,$(NFTcardS_ALL),$(eval NetCard_ip4_$(aa1):=$$(strip $$(shell ip a show $(aa1)|grep inet|awk \
+	'{print $$$$2 " " $$$$4}'|sed -e 's;[/\\.]; ;g'|awk \
+	'{if ($$$$6=="global"||$$$$6=="host") \
+    if ($$$$5==24) print  $$$$1 "." $$$$2 "." $$$$3 ".255" ; \
+	else print  $$$$1 ".255.255.255" ; else print $$$$6 "." $$$$7 "." $$$$8 "." $$$$9;}' \
+))))
 
 ifeq (host,$(NetCard_ip4_lo))
 NetCard_ip4_lo:=127.255.255.255
@@ -50,7 +56,7 @@ $$(EOL)NetCard_ip0_$(aa1) 2,3,4 --- 1,0 = \
  _=_ $(strip $(NetCard_ip0_$(aa1)))\
 	))
 
-NetCard_ip_textALL+=$(EOL)NetCard_ip4_br0,eth0,lo0 =$(NetCard_ip4_br0) , =$(NetCard_ip4_eth0), =$(NetCard_ip4_lo)
+NetCard_ip_textALL+=$(EOL)NetCard_ip4_br0,eth0,lo0:=$(NetCard_ip4_br0),$(NetCard_ip4_eth0),$(NetCard_ip4_lo)
 
 NFTgroupCard_x_lo:= lo
 NFTgroupCard_x_lan:= eth wlan br
