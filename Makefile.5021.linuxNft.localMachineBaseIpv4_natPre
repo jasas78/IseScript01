@@ -63,7 +63,7 @@ $(foreach aa1,lo, $(foreach aa2,$(NFTgroupCard_y2_lan) $(NFTgroupCard_y2_vpn),\
 $(call ip4inRuleAA1,_c1_N1checkSrcIp, ip saddr $(aa2) ip daddr $(aa2) $(NFTcnt) accept) \
 ))
 
-$(foreach aa1,$(NFTgroupCard_x_ALL), $(foreach aa2,$(_c1_N1checkSrcIp) ,\
+$(foreach aa1,$(NFTgroupCard_x_ALL), $(foreach aa2,$(NFTblackNatIP) ,\
   $(call ip4inRuleAA1,_c1_N1checkSrcIp, ip daddr $(aa2) $(NFTcnt) drop) \
 ))
 

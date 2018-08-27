@@ -80,7 +80,7 @@ NetCard_ip_textALL+=$(foreach aa1,$(NFTgroupCard_x_ALL),$(EOL)NFTgroupCard_y5_$(
 
 
 NFTblackHoleIP:=$(strip 127.0.0.0/8 192.168.0.0/16 10.0.0.0/8 224.0.0.251/24 )
-NFTblackNatIP:=$(strip 192.168.0.0/16 10.0.0.0/8 224.0.0.251/24 )
+NFTblackNatIP:=$(strip 192.168.0.0/16 10.0.0.0/8 224.0.0.251/24 255.255.255.255 )
 
 NFTtcpOUT_allow_port__jg1:= 55044 55052
 NFTtcpOUT_allow_port__ssh:=80 443 21 23
