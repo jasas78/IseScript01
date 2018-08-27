@@ -122,6 +122,9 @@ $(foreach aa1,$(NFTgroupCard_x_ALL)  ,\
 
 # _48_OOcheckTcpNew_ipHttpS
 $(foreach aa1,lan  ,\
+  $(foreach aa2,$(NFTtcpOUT_block_ip__httpS)  ,\
+    $(call ip4inRuleAA1,_48_OOcheckTcpNew_ipHttpS, ip daddr $(aa2) $(NFTcnt) drop ) \
+  )\
   $(foreach aa2,$(NFTtcpOUT_allow_ip__httpS)  ,\
     $(call ip4inRuleAA1,_48_OOcheckTcpNew_ipHttpS, ip daddr $(aa2) $(NFTcnt) accept ) \
   )\

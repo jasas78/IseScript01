@@ -75,6 +75,21 @@ NFTtcpOUT_allow_port__dns:=53
 
 NFTtcpOUT_allow_ip__httpS:= 91.189.91.26 91.189.91.23 # us.archive.ubuntu.com cn.archive.ubuntu.com
 NFTtcpOUT_allow_ip__httpS+= 91.189.91.23 91.189.88.149 91.189.88.161 91.189.88.152 91.189.91.26 91.189.88.162 # security.ubuntu.com      
+NFTtcpOUT_allow_ip__httpS+= 183.36.114.44 183.36.114.45 # www.sogou.com ns1.sogou.com ns2.sogou.com
+NFTtcpOUT_allow_ip__httpS+= 14.215.177.39 14.215.177.38 # www.baidu.com www.a.shifen.com
+
+
+NFTtcpOUT_block_ip__httpS:= 104.225.98.131 104.225.98.129 13.35.94.61 144.2.3.1 54.148.43.57 23.222.28.98 #a.root-servers.net.
+NFTtcpOUT_block_ip__httpS+= 23.215.100.147 23.222.28.57 192.204.26.83 192.204.26.123 52.10.55.151 54.191.241.246 218.30.103.50 # nstld.verisign-grs.com.
+NFTtcpOUT_block_ip__httpS+= 34.209.108.219 65.200.22.129 23.222.28.152 23.222.28.129 52.37.53.20 # pb.sogou.com
+NFTtcpOUT_block_ip__httpS+= 54.68.141.132 34.217.184.213
+NFTtcpOUT_block_ip__httpS+= 52.36.71.24 52.11.162.210 35.167.70.180 34.212.55.103 52.25.195.204 23.222.29.38 52.39.131.77 23.193.44.107
+NFTtcpOUT_block_ip__httpS+= 23.193.44.16 23.193.44.133 52.24.130.228 106.39.246.42 52.38.149.111
+NFTtcpOUT_block_ip__httpS+= 54.149.52.189 52.89.179.237 23.222.28.171 59.38.112.32 23.222.29.94 23.222.29.104
+NFTtcpOUT_block_ip__httpS+= 52.25.175.166 36.110.170.48 23.222.29.190 183.2.192.112 61.140.13.201 23.222.29.175 113.107.216.105
+NFTtcpOUT_block_ip__httpS+= 113.96.98.102 14.215.166.109 119.146.74.33 183.2.192.198 113.107.216.121 113.96.154.108
+NFTtcpOUT_block_ip__httpS+= 121.12.122.120 14.215.167.197 183.61.13.198 113.105.155.198 113.105.165.44 113.107.216.119 61.142.166.245
+NFTtcpOUT_block_ip__httpS+= 59.153.63.67 35.160.58.123 34.210.116.46 
 
 NFTtcpOUT_allow_ip__dns:=114.114.114.114
 
