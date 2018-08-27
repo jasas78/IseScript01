@@ -16,6 +16,7 @@ _17_IIcheckTcpDstPortNew       \
 _21_IIcheckProtocol_udp        \
 _23_IIcheckUdpDstPort          \
 _25_IIcheckProtocol_icmp       \
+_27_IIcheckProtocol_igmp	   \
 _29_IIunknown                  \
 
 ip4inRuleAA1=$(EOL)add rule ip tbLocalIpv4 chLocalIp4Card_$(aa1)$(1) $(2)
@@ -86,9 +87,9 @@ $(foreach aa1,$(NFTgroupCard_x_Block), \
 	      $(foreach aa4,1 2 3 4,\
 		    $(if $(word $(aa4),$(NetCard_ip4_$(aa3))),\
               $(call ip4inRuleAA1,_11_IIcheckDstIp, ip daddr $(word $(aa4),$(NetCard_ip4_$(aa3)))          \
-			    ip saddr $(word $(aa4),$(NetCard_ip1_$(aa3))) $(NFTcnt) goto chLocalIp4Card_$(aa1)_25_IIcheckProtocol_icmp )\
+			    ip saddr $(word $(aa4),$(NetCard_ip1_$(aa3))) $(NFTcnt) goto chLocalIp4Card_$(aa1)_21_IIcheckProtocol_udp )\
               $(call ip4inRuleAA1,_11_IIcheckDstIp, ip daddr 255.255.255.255 \
-			    ip saddr $(word $(aa4),$(NetCard_ip1_$(aa3))) $(NFTcnt) goto chLocalIp4Card_$(aa1)_25_IIcheckProtocol_icmp )\
+			    ip saddr $(word $(aa4),$(NetCard_ip1_$(aa3))) $(NFTcnt) goto chLocalIp4Card_$(aa1)_21_IIcheckProtocol_udp )\
 		    )\
 		  )\
         )\
@@ -155,17 +156,24 @@ $(foreach aa1,$(NFTgroupCard_x_ALL)  ,\
 	)
 )
 
-# _25_IIcheckProtocol_icmp -> _29_IIunknown 
+# _25_IIcheckProtocol_icmp -> _27_IIcheckProtocol_igmp 
 $(foreach aa1,$(NFTgroupCard_x_ALL)  ,\
-$(call ip4inRuleAA1,_25_IIcheckProtocol_icmp, ip protocol != icmp $(NFTcnt) goto chLocalIp4Card_$(aa1)_29_IIunknown) \
+$(call ip4inRuleAA1,_25_IIcheckProtocol_icmp, ip protocol != icmp $(NFTcnt) goto chLocalIp4Card_$(aa1)_27_IIcheckProtocol_igmp) \
 $(call ip4inRuleAA1,_25_IIcheckProtocol_icmp, icmp type { echo-reply   } $(NFTcnt) accept) \
 $(call ip4inRuleAA1,_25_IIcheckProtocol_icmp, icmp type { echo-request } $(NFTcnt) accept) \
 $(call ip4inRuleAA1,_25_IIcheckProtocol_icmp, $(NFTcnt) drop) \
 )
 
+# _27_IIcheckProtocol_igmp -> _29_IIunknown 
+$(foreach aa1,$(NFTgroupCard_x_ALL)  ,\
+$(call ip4inRuleAA1,_27_IIcheckProtocol_igmp, ip protocol != igmp $(NFTcnt) goto chLocalIp4Card_$(aa1)_29_IIunknown) \
+$(call ip4inRuleAA1,_25_IIcheckProtocol_icmp, $(NFTcnt) drop) \
+)
+
 # _29_IIunknown  ->
 $(foreach aa1,$(NFTgroupCard_x_ALL)  ,\
-$(call ip4inRuleAA1,_29_IIunknown, $(NFTcnt) accept) \
+  $(if $(NFTdebug),$(call ip4inRuleAA1,_29_IIunknown, meta nftrace set 1) )\
+  $(call ip4inRuleAA1,_29_IIunknown, $(NFTcnt) accept) \
 )
 
 # NFTtext_11_ipv4_input : end
