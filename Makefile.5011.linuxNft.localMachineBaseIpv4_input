@@ -86,9 +86,9 @@ $(foreach aa1,$(NFTgroupCard_x_Block), \
 	      $(foreach aa4,1 2 3 4,\
 		    $(if $(word $(aa4),$(NetCard_ip4_$(aa3))),\
               $(call ip4inRuleAA1,_11_IIcheckDstIp, ip daddr $(word $(aa4),$(NetCard_ip4_$(aa3)))          \
-			    ip saddr $(word $(aa4),$(NetCard_ip1_$(aa3))) ip protocol udp $(NFTcnt) accept)\
+			    ip saddr $(word $(aa4),$(NetCard_ip1_$(aa3))) $(NFTcnt) goto chLocalIp4Card_$(aa1)_25_IIcheckProtocol_icmp )\
               $(call ip4inRuleAA1,_11_IIcheckDstIp, ip daddr 255.255.255.255 \
-			    ip saddr $(word $(aa4),$(NetCard_ip1_$(aa3))) ip protocol udp $(NFTcnt) accept)\
+			    ip saddr $(word $(aa4),$(NetCard_ip1_$(aa3))) $(NFTcnt) goto chLocalIp4Card_$(aa1)_25_IIcheckProtocol_icmp )\
 		    )\
 		  )\
         )\
