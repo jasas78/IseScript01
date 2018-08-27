@@ -27,17 +27,21 @@ $(foreach aa1,$(NFTkeyworD_ALL),$(eval NFTcardS_$(aa1):=$(strip $(filter $(forea
 
 NFTcardSETs:=$(foreach aa1,ALL $(NFTkeyworD_ALL),NFTcardS_$(aa1))
 $(foreach aa1,$(NFTcardS_ALL),$(eval NetCard_ip0_$(aa1):=$$(strip $$(shell ip a show $(aa1)|grep inet))))
-$(foreach aa1,$(NFTcardS_ALL),$(eval NetCard_ip1_$(aa1):=$$(strip $$(shell ip a show $(aa1)|grep inet|awk '{printf $$$$2}'))))
-$(foreach aa1,$(NFTcardS_ALL),$(eval NetCard_ip2_$(aa1):=$$(strip $$(shell ip a show $(aa1)|grep inet|awk '{printf $$$$2}'|awk -F/ '{printf $$$$1}'))))
-$(foreach aa1,$(NFTcardS_ALL),$(eval NetCard_ip3_$(aa1):=$$(strip $$(shell ip a show $(aa1)|grep inet|awk '{printf $$$$2}'|awk -F/ '{printf $$$$2}'))))
-$(foreach aa1,$(NFTcardS_ALL),$(eval NetCard_ip4_$(aa1):=$$(strip $$(shell ip a show $(aa1)|grep inet|awk '{printf $$$$4}'))))
+$(foreach aa1,$(NFTcardS_ALL),$(eval NetCard_ip1_$(aa1):=$$(strip $$(shell ip a show $(aa1)|grep inet|awk \
+	'{print $$$$2}'))))
+$(foreach aa1,$(NFTcardS_ALL),$(eval NetCard_ip2_$(aa1):=$$(strip $$(shell ip a show $(aa1)|grep inet|awk \
+	'{print $$$$2}'|awk -F/ '{print $$$$1}'))))
+$(foreach aa1,$(NFTcardS_ALL),$(eval NetCard_ip3_$(aa1):=$$(strip $$(shell ip a show $(aa1)|grep inet|awk \
+	'{print $$$$2}'|awk -F/ '{print $$$$2}'))))
+$(foreach aa1,$(NFTcardS_ALL),$(eval NetCard_ip4_$(aa1):=$$(strip $$(shell ip a show $(aa1)|grep inet|awk \
+	'{print $$$$4}'))))
 
 ifeq (host,$(NetCard_ip4_lo))
 NetCard_ip4_lo:=127.255.255.255
 endif
 
 $(foreach aa1,$(NFTcardS_ALL),$(eval \
-	NetCard_ip_ALL+=\
+	NetCard_ip_textALL+=\
 $$(EOL)NetCard_ip0_$(aa1) 2,3,4 --- 1,0 = \
  $(NetCard_ip2_$(aa1)),\
  $(NetCard_ip3_$(aa1)),\
@@ -61,8 +65,8 @@ $(foreach aa1,$(NFTgroupCard_x_ALL),\
 	$(eval NFTgroupCard_y5_$(aa1):=$(strip $(foreach bb1,$(NFTgroupCard_x_$(aa1)),$(foreach bb2,$(NFTcardS_$(bb1)),$(NetCard_ip1_$(bb2))))))\
 	)
 
-NetCard_ip_ALL+=$(EOL)NFTgroupCard_x_ALL:=$(NFTgroupCard_x_ALL)
-NetCard_ip_ALL+=$(foreach aa1,$(NFTgroupCard_x_ALL),$(EOL)NFTgroupCard_y5_$(aa1):=$(NFTgroupCard_y5_$(aa1)))
+NetCard_ip_textALL+=$(EOL)NFTgroupCard_x_ALL:=$(NFTgroupCard_x_ALL)
+NetCard_ip_textALL+=$(foreach aa1,$(NFTgroupCard_x_ALL),$(EOL)NFTgroupCard_y5_$(aa1):=$(NFTgroupCard_y5_$(aa1)))
 
 
 
@@ -124,15 +128,15 @@ NFTudpIN_lo:=$(strip $(shell echo $(NFTudpIN_dns) |xargs -n 1|sort -u -n))
 
 
 
-NetCard_ip_ALL+=$(foreach aa1,$(NFTgroupCard_x_ALL),$(EOL)NFTtcpIN_$(aa1):=$(NFTtcpIN_$(aa1)))
-NetCard_ip_ALL+=$(foreach aa1,$(NFTgroupCard_x_ALL),$(EOL)NFTudpIN_$(aa1):=$(NFTudpIN_$(aa1)))
-NetCard_ip_ALL+=$(EOL) HOSTNAME=$(HOSTNAME)
+NetCard_ip_textALL+=$(foreach aa1,$(NFTgroupCard_x_ALL),$(EOL)NFTtcpIN_$(aa1):=$(NFTtcpIN_$(aa1)))
+NetCard_ip_textALL+=$(foreach aa1,$(NFTgroupCard_x_ALL),$(EOL)NFTudpIN_$(aa1):=$(NFTudpIN_$(aa1)))
+NetCard_ip_textALL+=$(EOL) HOSTNAME=$(HOSTNAME)
 
 
 
 define NFTcardINFO
 $(foreach aa1,$(NFTcardSETs),$(EOL)$(aa1)    : $($(aa1)))
-NetCard_ip_ALL:$(NetCard_ip_ALL)
+NetCard_ip_textALL:$(NetCard_ip_textALL)
 
 endef
 export NFTcardINFO
