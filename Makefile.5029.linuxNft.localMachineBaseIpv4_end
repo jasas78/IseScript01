@@ -14,7 +14,8 @@ $(foreach aa1,$(nf31_TEXT),\
 
 nf31:=deal_with_local_machine_packages_ipv4
 nf31:
-	echo "$${NFTtext_11_ipv4_input}"  $(NFTsed1)     >> $(NFTfile)
+	$(foreach aa1,$(nf31_TEXT),\
+		echo "$${$(aa1)}"  $(NFTsed1)     >> $(NFTfile)$(EOL)$(EOL))
 	@wc                                     $(NFTfile)
 
 linuxNft_OpList+=		\
