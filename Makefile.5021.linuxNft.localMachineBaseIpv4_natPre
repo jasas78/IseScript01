@@ -10,7 +10,7 @@ all:
 
 # NFTdebug:=
 
-NFTnowTable:=tbLocalIpv4napPre
+NFTnowTable:=tbLocalIpv4natPre
 
 my_tbLocalIpv4_N1chainALL :=   \
 _c1_N1checkSrcIp               \
