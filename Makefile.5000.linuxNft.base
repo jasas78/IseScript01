@@ -109,8 +109,7 @@ NFTtcpOUT_block_ip__httpS+= 64.13.232.149 13.32.207.133 65.200.22.232
 
 NFTtcpOUT_allow_ip__dns:=114.114.114.114
 
-NFTtcpOUT_allow:=$(NFTtcpOUT_allow_port__$(HOSTNAME)) \
-	$(NFTtcpOUT_allow_port__httpS) $(NFTtcpOUT_allow_port__ssh) $(NFTtcpOUT_allow_port__dns)
+NFTtcpOUT_allow_port__ALL:=$(strip $(sort $(foreach aa1,$(HOSTNAME) ssh httpS dns, $(NFTtcpOUT_allow_port__$(aa1)))))
 
 NFTudpOUT_allow_jg1:= 51044 51028 51052
 NFTudpOUT_allow:=53 67 68 69 123 5353 $(NFTudpOUT_allow_$(HOSTNAME))
