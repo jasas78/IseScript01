@@ -74,7 +74,7 @@ $(foreach aa1,$(NFTgroupCard_x_Src)  , \
   $(if $(filter lo,$(aa1)),,\
     $(call ip4inRuleAA1,_11_IIcheckDstIp, ip daddr 255.255.255.255       $(NFTcnt) drop)\
   )\
-  $(if $(NFTdebug),$(call ip4inRuleAA1,_11_IIcheckDstIp, meta nftrace set 1) )\
+  $(if $(NFTdebug),$(call ip4inRuleAA1,_11_IIcheckDstIp, $(NFTset_1),1) )\
   $(call ip4inRuleAA1,_11_IIcheckDstIp, $(NFTcnt) drop) \
 )
 
@@ -98,7 +98,7 @@ $(foreach aa1,$(NFTgroupCard_x_Block), \
 	  )\
     )\
    $(call ip4inRuleAA1,_11_IIcheckDstIp, ip daddr 255.255.255.255       $(NFTcnt) drop)\
-   $(if $(NFTdebug), $(call ip4inRuleAA1,_11_IIcheckDstIp, meta nftrace set 1) )\
+   $(if $(NFTdebug), $(call ip4inRuleAA1,_11_IIcheckDstIp, $(NFTset_1),1) )\
    $(call ip4inRuleAA1,_11_IIcheckDstIp, $(NFTcnt) drop) \
 )
 
@@ -128,12 +128,12 @@ $(foreach aa1,lo ,\
   $(foreach aa2,$(call sortUN, $(NFTtcpIN_lan) $(NFTtcpIN_vpn) 5555-5585 $(NFTtcpOUT_allow_port__$(HOSTNAME)) ),\
     $(call ip4inRuleAA1,_17_IIcheckTcpDstPortNew, tcp dport $(aa2) $(NFTcnt) accept)  \
   )\
-  $(call ip4inRuleAA1,_17_IIcheckTcpDstPortNew, $(NFTcnt) meta nftrace set 1) \
+  $(call ip4inRuleAA1,_17_IIcheckTcpDstPortNew, $(NFTcnt) $(NFTset_1),1) \
   $(call ip4inRuleAA1,_17_IIcheckTcpDstPortNew, $(NFTcnt) accept) \
 )
 
 $(foreach aa1,$(NFTgroupCard_x_ALL)  ,\
-  $(call ip4inRuleAA1,_17_IIcheckTcpDstPortNew, $(NFTcnt) meta nftrace set 1) \
+  $(call ip4inRuleAA1,_17_IIcheckTcpDstPortNew, $(NFTcnt) $(NFTset_1),1) \
   $(call ip4inRuleAA1,_17_IIcheckTcpDstPortNew, $(NFTcnt) drop) \
 )
 
@@ -152,7 +152,7 @@ $(foreach aa1,$(NFTgroupCard_x_ALL)  ,\
 	  $(call ip4inRuleAA1,_23_IIcheckUdpDstPort, udp dport $(aa2) $(NFTcnt) accept #__$(aa1)__$(aa2)__)  \
 	)\
 	$(if $(filter lo,$(aa1)),\
-	  $(if $(NFTdebug),$(call ip4inRuleAA1,_23_IIcheckUdpDstPort, meta nftrace set 1) )\
+	  $(if $(NFTdebug),$(call ip4inRuleAA1,_23_IIcheckUdpDstPort, $(NFTset_1),1) )\
 	  $(call ip4inRuleAA1,_23_IIcheckUdpDstPort, $(NFTcnt) accept #__$(aa1)__) ,\
       $(call ip4inRuleAA1,_23_IIcheckUdpDstPort, $(NFTcnt) drop) \
 	)
@@ -174,7 +174,7 @@ $(call ip4inRuleAA1,_25_IIcheckProtocol_icmp, $(NFTcnt) drop) \
 
 # _29_IIunknown  ->
 $(foreach aa1,$(NFTgroupCard_x_ALL)  ,\
-  $(if $(NFTdebug),$(call ip4inRuleAA1,_29_IIunknown, meta nftrace set 1) )\
+  $(if $(NFTdebug),$(call ip4inRuleAA1,_29_IIunknown, $(NFTset_1),1) )\
   $(call ip4inRuleAA1,_29_IIunknown, $(NFTcnt) accept) \
 )
 
