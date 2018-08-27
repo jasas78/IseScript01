@@ -26,7 +26,10 @@ CFGrunLinuxNftINCset1:=\
     Makefile.5015.linuxNft.localMachineBaseIpv4_forward \
     Makefile.5021.linuxNft.localMachineBaseIpv4_natPre \
 	Makefile.5023.linuxNft.localMachineBaseIpv4_natPost \
-    Makefile.5029.linuxNft.localMachineBaseIpv4_end \
+	Makefile.5025.linuxNft.localMachineBaseIpv4_natInput \
+	Makefile.5027.linuxNft.localMachineBaseIpv4_natOutput \
+	Makefile.5029.linuxNft.localMachineBaseIpv4_natForward \
+    Makefile.5039.linuxNft.localMachineBaseIpv4_end \
 	Makefile.5099.linuxNft.groupS \
 
 #	Makefile.4010.synopsys.path 	\
