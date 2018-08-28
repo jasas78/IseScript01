@@ -60,7 +60,7 @@ $(foreach aa1, lan vpn , \
     $(call ip4inRuleAA1,_c1_N1checkSrcIp, ip saddr $(aa2) $(NFTcnt) goto chLocalIp4Card_$(aa1)_c3_N1checkDstIp) \
   )\
   $(foreach aa2, $(NFTnat_block_ip__blackHole) ,\
-    $(call ip4inRuleAA1,_c1_N1checkSrcIp, ip saddr $(aa2) $(NFTcnt) drop)\
+    $(call ip4inRuleAA1,_c1_N1checkSrcIp, ip saddr $(aa2) $(NFTcnt) drop, NFTnat_block_ip__blackHole )\
   )\
 )
 
@@ -75,7 +75,7 @@ $(foreach aa1,lo, \
 
 $(foreach aa1,$(NFTgroupCard_x_ALL), \
 	$(if $(NFTdebug),$(call ip4inRuleAA1,_c1_N1checkSrcIp, $(NFTset_1),1) )\
-	$(call ip4inRuleAA1,_c1_N1checkSrcIp, $(NFTcnt) drop) \
+	$(call ip4inRuleAA1,_c1_N1checkSrcIp, $(NFTcnt) drop, end... ) \
 	)
 
 
@@ -87,14 +87,14 @@ $(foreach aa1,$(NFTgroupCard_x_ALL)  ,\
 
 $(foreach aa1,$(NFTgroupCard_x_ALL), \
   $(foreach aa2,$(NFTnat_block_ip__ALL) ,\
-    $(call ip4inRuleAA1,_c3_N1checkDstIp, ip daddr $(aa2) $(NFTcnt) drop) \
+    $(call ip4inRuleAA1,_c3_N1checkDstIp, ip daddr $(aa2) $(NFTcnt) drop, NFTnat_block_ip__ALL) \
 ))
 
 
 $(foreach aa1,$(NFTgroupCard_x_ALL), \
   $(call ip4inRuleAA1,_c3_N1checkDstIp, $(NFTcnt) goto chLocalIp4Card_$(aa1)_c5_N1checkProtocol_tcp) \
   $(call ip4inRuleAA1,_c3_N1checkDstIp, $(NFTset_1),1) \
-  $(call ip4inRuleAA1,_c3_N1checkDstIp, $(NFTcnt) drop) \
+  $(call ip4inRuleAA1,_c3_N1checkDstIp, $(NFTcnt) drop,end...) \
 )
 
 # _c5_N1checkProtocol_tcp --> _c7_N1checkTcpDstPortNew , _d1_N1checkProtocol_udp 
@@ -110,7 +110,7 @@ $(call ip4inRuleAA1,_c5_N1checkProtocol_tcp, $(NFTcnt) drop) \
 
 $(foreach aa1, $(NFTgroupCard_x_ALL) ,\
   $(foreach aa2,$(call sortUN, $(NFTnat_block_tcpPort__ALL) ),\
-    $(call ip4inRuleAA1,_c7_N1checkTcpDstPortNew, tcp dport $(aa2) $(NFTcnt) drop)  \
+    $(call ip4inRuleAA1,_c7_N1checkTcpDstPortNew, tcp dport $(aa2) $(NFTcnt) drop, NFTnat_block_tcpPort__ALL )  \
   )\
 )
 
