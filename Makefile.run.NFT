@@ -88,6 +88,8 @@ cat 1.txt|grep -n comment  |grep counter |grep -v ' packets 0 bytes 0 '|grep ' g
 cat 1.txt|grep -n comment  |grep counter |grep -v ' packets 0 bytes 0 '|grep ' accept '
 cat 1.txt|grep -n comment  |grep counter |grep -v ' packets 0 bytes 0 '|grep ' drop '
 
+cat /tmp/l1.txt |tail -n 60 |sed -e 's; rule ;\n  &;g' -e 's; counter ;\n  &;g' -e 's; comment ;\n  &;g' -e 's; packet: ;\n  &;g' -e 's; ip saddr ;\n  &;g' -e 's; ip id ;\n  &;g'
+
 (ns|grep ^tcp)|grep LISTEN |sort -k4
 
 nft monitor trac
