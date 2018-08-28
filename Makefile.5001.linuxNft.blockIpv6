@@ -82,9 +82,9 @@ add table ip6 tbBlockIp6
 #### ####     queue   statements : num <value> <scheduler>
 
 
-add chain ip6 tbBlockIp6 chBlockIp6input    { type filter hook input   priority 0 ; policy drop ; }
-add chain ip6 tbBlockIp6 chBlockIp6forward  { type filter hook forward priority 0 ; policy drop ; }
-add chain ip6 tbBlockIp6 chBlockIp6output   { type filter hook output  priority 0 ; policy drop ; }
+add chain ip6 tbBlockIp6 chBlockIp6input    { type filter hook input   priority 310 ; policy drop ; }
+add chain ip6 tbBlockIp6 chBlockIp6forward  { type filter hook forward priority 320 ; policy drop ; }
+add chain ip6 tbBlockIp6 chBlockIp6output   { type filter hook output  priority 330 ; policy drop ; }
 
 add rule  ip6 tbBlockIp6 chBlockIp6input        $(NFTcnt) drop
 add rule  ip6 tbBlockIp6 chBlockIp6forward      $(NFTcnt) drop

@@ -39,7 +39,7 @@ $(foreach aa1,$(NFTgroupCard_x_ALL),\
 
 # add my_tbLocalIpv4_N7OchainALL : end
 
-add chain ip $(NFTnowTable) chLocalIp4natOutPut   { type nat hook output  priority 0 ; policy accept ; }
+add chain ip $(NFTnowTable) chLocalIp4natOutPut   { type nat hook output  priority 108 ; policy accept ; }
 
 
 $(if 1,

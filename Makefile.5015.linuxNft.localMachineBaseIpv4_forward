@@ -38,7 +38,7 @@ $(EOL)add chain ip $(NFTnowTable) chLocalIp4Card_$(aa1)$(aa2)\
 
 # add my_tbLocalIpv4_FFchainALL : end
 
-add chain ip $(NFTnowTable) chLocalIp4forward   { type filter hook forward  priority 0 ; policy accept ; }
+add chain ip $(NFTnowTable) chLocalIp4forward   { type filter hook forward  priority 220 ; policy accept ; }
 
 
 

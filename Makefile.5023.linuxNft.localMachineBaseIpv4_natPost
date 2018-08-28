@@ -39,7 +39,7 @@ $(foreach aa1,$(NFTgroupCard_x_ALL),\
 
 # add my_tbLocalIpv4_N3chainALL : end
 
-add chain ip $(NFTnowTable) chLocalIp4natPost   { type nat hook postrouting  priority 0 ; policy accept ; }
+add chain ip $(NFTnowTable) chLocalIp4natPost   { type nat hook postrouting  priority 110 ; policy accept ; }
 
 $(if 1,
   $(call ip4inRule111,chLocalIp4natPost, ip protocol == icmp ip daddr 114.114.114.114 $(NFTset_1), testICMP31) 

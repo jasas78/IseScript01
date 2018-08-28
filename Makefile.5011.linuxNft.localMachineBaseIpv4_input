@@ -37,7 +37,7 @@ $(EOL)add chain ip $(NFTnowTable) chLocalIp4Card_$(aa1)$(aa2)\
 
 # add my_tbLocalIpv4_IIchainALL : end
 
-add chain ip $(NFTnowTable) chLocalIp4input    { type filter hook input   priority 0 ; policy accept ; }
+add chain ip $(NFTnowTable) chLocalIp4input    { type filter hook input   priority 200 ; policy accept ; }
 
 
 
