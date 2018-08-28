@@ -47,8 +47,8 @@ add chain ip $(NFTnowTable) chLocalIp4forward   { type filter hook forward  prio
 $(if 1,
   $(call ip4inRule111,chLocalIp4forward, ip protocol == icmp ip daddr 114.114.114.114 $(NFTset_1), testICMP31) 
   $(call ip4inRule111,chLocalIp4forward, ip protocol == icmp ip saddr 114.114.114.114 $(NFTset_1), testICMP31) 
-  $(Call ip4inRule111,chLocalIp4forward, ip daddr 114.114.114.114 udp dport 53 $(NFTset_1), testICMP31) 
-  $(Call ip4inRule111,chLocalIp4forward, ip saddr 114.114.114.114 udp dport 53 $(NFTset_1), testICMP31) 
+  $(call ip4inRule111,chLocalIp4forward, ip daddr 114.114.114.114 udp dport 53 $(NFTset_1), testICMP31) 
+  $(call ip4inRule111,chLocalIp4forward, ip saddr 114.114.114.114 udp dport 53 $(NFTset_1), testICMP31) 
 )
 $(if  ,
   $(call ip4inRule111,chLocalIp4forward, ip protocol == icmp ip daddr 8.8.8.8         $(NFTset_1), testICMP32) 
