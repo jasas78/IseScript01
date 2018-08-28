@@ -66,9 +66,8 @@ $(call ip4inRule111,chLocalIp4forward, $(NFTcnt) drop)
 
 ### _61_FFcheckSrcIp
 $(foreach aa1,$(NFTgroupCard_x_ALL)  , \
-  $(foreach aa2, $(foreach aa3,$(NFTgroupCard_x_ALL)  , $(NFTgroupCard_y2_$(aa3))) ,\
+  $(foreach aa2, $(foreach aa3,$(NFTgroupCard_x_ALL)  , $(NFTgroupCard_y5_$(aa3))) ,\
       $(call ip4inRuleAA1,_61_FFcheckSrcIp, ip saddr $(aa2) $(NFTcnt) goto chLocalIp4Card_$(aa1)_63_FFcheckDstIp, myIP ) \
-      $(call ip4inRuleAA1,_61_FFcheckSrcIp, ip daddr $(aa2) $(NFTcnt) goto chLocalIp4Card_$(aa1)_63_FFcheckDstIp, myIP ) \
   )\
 )
 
@@ -87,7 +86,7 @@ $(foreach aa1,$(NFTgroupCard_x_ALL), \
 
 ### _63_FFcheckDstIp
 $(foreach aa1,$(NFTgroupCard_x_ALL)  , \
-  $(foreach aa2, $(foreach aa3,$(NFTgroupCard_x_ALL)  , $(NFTgroupCard_y2_$(aa3))) ,\
+  $(foreach aa2, $(foreach aa3,$(NFTgroupCard_x_ALL)  , $(NFTgroupCard_y5_$(aa3))) ,\
       $(call ip4inRuleAA1,_63_FFcheckDstIp, ip saddr $(aa2) $(NFTcnt) goto chLocalIp4Card_$(aa1)_65_FFcheckProtocol_tcp, myIP ) \
   )\
 )
