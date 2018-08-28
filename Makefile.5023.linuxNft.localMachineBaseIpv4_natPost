@@ -60,10 +60,10 @@ $(if  ,
 
 $(foreach aa1,$(NFTgroupCard_x_ALL),\
   $(foreach aa2,$(NFTgroupCard_x_$(aa1)),$(foreach aa3,$(NFTcardS_$(aa2)),\
-    $(call ip4inRule111,chLocalIp4natPost   , iif $(aa3) $(NFTcnt) accept) \
+    $(call ip4inRule111,chLocalIp4natPost   , oif $(aa3) $(NFTcnt) accept) \
   ))\
 )
-$(ccall ip4inRule111,chLocalIp4natPost  , $(NFTcnt) $(NFTset_1))
+$(call ip4inRule111,chLocalIp4natPost  , $(NFTcnt) $(NFTset_1))
 $(call ip4inRule111,chLocalIp4natPost  , $(NFTcnt) accept)
 ### chLocalIp4nat : end
 
