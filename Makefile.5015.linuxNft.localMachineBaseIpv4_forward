@@ -60,9 +60,13 @@ $(call ip4inRuleAA1,_61_FFcheckSrcIp, ip saddr $(aa2) ip daddr $(aa2) $(NFTcnt) 
 ))
 
 $(foreach aa1,$(NFTgroupCard_x_ALL), \
-	$(if $(NFTdebug),$(call ip4inRuleAA1,_61_FFcheckSrcIp, $(NFTset_1),1) )\
-	$(call ip4inRuleAA1,_61_FFcheckSrcIp, $(NFTcnt) drop) \
-	)
+  $(call ip4inRuleAA1,_61_FFcheckSrcIp, ip protocol == icmp ip daddr 114.114.114.114 $(NFTcnt) accept, testICMP21) \
+  $(call ip4inRuleAA1,_61_FFcheckSrcIp, ip protocol == icmp ip daddr 8.8.8.8         $(NFTcnt) accept, testICMP22) \
+\
+  $(if $(NFTdebug),$(call ip4inRuleAA1,_61_FFcheckSrcIp, $(NFTset_1),1) )\
+\
+  $(call ip4inRuleAA1,_61_FFcheckSrcIp, $(NFTcnt) drop) \
+)
 
 
 ### _63_FFcheckDstIp
