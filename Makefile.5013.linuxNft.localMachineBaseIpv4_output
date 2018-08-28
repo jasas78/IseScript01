@@ -9,6 +9,7 @@ all:
 # NFTdebug:=
 
 NFTnowTable:=tbLocalIpv4_output
+NFTruleNO:=2001
 
 my_tbLocalIpv4_OOchainALL :=   \
 _41_OOcheckSrcIp               \

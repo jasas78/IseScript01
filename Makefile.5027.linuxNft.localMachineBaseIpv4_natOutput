@@ -11,6 +11,7 @@ all:
 # NFTdebug:=
 
 NFTnowTable:=tbLocalIpv4natOutPut
+NFTruleNO:=7001
 
 my_tbLocalIpv4_N7OchainALL :=   \
 _g1_N5OcheckSrcIp               \
