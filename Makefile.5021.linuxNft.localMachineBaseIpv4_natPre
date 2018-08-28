@@ -201,6 +201,12 @@ $(call ip4inRuleAA1,_d9_N1unknown, $(NFTcnt) accept) \
 )
 
 # _da_N1snat01fakeAsFromVPN  ->
+$(foreach aa1,$(NFTgroupCard_x_ALL)  , \
+  $(foreach aa2, $(NFTcardS_ALL) ,\
+      $(call ip4inRuleAA1,_da_N1snat01fakeAsFromVPN, ip daddr $(NetCard_ip1_$(aa2)) snat $(NetCard_ip1_$(aa2)) $(NFTcnt) , snat to local )\
+  )\
+)
+
 $(foreach aa1,$(NFTgroupCard_x_ALL)  ,\
 $(call ip4inRuleAA1,_da_N1snat01fakeAsFromVPN, $(NFTset_1), testSNAT12 ) \
 $(call ip4inRuleAA1,_da_N1snat01fakeAsFromVPN, snat $(NFTnatIP), testSNAT13 ) \
