@@ -123,8 +123,14 @@ $(foreach aa1,$(NFTgroupCard_x_ALL)  , \
   )\
 )
 
+$(foreach aa1,$(NFTgroupCard_x_ALL)  , $(foreach aa2,$(NFTblackHoleIP),\
+    $(call ip4inRuleAA1,_13_IIcheckSrcIp, ip saddr $(aa2) $(NFTcnt) drop, dropALLboardcastIPsrc ) \
+  )\
+)
+
 $(foreach aa1,$(NFTgroupCard_x_ALL), \
-   $(if $(NFTdebug), $(call ip4inRuleAA1,_13_IIcheckSrcIp, $(NFTset_1),1) )\
+  $(call ip4inRuleAA1,_13_IIcheckSrcIp, $(NFTcnt) goto chLocalIp4Card_$(aa1)_15_IIcheckProtocol_tcp, accept_normal_srcIP ) \
+  $(if $(NFTdebug), $(call ip4inRuleAA1,_13_IIcheckSrcIp, $(NFTset_1),1) )\
   $(call ip4inRuleAA1,_13_IIcheckSrcIp, $(NFTcnt) drop) \
 )
 
