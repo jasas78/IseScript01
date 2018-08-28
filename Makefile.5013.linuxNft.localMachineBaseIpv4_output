@@ -62,6 +62,8 @@ $(if  ,
 $(foreach aa1,$(NFTgroupCard_x_ALL),$(foreach aa2,$(NFTgroupCard_x_$(aa1)),$(foreach aa3,$(NFTcardS_$(aa2)),\
       $(call ip4inRule111,chLocalIp4output, oif $(aa3) $(NFTcnt) goto chLocalIp4Card_$(aa1)_41_OOcheckSrcIp) \
 )))
+
+$(call ip4inRule111,chLocalIp4output, $(NFTset_1),1)
 $(call ip4inRule111,chLocalIp4output, $(NFTcnt) drop)
 ### chLocalIp4output : end
 
