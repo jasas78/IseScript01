@@ -95,6 +95,11 @@ $(foreach aa1,$(NFTgroupCard_x_ALL), \
     $(call ip4inRuleAA1,_c3_N1checkDstIp, ip daddr $(aa2) $(NFTcnt) drop, NFTnat_block_ip__ALL) \
 ))
 
+$(foreach aa1,$(NFTgroupCard_x_ALL), \
+  $(foreach aa2, $(foreach aa3,$(NFTgroupCard_x_ALL),$(NFTgroupCard_y4_$(aa3))), \
+    $(call ip4inRuleAA1,_c3_N1checkDstIp, ip daddr $(aa2) $(NFTcnt) drop, block local boardcast ) \
+))
+
 
 $(foreach aa1,$(NFTgroupCard_x_ALL), \
   $(call ip4inRuleAA1,_c3_N1checkDstIp, $(NFTcnt) goto chLocalIp4Card_$(aa1)_c5_N1checkProtocol_tcp) \
