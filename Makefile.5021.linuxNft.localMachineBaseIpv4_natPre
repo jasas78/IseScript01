@@ -56,14 +56,18 @@ $(call ip4inRule111,chLocalIp4natPre  , $(NFTcnt) accept)
 
 ### _c1_N1checkSrcIp
 $(foreach aa1, lan vpn , \
-  $(foreach aa2,$(NFTgroupCard_y5_$(aa1)),\
+  $(foreach aa2, $(NFTgroupCard_y5_$(aa1)),\
     $(call ip4inRuleAA1,_c1_N1checkSrcIp, ip saddr $(aa2) $(NFTcnt) goto chLocalIp4Card_$(aa1)_c3_N1checkDstIp) \
 ))
 
 $(foreach aa1,lo, \
-  $(foreach aa2,$(NFTgroupCard_y5_lan) $(NFTgroupCard_y5_vpn),\
+  $(foreach aa2, $(NFTgroupCard_y2_$(aa1)) ,\
     $(call ip4inRuleAA1,_c1_N1checkSrcIp, ip saddr $(aa2) $(NFTcnt) goto chLocalIp4Card_$(aa1)_c3_N1checkDstIp) \
-))
+  )\
+  $(foreach aa2, $(NFTgroupCard_y5_lan) $(NFTgroupCard_y5_vpn),\
+    $(call ip4inRuleAA1,_c1_N1checkSrcIp, ip saddr $(aa2) $(NFTcnt) goto chLocalIp4Card_$(aa1)_c3_N1checkDstIp) \
+  )\
+)
 
 $(foreach aa1,$(NFTgroupCard_x_ALL), \
 	$(if $(NFTdebug),$(call ip4inRuleAA1,_c1_N1checkSrcIp, $(NFTset_1),1) )\
