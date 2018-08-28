@@ -152,26 +152,28 @@ $(call ip4inRuleAA1,_d1_N1checkProtocol_udp, $(NFTcnt) drop) \
 )
 
 # _d3_N1checkUdpDstPort
-$(foreach aa1,$(NFTgroupCard_x_ALL),\
-  $(foreach aa2,$(call sortUN,$(NFTudpOUT_allow) $(NFTudpIN_$(aa1)) ),\
-    $(call ip4inRuleAA1,_d3_N1checkUdpDstPort, udp dport $(aa2) $(NFTcnt) accept #__$(aa1)__$(aa2)__1 )  \
-  )\
-)
+
 $(foreach aa1,$(NFTgroupCard_x_ALL),\
   $(foreach aa2,$(call sortUN, $(NFTnat_block_udpPort__ALL) ),\
-    $(call ip4inRuleAA1,_d3_N1checkUdpDstPort, udp dport $(aa2) $(NFTcnt) drop #__$(aa1)__$(aa2)__3 )  \
+    $(call ip4inRuleAA1,_d3_N1checkUdpDstPort, udp dport $(aa2) $(NFTcnt) drop , deny_port )\
   )\
 )
-
-$(foreach aa1,lo ,\
-    $(call ip4inRuleAA1,_d3_N1checkUdpDstPort, $(NFTcnt) accept #__$(aa1)__$(aa2)__5 )  \
-)
-
 $(foreach aa1,$(NFTgroupCard_x_ALL),\
   $(foreach aa2, $(NFTgroupCard_y4_$(aa1)),\
     $(call ip4inRuleAA1,_d3_N1checkUdpDstPort, ip daddr $(aa2) $(NFTcnt) drop , prevent boardcast )\
   )\
 )
+
+$(foreach aa1,$(NFTgroupCard_x_ALL),\
+  $(foreach aa2,$(call sortUN,$(NFTudpOUT_allow) $(NFTudpIN_$(aa1)) ),\
+    $(call ip4inRuleAA1,_d3_N1checkUdpDstPort, udp dport $(aa2) $(NFTcnt) goto chLocalIp4Card_$(aa1)_da_N1snat01fakeAsFromVPN ,accept_port )\
+  )\
+)
+
+$(Foreach aa1,lo ,\
+    $(Call ip4inRuleAA1,_d3_N1checkUdpDstPort, $(NFTcnt) accept #__$(aa1)__$(aa2)__5 )  \
+)
+
 
 $(foreach aa1,$(NFTgroupCard_x_ALL)  ,\
   $(call ip4inRuleAA1,_d3_N1checkUdpDstPort, $(NFTset_1),1) \
