@@ -55,16 +55,14 @@ $(call ip4inRule111,chLocalIp4natPre  , $(NFTcnt) accept)
 
 
 ### _c1_N1checkSrcIp
-$(foreach aa1, $(NFTgroupCard_x_ALL), $(foreach aa2,$(NFTgroupCard_y2_$(aa1)),\
-$(call ip4inRuleAA1,_c1_N1checkSrcIp, ip saddr $(aa2) $(NFTcnt) goto chLocalIp4Card_$(aa1)_c3_N1checkDstIp) \
+$(foreach aa1, lan vpn , \
+  $(foreach aa2,$(NFTgroupCard_y5_$(aa1)),\
+    $(call ip4inRuleAA1,_c1_N1checkSrcIp, ip saddr $(aa2) $(NFTcnt) goto chLocalIp4Card_$(aa1)_c3_N1checkDstIp) \
 ))
 
-$(foreach aa1,lo, $(foreach aa2,$(NFTgroupCard_y2_lan) $(NFTgroupCard_y2_vpn),\
-$(call ip4inRuleAA1,_c1_N1checkSrcIp, ip saddr $(aa2) ip daddr $(aa2) $(NFTcnt) accept) \
-))
-
-$(foreach aa1,$(NFTgroupCard_x_ALL), $(foreach aa2,$(NFTblackNatIP) ,\
-  $(call ip4inRuleAA1,_c1_N1checkSrcIp, ip daddr $(aa2) $(NFTcnt) drop) \
+$(foreach aa1,lo, \
+  $(foreach aa2,$(NFTgroupCard_y5_lan) $(NFTgroupCard_y5_vpn),\
+    $(call ip4inRuleAA1,_c1_N1checkSrcIp, ip saddr $(aa2) $(NFTcnt) goto chLocalIp4Card_$(aa1)_c3_N1checkDstIp) \
 ))
 
 $(foreach aa1,$(NFTgroupCard_x_ALL), \
@@ -83,6 +81,11 @@ $(call ip4inRuleAA1,_c3_N1checkDstIp, ip daddr $(aa2) $(NFTcnt) drop) \
 )\
 $(call ip4inRuleAA1,_c3_N1checkDstIp, $(NFTcnt) goto chLocalIp4Card_$(aa1)_c5_N1checkProtocol_tcp) \
 )
+
+$(foreach aa1,$(NFTgroupCard_x_ALL), $(foreach aa2,$(NFTblackNatIP) ,\
+  $(call ip4inRuleAA1,_c3_N1checkDstIp, ip daddr $(aa2) $(NFTcnt) drop) \
+))
+
 
 $(foreach aa1,$(NFTgroupCard_x_ALL), \
   $(call ip4inRuleAA1,_c3_N1checkDstIp, ip daddr 239.0.0.0/8 $(NFTcnt) drop #__$(aa1)__$(aa2)__8 )  \
