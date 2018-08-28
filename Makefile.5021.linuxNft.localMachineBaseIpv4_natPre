@@ -94,6 +94,8 @@ $(foreach aa1, lan  ,\
   $(foreach aa2, $(NFTgroupCard_y5_lan) $(NFTgroupCard_y5_vpn) ,\
     $(call ip4inRuleAA1,_c3_N1checkDstIp, ip daddr $(aa2) $(NFTcnt) goto chLocalIp4Card_$(aa1)_c5_N1checkProtocol_tcp) \
   )\
+)
+$(foreach aa1,$(NFTgroupCard_x_ALL), \
   $(foreach aa2,$(NFTnat_block_ip__ALL) ,\
     $(call ip4inRuleAA1,_c3_N1checkDstIp, ip daddr $(aa2) $(NFTcnt) drop, NFTnat_block_ip__ALL) \
   )\
