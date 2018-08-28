@@ -71,21 +71,12 @@ $(call ip4inRule111,chLocalIp4natPre  , $(NFTcnt) accept)
 
 
 ### _c1_N1checkSrcIp
-$(foreach aa1, lan vpn , \
-  $(foreach aa2, $(NFTgroupCard_y5_$(aa1)),\
+$(foreach aa1, lan , \
+  $(foreach aa2, $(NFTgroupCard_y5_lan) $(NFTgroupCard_y5_vpn) ,\
     $(call ip4inRuleAA1,_c1_N1checkSrcIp, ip saddr $(aa2) $(NFTcnt) goto chLocalIp4Card_$(aa1)_c3_N1checkDstIp) \
   )\
   $(foreach aa2, $(NFTnat_block_ip__blackHole) ,\
     $(call ip4inRuleAA1,_c1_N1checkSrcIp, ip saddr $(aa2) $(NFTcnt) drop, NFTnat_block_ip__blackHole )\
-  )\
-)
-
-$(foreach aa1,lo, \
-  $(foreach aa2, $(NFTgroupCard_y2_$(aa1)) ,\
-    $(call ip4inRuleAA1,_c1_N1checkSrcIp, ip saddr $(aa2) $(NFTcnt) goto chLocalIp4Card_$(aa1)_c3_N1checkDstIp) \
-  )\
-  $(foreach aa2, $(NFTgroupCard_y5_lan) $(NFTgroupCard_y5_vpn),\
-    $(call ip4inRuleAA1,_c1_N1checkSrcIp, ip saddr $(aa2) $(NFTcnt) goto chLocalIp4Card_$(aa1)_c3_N1checkDstIp) \
   )\
 )
 
@@ -96,15 +87,14 @@ $(foreach aa1,$(NFTgroupCard_x_ALL), \
 
 
 ### _c3_N1checkDstIp
-$(foreach aa1,$(NFTgroupCard_x_ALL)  ,\
-  $(foreach aa2,$(NFTgroupCard_y5_$(aa1)),\
+$(foreach aa1, lan  ,\
+  $(foreach aa2, $(NFTgroupCard_y5_lan) $(NFTgroupCard_y5_vpn) ,\
     $(call ip4inRuleAA1,_c3_N1checkDstIp, ip daddr $(aa2) $(NFTcnt) goto chLocalIp4Card_$(aa1)_c5_N1checkProtocol_tcp) \
-))
-
-$(foreach aa1,$(NFTgroupCard_x_ALL), \
+  )\
   $(foreach aa2,$(NFTnat_block_ip__ALL) ,\
     $(call ip4inRuleAA1,_c3_N1checkDstIp, ip daddr $(aa2) $(NFTcnt) drop, NFTnat_block_ip__ALL) \
-))
+  )\
+)
 
 $(foreach aa1,$(NFTgroupCard_x_ALL), \
   $(foreach aa2, $(foreach aa3,$(NFTgroupCard_x_ALL),$(NFTgroupCard_y4_$(aa3))), \
