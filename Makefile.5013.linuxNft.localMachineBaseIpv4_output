@@ -66,6 +66,11 @@ $(call ip4inRule111,chLocalIp4output, $(NFTcnt) drop)
 
 
 ### _41_OOcheckSrcIp
+$(foreach aa1,$(NFTgroupCard_x_ALL)  , \
+  $(foreach aa2, $(foreach aa3,$(NFTgroupCard_x_ALL)  , $(NFTgroupCard_y2_$(aa3))) ,\
+      $(call ip4inRuleAA1,_41_OOcheckSrcIp, ip saddr $(aa2) $(NFTcnt) goto chLocalIp4Card_$(aa1)_43_OOcheckDstIp, SrcFromMySelfIP ) \
+  )\
+)
 
 $(foreach aa1,$(NFTgroupCard_x_ALL), $(foreach aa2,$(NFTgroupCard_y2_$(aa1)),\
     $(call ip4inRuleAA1,_41_OOcheckSrcIp, ip saddr $(aa2) $(NFTcnt) goto chLocalIp4Card_$(aa1)_43_OOcheckDstIp) \
@@ -82,6 +87,12 @@ $(foreach aa1,$(NFTgroupCard_x_ALL), \
 
 
 ### _43_OOcheckDstIp
+$(foreach aa1,$(NFTgroupCard_x_ALL)  , \
+  $(foreach aa2, $(foreach aa3,$(NFTgroupCard_x_ALL)  , $(NFTgroupCard_y2_$(aa3))) ,\
+      $(call ip4inRuleAA1,_43_OOcheckDstIp, ip saddr $(aa2) $(NFTcnt) goto chLocalIp4Card_$(aa1)_45_OOcheckProtocol_tcp, DstToMySelfIP ) \
+  )\
+)
+
 $(foreach aa1,$(NFTgroupCard_x_ALL)  ,$(foreach aa2,$(NFTgroupCard_y5_$(aa1)),\
 $(call ip4inRuleAA1,_43_OOcheckDstIp, ip daddr $(aa2) $(NFTcnt) goto chLocalIp4Card_$(aa1)_45_OOcheckProtocol_tcp) \
 ))
