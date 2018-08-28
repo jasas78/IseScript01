@@ -24,6 +24,7 @@ _d5_N1checkProtocol_icmp       \
 _d7_N1checkProtocol_igmp       \
 _d9_N1unknown                  \
 _da_N1snat01fakeAsFromVPN      \
+_db_N1snat02toSquid            \
 
 define NFTtext_21_ipv4_natPre
 
@@ -128,16 +129,13 @@ $(foreach aa1, $(NFTgroupCard_x_ALL) ,\
 )
 
 $(foreach aa1, $(NFTgroupCard_x_ALL) ,\
-  $(foreach aa2,$(call sortUN, $(NFTtcpOUT_allow) $(NFTtcpIN_$(aa1))), \
-    $(call ip4inRuleAA1,_c7_N1checkTcpDstPortNew, tcp dport $(aa2) $(NFTcnt) accept)  \
+  $(foreach aa2, 80 443 ,\
+    $(call ip4inRuleAA1,_c7_N1checkTcpDstPortNew, tcp dport $(aa2) $(NFTcnt) goto chLocalIp4Card_$(aa1)_db_N1snat02toSquid) \
   )\
 )
 
-$(foreach aa1, lo  ,\
-  $(call ip4inRuleAA1,_c7_N1checkTcpDstPortNew, $(NFTcnt) accept) \
-)
-
 $(foreach aa1,$(NFTgroupCard_x_ALL)  ,\
+  $(call ip4inRuleAA1,_c7_N1checkTcpDstPortNew, $(NFTcnt) drop) \
   $(call ip4inRuleAA1,_c7_N1checkTcpDstPortNew, $(NFTset_1),1) \
   $(call ip4inRuleAA1,_c7_N1checkTcpDstPortNew, $(NFTcnt) drop) \
 )
@@ -218,6 +216,15 @@ $(foreach aa1,$(NFTgroupCard_x_ALL)  ,\
 $(call ip4inRuleAA1,_da_N1snat01fakeAsFromVPN, $(NFTset_1), testSNAT12 ) \
 $(call ip4inRuleAA1,_da_N1snat01fakeAsFromVPN, snat $(NFTnatIP), testSNAT13 ) \
 $(call ip4inRuleAA1,_da_N1snat01fakeAsFromVPN, $(NFTcnt) accept) \
+)
+
+# _db_N1snat02toSquid  ->
+
+$(foreach aa1,$(NFTgroupCard_x_ALL)  ,\
+$(call ip4inRuleAA1,_db_N1snat02toSquid, $(NFTset_1), testSNAT12 ) \
+$(call ip4inRuleAA1,_db_N1snat02toSquid, tcp dport 80  dnat 127.0.0.1:56080, testSNAT13 ) \
+$(call ip4inRuleAA1,_db_N1snat02toSquid, tcp dport 443 dnat 127.0.0.1:56443, testSNAT13 ) \
+$(call ip4inRuleAA1,_db_N1snat02toSquid, $(NFTcnt) drop) \
 )
 
 # NFTtext_21_ipv4_natPre end
