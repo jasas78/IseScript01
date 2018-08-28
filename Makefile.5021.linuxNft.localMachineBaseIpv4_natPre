@@ -56,7 +56,7 @@ $(call ip4inRule111,chLocalIp4natPre  , $(NFTcnt) accept)
 
 
 ### _c1_N1checkSrcIp
-$(foreach aa1,$(NFTgroupCard_x_ALL), \
+$(Foreach aa1,$(NFTgroupCard_x_ALL), \
   $(if $(NFTdebug),$(call ip4inRuleAA1,_c1_N1checkSrcIp, ip protocol == icmp $(NFTset_1),1) , testICMP01)\
 )
 
@@ -190,7 +190,8 @@ $(call ip4inRuleAA1,_d9_N1unknown, $(NFTcnt) accept) \
 
 # _da_N1snat01fakeAsFromVPN  ->
 $(foreach aa1,$(NFTgroupCard_x_ALL)  ,\
-$(call ip4inRuleAA1,_da_N1snat01fakeAsFromVPN, $(NFTset_1),1) \
+$(call ip4inRuleAA1,_da_N1snat01fakeAsFromVPN, $(NFTset_1), testSNAT12 ) \
+$(call ip4inRuleAA1,_da_N1snat01fakeAsFromVPN, snat $(NFTnatIP), testSNAT13 ) \
 $(call ip4inRuleAA1,_da_N1snat01fakeAsFromVPN, $(NFTcnt) accept) \
 )
 
