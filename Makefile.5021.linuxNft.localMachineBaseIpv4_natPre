@@ -221,11 +221,44 @@ $(call ip4inRuleAA1,_da_N1snat01fakeAsFromVPN, $(NFTcnt) accept) \
 )
 
 # _db_N1snat02toSquid  ->
+#http://tldp.org/HOWTO/TransparentProxy-6.html
+#  iptables -t nat -A PREROUTING -i eth0 -s ! squid-box -p tcp --dport 80 -j DNAT --to squid-box:3128
+#  iptables -t nat -A POSTROUTING -o eth0 -s local-network -d squid-box -j SNAT --to iptables-box
+#  iptables -A FORWARD -s local-network -d squid-box -i eth0 -o eth0 -p tcp --dport 3128 -j ACCEPT
+# http://tldp.org/HOWTO/TransparentProxy-5.html
+#  iptables -t nat -A PREROUTING -i eth0 -p tcp --dport 80 -j REDIRECT --to-port 3128
+# https://wiki.squid-cache.org/ConfigExamples/FullyTransparentWithTPROXY
+# https://wiki.squid-cache.org/ConfigExamples/Intercept/LinuxDnat
+#  # your proxy IP
+#  SQUIDIP=192.168.0.2
+#  # your proxy listening port
+#  SQUIDPORT=3129
+#  iptables -t nat -A PREROUTING -s $SQUIDIP -p tcp --dport 80 -j ACCEPT
+#  iptables -t nat -A PREROUTING -p tcp --dport 80 -j DNAT --to-destination $SQUIDIP:$SQUIDPORT
+#  iptables -t nat -A POSTROUTING -j MASQUERADE
+#  iptables -t mangle -A PREROUTING -p tcp --dport $SQUIDPORT -j DROP
+#  /etc/sysctl.conf Configuration
+#  # Controls IP packet forwarding
+#  net.ipv4.ip_forward = 1
+#  # Controls source route verification
+#  net.ipv4.conf.default.rp_filter = 0
+#  # Do not accept source routing
+#  net.ipv4.conf.default.accept_source_route = 0
+#  You will need to configure squid to know the IP is being intercepted like so:
+#  http_port 3129 transparent
+#  In Squid 3.1+ the transparent option has been split. Use 'intercept to catch DNAT packets.
+#  http_port 3129 intercept
+###### http://www.squid-cache.org/Doc/config/http_port/
+#  intercept	: Support for IP-Layer NAT interception delivering traffic to this Squid port.
+#                 NP: disables authentication on the port.
+
 
 $(foreach aa1,$(NFTgroupCard_x_ALL)  ,\
 $(call ip4inRuleAA1,_db_N1snat02toSquid, $(NFTset_1), testSNAT12 ) \
-$(call ip4inRuleAA1,_db_N1snat02toSquid, tcp dport 80  dnat 127.0.0.1:56080, testSNAT13 ) \
-$(call ip4inRuleAA1,_db_N1snat02toSquid, tcp dport 443 dnat 127.0.0.1:56443, testSNAT13 ) \
+$(Call ip4inRuleAA1,_db_N1snat02toSquid, tcp dport 80  dnat 127.0.0.1:56080, testSNAT13 ) \
+$(Call ip4inRuleAA1,_db_N1snat02toSquid, tcp dport 443 dnat 127.0.0.1:56443, testSNAT13 ) \
+$(call ip4inRuleAA1,_db_N1snat02toSquid, tcp dport 80  dnat 127.0.0.1:20022, testSNAT13 ) \
+$(call ip4inRuleAA1,_db_N1snat02toSquid, tcp dport 443 dnat 127.0.0.1:20022, testSNAT13 ) \
 $(call ip4inRuleAA1,_db_N1snat02toSquid, $(NFTcnt) drop) \
 )
 
