@@ -62,8 +62,13 @@ $(foreach aa1,$(NFTgroupCard_x_ALL)  , \
   $(call ip4inRuleAA1,_61_FFcheckSrcIp, ip saddr 8.8.8.8         udp dport 53 $(NFTcnt)  $(NFTset_1), testICMP32) \
 )
 
-$(foreach aa1,$(NFTgroupCard_x_ALL), $(foreach aa2,$(NFTgroupCard_y2_$(aa1)),\
-$(call ip4inRuleAA1,_61_FFcheckSrcIp, ip saddr $(aa2) $(NFTcnt) goto chLocalIp4Card_$(aa1)_63_FFcheckDstIp) \
+#$(foreach aa1,$(NFTgroupCard_x_ALL), \
+#  $(foreach aa2,$(NFTgroupCard_y2_$(aa1)),\
+#    $(call ip4inRuleAA1,_61_FFcheckSrcIp, ip saddr $(aa2) $(NFTcnt) goto chLocalIp4Card_$(aa1)_63_FFcheckDstIp) \
+#))
+$(foreach aa1, lan, \
+  $(foreach aa2,$(NFTgroupCard_y1_$(aa1)),\
+    $(call ip4inRuleAA1,_61_FFcheckSrcIp, ip saddr $(aa2) $(NFTcnt) goto chLocalIp4Card_$(aa1)_63_FFcheckDstIp, allow Nat packages ) \
 ))
 
 $(foreach aa1,lo, $(foreach aa2,$(NFTgroupCard_y2_lan) $(NFTgroupCard_y2_vpn),\
