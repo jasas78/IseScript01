@@ -51,6 +51,17 @@ $(call ip4inRule111,chLocalIp4forward, $(NFTcnt) drop)
 
 
 ### _61_FFcheckSrcIp
+$(foreach aa1,$(NFTgroupCard_x_ALL)  , \
+  $(call ip4inRuleAA1,_61_FFcheckSrcIp, ip protocol == icmp ip daddr 114.114.114.114 $(NFTcnt)  $(NFTset_1), testICMP31) \
+  $(call ip4inRuleAA1,_61_FFcheckSrcIp, ip protocol == icmp ip daddr 8.8.8.8         $(NFTcnt)  $(NFTset_1), testICMP32) \
+  $(call ip4inRuleAA1,_61_FFcheckSrcIp, ip daddr 114.114.114.114 udp dport 53 $(NFTcnt)  $(NFTset_1), testICMP31) \
+  $(call ip4inRuleAA1,_61_FFcheckSrcIp, ip daddr 8.8.8.8         udp dport 53 $(NFTcnt)  $(NFTset_1), testICMP32) \
+  $(call ip4inRuleAA1,_61_FFcheckSrcIp, ip protocol == icmp ip saddr 114.114.114.114 $(NFTcnt)  $(NFTset_1), testICMP31) \
+  $(call ip4inRuleAA1,_61_FFcheckSrcIp, ip protocol == icmp ip saddr 8.8.8.8         $(NFTcnt)  $(NFTset_1), testICMP32) \
+  $(call ip4inRuleAA1,_61_FFcheckSrcIp, ip saddr 114.114.114.114 udp dport 53 $(NFTcnt)  $(NFTset_1), testICMP31) \
+  $(call ip4inRuleAA1,_61_FFcheckSrcIp, ip saddr 8.8.8.8         udp dport 53 $(NFTcnt)  $(NFTset_1), testICMP32) \
+)
+
 $(foreach aa1,$(NFTgroupCard_x_ALL), $(foreach aa2,$(NFTgroupCard_y2_$(aa1)),\
 $(call ip4inRuleAA1,_61_FFcheckSrcIp, ip saddr $(aa2) $(NFTcnt) goto chLocalIp4Card_$(aa1)_63_FFcheckDstIp) \
 ))
@@ -60,12 +71,14 @@ $(call ip4inRuleAA1,_61_FFcheckSrcIp, ip saddr $(aa2) ip daddr $(aa2) $(NFTcnt) 
 ))
 
 $(foreach aa1,$(NFTgroupCard_x_ALL), \
-  $(call ip4inRuleAA1,_61_FFcheckSrcIp, ip protocol == icmp ip daddr 114.114.114.114 $(NFTcnt) accept, testICMP21) \
-  $(call ip4inRuleAA1,_61_FFcheckSrcIp, ip protocol == icmp ip daddr 8.8.8.8         $(NFTcnt) accept, testICMP22) \
-  $(call ip4inRuleAA1,_61_FFcheckSrcIp, ip daddr 114.114.114.114 udp dport 53 $(NFTcnt) accept, testICMP21) \
-  $(call ip4inRuleAA1,_61_FFcheckSrcIp, ip daddr 8.8.8.8         udp dport 53 $(NFTcnt) accept, testICMP22) \
-\
   $(if $(NFTdebug),$(call ip4inRuleAA1,_61_FFcheckSrcIp, $(NFTset_1),1) )\
+\
+  $(Call ip4inRuleAA1,_61_FFcheckSrcIp, ip protocol == icmp ip daddr 114.114.114.114 $(NFTcnt) accept, testICMP21) \
+  $(Call ip4inRuleAA1,_61_FFcheckSrcIp, ip protocol == icmp ip daddr 8.8.8.8         $(NFTcnt) accept, testICMP22) \
+  $(Call ip4inRuleAA1,_61_FFcheckSrcIp, ip daddr 114.114.114.114 udp dport 53 $(NFTcnt) accept, testICMP21) \
+  $(Call ip4inRuleAA1,_61_FFcheckSrcIp, ip daddr 8.8.8.8         udp dport 53 $(NFTcnt) accept, testICMP22) \
+\
+  $(If $(NFTdebug),$(call ip4inRuleAA1,_61_FFcheckSrcIp, $(NFTset_1),1) )\
 \
   $(call ip4inRuleAA1,_61_FFcheckSrcIp, $(NFTcnt) drop) \
 )
