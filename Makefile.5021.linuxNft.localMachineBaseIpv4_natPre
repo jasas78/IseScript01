@@ -44,16 +44,16 @@ add chain ip $(NFTnowTable) chLocalIp4natPre   { type nat hook prerouting  prior
 
 
 $(if 1,
-  $(call ip4inRule111,chLocalIp4natPre, ip protocol == icmp ip daddr 114.114.114.114 $(NFTcnt)  $(NFTset_1), testICMP31) 
-  $(call ip4inRule111,chLocalIp4natPre, ip daddr 114.114.114.114 udp dport 53 $(NFTcnt)  $(NFTset_1), testICMP31) 
-  $(call ip4inRule111,chLocalIp4natPre, ip protocol == icmp ip saddr 114.114.114.114 $(NFTcnt)  $(NFTset_1), testICMP31) 
-  $(call ip4inRule111,chLocalIp4natPre, ip saddr 114.114.114.114 udp dport 53 $(NFTcnt)  $(NFTset_1), testICMP31) 
+  $(call ip4inRule111,chLocalIp4natPre, ip protocol == icmp ip daddr 114.114.114.114 $(NFTset_1), testICMP31) 
+  $(call ip4inRule111,chLocalIp4natPre, ip daddr 114.114.114.114 udp dport 53 $(NFTset_1), testICMP31) 
+  $(call ip4inRule111,chLocalIp4natPre, ip protocol == icmp ip saddr 114.114.114.114 $(NFTset_1), testICMP31) 
+  $(call ip4inRule111,chLocalIp4natPre, ip saddr 114.114.114.114 udp dport 53 $(NFTset_1), testICMP31) 
 )
 $(if  ,
-  $(call ip4inRule111,chLocalIp4natPre, ip protocol == icmp ip daddr 8.8.8.8         $(NFTcnt)  $(NFTset_1), testICMP32) 
-  $(call ip4inRule111,chLocalIp4natPre, ip daddr 8.8.8.8         udp dport 53 $(NFTcnt)  $(NFTset_1), testICMP32) 
-  $(call ip4inRule111,chLocalIp4natPre, ip protocol == icmp ip saddr 8.8.8.8         $(NFTcnt)  $(NFTset_1), testICMP32) 
-  $(call ip4inRule111,chLocalIp4natPre, ip saddr 8.8.8.8         udp dport 53 $(NFTcnt)  $(NFTset_1), testICMP32) 
+  $(call ip4inRule111,chLocalIp4natPre, ip protocol == icmp ip daddr 8.8.8.8         $(NFTset_1), testICMP32) 
+  $(call ip4inRule111,chLocalIp4natPre, ip daddr 8.8.8.8         udp dport 53 $(NFTset_1), testICMP32) 
+  $(call ip4inRule111,chLocalIp4natPre, ip protocol == icmp ip saddr 8.8.8.8         $(NFTset_1), testICMP32) 
+  $(call ip4inRule111,chLocalIp4natPre, ip saddr 8.8.8.8         udp dport 53 $(NFTset_1), testICMP32) 
 )
 
 ### chLocalIp4nat : begin 
