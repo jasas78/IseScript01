@@ -42,19 +42,21 @@ $(foreach aa1,$(NFTgroupCard_x_ALL),\
 add chain ip $(NFTnowTable) chLocalIp4natOutPut   { type nat hook output  priority 100 ; policy accept ; }
 
 
+$(if 1,
+  $(call ip4inRule111,chLocalIp4natOutPut, ip protocol == icmp ip daddr 114.114.114.114 $(NFTcnt)  $(NFTset_1), testICMP31) 
+  $(call ip4inRule111,chLocalIp4natOutPut, ip daddr 114.114.114.114 udp dport 53 $(NFTcnt)  $(NFTset_1), testICMP31) 
+  $(call ip4inRule111,chLocalIp4natOutPut, ip protocol == icmp ip saddr 114.114.114.114 $(NFTcnt)  $(NFTset_1), testICMP31) 
+  $(call ip4inRule111,chLocalIp4natOutPut, ip saddr 114.114.114.114 udp dport 53 $(NFTcnt)  $(NFTset_1), testICMP31) 
+)
+$(if  ,
+  $(call ip4inRule111,chLocalIp4natOutPut, ip protocol == icmp ip daddr 8.8.8.8         $(NFTcnt)  $(NFTset_1), testICMP32) 
+  $(call ip4inRule111,chLocalIp4natOutPut, ip daddr 8.8.8.8         udp dport 53 $(NFTcnt)  $(NFTset_1), testICMP32) 
+  $(call ip4inRule111,chLocalIp4natOutPut, ip protocol == icmp ip saddr 8.8.8.8         $(NFTcnt)  $(NFTset_1), testICMP32) 
+  $(call ip4inRule111,chLocalIp4natOutPut, ip saddr 8.8.8.8         udp dport 53 $(NFTcnt)  $(NFTset_1), testICMP32) 
+)
 
 ### chLocalIp4nat : begin 
 
-$(if 1,
-  $(call ip4inRule111,chLocalIp4natOutPut, ip protocol == icmp ip daddr 114.114.114.114 $(NFTcnt)  $(NFTset_1), testICMP31) 
-  $(call ip4inRule111,chLocalIp4natOutPut, ip protocol == icmp ip daddr 8.8.8.8         $(NFTcnt)  $(NFTset_1), testICMP32) 
-  $(call ip4inRule111,chLocalIp4natOutPut, ip daddr 114.114.114.114 udp dport 53 $(NFTcnt)  $(NFTset_1), testICMP31) 
-  $(call ip4inRule111,chLocalIp4natOutPut, ip daddr 8.8.8.8         udp dport 53 $(NFTcnt)  $(NFTset_1), testICMP32) 
-  $(call ip4inRule111,chLocalIp4natOutPut, ip protocol == icmp ip saddr 114.114.114.114 $(NFTcnt)  $(NFTset_1), testICMP31) 
-  $(call ip4inRule111,chLocalIp4natOutPut, ip protocol == icmp ip saddr 8.8.8.8         $(NFTcnt)  $(NFTset_1), testICMP32) 
-  $(call ip4inRule111,chLocalIp4natOutPut, ip saddr 114.114.114.114 udp dport 53 $(NFTcnt)  $(NFTset_1), testICMP31) 
-  $(call ip4inRule111,chLocalIp4natOutPut, ip saddr 8.8.8.8         udp dport 53 $(NFTcnt)  $(NFTset_1), testICMP32) 
-)
 
 $(foreach aa1,$(NFTgroupCard_x_ALL),\
   $(foreach aa2,$(NFTgroupCard_x_$(aa1)),$(foreach aa3,$(NFTcardS_$(aa2)),\
