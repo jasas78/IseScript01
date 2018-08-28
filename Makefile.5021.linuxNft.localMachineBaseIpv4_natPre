@@ -42,7 +42,7 @@ $(foreach aa1,$(NFTgroupCard_x_ALL),\
 add chain ip $(NFTnowTable) chLocalIp4natPre   { type nat hook prerouting  priority 0 ; policy accept ; }
 
 
-$(if 1,
+$(if ,
   $(call ip4inRule111,chLocalIp4natPre, ip protocol == icmp ip daddr 114.114.114.114 $(NFTcnt)  $(NFTset_1), testICMP31) 
   $(call ip4inRule111,chLocalIp4natPre, ip protocol == icmp ip daddr 8.8.8.8         $(NFTcnt)  $(NFTset_1), testICMP32) 
   $(call ip4inRule111,chLocalIp4natPre, ip daddr 114.114.114.114 udp dport 53 $(NFTcnt)  $(NFTset_1), testICMP31) 
