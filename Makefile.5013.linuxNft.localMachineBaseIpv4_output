@@ -104,6 +104,10 @@ $(foreach aa1,$(NFTgroupCard_x_ALL)  , $(foreach aa2,$(NFTprivateNetIP),\
   )\
 )
 
+$(foreach aa1,$(NFTgroupCard_x_ALL)  ,\
+  $(call ip4inRuleAA1,_43_OOcheckDstIp, $(NFTcnt) goto chLocalIp4Card_$(aa1)_45_OOcheckProtocol_tcp, to_normal_IP ) \
+)
+
 $(foreach aa1,$(NFTgroupCard_x_ALL), \
   $(call ip4inRuleAA1,_43_OOcheckDstIp, $(NFTset_1),1) \
   $(call ip4inRuleAA1,_43_OOcheckDstIp, $(NFTcnt) drop) \
