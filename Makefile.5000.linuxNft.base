@@ -159,8 +159,8 @@ NetCard_ip_textALL+=$(foreach aa1,$(NFTgroupCard_x_ALL),$(EOL)NFTtcpIN_$(aa1):=$
 NetCard_ip_textALL+=$(foreach aa1,$(NFTgroupCard_x_ALL),$(EOL)NFTudpIN_$(aa1):=$(NFTudpIN_$(aa1)))
 NetCard_ip_textALL+=$(EOL) HOSTNAME=$(HOSTNAME)
 
-NFTnatIP:=10.22.22.25
 NFTnatIP:=192.168.1.147
+NFTnatIP:=10.22.22.25
 
 
 define NFTcardINFO
