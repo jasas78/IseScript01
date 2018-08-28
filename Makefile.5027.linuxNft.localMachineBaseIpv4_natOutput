@@ -44,8 +44,8 @@ add chain ip $(NFTnowTable) chLocalIp4natOutPut   { type nat hook output  priori
 
 $(if 1,
   $(call ip4inRule111,chLocalIp4natOutPut, ip protocol == icmp ip daddr 114.114.114.114 $(NFTset_1), testICMP31) 
-  $(call ip4inRule111,chLocalIp4natOutPut, ip daddr 114.114.114.114 udp dport 53 $(NFTset_1), testICMP31) 
   $(call ip4inRule111,chLocalIp4natOutPut, ip protocol == icmp ip saddr 114.114.114.114 $(NFTset_1), testICMP31) 
+  $(call ip4inRule111,chLocalIp4natOutPut, ip daddr 114.114.114.114 udp dport 53 $(NFTset_1), testICMP31) 
   $(call ip4inRule111,chLocalIp4natOutPut, ip saddr 114.114.114.114 udp dport 53 $(NFTset_1), testICMP31) 
 )
 $(if  ,
