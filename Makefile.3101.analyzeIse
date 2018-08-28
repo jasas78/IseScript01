@@ -5,6 +5,8 @@ $(eval $(call testVARmustExist,AnalyzeIseTopXise,ERRmsgAnalyzeIseTEXT))
 
 $(shell [ -d ana ] || mkdir ana)
 
+set_ftp_pass:= set ftp:passive-mode false ;
+set_ftp_pass:= echo use_no_passive-mode ;
 anaTopIse:=$(AnalyzeIseTopDir)/$(AnalyzeIseTopXise)
 
 iseAnalyzeFileset00:=ana/ana.ise.fileset00.resort.$(AnalyzeIseTopXise).txt
@@ -265,7 +267,7 @@ tt211:
 		echo "`date ` : makeing tt211 , no $(ftpTT22) exist. wait 10 second... " ; \
 		sleep 10 ; \
 		done || echo -n 
-	LD_LIBRARY_PATH=/lib64:/usr/lib64 lftp -e "set ftp:passive-mode false;rm -r /tt21tmp/ ; rm /$(t1wRM1) ;quit" $(ftpt1w)
+	LD_LIBRARY_PATH=/lib64:/usr/lib64 lftp -e "$(set_ftp_pass) rm -r /tt21tmp/ ; rm /$(t1wRM1) ;quit" $(ftpt1w)
 	@echo "`date ` : makeing tt211 , $(ftpTT22) found. start ...." ; 
 	cd tt21tmp && wget -q $(cdsTT22) 
 	make tt212 \
@@ -334,7 +336,7 @@ tt31:
 	$(tt3check)
 	wput -u -nc coe.now.coe $(ftpPATH)/$(coePATH)
 	@echo "the old now.bit md5sum is `md5sum now.bit`"
-	-LD_LIBRARY_PATH=/lib64:/usr/lib64 lftp -e "set ftp:passive-mode false;rm /$(mcsDIR)/fpga_top.bit;quit" ftp://coe:coe@192.168.1.93/
+	-LD_LIBRARY_PATH=/lib64:/usr/lib64 lftp -e "$(set_ftp_pass)rm /$(mcsDIR)/fpga_top.bit;quit" ftp://coe:coe@192.168.1.93/
 	@md5sum      coe.now.coe
 	cat coe.now.coe > 111/coe.now.coe
 
