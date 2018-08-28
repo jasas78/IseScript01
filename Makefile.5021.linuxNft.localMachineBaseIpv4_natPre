@@ -103,16 +103,24 @@ $(call ip4inRuleAA1,_c5_N1checkProtocol_tcp, $(NFTcnt) drop) \
 )
 
 # _c7_N1checkTcpDstPortNew
-$(foreach aa1,$(NFTgroupCard_x_ALL)  ,\
-  $(if $(filter lo,$(aa1)),\
-    $(call ip4inRuleAA1,_c7_N1checkTcpDstPortNew, $(NFTcnt) accept) ,\
-    $(foreach aa2,$(call sortUN, $(NFTtcpOUT_allow) $(NFTtcpIN_$(aa1))), \
-      $(call ip4inRuleAA1,_c7_N1checkTcpDstPortNew, tcp dport $(aa2) $(NFTcnt) accept)  \
-    )\
+
+$(foreach aa1, $(NFTgroupCard_x_ALL) ,\
+  $(foreach aa2,$(call sortUN, $(NFTnat_block_tcpPort__ALL) ),\
+    $(call ip4inRuleAA1,_c7_N1checkTcpDstPortNew, tcp dport $(aa2) $(NFTcnt) drop)  \
   )\
-  $(if $(filter lan,$(aa1)), \
-    $(foreach aa2,$(call sortUU, $(NFTgroupCard_y5_lan) ), \
-      $(call ip4inRuleAA1,_c7_N1checkTcpDstPortNew, ip daddr $(aa2) $(NFTcnt) accept) ))\
+)
+
+$(foreach aa1, $(NFTgroupCard_x_ALL) ,\
+  $(foreach aa2,$(call sortUN, $(NFTtcpOUT_allow) $(NFTtcpIN_$(aa1))), \
+    $(call ip4inRuleAA1,_c7_N1checkTcpDstPortNew, tcp dport $(aa2) $(NFTcnt) accept)  \
+  )\
+)
+
+$(foreach aa1, lo  ,\
+  $(call ip4inRuleAA1,_c7_N1checkTcpDstPortNew, $(NFTcnt) accept) \
+)
+
+$(foreach aa1,$(NFTgroupCard_x_ALL)  ,\
   $(call ip4inRuleAA1,_c7_N1checkTcpDstPortNew, $(NFTset_1),1) \
   $(call ip4inRuleAA1,_c7_N1checkTcpDstPortNew, $(NFTcnt) drop) \
 )

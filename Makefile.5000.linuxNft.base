@@ -92,8 +92,8 @@ NFTnat_block_ip__blackHole:=$(strip 192.168.0.0/16 10.0.0.0/8 224.0.0.0/8 255.25
 NFTnat_block_ip__ALL:=$(strip $(sort $(NFTnat_block_ip__tvbox1) $(NFTnat_block_ip__blackHole)))
 
 NFTtcpOUT_allow_port__jg1:= 55044 55052
-NFTtcpOUT_allow_port__ssh:=80 443 21 23
-NFTtcpOUT_allow_port__httpS:=80 443 21 23
+NFTtcpOUT_allow_port__ssh:=20 21 22 23
+NFTtcpOUT_allow_port__httpS:=80 443 
 NFTtcpOUT_allow_port__dns:=53
 
 NFTtcpOUT_allow_ip__httpS:= 91.189.91.26 91.189.91.23 # us.archive.ubuntu.com cn.archive.ubuntu.com
