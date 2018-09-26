@@ -146,7 +146,7 @@ NFTtcpOUT_allow_port__ALL:=$(strip $(sort $(foreach aa1,$(HOSTNAME) ssh httpS dn
 NFTudpOUT_allow_jg1:= 51044 51028 51052
 NFTudpOUT_allow:=53 67 68 69 123 5353 $(NFTudpOUT_allow_$(HOSTNAME))
 
-NFTtcpIN_ssh:=55522 33221 22225
+NFTtcpIN_ssh:=55522 33221 22225 20022
 
 # go_ginuerzh__g
 NFTtcpIN_vpn_acceptPort:=55050 55028    

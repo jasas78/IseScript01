@@ -206,8 +206,8 @@ tt0:
 tt1:=gen_coe_and_burn_only
 $(tt1):=make ann && make aaa && make uf
 
-tt2:=gen_coe_and_burn_form_temp_cds
-$(tt2):= make tt0 && make tt1 && make bk2
+tt2x:=gen_coe_and_burn_form_temp_cds
+$(tt2x):= make tt0 && make tt1 && make bk2
 
 tt211:=loop_the_tt2_by_ftp_automaticly_single_step
 #$(tt22):= make tt0 && make tt1 && make bk2
@@ -217,16 +217,21 @@ tt22:=loop_the_tt2_by_ftp_automaticly_loop
 
 tt1:
 	$($(tt1))
-tt2:
-	$($(tt2))
+tt2x:
+	$($(tt2x))
 
-t1wRM1:=/cds/start.tt22.txt 
+t1wFname1:=start.tt22_genAndBurn.txt
+t1wFname2:=start.tt23_genCoeOnly.txt
+t1wRM1:=/cds/$(t1wFname1)
+t1wRM2:=/cds/$(t1wFname2)
 ftpt1r:=ftp://t1:t1@192.168.1.93/
 ftpt1w:=ftp://t1w:t1w@192.168.1.93/
-ftpTT22:=$(ftpt1r)/$(t1wRM1)
+ftpTT221:=$(ftpt1r)/$(t1wRM1)
+ftpTT222:=$(ftpt1r)/$(t1wRM2)
 cdsTT22oo:=elan_tran01.cds
 cdsTT22:=$(ftpt1r)/cds/$(cdsTT22oo)
-startTT22:=tt21tmp/start.tt22.txt 
+startTT221:=tt21tmp/$(t1wFname1)
+startTT222:=tt21tmp/$(t1wFname2)
 errTT22:=tt21tmp/100_error_reason.txt 
 cdsTT22in:=tt21tmp/$(cdsTT22oo)
 
@@ -237,7 +242,7 @@ MD5coe8=$(call M8,coe.now.coe)
 MD5mcs6=$(call M6,mcs.now.mcs)
 MD5mcs8=$(call M8,mcs.now.mcs)
 
-tt213:
+tt215:
 	echo cds.now.cds_$(call M6,cds.now.cds)
 	echo cds.now.cds_$(call M8,cds.now.cds)
 	echo mcs.now.mcs_$(call M6,mcs.now.mcs)
@@ -262,19 +267,37 @@ tt211:
 	# ' no no_tmp_md5_file_exist . exit.'
 	@while [ 1 ] ; do \
 		rm -f tt21tmp/* ; \
-		( cd tt21tmp && wget -q $(ftpTT22) &>/dev/null ; sleep 1 ) ; \
-		test -f $(startTT22)  && grep -q ^tt22 $(startTT22) && break ; \
-		echo "`date ` : makeing tt211 , no $(ftpTT22) exist. wait 10 second... " ; \
+		( cd tt21tmp && wget -q $(ftpTT221) &>/dev/null ; sleep 1 ) ; \
+		( cd tt21tmp && wget -q $(ftpTT222) &>/dev/null ; sleep 1 ) ; \
+		test -f $(startTT221)  && grep -q ^tt22 $(startTT221) && echo "$(startTT221) found " && break ; \
+		test -f $(startTT222)  && grep -q ^tt22 $(startTT222) && echo "$(startTT222) found " && break ; \
+		echo "`date ` : makeing tt211 , no $(ftpTT221) or $(ftpTT222) exist. wait 10 second... " ; \
 		sleep 10 ; \
 		done || echo -n 
-	LD_LIBRARY_PATH=/lib64:/usr/lib64 lftp -e "$(set_ftp_pass) rm -r /tt21tmp/ ; rm /$(t1wRM1) ;quit" $(ftpt1w)
-	@echo "`date ` : makeing tt211 , $(ftpTT22) found. start ...." ; 
+	LD_LIBRARY_PATH=/lib64:/usr/lib64 lftp -e "$(set_ftp_pass) rm -r /tt21tmp/ ; rm $(t1wRM1) $(t1wRM2) ; quit" $(ftpt1w) || echo -n
+	[ -f tt21tmp/$(t1wFname1) ] && make tt2121 || echo -n
+	[ -f tt21tmp/$(t1wFname2) ] && make tt2122 || echo -n
+
+tt2121 : tt21tmp/$(t1wFname1) 
+	rm -f  $<
+	@echo "`date ` : $< found --==>  makeing $@ , start ...." ; 
 	cd tt21tmp && wget -q $(cdsTT22) 
-	make tt212 \
+	make tt214 \
 		|| (echo ' 99 : during the process , some error found .' >> $(errTT22) )
 	sleep 1
 	wput tt21tmp/ $(ftpt1w)
-tt212:
+
+tt2122 : tt21tmp/$(t1wFname2) 
+	rm -f  $<
+	@echo "`date ` : $< found --==>  makeing $@ , start ...." ; 
+	cd tt21tmp && wget -q $(cdsTT22) 
+	rm -f bkCDS/tmp.cds
+	cp tt21tmp/$(cdsTT22oo) bkCDS/tmp.cds
+	make tt0
+	sleep 1
+	wput tt21tmp/ $(ftpt1w)
+
+tt214:
 	sleep 1
 	echo "`date +%s` `date`"      >  tt21tmp/100_start_time.txt
 	[ -n "$(cdsTT22in)" -a -f "$(cdsTT22in)" ] || ( \
@@ -286,8 +309,9 @@ tt212:
 		; exit 23 )
 	md5sum $(cdsTT22in) >> tt21tmp/201_cds_md5_$(MD5cds8).txt
 	wc     $(cdsTT22in) >> tt21tmp/202_cds_size.txt
-	cat    $(cdsTT22in) >  111/$(cdsTT22oo)
-	nohup make tt2      >  tt21tmp/301_building_log.txt
+	rm -f bkCDS/tmp.cds
+	cp     $(cdsTT22in)     bkCDS/tmp.cds
+	nohup make tt2x      >  tt21tmp/301_building_log.txt
 	cp mcs.now.mcs    tt21tmp/
 	cp cds.now.cds    tt21tmp/cds.$(MD5cds8).cds
 	cp coe.now.coe    tt21tmp/coe.$(MD5cds8)_$(MD5coe8).coe
@@ -367,5 +391,5 @@ $(tt42):= make tt32 && make tt33 && make nf
 tt42:
 	$($(tt42))
 
-showRunHelpList +=  $($(ann)) ann tt0 tt1 tt2 tt22 tt31 tt32 tt33 tt41 tt42
+showRunHelpList +=  $($(ann)) ann tt0 tt1 tt2x tt22 tt31 tt32 tt33 tt41 tt42
 

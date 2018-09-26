@@ -53,6 +53,8 @@ $(if 1,
   $(call ip4inRule111,chLocalIp4natPre, ip protocol == icmp ip daddr 10.22.22.25     $(NFTset_1), testICMP31) 
   $(call ip4inRule111,chLocalIp4natPre, ip daddr 114.114.114.114 udp dport 53        $(NFTset_1), testICMP31) 
   $(call ip4inRule111,chLocalIp4natPre, ip saddr 114.114.114.114 udp dport 53        $(NFTset_1), testICMP31) 
+  $(call ip4inRule111,chLocalIp4natPre, tcp dport 20022 $(NFTset_1), testICMP31) 
+  $(call ip4inRule111,chLocalIp4natPre, tcp sport 20022 $(NFTset_1), testICMP31) 
 )
 $(if  ,
   $(call ip4inRule111,chLocalIp4natPre, ip protocol == icmp ip daddr 8.8.8.8         $(NFTset_1), testICMP32) 
