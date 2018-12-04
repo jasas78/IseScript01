@@ -1,0 +1,85 @@
+all: 
+
+### /usr/bin/ld: skipping incompatible /usr/lib/gcc/x86_64-linux-gnu/7/libgcc.a when searching for -lgcc
+### if the above error met : apt install g++-multilib
+### or , if you are using a gcc package other than the default one (e.g. gcc-7), 
+### and you want small size ,
+### then you'll need to install the package for that specific version:
+### apt install g++-7-multilib
+
+ifeq (,$(GoTOP))
+$(info )
+$(info ' go lang project , should has a VAR named GoTOP being defined in Makefile.env')
+$(info '                   as the end target name; ')
+$(info ' and the src files being put into the src?/*.go' )
+$(info )
+$(error )
+endif
+
+Wput_default :=wput -u -nc 
+
+GobinPathList:=$${HOME}/go/BBgo /$${HOME}/go/bin/
+GObinPathX:=PATH="$(shell echo $(strip $(wildcard $(shell echo $(GobinPathList))))|tr ' ' ':'):$${PATH}"
+GObinNow:=$(strip $(firstword $(wildcard $(shell echo $(GobinPathList)))))
+ifeq (,$(GObinNow))
+$(info )
+$(info ' file do NOT exist : $(GobinPathList)')
+$(info )
+$(error )
+endif
+
+CFGrunGoINCset1:=\
+Makefile.3071.beautifyBase    \
+Makefile.3073.beautifyGo    \
+Makefile.4001.go.lang.analyze    \
+
+CFGrunGoINCset2:=$(foreach aa1,$(CFGrunGoINCset1),$(TM)/$(aa1))
+
+goVimFileSetS:=$(sort $(wildcard src/*.go src?/*.go ))
+
+include $(CFGmakeEnv)
+
+
+c:=clean_all_tmp_files_during_go_compile
+$(c):= cm 
+c:$($(c))
+
+cm:=clean_mobile
+$(cm):=clean_mobile_tmp_files
+cm:
+	rm -fr mobile/*
+
+ll:=list_tmp_and_out_directory
+ll:
+	@echo ; ls -dl mobile/* ; echo 
+
+bm:=build_go_lang_for_mobile
+bm:
+	$(GObinPathX) \
+		$(GObinNow) \
+		build  -target=android \
+		$(goVimFileSetS) 
+	ls -l mobile/* -d
+
+
+showRunHelpList += cm c ll bm 
+
+define showRunHelpTEXText1
+endef
+
+
+$(call genVimWithFileList,showSourceCodeTEXT,$(goVimFileSetS),vg)
+
+
+$(eval $(foreach aa2,$(CFGrunGoINCset2),$(call tryINCmustExist,$(aa2),db8193911)))
+
+aaa:=build_win_and_linux_execute_bin_fileS
+$(aaa):=cm bm
+aaa: $($(aaa))
+
+showRunHelpList += aaa 
+
+#$(info goVimFileSetS -> $(goVimFileSetS))
+btList01verilog += $(goVimFileSetS)
+
+
