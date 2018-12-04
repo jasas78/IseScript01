@@ -51,22 +51,26 @@ c:$($(c))
 cm:=clean_mobile
 $(cm):=clean_mobile_tmp_files
 cm:
-	rm -fr mobile/*
-	mkdir mobile
+	[ -d mobile ] || mkdir mobile
+	rm -f mobile/*.apk
 
 ll:=list_tmp_and_out_directory
 ll:
 	@echo ; ls -dl mobile/* ; echo 
 
+tmp_localProject_path:=$(shell dirname  `realpath .`)
+tmp_localProject_name:=$(shell basename `realpath .`)
 bm:=build_go_lang_for_mobile
 bm:
 	@[ -d mobile ] || mkdir mobile
+	rm -f /tmp/tmp.localProject 
+	ln -s $(tmp_localProject_path)/    /tmp/tmp.localProject
 	$(GObinPathX) \
 		$(GObinNow) \
 		build  \
 		-target=android \
 		-o      mobile/$(GoTOP).apk  \
-		golang.org/x/mobile/example/basic
+		tmp.localProject/$(tmp_localProject_name)/src/
 #		$(goVimFileSetS) 
 	ls -l mobile/* -d
 
