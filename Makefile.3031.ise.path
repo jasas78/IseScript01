@@ -3,6 +3,13 @@ all:
 XD1:=$(shell realpath $(TM)/settings64.sh)
 XD2:=$(shell dirname  $(XD1))
 XD3:=$(XD2)/ISE/bin/lin64
+Xilinx_lic_path:=$(shell realpath $(XD2)/../../../Xilinx_ise.lic)
+$(if $(strip $(Xilinx_lic_path)),,Xilinx_lic_path:=$(shell realpath $(XD2)/../../Xilinx_ise.lic))
+$(if $(strip $(Xilinx_lic_path)),,Xilinx_lic_path:=$(shell realpath $(XD2)/../Xilinx_ise.lic))
+$(if $(strip $(Xilinx_lic_path)),,Xilinx_lic_path:=$(shell realpath $(XD2)/Xilinx_ise.lic))
+
+XILINXD_LICENSE_FILE:=$(Xilinx_lic_path)
+export XILINXD_LICENSE_FILE
 
 ### you can pre-define the following envVARs
 LDso641?=LD_PRELOAD=/home/bootH/Xilinx/usb-driver/libusb-driver.so.64.so 

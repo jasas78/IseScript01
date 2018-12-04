@@ -19,3 +19,9 @@ include $(CFGmake00env)
 
 #$(info vvvv1->$(vvvv1))
 #$(info vvvv2->$(vvvv2))
+
+# git remote add origin https://dengyanuoapp@github.com/dengyanuoapp/Ise601.3phrase.motoro.git
+# git remote add origin https://github.com/dengyanuoapp/IseScript01.git
+up:
+	git push -u origin master
+
