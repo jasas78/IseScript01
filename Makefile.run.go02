@@ -18,12 +18,16 @@ endif
 
 Wput_default :=wput -u -nc 
 
-GobinPathList:=$${HOME}/go/BBgo /$${HOME}/go/bin/
-GObinPathX:=PATH="$(shell echo $(strip $(wildcard $(shell echo $(GobinPathList))))|tr ' ' ':'):$${PATH}"
-GObinNow:=$(strip $(firstword $(wildcard $(shell echo $(GobinPathList)))))
+GobinPathList1:=$${HOME}/go/BBgo $${HOME}/go/bin/
+GobinPathList2:=$(foreach aa1,$(GobinPathList1),$(shell echo $(aa1)))
+GobinPathList3:=$(wildcard $(GobinPathList2))
+GObinPathX:=PATH="$(shell echo $(GobinPathList2)|tr ' ' ':'):$${PATH}"
+GObinNow:=$(strip $(firstword $(wildcard $(foreach aa1,$(GobinPathList2),$(shell echo $(aa1)/gomobile)))))
 ifeq (,$(GObinNow))
 $(info )
-$(info ' file do NOT exist : $(GobinPathList)')
+$(info ' file do NOT exist : $(GobinPathList1)')
+$(info ' file do NOT exist : $(GobinPathList2)')
+$(info ' file do NOT exist : $(GobinPathList3)')
 $(info )
 $(error )
 endif
@@ -48,6 +52,7 @@ cm:=clean_mobile
 $(cm):=clean_mobile_tmp_files
 cm:
 	rm -fr mobile/*
+	mkdir mobile
 
 ll:=list_tmp_and_out_directory
 ll:
@@ -55,10 +60,14 @@ ll:
 
 bm:=build_go_lang_for_mobile
 bm:
+	@[ -d mobile ] || mkdir mobile
 	$(GObinPathX) \
 		$(GObinNow) \
-		build  -target=android \
-		$(goVimFileSetS) 
+		build  \
+		-target=android \
+		-o      mobile/$(GoTOP).apk  \
+		golang.org/x/mobile/example/basic
+#		$(goVimFileSetS) 
 	ls -l mobile/* -d
 
 
