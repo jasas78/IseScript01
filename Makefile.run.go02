@@ -44,11 +44,16 @@ goVimFileSetS:=$(sort $(wildcard src/*.go src?/*.go ))
 include $(CFGmakeEnv)
 
 
-tmp_localProject_path:=$(shell dirname  `realpath .`)
-tmp_localProject_name:=$(shell basename `realpath .`)
+tmp_localProject_path:=$(shell  dirname  `realpath .`)
+tmp_localProject_name1:=$(shell basename `realpath .`)
+tmp_localProject_name2:=$(shell \
+	[ -f src/AndroidManifest.xml ] \
+	&& (grep '\bpackage=' src/AndroidManifest.xml |tr '"' ' ' |awk '{printf $$2}') \
+	|| echo $(tmp_localProject_name1) \
+	)
 dstApkList:=mobile/$(GoTOP).apk
 dstAPK:=$(firstword $(dstApkList))
-dstAPK:=mobile/$(tmp_localProject_name).apk
+dstAPK:=mobile/$(tmp_localProject_name1).apk
 
 c:=clean_all_tmp_files_during_go_compile
 $(c):= cm 
@@ -69,15 +74,15 @@ $(bm):=build_go_lang_for_mobile
 bm :
 	@[ -d mobile ] || mkdir mobile
 	rm -f /tmp/tmp.localProject 
-	rm -f $(tmp_localProject_name)
-	ln -s src/ $(tmp_localProject_name)
+	rm -f $(tmp_localProject_name1)
+	ln -s src/ $(tmp_localProject_name1)
 	ln -s $(tmp_localProject_path)/    /tmp/tmp.localProject
 	$(GObinPathX) \
 		$(GObinNow) \
 		build  \
 		-target=android \
 		-o      $(dstAPK)  \
-		tmp.localProject/$(tmp_localProject_name)/$(tmp_localProject_name)/
+		tmp.localProject/$(tmp_localProject_name1)/$(tmp_localProject_name1)/
 	ls -l mobile/* -d
 
 in:=im
@@ -88,12 +93,14 @@ in :
 tm:=test
 $(tm):=run_target_apk_built_by_gomobile
 tm :
-	adb shell am start -n org.golang.todo.$(tmp_localProject_name)/org.golang.app.GoNativeActivity
+	adb shell am start -n $(tmp_localProject_name2)/org.golang.app.GoNativeActivity
+#	adb shell am start -n org.golang.todo.$(tmp_localProject_name1)/org.golang.app.GoNativeActivity
+#tmp_localProject_name2=$(tmp_localProject_name2)
 
 un:=um
 $(un):=uninstall_the_android_package_apk
 un :
-	-adb uninstall org.golang.todo.$(tmp_localProject_name)
+	-adb uninstall org.golang.todo.$(tmp_localProject_name1)
 
 showRunHelpList += cm c ll bm in tm un
 
