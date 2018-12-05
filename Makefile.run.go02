@@ -64,8 +64,9 @@ ll:=list_tmp_and_out_directory
 ll:
 	@echo ; ls -dl mobile/* ; echo 
 
-bm:=build_go_lang_for_mobile
-bm:
+bm:=bb
+$(bm):=build_go_lang_for_mobile
+bm $(bm):
 	@[ -d mobile ] || mkdir mobile
 	rm -f /tmp/tmp.localProject 
 	rm -f $(tmp_localProject_name)
@@ -79,16 +80,22 @@ bm:
 		tmp.localProject/$(tmp_localProject_name)/$(tmp_localProject_name)/
 	ls -l mobile/* -d
 
-im:=install_target_apk_built_by_gomobile
-im:
+in:=im
+$(in):=install_target_apk_built_by_gomobile
+in $(in):
 	-adb uninstall org.golang.todo.basic
 	adb install -r $(dstAPK)  
-tm:=run_target_apk_built_by_gomobile
-tm:
+tm:=test
+$(tm):=run_target_apk_built_by_gomobile
+tm $(tm):
 	adb shell am start -n org.golang.todo.$(tmp_localProject_name)/org.golang.app.GoNativeActivity
 
+un:=um
+$(un):=uninstall_the_android_package_apk
+un $(un):
+	-adb uninstall org.golang.todo.$(tmp_localProject_name)
 
-showRunHelpList += cm c ll bm im tm
+showRunHelpList += cm c ll bm in tm un
 
 define showRunHelpTEXText1
 endef
@@ -100,7 +107,7 @@ $(call genVimWithFileList,showSourceCodeTEXT,$(goVimFileSetS),vg)
 $(eval $(foreach aa2,$(CFGrunGoINCset2),$(call tryINCmustExist,$(aa2),db8193911)))
 
 aaa:=build_arm_arm64_x86_x86-64_for_android
-$(aaa):=cm bm im tm
+$(aaa):=cm bm in tm
 aaa: $($(aaa))
 
 showRunHelpList += aaa 
