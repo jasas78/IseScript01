@@ -116,8 +116,17 @@ un:=um
 $(un):=uninstall_the_android_package_apk
 un :
 	-adb uninstall $(tmp_localProject_name2)
+vpGO_file:=_vim/dir_09.txt
+vpgo:=gen_vim_filelist_for_go_langauge
+vpgo:
+	echo -n  > $(vpGO_file)
+	$(foreach aa2,$(filter %.go,$(goVimFileSetS)), \
+		grep -q '\bimport\s*'   $(aa2) && make vpGO FFF=$(aa2) RRR=$(listPath92)|| echo 'ignore  == $(aa2)' $(EOL))
+#		grep -q 'import'   $(aa2) )
+#		echo $(aa2)$(EOL))
+#		grep -q '\bimport\s*('   $(aa2) && make vpGO FFF=$(aa2) RRR=$(listPath92)|| echo 'ignore  == $(aa2)' $(EOL))
 
-showRunHelpList += cm c ll bm in tm un
+showRunHelpList += cm c ll bm in tm un vpgo
 
 define showRunHelpTEXText1
 endef
