@@ -76,13 +76,6 @@ vpGo9x2:
 #	@echo "makeing $@     SSS=$(SSS) RRR=$(RRR) TTT=$(TTT) "
 	@grep $(SSS)$$  $(RRR) >> $(TTT)
 
-#	$(foreach aa2,$(filter %.go,$(goVimFileSetS)), \
-#		make vpGo9 FFF=$(aa2) RRR=$(listPath92) TTT=$(vpGO_file) $(EOL))
-#		[ "${aecho 'ignore  == $(aa2)' $(EOL))
-#		grep -q 'import'   $(aa2) )
-#		echo $(aa2)$(EOL))
-#		grep -q '\bimport\s*('   $(aa2) && make vpGO FFF=$(aa2) RRR=$(listPath92)|| echo 'ignore  == $(aa2)' $(EOL))
-
 
 _vim/cscope.files : vp
 
