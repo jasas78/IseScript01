@@ -66,7 +66,7 @@ ll:
 
 bm:=bb
 $(bm):=build_go_lang_for_mobile
-bm $(bm):
+bm :
 	@[ -d mobile ] || mkdir mobile
 	rm -f /tmp/tmp.localProject 
 	rm -f $(tmp_localProject_name)
@@ -82,17 +82,17 @@ bm $(bm):
 
 in:=im
 $(in):=install_target_apk_built_by_gomobile
-in $(in):
+in :
 	-adb uninstall org.golang.todo.basic
 	adb install -r $(dstAPK)  
 tm:=test
 $(tm):=run_target_apk_built_by_gomobile
-tm $(tm):
+tm :
 	adb shell am start -n org.golang.todo.$(tmp_localProject_name)/org.golang.app.GoNativeActivity
 
 un:=um
 $(un):=uninstall_the_android_package_apk
-un $(un):
+un :
 	-adb uninstall org.golang.todo.$(tmp_localProject_name)
 
 showRunHelpList += cm c ll bm in tm un
