@@ -25,5 +25,5 @@ include $(CFGmake00env)
 up:
 	git push -u origin master
 
-upup:
+upp upup:
 	make up -C $(TM) 
