@@ -49,7 +49,7 @@ tmp_localProject_name1:=$(shell basename `realpath .`)
 tmp_localProject_name2:=$(shell \
 	[ -f src/AndroidManifest.xml ] \
 	&& (grep '\bpackage=' src/AndroidManifest.xml |tr '"' ' ' |awk '{printf $$2}') \
-	|| echo $(tmp_localProject_name1) \
+	|| echo org.golang.todo.$(tmp_localProject_name1) \
 	)
 dstApkList:=mobile/$(GoTOP).apk
 dstAPK:=$(firstword $(dstApkList))
@@ -88,7 +88,7 @@ bm :
 in:=im
 $(in):=install_target_apk_built_by_gomobile
 in :
-	-adb uninstall org.golang.todo.basic
+	-adb uninstall $(tmp_localProject_name2)
 	adb install -r $(dstAPK)  
 tm:=test
 $(tm):=run_target_apk_built_by_gomobile
@@ -100,7 +100,7 @@ tm :
 un:=um
 $(un):=uninstall_the_android_package_apk
 un :
-	-adb uninstall org.golang.todo.$(tmp_localProject_name1)
+	-adb uninstall $(tmp_localProject_name2)
 
 showRunHelpList += cm c ll bm in tm un
 
