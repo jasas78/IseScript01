@@ -121,7 +121,9 @@ vpgo:=gen_vim_filelist_for_go_langauge
 vpgo:
 	echo -n  > $(vpGO_file)
 	$(foreach aa2,$(filter %.go,$(goVimFileSetS)), \
-		grep -q '\bimport\s*'   $(aa2) && make vpGO FFF=$(aa2) RRR=$(listPath92)|| echo 'ignore  == $(aa2)' $(EOL))
+		make vpGo9 FFF=$(aa2) RRR=$(listPath92) TTT=$(vpGO_file) $(EOL))
+#		[ "${aecho 'ignore  == $(aa2)' $(EOL))
+#		grep -q '\bimport\s*'   $(aa2) 
 #		grep -q 'import'   $(aa2) )
 #		echo $(aa2)$(EOL))
 #		grep -q '\bimport\s*('   $(aa2) && make vpGO FFF=$(aa2) RRR=$(listPath92)|| echo 'ignore  == $(aa2)' $(EOL))
