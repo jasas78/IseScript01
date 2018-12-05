@@ -60,6 +60,30 @@ vp: vpc
 	@wc _vim/cscope.files 
 	sync
 
+vpGo9:
+	@grep -q '\bimport\b\s*'   $(FFF) || echo '== ignore $(FFF) '
+	@grep -q '\bimport\b\s*'   $(FFF) && make vpGo9x1 || echo -n ''
+vpGo9x1:
+#	@echo
+#	@echo "makeing $@     FFF=$(FFF) RRR=$(RRR) TTT=$(TTT) "
+	@cat $(FFF) |sed -e '1,/\bimport\b/ d' -ne '1,/)/{p;}' |sed -e 's;).*$$;;g' \
+		|xargs -n 1 |grep -v ^$$ \
+		> 1.txt
+	@for aa1 in `cat 1.txt` ; do make vpGo9x2 SSS=src/$${aa1}    RRR=$(RRR) TTT=$(TTT) ; done
+
+vpGo9x2:
+#	@echo
+#	@echo "makeing $@     SSS=$(SSS) RRR=$(RRR) TTT=$(TTT) "
+	@grep $(SSS)$$  $(RRR) >> $(TTT)
+
+#	$(foreach aa2,$(filter %.go,$(goVimFileSetS)), \
+#		make vpGo9 FFF=$(aa2) RRR=$(listPath92) TTT=$(vpGO_file) $(EOL))
+#		[ "${aecho 'ignore  == $(aa2)' $(EOL))
+#		grep -q 'import'   $(aa2) )
+#		echo $(aa2)$(EOL))
+#		grep -q '\bimport\s*('   $(aa2) && make vpGO FFF=$(aa2) RRR=$(listPath92)|| echo 'ignore  == $(aa2)' $(EOL))
+
+
 _vim/cscope.files : vp
 
 
