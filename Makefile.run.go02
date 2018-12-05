@@ -44,6 +44,12 @@ goVimFileSetS:=$(sort $(wildcard src/*.go src?/*.go ))
 include $(CFGmakeEnv)
 
 
+tmp_localProject_path:=$(shell dirname  `realpath .`)
+tmp_localProject_name:=$(shell basename `realpath .`)
+dstApkList:=mobile/$(GoTOP).apk
+dstAPK:=$(firstword $(dstApkList))
+dstAPK:=mobile/$(tmp_localProject_name).apk
+
 c:=clean_all_tmp_files_during_go_compile
 $(c):= cm 
 c:$($(c))
@@ -58,24 +64,31 @@ ll:=list_tmp_and_out_directory
 ll:
 	@echo ; ls -dl mobile/* ; echo 
 
-tmp_localProject_path:=$(shell dirname  `realpath .`)
-tmp_localProject_name:=$(shell basename `realpath .`)
 bm:=build_go_lang_for_mobile
 bm:
 	@[ -d mobile ] || mkdir mobile
 	rm -f /tmp/tmp.localProject 
+	rm -f $(tmp_localProject_name)
+	ln -s src/ $(tmp_localProject_name)
 	ln -s $(tmp_localProject_path)/    /tmp/tmp.localProject
 	$(GObinPathX) \
 		$(GObinNow) \
 		build  \
 		-target=android \
-		-o      mobile/$(GoTOP).apk  \
-		tmp.localProject/$(tmp_localProject_name)/src/
-#		$(goVimFileSetS) 
+		-o      $(dstAPK)  \
+		tmp.localProject/$(tmp_localProject_name)/$(tmp_localProject_name)/
 	ls -l mobile/* -d
 
+im:=install_target_apk_built_by_gomobile
+im:
+	-adb uninstall org.golang.todo.basic
+	adb install -r $(dstAPK)  
+tm:=run_target_apk_built_by_gomobile
+tm:
+	adb shell am start -n org.golang.todo.$(tmp_localProject_name)/org.golang.app.GoNativeActivity
 
-showRunHelpList += cm c ll bm 
+
+showRunHelpList += cm c ll bm im tm
 
 define showRunHelpTEXText1
 endef
@@ -86,8 +99,8 @@ $(call genVimWithFileList,showSourceCodeTEXT,$(goVimFileSetS),vg)
 
 $(eval $(foreach aa2,$(CFGrunGoINCset2),$(call tryINCmustExist,$(aa2),db8193911)))
 
-aaa:=build_win_and_linux_execute_bin_fileS
-$(aaa):=cm bm
+aaa:=build_arm_arm64_x86_x86-64_for_android
+$(aaa):=cm bm im tm
 aaa: $($(aaa))
 
 showRunHelpList += aaa 
