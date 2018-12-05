@@ -20,6 +20,7 @@ vFFset01:=\
 	*.v  *.ucf scr*.scr *.ncd \
 	*.go \
 	*.rule \
+	AndroidManifest.xml \
 
 vp:=vim_prepare1
 vp: vpc
