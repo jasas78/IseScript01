@@ -36,7 +36,9 @@ vp: vpc
 	@
 	@echo -n > _vim/cscope.in2
 	@echo $(wildcard \
-		$(foreach ff1,$(strip $(shell cat _vim/dir_01.txt |sed -e 's/^ *//g' |sed -e '/^#.*$$/d' |sed -e 's/ *$$//g' |sed -e '/^$$/d' |sort -u )),\
+		$(foreach ff1,$(strip $(shell \
+		    cat $(wildcard _vim/dir_0?.txt) |sed -e 's/^ *//g' |sed -e '/^#.*$$/d' |sed -e 's/ *$$//g' |sed -e '/^$$/d' |sort -u \
+			)),\
 		$(foreach ff2,$(vFFset01),$(ff1)/$(ff2)))\
 		)\
 		|tr ' ' '\n' \

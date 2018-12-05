@@ -55,6 +55,21 @@ dstApkList:=mobile/$(GoTOP).apk
 dstAPK:=$(firstword $(dstApkList))
 dstAPK:=mobile/$(tmp_localProject_name1).apk
 
+# list.001.file.txt  list.002.dir.txt
+listPath1:=$(shell realpath $${HOME}/go/)
+listPath2:=$(shell realpath $(listPath1)/../)
+listPath3:=$(shell realpath $(listPath2)/now_dir__)
+listPath91:=$(listPath3).001.file.txt
+listPath92:=$(listPath3).002.dir.txt
+
+ifeq ($(V),1)
+$(info listPath1=$(listPath1))
+$(info listPath2=$(listPath2))
+$(info listPath3=$(listPath3))
+$(info listPath91=$(listPath91))
+$(info listPath92=$(listPath92))
+endif
+
 c:=clean_all_tmp_files_during_go_compile
 $(c):= cm 
 c:$($(c))
