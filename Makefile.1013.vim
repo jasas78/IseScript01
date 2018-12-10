@@ -11,6 +11,7 @@ vpc:=vim_prepare_clean
 vpc :
 	@mkdir -p _vim/
 	@rm -f _vim/cscope.out       _vim/cscope.in?     _vim/tags
+	@touch _vim/vim_file01.txt _vim/dir_01.txt _vim/dir_09.txt 
 
 
 vFFset01:=\
@@ -24,11 +25,13 @@ vFFset01:=\
 
 vp:=vim_prepare1
 vp: vpc
+	@#echo kkk11
 	@#mkdir -p _vim src1 src2 src3 src9
 	@[ -d src9 ] || mkdir src9
 	@[ -d _vim ] || mkdir _vim
 	@ls $(wildcard $(TM)/Makefile*)    > _vim/cscope.in0
-	@touch _vim/vim_file01.txt _vim/dir_01.txt 
+	@touch _vim/vim_file01.txt _vim/dir_01.txt _vim/dir_09.txt 
+	@#ls -l _vim/vim_file01.txt _vim/dir_01.txt _vim/dir_09.txt 
 	@
 	@echo -n > _vim/cscope.in1
 	@$(foreach ff1,$(strip $(shell cat   _vim/vim_file01.txt)),\
