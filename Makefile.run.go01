@@ -90,7 +90,7 @@ tt:
 	@reset
 
 
-showRunHelpList += cw cl c ll bw bl tt
+showRunHelpList += cw cl c ll bw bl tt  vpgo tour
 
 define showRunHelpTEXText1
 endef
