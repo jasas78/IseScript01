@@ -121,11 +121,9 @@ $(eval                  vimName1:=$(3)$(gvIdx))
 
 $(eval                  vimName2:=\
 $(if $(strip $(filter %.pdf,$(vimObjBase1))),pdf,\
-$(if $(strip $(filter %.txt,$(vimObjBase1))),vim,\
-unknown)))
+vim))
 
-$(eval $(1)+=$$(EOL)    $(vimName1)    =>   $(2) )
-$(eeval $(1)+=$$(EOL)    $(vimName1)    =>   $(2) : $(vimObjBase1) : $(vimName1) , $(vimName2) )
+$(eval $(1)+=$$(EOL)    $(vimName1)    =>   $(2) ->cmd-> $(vimName2) )
 $(eval                  $(vimName1)    :$(EOL)	$(vimName2) $(2) )
 $(eval                  $(vimName1):=$(vimName1))
 
