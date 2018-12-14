@@ -116,9 +116,18 @@ define genVimWithFile01
 $(iinfo 123,$1,$2,$3)
 $(eval gvList1+=$(3)$(gvIdx))
 
-$(eval $(1)+=$$(EOL)    $(3)$(gvIdx)    =>   $(2) )
-$(eval                  $(3)$(gvIdx)    :$(EOL)	vim $(2) )
-$(eval                  $(3)$(gvIdx):=$$(shell basename $(2)))
+$(eval                  vimObjBase1:=$$(shell basename $(2)))
+$(eval                  vimName1:=$(3)$(gvIdx))
+
+$(eval                  vimName2:=\
+$(if $(strip $(filter %.pdf,$(vimObjBase1))),pdf,\
+$(if $(strip $(filter %.txt,$(vimObjBase1))),vim,\
+unknown)))
+
+$(eval $(1)+=$$(EOL)    $(vimName1)    =>   $(2) )
+$(eeval $(1)+=$$(EOL)    $(vimName1)    =>   $(2) : $(vimObjBase1) : $(vimName1) , $(vimName2) )
+$(eval                  $(vimName1)    :$(EOL)	$(vimName2) $(2) )
+$(eval                  $(vimName1):=$(vimName1))
 
 $(eval gvMOD:=$$(shell echo "$$$$(($$(gvIdx) % 5))"))
 $(eval ifeq (0,$(gvMOD))$(EOL)$(1)+=$$(EOL)$(EOL)endif)
