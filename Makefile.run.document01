@@ -17,8 +17,8 @@ define showRunHelpTEXText1
 endef
 
 
-$(call genVimWithFileList,showSourceCodeTEXT,$(docVimFileSetS1),vg)
-$(call genVimWithFileList,showSourceCodeTEXT,$(docVimFileSetS2),pg)
+$(call genVimWithFileList,showSourceCodeTEXT1,$(docVimFileSetS1),vg)
+$(call genVimWithFileList,showSourceCodeTEXT2,$(docVimFileSetS2),pg)
 
 
 $(eval $(foreach aa2,$(CFGrunGoINCset2),$(call tryINCmustExist,$(aa2),db8193911)))
