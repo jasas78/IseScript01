@@ -5,7 +5,8 @@ CFGrunGoINCset1:=\
 
 CFGrunGoINCset2:=$(foreach aa1,$(CFGrunGoINCset1),$(TM)/$(aa1))
 
-docVimFileSetS:=$(sort $(wildcard src/*.go src?/*.go src/*.xml ))
+docVimFileSetS1:=$(sort $(wildcard src/*.txt src?/*.txt ))
+docVimFileSetS2:=$(sort $(wildcard src/*.pdf src?/*.pdf ))
 
 include $(CFGmakeEnv)
 
@@ -16,7 +17,8 @@ define showRunHelpTEXText1
 endef
 
 
-$(call genVimWithFileList,showSourceCodeTEXT,$(docVimFileSetS),vg)
+$(call genVimWithFileList,showSourceCodeTEXT,$(docVimFileSetS1),vg)
+$(call genVimWithFileList,showSourceCodeTEXT,$(docVimFileSetS2),pg)
 
 
 $(eval $(foreach aa2,$(CFGrunGoINCset2),$(call tryINCmustExist,$(aa2),db8193911)))
