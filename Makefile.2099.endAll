@@ -23,9 +23,21 @@ srh:
 
 ss:=showSourceCode
 $(ss):=show_all_source_files_in_current_dir_for_vim_______current_dir
-ss:
+ss: ss0 ss1 ss2 ss3 ss4 ss5
+ss0:
 	@[ -z "$${showRunHelpTEXText3}" ] || echo "$${showRunHelpTEXText3}" 
-	@echo "$${showSourceCodeTEXT}""$${showSourceCodeTEXT1}""$${showSourceCodeTEXT2}" ; echo
+	@echo "$${showSourceCodeTEXT}"
+ss1:
+	@echo "$${showSourceCodeTEXT1}"
+ss2:
+	@echo "$${showSourceCodeTEXT2}"
+ss3:
+	@echo "$${showSourceCodeTEXT3}"
+ss4:
+	@echo "$${showSourceCodeTEXT4}"
+ss5:
+	@echo "$${showSourceCodeTEXT5}"
+
 
 $(call CallExpandHelpAll,showHelpTEXT,so sml srh )
 

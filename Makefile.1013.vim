@@ -121,7 +121,9 @@ $(eval                  vimName1:=$(3)$(gvIdx))
 
 $(eval                  vimName2:=\
 $(if $(strip $(filter %.pdf,$(vimObjBase1))),pdf,\
-vim))
+$(if $(strip $(filter %.jpg %.jpeg %.bmp %.png %.gif,$(vimObjBase1))),gpicview,\
+$(if $(strip $(filter %.doc %.docx %.ppt %.pptx,$(vimObjBase1))),soffice,\
+vim))))
 
 $(eval $(1)+=$$(EOL)    $(vimName1)    =>   $(2) ->cmd-> $(vimName2) )
 $(eval                  $(vimName1)    :$(EOL)	$(vimName2) $(2) )
