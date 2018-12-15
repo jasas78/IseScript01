@@ -127,7 +127,7 @@ $(eval $(1)+=$$(EOL)    $(vimName1)    =>   $(2) ->cmd-> $(vimName2) )
 $(eval                  $(vimName1)    :$(EOL)	$(vimName2) $(2) )
 $(eval                  $(vimName1):=$(vimName1))
 
-$(eval gvMOD:=$$(shell echo "$$$$(($$(gvIdx) % 5))"))
+$(eval gvMOD:=$$(shell echo "$$$$(($$(gvIdx) % 4))"))
 $(eval ifeq (0,$(gvMOD))$(EOL)$(1)+=$$(EOL)$(EOL)endif)
 
 $(eval gvIdx:=$$(shell echo "$$$$(($$(gvIdx) + 1))"))
