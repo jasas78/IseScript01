@@ -47,7 +47,7 @@ $(cfgLine2altera)  \
 endef
 
 OCDcfgList:=$(sort $(wildcard $(cfgOpenOCD)/*.cfg))
-$(call genVimWithFileList,showSourceCodeTEXT,$(OCDcfgList),vv)
+$(call genVimWithFileList,showSourceCodeTEXT0,$(OCDcfgList),vv)
 
 showRunHelpList +=gvrUSAGE gvfUSAGE
 

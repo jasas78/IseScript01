@@ -13,7 +13,7 @@ VERDIhdlList:=$(filter-out $(VERDIfilterOutList),$(sort \
 	$(VERDIextSrcList)
 export VERDIhdlList
 
-$(call genVimWithFileList,showSourceCodeTEXT,$(VERDIhdlList),vv)
+$(call genVimWithFileList,showSourceCodeTEXT0,$(VERDIhdlList),vv)
 
 
 

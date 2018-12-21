@@ -12,6 +12,7 @@ docVimFileSetS2:=$(sort $(wildcard $(foreach aa1,pdf,                           
 docVimFileSetS3:=$(sort $(wildcard $(foreach aa1,jpg png gif jpeg bmp,          $(foreach aa2,$(docDIRprefix1),$(aa2)$(aa1)) )))
 docVimFileSetS4:=$(sort $(wildcard $(foreach aa1,doc docx ppt pptx,             $(foreach aa2,$(docDIRprefix1),$(aa2)$(aa1)) )))
 docVimFileSetS5:=$(sort $(wildcard                                              $(docDIRprefix2),$(aa2)                       ))
+docVimFileSetS6:=$(sort $(wildcard $(foreach aa1,html htm xml,                  $(foreach aa2,$(docDIRprefix1),$(aa2)$(aa1)) )))
 
 include $(CFGmakeEnv)
 
@@ -27,9 +28,11 @@ $(call genVimWithFileList,showSourceCodeTEXT2,$(docVimFileSetS2),pg)
 $(call genVimWithFileList,showSourceCodeTEXT3,$(docVimFileSetS3),jp)
 $(call genVimWithFileList,showSourceCodeTEXT4,$(docVimFileSetS4),do)
 $(call genVimWithFileList,showSourceCodeTEXT5,$(docVimFileSetS5),mm)
+$(call genVimWithFileList,showSourceCodeTEXT6,$(docVimFileSetS6),ff)
 
 $(iinfo docVimFileSetS5 $(docVimFileSetS5))
 $(iinfo docDIRprefix2 $(docDIRprefix2))
+$(iinfo docVimFileSetS6 $(docVimFileSetS6))
 
 
 $(eval $(foreach aa2,$(CFGrunGoINCset2),$(call tryINCmustExist,$(aa2),db8193911)))

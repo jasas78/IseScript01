@@ -16,7 +16,7 @@ TBhdlList:=$(filter-out $(VCSfilterOutList),$(sort \
 	$(wildcard srcSYN/tbSrc?/*.v) \
 	))\
 	$(VCSextSrcList)
-$(call genVimWithFileList,showSourceCodeTEXT,$(RTLhdlList) $(TBhdlList),vv)
+$(call genVimWithFileList,showSourceCodeTEXT0,$(RTLhdlList) $(TBhdlList),vv)
 
 
 

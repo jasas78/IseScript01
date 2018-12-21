@@ -23,20 +23,22 @@ srh:
 
 ss:=showSourceCode
 $(ss):=show_all_source_files_in_current_dir_for_vim_______current_dir
-ss: ss0 ss1 ss2 ss3 ss4 ss5
-ss0:
-	@[ -z "$${showRunHelpTEXText3}" ] || echo "$${showRunHelpTEXText3}" 
-	@echo "$${showSourceCodeTEXT}"
-ss1:
-	@echo "$${showSourceCodeTEXT1}"
-ss2:
-	@echo "$${showSourceCodeTEXT2}"
-ss3:
-	@echo "$${showSourceCodeTEXT3}"
-ss4:
-	@echo "$${showSourceCodeTEXT4}"
-ss5:
-	@echo "$${showSourceCodeTEXT5}"
+ssList:=0 1 2 3 4 5 6
+ss: ssXX $(foreach aa1,$(ssList), ss$(aa1))
+ssXX:
+	@echo
+	@[ -z "$${showRunHelpTEXText3}" ] || ( echo "$${showRunHelpTEXText3}" ; echo )
+define ssTP1
+
+ss$(1):
+	@[ -z "$$$${showSourceCodeTEXT$(1)}" ] || ( echo "$$$${showSourceCodeTEXT$(1)}" ; echo )
+
+endef
+$(foreach aa1,$(ssList),$(eval $(call ssTP1,$(aa1))))
+# showSourceCodeTEXT0 showSourceCodeTEXT1 
+
+#ss0:
+#	@echo "$${showSourceCodeTEXT0}"
 
 
 $(call CallExpandHelpAll,showHelpTEXT,so sml srh )
@@ -51,15 +53,15 @@ all: showOption showVimMakefileList
 #	echo kkk99000021
 else
 $(call CallExpandHelpAll,showRunHelpTEXT,$(showRunHelpList))
-export showSourceCodeTEXT
-export showSourceCodeTEXT1
-export showSourceCodeTEXT2
-export showRunHelpTEXText1
-export showRunHelpTEXText2
-export showRunHelpTEXText3
-export showRunHelpTEXText4
-export showRunHelpTEXText5
+
+# showSourceCodeTEXT0 showSourceCodeTEXT1 
+$(foreach aa1,$(ssList),$(eval export showSourceCodeTEXT$(aa1)))
+
+#export showRunHelpTEXText1
+$(foreach aa1,1 2 3 4 5,$(eval export showRunHelpTEXText$(aa1)))
+
 export showRunHelpTEXT
+
 all: showSourceCode showOption showRunHelp
 #	echo kkk99000022
 endif

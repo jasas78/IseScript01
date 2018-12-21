@@ -12,7 +12,7 @@ NFTruleList:=$(filter-out $(NFTfilterOutList),$(sort \
 	$(NFTextSrcList)
 export NFTruleList
 
-$(call genVimWithFileList,showSourceCodeTEXT,$(NFTruleList),vn)
+$(call genVimWithFileList,showSourceCodeTEXT0,$(NFTruleList),vn)
 
 
 

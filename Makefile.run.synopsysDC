@@ -16,7 +16,7 @@ RTLhdlList:=$(filter-out $(DCfilterOutList),$(sort \
 #	$(wildcard srcSYN/tbSrc?/*.v) \
 #	))\
 #	$(DCextSrcList)
-$(call genVimWithFileList,showSourceCodeTEXT,$(RTLhdlList) $(TBhdlList),vv)
+$(call genVimWithFileList,showSourceCodeTEXT0,$(RTLhdlList) $(TBhdlList),vv)
 
 
 

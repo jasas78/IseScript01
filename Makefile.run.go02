@@ -93,7 +93,7 @@ define showRunHelpTEXText1
 endef
 
 
-$(call genVimWithFileList,showSourceCodeTEXT,$(goVimFileSetS),vg)
+$(call genVimWithFileList,showSourceCodeTEXT0,$(goVimFileSetS),vg)
 
 
 $(eval $(foreach aa2,$(CFGrunGoINCset2),$(call tryINCmustExist,$(aa2),db8193911)))
