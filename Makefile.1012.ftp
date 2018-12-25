@@ -1,0 +1,16 @@
+all:
+
+
+
+ftpACCd_default:=ftp://cap:cap@192.168.1.93
+ftpACCu_default:=ftp://cap:cap@192.168.1.93
+
+define ftpACCscript
+ftpACCd?=$(ftpACCd_default)
+ftpACCu?=$(ftpACCu_default)
+
+wgetX1:=wget -k -nc -r --no-parent --adjust-extension -olog01d.txt --remote-encoding=cp936
+wputX1:=wput -k -nc -r --no-parent --adjust-extension -olog01p.txt --remote-encoding=cp936
+
+endef
+$(if $(strip $(ftpACCd)),,$(eval $(ftpACCscript)))

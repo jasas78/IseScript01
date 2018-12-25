@@ -3,7 +3,8 @@ all:
 
 $(eval $(call tryINCmustExist,$(TM)/Makefile.1011.git,db9100001))
 $(eval $(call tryINCmustExist,$(TM)/Makefile.1010.proxy,db9100002))
-$(eval $(call tryINCmustExist,$(TM)/Makefile.1013.vim,db9100003))
+$(eval $(call tryINCmustExist,$(TM)/Makefile.1012.ftp,db9100003))
+$(eval $(call tryINCmustExist,$(TM)/Makefile.1013.vim,db9100004))
 
 m:=vim_Makefile
 m : $(TT)/Makefile
