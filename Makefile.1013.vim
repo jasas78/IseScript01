@@ -122,7 +122,7 @@ $(eval                  vimName1:=$(3)$(gvIdx))
 $(eval                  vimName2:=\
 $(if $(strip $(filter %.pdf,$(vimObjBase1))),pdf,\
 $(if $(strip $(filter %.jpg %.jpeg %.bmp %.png %.gif,$(vimObjBase1))),gpicview,\
-$(if $(strip $(filter %.doc %.docx %.ppt %.pptx,$(vimObjBase1))),soffice,\
+$(if $(strip $(filter %.doc %.docx %.ppt %.pptx %.xls %.xlsx,$(vimObjBase1))),soffice,\
 $(if $(strip $(filter %.htm %.html,$(vimObjBase1))),firefox,\
 vim)))))
 
