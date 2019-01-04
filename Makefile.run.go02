@@ -98,11 +98,15 @@ $(call genVimWithFileList,showSourceCodeTEXT0,$(goVimFileSetS),vg)
 
 $(eval $(foreach aa2,$(CFGrunGoINCset2),$(call tryINCmustExist,$(aa2),db8193911)))
 
-aaa:=build_arm_arm64_x86_x86-64_for_android
+aaa:=build_arm_arm64_x86_x86-64_for_android__and_install
 $(aaa):=cm bm in tm
 aaa: $($(aaa))
 
-showRunHelpList += aaa 
+bbb:=build_arm_arm64_x86_x86-64_for_android__build_only
+$(bbb):=cm bm 
+bbb: $($(bbb))
+
+showRunHelpList += aaa bbb
 
 #$(info goVimFileSetS -> $(goVimFileSetS))
 btList01verilog += $(goVimFileSetS)
