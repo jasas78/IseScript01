@@ -60,8 +60,12 @@ vp: vpc
 	@#rm -f _vim/cscope.in? cscope.out tags
 	@ctags -L _vim/cscope.files
 	@cscope -Rbu  -k -i _vim/cscope.files 
-	@wc _vim/cscope.files 
 	sync
+	@head -n 5 _vim/cscope.files 
+	@echo
+	@tail -n 5 _vim/cscope.files 
+	@echo
+	@wc _vim/cscope.files 
 
 vpGo9:
 	@grep -q '\bimport\b\s*'   $(FFF) || echo '== ignore $(FFF) '
