@@ -20,6 +20,7 @@ srh:
 	@[ -z "$${showRunHelpTEXText1}" ] || echo "$${showRunHelpTEXText1}" 
 	@echo "$${showRunHelpTEXT}" ; echo
 	@[ -z "$${showRunHelpTEXText5}" ] || echo "$${showRunHelpTEXText5}" 
+	@$(if $(GOapkNow),echo "    GOapkNow=$(GOapkNow)";echo "    GObinNow=$(GObinNow)";echo)
 
 ss:=showSourceCode
 $(ss):=show_all_source_files_in_current_dir_for_vim_______current_dir
@@ -59,7 +60,6 @@ $(foreach aa1,$(ssList),$(eval export showSourceCodeTEXT$(aa1)))
 
 #export showRunHelpTEXText1
 $(foreach aa1,1 2 3 4 5,$(eval export showRunHelpTEXText$(aa1)))
-
 export showRunHelpTEXT
 
 all: showSourceCode showOption showRunHelp
