@@ -67,8 +67,13 @@ bm :
 		build  \
 		-target=android \
 		-o      $(dstAPK)  \
-		tmp.localProject/$(tmp_localProject_name1)/$(tmp_localProject_name1)/
-	ls -l mobile/* -d
+		tmp.localProject/$(tmp_localProject_name1)/$(tmp_localProject_name1)/ \
+		|| \
+		( echo ; echo ;  \
+		echo " if errer is ---->>>  does not import \"golang.org/x/mobile/app\"" ; \
+		echo if means this program is not for android , so , use go , instead of gomobile. ; \
+		echo ;  echo ; exit 11 )
+	@echo "$$(ls -l mobile/* -d)         $$(ls -lh mobile/* -d |awk '{print $$5}')"
 
 in:=im
 $(in):=install_target_apk_built_by_gomobile
