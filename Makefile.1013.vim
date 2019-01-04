@@ -128,7 +128,8 @@ $(if $(strip $(filter %.pdf,$(vimObjBase1))),pdf,\
 $(if $(strip $(filter %.jpg %.jpeg %.bmp %.png %.gif,$(vimObjBase1))),gpicview,\
 $(if $(strip $(filter %.doc %.docx %.ppt %.pptx %.xls %.xlsx,$(vimObjBase1))),soffice,\
 $(if $(strip $(filter %.htm %.html,$(vimObjBase1))),firefox,\
-vim)))))
+$(if $(strip $(filter %.go,$(vimObjBase1))),GOPATH='$$$$(GobinPath20)' vim,\
+vim))))))
 
 $(eval $(1)+=$$(EOL)    $(vimName1)    =>   $(2) ->cmd-> $(vimName2) )
 $(eval                  $(vimName1)    :$(EOL)	$(vimName2) $(2) )

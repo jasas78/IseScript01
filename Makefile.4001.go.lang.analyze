@@ -19,9 +19,12 @@ GObinNow:=$(strip $(firstword $(wildcard $(foreach aa1,$(GobinPathList2),$(shell
 
 GobinPath09:=$(shell realpath $${HOME}/go/bin/)
 GobinPath11:=$(shell realpath $(GobinPath09)/../../)
-GobinPath18:=$(shell realpath $(GobinPath11)/go/bin)
-GobinPath19:=$(shell realpath $(GobinPath11)/GOPATH/bin)
+GobinPath18:=$(GobinPath11)/go/bin
+GobinPath19:=$(GobinPath11)/GOPATH/bin
+GobinPath20:=$(GobinPath11)/GOPATH
+export GobinPath20
 GObinPathX:=PATH="$(GobinPath18):$(GobinPath19):$${PATH}"
+GObinPathY:=GOPATH=$(GobinPath11)/GOPATH
 GObinNow:=$(GobinPath18)/go
 GOapkNow:=$(GobinPath19)/gomobile
 
