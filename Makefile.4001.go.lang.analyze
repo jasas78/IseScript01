@@ -16,6 +16,15 @@ GobinPathList2:=$(foreach aa1,$(GobinPathList1),$(shell echo $(aa1)))
 GobinPathList3:=$(wildcard $(GobinPathList2))
 GObinPathX:=PATH="$(shell echo $(GobinPathList2)|tr ' ' ':'):$${PATH}"
 GObinNow:=$(strip $(firstword $(wildcard $(foreach aa1,$(GobinPathList2),$(shell echo $(aa1)/gomobile)))))
+
+GobinPath09:=$(shell realpath $${HOME}/go/bin/)
+GobinPath11:=$(shell realpath $(GobinPath09)/../../)
+GobinPath18:=$(shell realpath $(GobinPath11)/go/bin)
+GobinPath19:=$(shell realpath $(GobinPath11)/GOPATH/bin)
+GObinPathX:=PATH="$(GobinPath18):$(GobinPath19):$${PATH}"
+GObinNow:=$(GobinPath18)/go
+GOapkNow:=$(GobinPath19)/gomobile
+
 ifeq (,$(GObinNow))
 $(info )
 $(info ' file do NOT exist : $(GobinPathList1)')

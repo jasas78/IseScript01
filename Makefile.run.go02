@@ -63,7 +63,7 @@ bm :
 	ln -s src/ $(tmp_localProject_name1)
 	ln -s $(tmp_localProject_path)/    /tmp/tmp.localProject
 	$(GObinPathX) \
-		$(GObinNow) \
+		$(GOapkNow) \
 		build  \
 		-target=android \
 		-o      $(dstAPK)  \

@@ -20,15 +20,6 @@ GoWinPre:= GOOS=windows GOARCH=386
 Go386Pre:= GOOS=linux GOARCH=386
 Wput_default :=wput -u -nc 
 
-GobinPathList:=$${HOME}/go/BBgo/go
-GObinNow:=$(strip $(wildcard $(shell echo $(GobinPathList))))
-ifeq (,$(GObinNow))
-$(info )
-$(info ' file do NOT exist : $(GobinPathList)')
-$(info )
-$(error )
-endif
-
 CFGrunGoINCset1:=\
 Makefile.3071.beautifyBase    \
 Makefile.3073.beautifyGo    \
