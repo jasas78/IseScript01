@@ -36,6 +36,8 @@ tmp_localProject_name2:=$(shell \
 	&& (grep '\bpackage=' src/AndroidManifest.xml |tr '"' ' ' |awk '{printf $$2}') \
 	|| echo org.golang.todo.$(tmp_localProject_name1) \
 	)
+tmp_localProject_name3:=$(shell \
+	echo $(tmp_localProject_name2) |tr '-' '_')
 dstApkList:=mobile/$(GoTOP).apk
 dstAPK:=$(firstword $(dstApkList))
 dstAPK:=mobile/$(tmp_localProject_name1).apk
@@ -78,19 +80,19 @@ bm :
 in:=im
 $(in):=install_target_apk_built_by_gomobile
 in :
-	-adb uninstall $(tmp_localProject_name2)
+	-adb uninstall $(tmp_localProject_name3)
 	adb install -r $(dstAPK)  
 tm:=test
 $(tm):=run_target_apk_built_by_gomobile
 tm :
-	adb shell am start -n $(tmp_localProject_name2)/org.golang.app.GoNativeActivity
+	adb shell am start -n $(tmp_localProject_name3)/org.golang.app.GoNativeActivity
 #	adb shell am start -n org.golang.todo.$(tmp_localProject_name1)/org.golang.app.GoNativeActivity
-#tmp_localProject_name2=$(tmp_localProject_name2)
+#tmp_localProject_name3=$(tmp_localProject_name3)
 
 un:=um
 $(un):=uninstall_the_android_package_apk
 un :
-	-adb uninstall $(tmp_localProject_name2)
+	-adb uninstall $(tmp_localProject_name3)
 
 showRunHelpList += cm c ll bm in tm un vpgo tour
 
