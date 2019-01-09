@@ -5,8 +5,9 @@ CFGrunGoINCset1:=\
 
 CFGrunGoINCset2:=$(foreach aa1,$(CFGrunGoINCset1),$(TM)/$(aa1))
 
-docDIRprefix1:=$(foreach aa1,src src? src??,$(aa1)/*. $(aa1)/*/*. $(aa1)/*/*/*.)
-docDIRprefix2:=$(foreach aa1,src src? src??,$(aa1)/Makefile* $(aa1)/*/Makefile* $(aa1)/*/*/Makefile*)
+docDIRprefix0:=src src? src?? exampleSRC exampleSRC? exampleSRC?? 
+docDIRprefix1:=$(foreach aa1,$(docDIRprefix0),$(aa1)/*. $(aa1)/*/*. $(aa1)/*/*/*.)
+docDIRprefix2:=$(foreach aa1,$(docDIRprefix0),$(aa1)/Makefile* $(aa1)/*/Makefile* $(aa1)/*/*/Makefile*)
 docVimFileSetS1:=$(sort $(wildcard $(foreach aa1,txt c h cpp hpp go pl plx,     $(foreach aa2,$(docDIRprefix1),$(aa2)$(aa1)) )))
 docVimFileSetS2:=$(sort $(wildcard $(foreach aa1,pdf,                           $(foreach aa2,$(docDIRprefix1),$(aa2)$(aa1)) )))
 docVimFileSetS3:=$(sort $(wildcard $(foreach aa1,jpg png gif jpeg bmp,          $(foreach aa2,$(docDIRprefix1),$(aa2)$(aa1)) )))
@@ -30,6 +31,7 @@ $(call genVimWithFileList,showSourceCodeTEXT4,$(docVimFileSetS4),do)
 $(call genVimWithFileList,showSourceCodeTEXT5,$(docVimFileSetS5),mm)
 $(call genVimWithFileList,showSourceCodeTEXT6,$(docVimFileSetS6),ff)
 
+$(iinfo docDIRprefix1 $(docDIRprefix1))
 $(iinfo docVimFileSetS5 $(docVimFileSetS5))
 $(iinfo docDIRprefix2 $(docDIRprefix2))
 $(iinfo docVimFileSetS6 $(docVimFileSetS6))

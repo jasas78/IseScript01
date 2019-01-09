@@ -24,7 +24,13 @@ Makefile.4001.go.lang.analyze    \
 
 CFGrunGoINCset2:=$(foreach aa1,$(CFGrunGoINCset1),$(TM)/$(aa1))
 
-goVimFileSetS:=$(sort $(wildcard src/*.go src?/*.go src/*.xml ))
+goVimFileSetSgo1:=src src? src?? exampleSRC exampleSRC? exampleSRC?? 
+goVimFileSetSgo2:=*.go *.xml
+goVimFileSetSgo8:=$(foreach aa1,$(goVimFileSetSgo1),$(foreach aa2,$(goVimFileSetSgo2),$(aa1)/$(aa2)))
+goVimFileSetSgo9:=$(sort $(wildcard $(goVimFileSetSgo8)))
+
+$(iinfo goVimFileSetSgo8 $(goVimFileSetSgo8))
+$(iinfo goVimFileSetSgo9 $(goVimFileSetSgo9))
 
 include $(CFGmakeEnv)
 
@@ -64,10 +70,11 @@ bm :
 	rm -f $(tmp_localProject_name1)
 	ln -s src/ $(tmp_localProject_name1)
 	ln -s $(tmp_localProject_path)/    /tmp/tmp.localProject
-	$(GObinPathX) \
-		$(GOapkNow) \
-		build  \
-		-target=android \
+	$(GObinPathX)          \
+		$(GOapkNow)        \
+		build              \
+		-target=android    \
+		-v                 \
 		-o      $(dstAPK)  \
 		tmp.localProject/$(tmp_localProject_name1)/$(tmp_localProject_name1)/ \
 		|| \
@@ -100,7 +107,7 @@ define showRunHelpTEXText1
 endef
 
 
-$(call genVimWithFileList,showSourceCodeTEXT0,$(goVimFileSetS),vg)
+$(call genVimWithFileList,showSourceCodeTEXT0,$(goVimFileSetSgo9),vg)
 
 
 $(eval $(foreach aa2,$(CFGrunGoINCset2),$(call tryINCmustExist,$(aa2),db8193911)))
@@ -115,7 +122,7 @@ bbb: $($(bbb))
 
 showRunHelpList += aaa bbb
 
-#$(info goVimFileSetS -> $(goVimFileSetS))
-btList01verilog += $(goVimFileSetS)
+#$(info goVimFileSetSgo9 -> $(goVimFileSetSgo9))
+btList01verilog += $(goVimFileSetSgo9)
 
 
