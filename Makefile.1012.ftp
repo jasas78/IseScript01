@@ -7,7 +7,10 @@ ftpACC2_default:=ftp://dd:dd@192.168.1.93
 ftpACCu_default:=ftp://capw:capw@192.168.1.93
 
 wgetX1:=wget -k -nc -r --no-parent --adjust-extension -olog01d.txt --remote-encoding=cp936
-wputX1:=wput -olog01u.txt --binary --reupload 
+wgetX2:=wget -k -nc -r --no-parent --adjust-extension -olog01d.txt --remote-encoding=utf8
+wgetY1:=wget -olog01d.txt --remote-encoding=cp936 -O -
+wgetY2:=wget -olog01d.txt --remote-encoding=utf8  -O -
+wputX1:=wput -olog01u.txt --binary --reupload --dont-continue 
 
 ## ifneq (,$(strip $(ftpACCd)))
 
