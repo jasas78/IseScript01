@@ -39,8 +39,8 @@ $(iinfo docVimFileSetS6 $(docVimFileSetS6))
 
 $(eval $(foreach aa2,$(CFGrunGoINCset2),$(call tryINCmustExist,$(aa2),db8193911)))
 
-aaa:=show_document_only
-$(aaa):=
+aaa?=show_document_only
+$(aaa)?=nothing_now
 aaa: $($(aaa))
 
 showRunHelpList += aaa 
