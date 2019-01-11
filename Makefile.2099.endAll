@@ -62,7 +62,7 @@ $(foreach aa1,$(ssList),$(eval export showSourceCodeTEXT$(aa1)))
 $(foreach aa1,1 2 3 4 5,$(eval export showRunHelpTEXText$(aa1)))
 export showRunHelpTEXT
 
-all: showSourceCode showOption showRunHelp
+all: showSourceCode showOption showRunHelp $(if $(showLast),showLast)
 #	echo kkk99000022
 endif
 
