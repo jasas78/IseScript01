@@ -21,8 +21,8 @@ srh:
 	@echo "$${showRunHelpTEXT}" ; echo
 	@[ -z "$${showRunHelpTEXText5}" ] || echo "$${showRunHelpTEXText5}" 
 	@$(if $(GOapkNow),echo "    GOapkNow=$(GOapkNow)";echo "    GObinNow=$(GObinNow)";echo)
-	@[ -z "$${showFtpHelpTEXTup}" ] || echo "$${showFtpHelpTEXTup}" 
-	@[ -z "$${showFtpHelpTEXTdown}" ] || echo "$${showFtpHelpTEXTdown}" 
+	@[ -z "$${showFtpHelpTEXTup}"   ] || echo "     $${showFtpHelpTEXTup}" 
+	@[ -z "$${showFtpHelpTEXTdown}" ] || echo "     $${showFtpHelpTEXTdown}" 
 
 ss:=showSourceCode
 $(ss):=show_all_source_files_in_current_dir_for_vim_______current_dir
