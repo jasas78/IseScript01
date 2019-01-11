@@ -32,3 +32,63 @@ XXXdl4:
 	@cat $(word 2,$($(dl4))) |hexdump -C > $(word 2,$($(dl4))).txt
 	@echo $$(ls -l $(word 2,$($(dl4)))) $$(ls -lh $(word 2,$($(dl4)))|awk '{print $$5}')
 endef
+
+
+#define CallExpandHelpOne
+#$(if $(strip $(filter $(1),space)),$(EOL1),\
+#$(1)         => $($(1))$(if $($($(1))),        =>> $($($(1))))\
+#)
+#
+#endef
+#
+#CallExpandHelpDependance=$(if $($(1)), $(eval $($(1)) : $(1) ))
+#
+define CallExpandFtpALLu3
+$(eeval $(1)=$$(EOL) $(foreach aa1,$(2),   $$(call CallExpandHelpOne,$(aa1))))\
+$(eeval $(foreach aa1,$(2),$(call CallExpandHelpDependance,$(aa1))))\
+$(eeval export $(1))
+endef
+
+upIdx1:=1
+downIdx1:=1
+
+define CallExpandFtpTOP3
+$(info "================top3===$1 , $2 , $3 : $4 , $5 , $6 ")
+endef
+
+wList3toend:=3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30
+define CallExpandFtpTOP2
+$(eval list=$($($(3))))
+$(eval add1=$($(1)Idx3))
+$(eval add2=$(shell expr $($(1)Idx3) + 1 ))
+
+$(eval p1=$(word $(add1),$(list)))
+$(eval p2=$(word $(add2),$(list)))
+
+$(iinfo "================top2===$1 , $2 , $3, $4 : $(upIdx1),$(downIdx1),$(upIdx2),$(downIdx2): $(p1), $(p2) : $(list) ")
+$(iinfo "================top2===$1 , $2 , $3 : $(p1), $(p2) , $($(1)Idx2) $($(1)Idx3) : $(add1) , $(add2) ")
+$(if $(p2),$(eval $(call CallExpandFtpTOP3,$1,$2,$3,$($(1)Idx2),$(p1),$(p2))))
+
+$(eval $(1)Idx3=$(shell expr $($(1)Idx3) + 2 ))
+$(eval $(1)Idx2=$(shell expr $($(1)Idx2) + 1 ))
+$(if $(p1)$(p2),$(eval $(call CallExpandFtpTOP2,$1,$2,$3)))
+endef
+
+define CallExpandFtpTOP1
+$(eval $$(1)Idx2:=1)
+$(eval $$(1)Idx3:=1)
+$(iinfo "================top1===$1 , $2 , $3, $4 : $(upIdx1),$(downIdx1),$(upIdx2),$(downIdx2): $(p1), $(p2) : $(list) ")
+$(eval $(foreach aa1,$($(3)),$(call CallExpandFtpTOP2,$(1),$(2),$(aa1))))
+endef
+
+CallExpandFtpALLup=$(eval   $(call CallExpandFtpTOP1,up,$(strip   $1),$(strip $2)))
+CallExpandFtpALLdown=$(eval $(call CallExpandFtpTOP1,down,$(strip $1),$(strip $2)))
+
+#$(foreach kk1,$1,$(info 2))
+#$(foreach kk1,$1,$(iinfo CallExpandFtpALLu2,$(kk1)))
+#$(eval $(foreach kk1,$$1,$(info 2)))
+# ftpRunHelpListUP
+# CallExpandFtpALLup
+# CallGenFtpHelpListDOWN
+#$(call CallExpandFtpALLup,showFtpHelpTEXTup,ftpRunHelpListUP )
+
