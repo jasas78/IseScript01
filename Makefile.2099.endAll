@@ -21,6 +21,8 @@ srh:
 	@echo "$${showRunHelpTEXT}" ; echo
 	@[ -z "$${showRunHelpTEXText5}" ] || echo "$${showRunHelpTEXText5}" 
 	@$(if $(GOapkNow),echo "    GOapkNow=$(GOapkNow)";echo "    GObinNow=$(GObinNow)";echo)
+	@[ -z "$${showFtpHelpTEXTup}" ] || echo "$${showFtpHelpTEXTup}" 
+	@[ -z "$${showFtpHelpTEXTdown}" ] || echo "$${showFtpHelpTEXTdown}" 
 
 ss:=showSourceCode
 $(ss):=show_all_source_files_in_current_dir_for_vim_______current_dir
@@ -55,12 +57,17 @@ all: showOption showVimMakefileList
 else
 $(call CallExpandHelpAll,showRunHelpTEXT,$(showRunHelpList))
 
+$(call CallGenFtpHelpListUP,showFtpHelpTEXTup,$(ftpRunHelpListUP))
+$(call CallGenFtpHelpListDOWN,showFtpHelpTEXTdown,$(ftpRunHelpListDOWN))
+
 # showSourceCodeTEXT0 showSourceCodeTEXT1 
 $(foreach aa1,$(ssList),$(eval export showSourceCodeTEXT$(aa1)))
 
 #export showRunHelpTEXText1
 $(foreach aa1,1 2 3 4 5,$(eval export showRunHelpTEXText$(aa1)))
 export showRunHelpTEXT
+export showFtpHelpTEXTup
+export showFtpHelpTEXTdown
 
 all: showSourceCode showOption showRunHelp $(if $(showLast),showLast)
 #	echo kkk99000022
