@@ -29,7 +29,8 @@ define ftpTEMPdown
 $1:
 	$(wgetY1)     $(ftpServerPathUP)/$(2)    > $(3)
 	@md5sum                            $(3)
-	@cat $(3) |hexdump -C > $(3).txt
+	$(if $(filter $(3),$(download_need_cp936_to_utf8)),cat $(3) |dos2unix|iconv -f cp936 -t utf8 -c > $(3).utf8.txt)
+	$(if $(filter $(3),$(download_need_hexdump)),cat $(3) |hexdump -C > $(3).hexdump.txt)
 	@echo $$$$(ls -l $(3))     $$$$(ls -lh $(3)|awk '{print $$$$5}')
 	@echo
 endef
