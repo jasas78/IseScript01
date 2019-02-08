@@ -68,7 +68,7 @@ bl:
 		$(Go386Pre) \
 		$(GObinNow) \
 		build  -o lnx/$(aa1).lnx.exe \
-		$(if $($(aa1)),$(wildcard $($(aa1)) src?/$($(aa1)) src?/$($(aa1)).go ) \
+		$(if $($(aa1)),$(wildcard $(foreach bb1,$($(aa1)),$(bb1) $(bb1).go src?/$(bb1) src?/$(bb1).go )) \
 		,$(goVimFileSetS)) $(EOL)\
 		strip lnx/$(aa1).lnx.exe $(EOL)\
 		)
