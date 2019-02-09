@@ -89,7 +89,10 @@ bl:
 	$(foreach aa1,$(GoTOP),\
 		$(GoPre$(aa2)) \
 		$(GObinNow) \
-		build  -o lnx/$(aa1).lnx.$(aa2).exe \
+		build  \
+		-a -ldflags '-w -extldflags "-static"' \
+		-tags 'osusergo netgo static_build' \
+		-o lnx/$(aa1).lnx.$(aa2).exe \
 		$(if $($(aa1)),$(wildcard $(foreach bb1,$($(aa1)),$(bb1) $(bb1).go src?/$(bb1) src?/$(bb1).go )) \
 		,$(goVimFileSetS)) $(EOL)\
 		$(Strip$(aa2)) lnx/$(aa1).lnx.$(aa2).exe $(EOL)\
