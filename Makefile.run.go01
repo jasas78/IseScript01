@@ -16,8 +16,29 @@ $(info )
 $(error )
 endif
 
-GoWinPre:= GOOS=windows GOARCH=386
-Go386Pre:= GOOS=linux GOARCH=386
+# https://gist.github.com/asukakenji/f15ba7e588ac42795f421b48b8aede63
+GOOS_list := android darwin dragonfly freebsd linux nacl netbsd openbsd plan9 solaris windows zos
+GOARCH_list := 386 amd64 amd64p32 arm armbe arm64 arm64be ppc64 ppc64le \
+	mips mipsle mips64 mips64le mips64p32 mips64p32le ppc s390 s390x sparc sparc64
+GOARCH_list32 := 386 amd64p32 arm armbe mips mipsle mips64p32 mips64p32le ppc s390 sparc
+GOARCH_list64 := amd64 arm64 arm64be ppc64 ppc64le mips64 mips64le s390x sparc64
+GOOS_GOARCH_32 := darwin/386 freebsd/386 freebsd/arm linux/386 linux/arm linux/mips linux/mipsle \
+	nacl/386 nacl/amd64p32 nacl/arm netbsd/386 netbsd/arm openbsd/386 openbsd/arm plan9/386 plan9/arm windows/386
+GOOS_GOARCH_64 := darwin/amd64 dragonfly/amd64 freebsd/amd64 linux/amd64 linux/arm64 linux/ppc64 linux/ppc64le \
+    linux/mips64 linux/mips64le linux/s390x netbsd/amd64 openbsd/amd64 plan9/amd64 solaris/amd64 windows/amd64
+
+GoPreWin386:=     GOOS=windows GOARCH=386
+GoPreLinux386:=   GOOS=linux   GOARCH=386
+GoPreLinuxX64:=   GOOS=linux   GOARCH=amd64
+GoPreLinuxArm:=   GOOS=linux   GOARCH=arm
+GoPreLinuxArm64:= GOOS=linux   GOARCH=arm64
+GoPreLinuxALL:= Linux386 LinuxArm LinuxX64 LinuxArm64
+
+StripLinux386:=strip
+StripLinuxX64:=strip
+StripLinuxArm:=arm-none-eabi-strip
+StripLinuxArm64:=aarch64-linux-gnu-strip
+
 Wput_default :=wput -u -nc 
 
 CFGrunGoINCset1:=\
@@ -53,7 +74,7 @@ ll:
 
 bw:=build_go_lang_for_win
 bw:
-	$(GoWinPre) \
+	$(GoPreWin386) \
 		$(GObinNow) \
 		build  -o win/$(GoTOP).win.exe $(goVimFileSetS) 
 	echo strip win/$(GoTOP).win.exe
@@ -64,14 +85,15 @@ endif
 
 bl:=build_go_lang_for_linux
 bl:
+	$(foreach aa2,$(GoPreLinuxALL),\
 	$(foreach aa1,$(GoTOP),\
-		$(Go386Pre) \
+		$(GoPre$(aa2)) \
 		$(GObinNow) \
-		build  -o lnx/$(aa1).lnx.exe \
+		build  -o lnx/$(aa1).lnx.$(aa2).exe \
 		$(if $($(aa1)),$(wildcard $(foreach bb1,$($(aa1)),$(bb1) $(bb1).go src?/$(bb1) src?/$(bb1).go )) \
 		,$(goVimFileSetS)) $(EOL)\
-		strip lnx/$(aa1).lnx.exe $(EOL)\
-		)
+		$(Strip$(aa2)) lnx/$(aa1).lnx.$(aa2).exe $(EOL)\
+		))
 	ls -l lnx/* -d
 
 tt:=test
