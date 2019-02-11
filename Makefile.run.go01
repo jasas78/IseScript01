@@ -33,6 +33,7 @@ GoPreLinuxX64:=   GOOS=linux   GOARCH=amd64
 GoPreLinuxArm:=   GOOS=linux   GOARCH=arm
 GoPreLinuxArm64:= GOOS=linux   GOARCH=arm64
 GoPreLinuxALL:= Linux386 LinuxArm LinuxX64 LinuxArm64
+GoPreDockerALL:= Linux386 LinuxArm LinuxX64 LinuxArm64
 
 StripLinux386:=strip
 StripLinuxX64:=strip
@@ -42,6 +43,7 @@ StripLinuxArm64:=aarch64-linux-gnu-strip
 Wput_default :=wput -u -nc 
 
 CFGrunGoINCset1:=\
+Makefile.1021.docker01 \
 Makefile.3071.beautifyBase    \
 Makefile.3073.beautifyGo    \
 Makefile.4001.go.lang.analyze    \
