@@ -84,6 +84,7 @@ bdi:
 	$(eval bb2:=$(shell echo $(aa1).lnx.$(aa2).exe|tr [A-Z\-] [a-z_]))\
 	$(call DockerBuildTP01,$(bb1),$(bb2))\
 	))
+	docker images |egrep '(seconds* ago|minutes* ago)'
 
 #	@echo "_doing $(aa1) $(aa2) lnx/$(bb1) $(bb2)" ;\
 #	exit 33$(EOL)\
