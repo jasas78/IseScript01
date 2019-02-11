@@ -87,6 +87,7 @@ bl:=build_go_lang_for_linux
 bl:
 	$(foreach aa2,$(GoPreLinuxALL),\
 	$(foreach aa1,$(GoTOP),\
+		CGO_ENABLED=0 \
 		$(GoPre$(aa2)) \
 		$(GObinNow) \
 		build  \
