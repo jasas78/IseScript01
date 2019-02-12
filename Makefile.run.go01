@@ -113,6 +113,7 @@ lnx/$(1).lnx.$(2).exe : $(lnxGoSrc01)
 				-o lnx/$(1).lnx.$(2).exe \
 				$(lnxGoSrc01)
 	$(Strip$(2)) lnx/$(1).lnx.$(2).exe
+	-docker image rm $(shell echo $(1).lnx.$(2).exe|tr [A-Z\-] [a-z_])
 
 endef
 

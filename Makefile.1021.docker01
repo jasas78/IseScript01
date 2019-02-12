@@ -80,7 +80,7 @@ $(eval bb1:=$(1).lnx.$(2).exe)\
 $(eval bb2:=$(shell echo $(1).lnx.$(2).exe|tr [A-Z\-] [a-z_]))\
 $(eval bb3:=$(strip $(shell docker images |grep ^'$(bb2)\b')))\
 $(iinfo $(bb1),$(bb2),$(bb3))\
-$(if $(bb3),@echo "$(bb3) ... skip",\
+$(if $(bb3),@echo "$(bb3) ... ... ... skip",\
 $(call DockerBuildTP01,$(bb1),$(bb2))\
 )
 
@@ -96,7 +96,9 @@ bdi:
 	$(foreach aa2,$(GoPreDockerALL),\
 	$(call DockerBuildTP03,$(aa1),$(aa2))\
 	))
-	docker images |egrep '(seconds* ago|minutes* ago)'
+	$(foreach aa1,$(DockerList),\
+	@-docker images |grep ^'$(aa1)\b' 2>/dev/null $(EOL)\
+	)
 
 #	@echo "_doing $(aa1) $(aa2) lnx/$(bb1) $(bb2)" ;\
 #	exit 33$(EOL)\
