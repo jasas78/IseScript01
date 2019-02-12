@@ -69,20 +69,32 @@ define DockerBuildTP02
 
 endef
 
+#-docker rmi $2 2>/dev/null
 define DockerBuildTP01
--docker rmi $2 2>/dev/null
-cd lnx && tar cf - $1|docker import --change 'CMD ["/$1"]' - $2
+tar -cf -   -C lnx       $1|docker import --change 'CMD ["/$1"]' - $2
 
 endef
+
+define DockerBuildTP03
+$(eval bb1:=$(1).lnx.$(2).exe)\
+$(eval bb2:=$(shell echo $(1).lnx.$(2).exe|tr [A-Z\-] [a-z_]))\
+$(eval bb3:=$(strip $(shell docker images |grep ^'$(bb2)\b')))\
+$(iinfo $(bb1),$(bb2),$(bb3))\
+$(if $(bb3),@echo "$(bb3) ... skip",\
+$(call DockerBuildTP01,$(bb1),$(bb2))\
+)
+
+$(ccall DockerBuildTP01,$(bb1),$(bb2),$(bb3))
+
+endef
+
 
 bdi:=build_docker_images_for_test_only
 bdi:
 	@echo "Runing $($@)"
 	$(foreach aa1,$(DockerList),\
 	$(foreach aa2,$(GoPreDockerALL),\
-	$(eval bb1:=$(aa1).lnx.$(aa2).exe)\
-	$(eval bb2:=$(shell echo $(aa1).lnx.$(aa2).exe|tr [A-Z\-] [a-z_]))\
-	$(call DockerBuildTP01,$(bb1),$(bb2))\
+	$(call DockerBuildTP03,$(aa1),$(aa2))\
 	))
 	docker images |egrep '(seconds* ago|minutes* ago)'
 
