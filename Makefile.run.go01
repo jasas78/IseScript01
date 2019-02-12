@@ -86,21 +86,50 @@ ifdef wputPATH
 endif
 
 bl:=build_go_lang_for_linux
-bl:
-	$(foreach aa2,$(GoPreLinuxALL),\
+## bl:
+## 	$(foreach aa2,$(GoPreLinuxALL),\
+## 	$(foreach aa1,$(GoTOP),\
+## 		CGO_ENABLED=0 \
+## 		$(GoPre$(aa2)) \
+## 		$(GObinNow) \
+## 		build  \
+## 		-a -ldflags '-w -extldflags "-static"' \
+## 		-tags 'osusergo netgo static_build' \
+## 		-o lnx/$(aa1).lnx.$(aa2).exe \
+## 		$(if $($(aa1)),$(wildcard $(foreach bb1,$($(aa1)),$(bb1) $(bb1).go src?/$(bb1) src?/$(bb1).go )) \
+## 		,$(goVimFileSetS)) $(EOL)\
+## 		$(Strip$(aa2)) lnx/$(aa1).lnx.$(aa2).exe $(EOL)\
+## 		))
+## 	ls -l lnx/* -d
+bl: $(foreach aa2,$(GoPreLinuxALL),\
 	$(foreach aa1,$(GoTOP),\
-		CGO_ENABLED=0 \
-		$(GoPre$(aa2)) \
-		$(GObinNow) \
-		build  \
-		-a -ldflags '-w -extldflags "-static"' \
-		-tags 'osusergo netgo static_build' \
-		-o lnx/$(aa1).lnx.$(aa2).exe \
-		$(if $($(aa1)),$(wildcard $(foreach bb1,$($(aa1)),$(bb1) $(bb1).go src?/$(bb1) src?/$(bb1).go )) \
-		,$(goVimFileSetS)) $(EOL)\
-		$(Strip$(aa2)) lnx/$(aa1).lnx.$(aa2).exe $(EOL)\
+		lnx/$(aa1).lnx.$(aa2).exe \
 		))
-	ls -l lnx/* -d
+	@ls -l lnx/* -d
+
+
+define build_go_lang_tp02
+endef
+define build_go_lang_tp01
+lnx/$(1).lnx.$(2).exe : 
+	@echo "building...[$$@]"
+	CGO_ENABLED=0 \
+				$(GoPre$(2)) \
+				$$(GObinNow) \
+				build  \
+				-a -ldflags '-w -extldflags "-static"' \
+				-tags 'osusergo netgo static_build' \
+				-o lnx/$(1).lnx.$(2).exe \
+				$(if $($(1)),$(wildcard $(foreach bb1,$($(1)),$(bb1) $(bb1).go src?/$(bb1) src?/$(bb1).go )) \
+				,$(goVimFileSetS))
+	$(Strip$(2)) lnx/$(1).lnx.$(2).exe
+
+endef
+
+$(foreach aa2,$(GoPreLinuxALL),\
+	$(foreach aa1,$(GoTOP),\
+	$(eval $(call build_go_lang_tp01,$(aa1),$(aa2)))\
+	))
 
 tt:=test
 $(tt):=$(foreach aa1,$(GoTOP),lnx/$(aa1).lnx.exe )
