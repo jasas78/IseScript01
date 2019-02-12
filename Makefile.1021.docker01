@@ -104,7 +104,14 @@ ccc:
 		docker container rm $${aa1} ; \
 		done
 
-showRunHelpList += ccc cdn bdi
+cdi:=clean_docker_images
+cdi: 
+	@echo "Runing $($@)"
+	@-for aa1 in $$(docker container ls -a |awk '{print $$1}'|grep -v ^CONTAINER) ; do\
+		docker container rm $${aa1} ; \
+		done
+
+showRunHelpList += ccc cdn cdi bdi
 
 
 endif

@@ -32,8 +32,8 @@ GoPreLinux386:=   GOOS=linux   GOARCH=386
 GoPreLinuxX64:=   GOOS=linux   GOARCH=amd64
 GoPreLinuxArm:=   GOOS=linux   GOARCH=arm
 GoPreLinuxArm64:= GOOS=linux   GOARCH=arm64
-GoPreLinuxALL:= Linux386 LinuxArm LinuxX64 LinuxArm64
-GoPreDockerALL:= Linux386 LinuxArm LinuxX64 LinuxArm64
+GoPreLinuxALL?= Linux386 LinuxArm LinuxX64 LinuxArm64
+GoPreDockerALL?= Linux386 LinuxArm LinuxX64 LinuxArm64
 
 StripLinux386:=strip
 StripLinuxX64:=strip
