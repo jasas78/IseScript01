@@ -55,6 +55,7 @@ ifdef inMakeScriptDIR
 all: showOption showVimMakefileList
 #	echo kkk99000021
 else
+showRunHelpList += $(showRunHelpListLast)
 $(call CallExpandHelpAll,showRunHelpTEXT,$(showRunHelpList))
 
 $(call CallExpandFtpALLup,   showFtpHelpTEXTup,   ftpRunHelpListUP)

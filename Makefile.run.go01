@@ -145,7 +145,8 @@ $(aaa):=cw cl bw bl
 aaa: $($(aaa))
 
 lnx:=build_and_test_linux_only
-lnx:cl bl tt
+$(lnx):=cl bl tt
+lnx:$($(lnx))
 
 showRunHelpList += aaa lnx
 
