@@ -71,8 +71,10 @@ define DockerBuildTP02
 endef
 
 #-docker rmi $2 2>/dev/null
+#-docker push   $2:`date +"%Y_%m_%d__%H%M%S__%s"`
 define DockerBuildTP01
 tar -cf -   -C lnx       $1|docker import --change 'CMD ["/$1"]' - $2
+-docker push   $2
 
 endef
 
@@ -84,8 +86,6 @@ $(iinfo $(bb1),$(bb2),$(bb3))\
 $(if $(bb3),@echo "$(bb3) ... ... ... skip",\
 $(call DockerBuildTP01,$(bb1),$(bb2))\
 )
-
-$(ccall DockerBuildTP01,$(bb1),$(bb2),$(bb3))
 
 endef
 
