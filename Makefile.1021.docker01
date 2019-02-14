@@ -78,7 +78,7 @@ endef
 
 define DockerBuildTP03
 $(eval bb1:=$(1).lnx.$(2).exe)\
-$(eval bb2:=$(shell echo $(1).lnx.$(2).exe|tr [A-Z\-] [a-z_]))\
+$(eval bb2:=$(DockerUserName)/$(shell echo $(1).lnx.$(2).exe|tr [A-Z\-] [a-z_]))\
 $(eval bb3:=$(strip $(shell docker images |grep ^'$(bb2)\b')))\
 $(iinfo $(bb1),$(bb2),$(bb3))\
 $(if $(bb3),@echo "$(bb3) ... ... ... skip",\
@@ -97,9 +97,7 @@ bdi:
 	$(foreach aa2,$(GoPreDockerALL),\
 	$(call DockerBuildTP03,$(aa1),$(aa2))\
 	))
-	$(foreach aa1,$(DockerList),\
-	@-docker images |grep ^'$(aa1)\b' 2>/dev/null $(EOL)\
-	)
+	-docker images |grep ^'$(DockerUserName)/' 2>/dev/null 
 
 #	@echo "_doing $(aa1) $(aa2) lnx/$(bb1) $(bb2)" ;\
 #	exit 33$(EOL)\
@@ -122,8 +120,8 @@ ccc:
 cdi:=clean_docker_images
 cdi: 
 	@echo "Runing $($@)"
-	@-for aa1 in $$(docker container ls -a |awk '{print $$1}'|grep -v ^CONTAINER) ; do\
-		docker container rm $${aa1} ; \
+	for aa1 in $$(docker image ls |awk '{print $$1}'|grep ^'$(DockerUserName)/') ; do\
+		docker image rm $${aa1} ; \
 		done
 
 showRunHelpList += ccc cdn cdi bdi
