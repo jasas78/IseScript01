@@ -96,9 +96,11 @@ bl: $(foreach aa2,$(GoPreLinuxALL),\
 define build_go_lang_tp02
 endef
 define build_go_lang_tp01
+$(eval lnxGoSrc00:=$(wildcard $(1) $(1).go src?/$(1) src?/$(1).go))
+$(eval lnxGoDir01:=$(shell dirname $(firstword $(lnxGoSrc00))))
 $(eval lnxGoSrc01:=\
 	$(if $($(1)),\
-	$(wildcard $(foreach bb1,$($(1)),$(bb1) $(bb1).go src?/$(bb1) src?/$(bb1).go )) \
+	$(wildcard $(foreach bb1,$($(1)),$(bb1) $(bb1).go $(lnxGoDir01)/$(bb1) $(lnxGoDir01)/$(bb1).go )) \
 	,$(goVimFileSetS)\
 	)\
 )
