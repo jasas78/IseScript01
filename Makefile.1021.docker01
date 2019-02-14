@@ -78,7 +78,7 @@ endef
 
 define DockerBuildTP03
 $(eval bb1:=$(1).lnx.$(2).exe)\
-$(eval bb2:=$(DockerUserName)/$(shell echo $(1).lnx.$(2).exe|tr [A-Z\-] [a-z_]))\
+$(eval bb2:=$(DockerUserName)/$(shell echo $(1).lnx.$(2).exe|tr [A-Z] [a-z]|tr -d '\.\-_'))\
 $(eval bb3:=$(strip $(shell docker images |grep ^'$(bb2)\b')))\
 $(iinfo $(bb1),$(bb2),$(bb3))\
 $(if $(bb3),@echo "$(bb3) ... ... ... skip",\

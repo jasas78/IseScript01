@@ -113,7 +113,8 @@ lnx/$(1).lnx.$(2).exe : $(lnxGoSrc01)
 				-o lnx/$(1).lnx.$(2).exe \
 				$(lnxGoSrc01)
 	$(Strip$(2)) lnx/$(1).lnx.$(2).exe
-	$(if $(strip $(DockerList)),-docker image rm $$(DockerUserName)/$(shell echo $(1).lnx.$(2).exe|tr [A-Z\-] [a-z_]))
+	$(if $(strip $(DockerList)),-echo ; docker image rm \
+		$$(DockerUserName)/$(shell echo $(1).lnx.$(2).exe|tr [A-Z] [a-z]|tr -d '\.\-_' 2>/dev/null))
 
 endef
 
