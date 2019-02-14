@@ -90,8 +90,8 @@ $(ccall DockerBuildTP01,$(bb1),$(bb2),$(bb3))
 endef
 
 
-bdi:=build_docker_images_for_test_only
-bdi:
+dkb:=build_docker_images_for_test_only
+dkb:
 	@echo "Runing $($@)"
 	$(foreach aa1,$(DockerList),\
 	$(foreach aa2,$(GoPreDockerALL),\
@@ -103,28 +103,31 @@ bdi:
 #	exit 33$(EOL)\
 #
 
-cdn:=clean_docker_none
-cdn :
+dkcn:=clean_docker_none
+dkcn :
 	@echo "Runing $($@)"
 	 @echo ; for aa1 in $$(docker images  |grep '<none>'  |awk '{print $$3}' ) ; do\
 		 echo docker image rm $${aa1} ; \
 		      docker image rm $${aa1} ; \
 		 done
-ccc:=clean_docker_cache
-ccc: 
+dkcc:=clean_docker_cache
+dkcc: 
 	@echo "Runing $($@)"
 	@-for aa1 in $$(docker container ls -a |awk '{print $$1}'|grep -v ^CONTAINER) ; do\
 		docker container rm $${aa1} ; \
 		done
 
-cdi:=clean_docker_images
-cdi: 
+dkci:=clean_docker_images
+dkci: 
 	@echo "Runing $($@)"
 	for aa1 in $$(docker image ls |awk '{print $$1}'|grep ^'$(DockerUserName)/') ; do\
 		docker image rm $${aa1} ; \
 		done
 
-showRunHelpList += ccc cdn cdi bdi
+dkl:=docker_login
+$(dkl)=docker login -u $(DockerUserName)
+
+showRunHelpList += dkcc dkcn dkci dkb dkl
 
 
 endif
