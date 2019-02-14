@@ -47,6 +47,7 @@ all:
 #
 
 ifdef DockerList
+DockerUserName?=dengyanuoapp
 DockerSource?=dyn_empty_docker
 #DockerSource:=scratchx
 DockerSource:=$(strip $(DockerSource))
