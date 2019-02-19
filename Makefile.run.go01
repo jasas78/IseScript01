@@ -50,7 +50,8 @@ Makefile.4001.go.lang.analyze    \
 
 CFGrunGoINCset2:=$(foreach aa1,$(CFGrunGoINCset1),$(TM)/$(aa1))
 
-goVimFileSetS:=$(sort $(wildcard src/*.go src?/*.go ))
+goVimFileSetS2:=$(sort $(wildcard src/*.go src?/*.go ))
+goVimFileSetS:=$(sort $(foreach aa1, $(goVimFileSetS2) $(goVimFileSetS2) ,$(shell /usr/bin/realpath --relative-to . $(aa1))))
 
 include $(CFGmakeEnv)
 
