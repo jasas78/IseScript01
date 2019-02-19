@@ -126,8 +126,8 @@ lnx/$(1).lnx.$(2).exe : $(lnxGoSrc01)
 
 endef
 
-$(info GoPreLinuxALL:$(GoPreLinuxALL))
-$(info GoTOP:$(GoTOP))
+$(iinfo GoPreLinuxALL:$(GoPreLinuxALL))
+$(iinfo GoTOP:$(GoTOP))
 $(foreach aa2,$(GoPreLinuxALL),\
 	$(foreach aa1,$(GoTOP),\
 	$(eval $(call build_go_lang_tp01,$(aa1),$(aa2)))\
