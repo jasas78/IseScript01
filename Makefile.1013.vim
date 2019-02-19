@@ -153,6 +153,6 @@ $(eval export $(1))\
 
 endef
 
-MakefileList:=$(sort $(wildcard $(TM)/Makefile*))
+MakefileList:=$(sort $(shell /usr/bin/realpath --relative-to . $(wildcard $(TM)/Makefile*)))
 $(call genVimWithFileList,showVimMakefileListText,$(MakefileList),vm)
 
