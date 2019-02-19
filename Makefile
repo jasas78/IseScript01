@@ -15,7 +15,7 @@ TN:=$(shell /usr/bin/realpath --relative-to . $(TT)/script.NOW)
 
 CFGmake00env:=$(wildcard $(TM)/Makefile.00.env)
 ifndef CFGmake00env
-$(error "173800 why      $(TM)/Makefile.00.env don't exist ?")
+$(eerror "173800 why      $(TM)/Makefile.00.env don't exist ?")
 endif
 include $(CFGmake00env)
 
