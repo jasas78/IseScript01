@@ -16,6 +16,7 @@ cg:=coreGen
 
 cgDIR:=$(shell pwd)
 cgROMname?=cgROMname
+$(info cgROMname:$(cgROMname))
 cgSRCdir:=$(shell dirname $(cgROMname))
 cgSRCname1:=$(shell basename $(cgROMname))
 cgSRCname2:=$(patsubst %.xise,%, $(cgSRCname1) )

@@ -1,6 +1,7 @@
 all: 
 
 XD1:=$(wildcard $(shell realpath $(TM)/settings64.sh))
+$(info XD1:$(XD1))
 XD2:=$(shell dirname  $(if $(XD1),$(XD1),/))
 XD3:=$(XD2)/ISE/bin/lin64
 Xilinx_lic_path2:=$(firstword $(wildcard \

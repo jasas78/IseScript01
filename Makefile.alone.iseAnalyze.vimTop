@@ -32,6 +32,7 @@ ifeq (,$(CFGmakeVimBase))
 $(error 'CFGmakeVimBase not found 001 ')
 endif
 CFGmakeVimBase:=$(shell realpath $(CFGmakeVimBase))
+$(info 'CFGmakeVimBase:$(CFGmakeVimBase)')
 CFGmakeVimBase:=$(shell dirname $(CFGmakeVimBase))
 CFGmakeVimBase:=$(CFGmakeVimBase)/Makefile.vimBase
 CFGmakeVimBase:=$(wildcard $(CFGmakeVimBase))
