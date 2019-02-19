@@ -99,7 +99,7 @@ define build_go_lang_tp02
 endef
 define build_go_lang_tp01
 $(eval lnxGoSrc00:=$(wildcard $(1) $(1).go src?/$(1) src?/$(1).go))
-$(eval $$(info lnxGoSrc00?=NOTexist183818:$1))
+$(eval $$(info lnxGoSrc00?=NOTexist183817:$1))
 $(eval lnxGoDir01:=$(shell dirname $(firstword $(lnxGoSrc00))))
 $(eval lnxGoSrc01:=\
 	$(if $($(1)),\
@@ -125,6 +125,8 @@ lnx/$(1).lnx.$(2).exe : $(lnxGoSrc01)
 
 endef
 
+$(info GoPreLinuxALL:$(GoPreLinuxALL))
+$(info GoTOP:$(GoTOP))
 $(foreach aa2,$(GoPreLinuxALL),\
 	$(foreach aa1,$(GoTOP),\
 	$(eval $(call build_go_lang_tp01,$(aa1),$(aa2)))\
