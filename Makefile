@@ -4,11 +4,13 @@ awk:=$(env64) awk
 
 all:
 
-File01?=$(shell realpath ./Makefile)
+File01?=$(shell /usr/bin/realpath --relative-to . ./Makefile)
+File01?=$(shell /usr/bin/realpath --relative-to . ./Makefile.notExist038381)
 export File01
-TT:=$(shell realpath .)
+TT:=$(shell /usr/bin/realpath --relative-to . .)
+$(info File01:$(File01))
 TM:=$(shell dirname $(File01))
-TN:=$(shell realpath $(TT)/script.NOW)
+TN:=$(shell /usr/bin/realpath --relative-to . $(TT)/script.NOW)
 
 
 CFGmake00env:=$(wildcard $(TM)/Makefile.00.env)

@@ -1,12 +1,15 @@
 all: 
 
-XD1:=$(shell realpath $(TM)/settings64.sh)
-XD2:=$(shell dirname  $(XD1))
+XD1:=$(wildcard $(shell realpath $(TM)/settings64.sh))
+XD2:=$(shell dirname  $(if $(XD1),$(XD1),/))
 XD3:=$(XD2)/ISE/bin/lin64
-Xilinx_lic_path:=$(shell realpath $(XD2)/../../../Xilinx_ise.lic)
-$(if $(strip $(Xilinx_lic_path)),,Xilinx_lic_path:=$(shell realpath $(XD2)/../../Xilinx_ise.lic))
-$(if $(strip $(Xilinx_lic_path)),,Xilinx_lic_path:=$(shell realpath $(XD2)/../Xilinx_ise.lic))
-$(if $(strip $(Xilinx_lic_path)),,Xilinx_lic_path:=$(shell realpath $(XD2)/Xilinx_ise.lic))
+Xilinx_lic_path2:=$(firstword $(wildcard \
+	$(XD2)/../../../Xilinx_ise.lic \
+	$(XD2)/../../Xilinx_ise.lic \
+	$(XD2)/../Xilinx_ise.lic \
+	$(XD2)/Xilinx_ise.lic \
+	))
+Xilinx_lic_path:=$(shell realpath $(if $(Xilinx_lic_path2),$(Xilinx_lic_path2),./Xilinx_ise.lic))
 
 XILINXD_LICENSE_FILE:=$(Xilinx_lic_path)
 export XILINXD_LICENSE_FILE

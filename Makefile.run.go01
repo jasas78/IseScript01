@@ -99,6 +99,7 @@ define build_go_lang_tp02
 endef
 define build_go_lang_tp01
 $(eval lnxGoSrc00:=$(wildcard $(1) $(1).go src?/$(1) src?/$(1).go))
+$(eval lnxGoSrc00?=NOTexist183818)
 $(eval lnxGoDir01:=$(shell dirname $(firstword $(lnxGoSrc00))))
 $(eval lnxGoSrc01:=\
 	$(if $($(1)),\
