@@ -8,7 +8,7 @@ File01?=$(shell /usr/bin/realpath --relative-to . ./Makefile)
 File01?=$(shell /usr/bin/realpath --relative-to . ./Makefile.notExist038381)
 export File01
 TT:=$(shell /usr/bin/realpath --relative-to . .)
-$(info File01:$(File01))
+$(iinfo File01:$(File01))
 TM:=$(shell dirname $(File01))
 TN:=$(shell /usr/bin/realpath --relative-to . $(TT)/script.NOW)
 
