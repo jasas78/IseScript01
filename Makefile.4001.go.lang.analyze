@@ -78,4 +78,4 @@ tour:
 	@echo
 
 vg:
-	echo ; [ -n "$(DST)" ] && $(GObinNow)fmt -w $(DST) || (echo "usage : make vg DST=XXX.go" ; echo )
+	echo ; [ -n "$(DST)" ] && vim $(DST) && $(GObinNow)fmt -w $(DST) || (echo "usage : make vg DST=XXX.go" ; echo )
