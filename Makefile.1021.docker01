@@ -106,7 +106,7 @@ dkb:
 dkcn:=clean_docker_none
 dkcn :
 	@echo "Runing $($@)"
-	 @echo ; for aa1 in $$(docker images  |grep '<none>'  |awk '{print $$3}' ) ; do\
+	 @echo ; for aa1 in $$(docker image ls -a  |grep '<none>'  |awk '{print $$3}' ) ; do\
 		 echo docker image rm $${aa1} ; \
 		      docker image rm $${aa1} ; \
 		 done
@@ -121,6 +121,9 @@ dkci:=clean_docker_images
 dkci: 
 	@echo "Runing $($@)"
 	for aa1 in $$(docker image ls |awk '{print $$1}'|grep ^'$(DockerUserName)/') ; do\
+		docker image rm $${aa1} ; \
+		done
+	for aa1 in $$(docker image ls |awk '{print $$1}'|grep ^'udp_test/') ; do\
 		docker image rm $${aa1} ; \
 		done
 
