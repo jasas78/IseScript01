@@ -78,6 +78,9 @@ tour:
 	@echo
 
 vg:
-	echo ; [ -n "$(DST)" ] && vim $(DST) && $(GObinNow)fmt -w $(DST) || (echo "usage : make vg DST=XXX.go" ; echo )
+	@echo 
+	@[ -n "$(DST)" ] && [ -f "$(DST)" ] || (echo "938381 usage : make vg DST=XXX.go" ; echo ; exit 32 )
+	vim $(DST) 
+	@$(GObinNow)fmt -w `realpath $(sort $(wildcard $(DST) *.go src?/*.go))`
 btgo:
 	$(GObinNow)fmt -w src?/*.go
