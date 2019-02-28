@@ -79,6 +79,7 @@ tour:
 
 vg:
 	@echo 
+	make vp
 	@[ -n "$(DST)" ] && [ -f "$(DST)" ] || (echo "938381 usage : make vg DST=XXX.go" ; echo ; exit 32 )
 	vim $(DST) 
 	@$(GObinNow)fmt -w `realpath $(sort $(wildcard $(DST) *.go src?/*.go))`

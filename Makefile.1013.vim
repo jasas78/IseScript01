@@ -27,6 +27,7 @@ vp:=vim_prepare1
 vp: vpc
 	@#echo kkk11
 	@#mkdir -p _vim src1 src2 src3 src9
+	@echo ===== vp ing : $(vp) =====
 	@[ -d src9 ] || mkdir src9
 	@[ -d _vim ] || mkdir _vim
 	@ls $(wildcard $(TM)/Makefile*)    > _vim/cscope.in0
