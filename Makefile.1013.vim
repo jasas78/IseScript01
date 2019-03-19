@@ -59,6 +59,7 @@ vp: vpc
 		>_vim/cscope.files
 	@
 	@#rm -f _vim/cscope.in? cscope.out tags
+	@rm -f                  cscope.out tags
 	@ctags -L _vim/cscope.files
 	@cscope -Rbu  -k -i _vim/cscope.files 
 	sync
