@@ -2,13 +2,13 @@ all:
 
 $(if $(synopsysPATH),,$(error 'you should define the synopsysPATH and run again'))
 
-# srcDeselectAll -win $$_nTrace1
+# srcDeseLectAll -win $$_nTrace1
 # srcSelect -signal "rst" -win $$_nTrace1
 # srcAddSelectedToWave -win $$_nTrace1
-# srcDeselectAll -win $$_nTrace1
+# srcDeseLectAll -win $$_nTrace1
 # srcSelect -signal "clk" -win $$_nTrace1
 # srcAddSelectedToWave -win $$_nTrace1
-# srcDeselectAll -win $$_nTrace1
+# srcDeseLectAll -win $$_nTrace1
 # srcSelect -signal "c" -win $$_nTrace1
 # srcAddSelectedToWave -win $$_nTrace1
 

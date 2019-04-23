@@ -49,7 +49,7 @@ Usage: promgen [-b] [-spi] [-p mcs|exo|tek|hex|bin|ieee1532|ufp] [-o <outfile>
 {<outfile>}] [-s <size> {<size>}] [-x <xilinx_prom> {<xilinx_prom>}] [-c
 [<hexbyte>]] [-l] [-w] [-bpi_dc serial|parallel] [-intstyle ise|xflow|silent]
 [-t <templatefile[.pft]>] [-z [<version:0,3>]] [-i <version:0,3>] [-data_width
-8|16|32] [-config_mode selectmap8|selectmap16|selectmap32] {-ver <version:0,3>
+8|16|32] [-config_mode sElectmap8|sElectmap16|sElectmap32] {-ver <version:0,3>
 <file> {<file>}} {-u <hexaddr> <file> {<file>}} {-d <hexaddr> <file> {<file>}}
 {-n <file> {<file>}} {-bd <file> [start <hexaddr>] [tag <tagname> {<tagname>}]}
 {-bm <file>} {-data_file up|down <hexaddr> <file> {<file>}} [-r <promfile>] 

@@ -108,6 +108,7 @@ $(eval lnxGoSrc01:=\
 	,$(goVimFileSetS)\
 	)\
 )
+$(if $(wildcard $(filter %test.go,$(lnxGoSrc01))),$(error " *test.go is not allow in the source file." ))
 lnx/$(1).lnx.$(2).exe : $(lnxGoSrc01)
 	@echo "building...[$$@]"
 	CGO_ENABLED=0 \
