@@ -135,9 +135,10 @@ $(foreach aa2,$(GoPreLinuxALL),\
 	))
 
 tt:=test
-$(tt):=$(foreach aa1,$(GoTOP),lnx/$(aa1).lnx.exe )
+
+$(tt):=$(foreach aa2,$(GoPreLinuxALL),$(foreach aa1,$(GoTOP),lnx/$(aa1).lnx.$(aa2).exe ))
 tt:
-	$(foreach aa1,$(GoTOP),lnx/$(aa1).lnx.exe $(runPara_$(aa1)) $(EOL))
+	$(foreach aa2,$(GoPreLinuxALL),$(foreach aa1,$(GoTOP),lnx/$(aa1).lnx.$(aa2).exe $(runPara_$(aa1)) $(EOL)))
 	@reset
 
 
