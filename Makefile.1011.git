@@ -13,6 +13,12 @@ gc :
 	echo "$(TT)_ _$(time_called)" > date.now.txt
 	git commit -a --template=date.now.txt
 	sync
+git:
+	@echo
+	@echo ' if met error, try ... '
+	@echo 'git config --global pack.windowMemory "32m"'
+	@echo 'git repack -a -d --window-memory 10m --max-pack-size 100m '
+	@echo
 
 gd:=git_diff
 $(gd):=git_diff______current_dir_files

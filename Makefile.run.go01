@@ -28,6 +28,8 @@ GOOS_GOARCH_64 := darwin/amd64 dragonfly/amd64 freebsd/amd64 linux/amd64 linux/a
     linux/mips64 linux/mips64le linux/s390x netbsd/amd64 openbsd/amd64 plan9/amd64 solaris/amd64 windows/amd64
 
 GoPreWin386:=     GOOS=windows GOARCH=386
+GoPreWinALL?=     Win386
+
 GoPreLinux386:=   GOOS=linux   GOARCH=386
 GoPreLinuxX64:=   GOOS=linux   GOARCH=amd64
 GoPreLinuxArm:=   GOOS=linux   GOARCH=arm
@@ -77,12 +79,17 @@ ll:
 	@ls -dl win/* ; echo ;ls -dl lnx/* ; 
 
 bw:=build_go_lang_for_win
-bw:
-	$(GoPreWin386) \
-		$(GObinNow) \
-		build  -o win/$(GoTOP).win.exe $(goVimFileSetS) 
-	echo strip win/$(GoTOP).win.exe
-	ls -l win/* -d
+bw: $(foreach aa2,$(GoPreWinALL),\
+	$(foreach aa1,$(GoTOP),\
+		win/$(aa1).win.$(aa2).exe \
+		))
+	@ls -l win/* -d
+
+#	$(GoPreWin386) \
+#		$(GObinNow) \
+#		build  -o win/$(GoTOP).win.exe $(goVimFileSetS) 
+#	echo strip win/$(GoTOP).win.exe
+#	ls -l win/* -d
 ifdef wputPATH
 	$(Wput_default) win/$(GoTOP).win.exe $(wputPATH)/ 
 endif
@@ -125,11 +132,26 @@ lnx/$(1).lnx.$(2).exe : $(lnxGoSrc01)
 		> /dev/null \
 		)
 
+win/$(1).win.$(2).exe : $(lnxGoSrc01)
+	@echo "building...[$$@]"
+	CGO_ENABLED=0 \
+				$(GoPre$(2)) \
+				$$(GObinNow) \
+				build  \
+				-a -ldflags '-w -extldflags "-static"' \
+				-tags 'osusergo netgo static_build' \
+				-o win/$(1).win.$(2).exe \
+				$(lnxGoSrc01)
+
 endef
 
 $(iinfo GoPreLinuxALL:$(GoPreLinuxALL))
 $(iinfo GoTOP:$(GoTOP))
 $(foreach aa2,$(GoPreLinuxALL),\
+	$(foreach aa1,$(GoTOP),\
+	$(eval $(call build_go_lang_tp01,$(aa1),$(aa2)))\
+	))
+$(foreach aa2,$(GoPreWinALL),\
 	$(foreach aa1,$(GoTOP),\
 	$(eval $(call build_go_lang_tp01,$(aa1),$(aa2)))\
 	))
