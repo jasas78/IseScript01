@@ -11,6 +11,7 @@ endif
 
 Wput_default :=wput -u -nc 
 
+ifdef GoPath00001
 GobinPathList1:=$${HOME}/go/BBgo $${HOME}/go/bin/
 GobinPathList2:=$(foreach aa1,$(GobinPathList1),$(shell echo $(aa1)))
 GobinPathList3:=$(wildcard $(GobinPathList2))
@@ -20,6 +21,9 @@ GObinNow:=$(strip $(firstword $(wildcard $(foreach aa1,$(GobinPathList2),$(shell
 GobinPath09:=$(shell realpath $${HOME}/go/bin/)
 GobinPath11:=$(shell realpath $(GobinPath09)/../../)
 GobinPath18:=$(GobinPath11)/go/bin
+else
+GobinPath18:=$(shell realpath /home/g/gD/nowDIR/bin)
+endif
 GobinPath19:=$(GobinPath11)/GOPATH/bin
 GobinPath20:=$(GobinPath11)/GOPATH
 export GobinPath20
@@ -40,9 +44,11 @@ endif
 # list.001.file.txt  list.002.dir.txt
 listPath1:=$(shell realpath $${HOME}/go/)
 listPath2:=$(shell realpath $(listPath1)/../)
+ifdef GoPath000002
 listPath3:=$(shell realpath $(listPath2)/now_dir__)
 listPath4:=$(shell realpath $(listPath3)/go/bin)
 listPath5:=$(shell realpath $(listPath3)/GOPATH/bin)
+endif
 listPath91:=$(listPath3).001.file.txt
 listPath92:=$(listPath3).002.dir.txt
 goPATH1:=PATH=$(listPath4):$(listPath5):$${PATH}
