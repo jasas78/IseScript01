@@ -13,12 +13,32 @@ gc :
 	echo "$(TT)_ _$(time_called)" > date.now.txt
 	git commit -a --template=date.now.txt
 	sync
-git:
-	@echo
-	@echo ' if met error, try ... '
-	@echo 'git config --global pack.windowMemory "32m"'
-	@echo 'git repack -a -d --window-memory 10m --max-pack-size 100m '
-	@echo
+#git:
+#	@echo
+#	@echo ' if met error, try ... '
+#	@echo 'git config --global pack.windowMemory "32m"'
+#	@echo 'git repack -a -d --window-memory 10m --max-pack-size 100m '
+#	@echo
+
+git :
+	git config --global pack.windowMemory           "32m"
+	git config --global pack.packSizeLimit          "33m"
+	git config --global pack.deltaCacheSize         "34m"
+	git config --global pack.threads                "1"
+	git config --global core.packedGitLimit         "35m"
+	git config --global core.packedGitWindowSize    "36m"
+	git config --global http.postbuffer             "5m"
+	git config --global core.fileMode               false
+	git repack -a -d --window-memory 10m --max-pack-size 50m
+
+gitX:
+	swapoff                /swapfile || echo
+	#dd if=/dev/zero     of=/swapfile bs=1024 count=1048576
+	dd if=/dev/zero     of=/swapfile bs=1024 count=4194304
+	chmod 600              /swapfile
+	mkswap                 /swapfile
+	swapon                 /swapfile
+
 
 gd:=git_diff
 $(gd):=git_diff______current_dir_files
