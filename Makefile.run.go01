@@ -156,15 +156,15 @@ $(foreach aa2,$(GoPreWinALL),\
 	$(eval $(call build_go_lang_tp01,$(aa1),$(aa2)))\
 	))
 
-tt:=test
+ttX1:=test
 
-$(tt):=$(foreach aa2,$(GoPreLinuxALL),$(foreach aa1,$(GoTOP),lnx/$(aa1).lnx.$(aa2).exe ))
-tt:
+$(ttX1):=$(foreach aa2,$(GoPreLinuxALL),$(foreach aa1,$(GoTOP),lnx/$(aa1).lnx.$(aa2).exe ))
+ttX1:
 	$(foreach aa2,$(GoPreLinuxALL),$(foreach aa1,$(GoTOP),lnx/$(aa1).lnx.$(aa2).exe $(runPara_$(aa1)) $(EOL)))
 	@reset
 
 
-showRunHelpList += cw cl c ll bw bl tt  vpgo tour
+showRunHelpList += cw cl c ll bw bl ttX1  vpgo tour
 
 define showRunHelpTEXText1
 endef
@@ -180,7 +180,7 @@ $(aaa):=cw cl bw bl
 aaa: $($(aaa))
 
 lnx:=build_and_test_linux_only
-$(lnx):=cl bl tt
+$(lnx):=cl bl ttX1
 lnx:$($(lnx))
 
 showRunHelpList += aaa lnx
