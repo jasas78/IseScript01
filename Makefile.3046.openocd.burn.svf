@@ -68,7 +68,7 @@ shutdown  33
 endef
 export obrTEXT1 
 
-obr:=openocd_burn_fpga_for_run_in_RAM
+obr:=openocd_burn_fpga_for_run_in_RAM using_Altera_burn_tool
 obr:
 	echo "$${obrTEXT1}" > tmp/obr01.txt
 	echo ; aa1=1 ; while [ $${aa1} -lt 10 ] ; do nohup \

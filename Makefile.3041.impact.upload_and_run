@@ -30,7 +30,7 @@ endef
 export SCRuur1
 
 ur:=impact_upload_and_run
-$(ur):=Makefile.3041.impact.upload_and_run
+$(ur):=Makefile.3041.impact.upload_and_run using_Xilinx_burn_tools
 ur :
 	@echo out/$(FNuurLog1) > out/loging.txt
 	@echo ;echo '---- $(ur) start --- burn to RAM and run ---->>   $(AnotherDSTur)'
