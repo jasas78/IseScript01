@@ -1,5 +1,19 @@
 all:
 
+define if_met_error_libpng12
+/e/eda2312/verdi_2016.06/platform/LINUXAMD64/bin/Novas: 
+	error while loading shared libraries: libpng12.so.0: 
+	cannot open shared object file: No such file or directory
+1. https://forums.debian.net/viewtopic.php?f=30&t=143335
+2. https://packages.debian.org/jessie/libpng12-0
+3.  wget http://ftp.de.debian.org/debian/pool/main/libp/libpng/libpng12-0_1.2.50-2+deb8u3_amd64.deb
+4. apt install multiarch-support
+5. ar x libpng12-0_1.2.50-2+deb8u3_amd64.deb
+6. tar xf data.tar.xz
+7. mv lib/x86_64-linux-gnu/libpng12.so.0* /lib/x86_64-linux-gnu/
+
+endef
+
 $(if $(synopsysPATH),,$(error 'you should define the synopsysPATH and run again'))
 
 # srcDeseLectAll -win $$_nTrace1
