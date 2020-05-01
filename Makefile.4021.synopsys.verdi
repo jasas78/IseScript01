@@ -83,7 +83,7 @@ bv1:
 	@echo
 
 
-tv1:=run_the_test_of_Verdi_FSDB
+tv1:=run_the_test_of_Verdi_FSDB1
 tv1:
 	@echo
 	rm -f ./verdi.fsdb && cp srcSIM/verdi.fsdb ./
@@ -96,7 +96,7 @@ tv1:
 			   -top $(VERDItb)
 	@echo
 
-tv9:=run_the_test_of_Verdi_FSDB
+tv9:=run_the_test_of_Verdi_FSDB9
 tv9:
 	@echo
 	rm -f ./verdi.fsdb && cp srcSIM/verdi.fsdb ./

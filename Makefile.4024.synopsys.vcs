@@ -11,7 +11,19 @@ bs1:
 			 $(TBhdlList) $(RTLhdlList) 
 	@echo
 
-vcsPara1:= -lca -debug_access+all
+define no-pie-g++
+
+#!/bin/bash
+exec g++ -no-pie $*
+
+endef
+
+# make sure use gcc 4.4
+vcsPara1:= -debug_access+all -full64 
+#vcsPara1:= -debug_access+all -full64 -cpp no-pie-g++
+#vcsPara1:= -lca -debug_access+all -full64 -cpp no-pie-g++
+#vcsPara1:= -lca -debug_access+all -full64
+#vcsPara1:= -lca -debug_access+all
 #vcsPara1:= -debug_access+all
 
 ### +define+<macro_name>=<value>
@@ -56,7 +68,7 @@ ts2:=run_the_test_of_VCS___with_Verdi_FSDB
 ts2:
 	@echo
 	rm -f verdi.fsdb
-	LD_LIBRARY_PATH=$(VERDI_HOME)/share/PLI/VCS/linux   \
+	LD_LIBRARY_PATH=$(VERDI_HOME)/share/PLI/VCS/linux64   \
 					./simv
 	@echo
 
