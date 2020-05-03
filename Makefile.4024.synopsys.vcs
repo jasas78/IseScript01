@@ -19,18 +19,21 @@ exec g++ -no-pie $*
 endef
 
 # make sure use gcc 4.4
-vcsPara1:= -debug_access+all -full64 
+#vcsPara1:= -debug_access+all -full64 
 #vcsPara1:= -debug_access+all -full64 -cpp no-pie-g++
 #vcsPara1:= -lca -debug_access+all -full64 -cpp no-pie-g++
 #vcsPara1:= -lca -debug_access+all -full64
 #vcsPara1:= -lca -debug_access+all
 #vcsPara1:= -debug_access+all
+#vcsPara1:= -debug_access+all -LDFLAGS -Wl,--no-as-needed -LDFLAGS -fPIC
+vcsPara1:= -lca -debug_access+all -LDFLAGS -Wl,--no-as-needed -LDFLAGS -fPIC
 
 ### +define+<macro_name>=<value>
 
 bs2:=synopsys_VCS_build___with_Verdi_FSDB
 bs2:
-	@echo
+	@echo    --------- process $@ ------- begin
+	@pwd
 	VCS_HOME=$(VCS_HOME) 				\
 			 VERDI_HOME=$(VERDI_HOME) 	\
 			 PATH=$(synopsysPATH)/gcc4:$${PATH}     \
@@ -39,7 +42,7 @@ bs2:
 			 $(VCSdefine)   			\
 			 $(RTLhdlSearch)			\
 			 $(TBhdlList) $(RTLhdlList) 
-	@echo
+	@echo    --------- process $@ ------- end
 
 
 cvs:=clean_vcs_tmp_file
@@ -68,8 +71,10 @@ ts2:=run_the_test_of_VCS___with_Verdi_FSDB
 ts2:
 	@echo
 	rm -f verdi.fsdb
-	LD_LIBRARY_PATH=$(VERDI_HOME)/share/PLI/VCS/linux64   \
+	pwd
+	LD_LIBRARY_PATH=$(VERDI_HOME)/share/PLI/VCS/linux   \
 					./simv
+	pwd
 	@echo
 
 ws1:=all_vcs_without_Verdi_FSDB
