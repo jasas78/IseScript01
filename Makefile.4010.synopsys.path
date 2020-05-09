@@ -5,6 +5,7 @@ $(if $(wildcard synopsysPATH),,$(shell ln -s $(TM)/synopsysPATH))
 #LM_LICENSE_FILE?=27000@127.0.0.1
 LM_LICENSE_FILE?=56789@127.0.0.1
 export LM_LICENSE_FILE
+$(info LM_LICENSE_FILE=$(LM_LICENSE_FILE))
 
 synopsysPATH:=$(shell realpath synopsysPATH)
 synopsysPATHok:=$(firstword $(wildcard synopsysPATH/root.LV__eda*synopsysBase))

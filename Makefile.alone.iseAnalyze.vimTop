@@ -50,7 +50,7 @@ export CFGmakeVimBase
 include $(CFGmakeVimBase)
 
 vm:
-	vim $(CFGmakeVimBase)
+	$(vim) $(CFGmakeVimBase)
 
 
 
@@ -67,7 +67,7 @@ m:=Makefile
 Makefile:=$(CFGmakeTOP)
 
 m $(m) :
-	vim $(m)
+	$(vim) $(m)
 
 
 
@@ -91,8 +91,8 @@ v2:=testbench.v
 v3:=v_code/CP447_CMI_AL0205.v
 
 vvvv1:=v1 v2 v3
-$(foreach aa1,$(vvvv1),$(eval $(aa1):$($(aa1))$(EOL)		vim $$^))
-vvvv2:=$(foreach aa1,$(vvvv1),$(aa1): vim $($(aa1))$(EOL)  )
+$(foreach aa1,$(vvvv1),$(eval $(aa1):$($(aa1))$(EOL)		$(vim) $$^))
+vvvv2:=$(foreach aa1,$(vvvv1),$(aa1): $(vim) $($(aa1))$(EOL)  )
 export vvvv2
 
 cx:=clean_xilinx_tmp_files

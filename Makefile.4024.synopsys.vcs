@@ -26,7 +26,11 @@ endef
 #vcsPara1:= -lca -debug_access+all
 #vcsPara1:= -debug_access+all
 #vcsPara1:= -debug_access+all -LDFLAGS -Wl,--no-as-needed -LDFLAGS -fPIC
-vcsPara1:= -lca -debug_access+all -LDFLAGS -Wl,--no-as-needed -LDFLAGS -fPIC
+#vcsPara1:= -lca -debug_access+all -LDFLAGS -Wl,--no-as-needed -LDFLAGS -fPIC
+#vcsPara1:= -lca -debug_access+all -LDFLAGS -Wl,--no-as-needed -LDFLAGS -fPIC -full64
+#vcsPara1:= -lca -debug_access+all
+#vcsPara1:= -lca -debug_access+all -full64 -LDFLAGS -Wl,--no-as-needed
+vcsPara1:= -debug_access+all -full64 -LDFLAGS -Wl,--no-as-needed
 
 ### +define+<macro_name>=<value>
 

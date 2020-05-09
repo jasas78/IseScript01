@@ -1,7 +1,9 @@
 all:
 
+vim:=vim -i /tmp/_viminfo.$(USER)
+
 btCMD01:= astyle --suffix=none 
-btCMD01:= /usr/bin/vim \
+btCMD01:= $(vim) \
 	-n -E \
 	-c ':argdo normal gg=G' \
 	-c ':retab' \
@@ -117,7 +119,7 @@ $(sml):=show_all_makefiles_in_script_dir_for_vim_______script_dir
 sml :
 	@echo "$${showVimMakefileListText}";echo
 
-#$(eval                  $(3)$(gvIdx)    :$(EOL)	$(btCMD01) $(2) $(EOL)	vim $(2) )
+#$(eval                  $(3)$(gvIdx)    :$(EOL)	$(btCMD01) $(2) $(EOL)	$(vim) $(2) )
 define genVimWithFile01
 $(iinfo 123,$1,$2,$3)
 $(eval gvList1+=$(3)$(gvIdx))
@@ -130,8 +132,8 @@ $(if $(strip $(filter %.pdf,$(vimObjBase1))),pdf,\
 $(if $(strip $(filter %.jpg %.jpeg %.bmp %.png %.gif,$(vimObjBase1))),gpicview,\
 $(if $(strip $(filter %.doc %.docx %.ppt %.pptx %.xls %.xlsx,$(vimObjBase1))),soffice,\
 $(if $(strip $(filter %.htm %.html,$(vimObjBase1))),firefox,\
-$(if $(strip $(filter %.go,$(vimObjBase1))),GOPATH='$$$$(GobinPath20)' vim,\
-vim))))))
+$(if $(strip $(filter %.go,$(vimObjBase1))),GOPATH='$$$$(GobinPath20)' $(vim),\
+$(vim)))))))
 
 $(eval $(1)+=$$(EOL)    $(vimName1)    =>   $(2) ->cmd-> $(vimName2) )
 $(eval                  $(vimName1)    :$(EOL)	$(vimName2) $(2) )

@@ -8,11 +8,11 @@ $(eval $(call tryINCmustExist,$(TM)/Makefile.1013.vim,db9100004))
 
 m:=vim_Makefile
 m : $(TT)/Makefile
-	vim $^
+	$(vim) $^
 
 
 e:=vim_Makefile_env
 e : Makefile.env
-	vim $^
+	$(vim) $^
 
 
