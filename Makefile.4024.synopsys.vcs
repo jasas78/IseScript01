@@ -2,13 +2,16 @@ all:
 
 $(if $(synopsysPATH),,$(error 'you should define the synopsysPATH and run again'))
 
+bs1_CMD:= \
+	VCS_HOME=$(VCS_HOME) 				\
+	$(synopsysBIN)/vcs  		        \
+	$(RTLhdlSearch)			            \
+	$(TBhdlList) $(RTLhdlList) 
+
 bs1:=synopsys_VCS_build_only___withouth_Verdi_FSDB
 bs1:
 	@echo
-	VCS_HOME=$(VCS_HOME) 				\
-			 $(synopsysBIN)/vcs  		\
-			 $(RTLhdlSearch)			\
-			 $(TBhdlList) $(RTLhdlList) 
+	$(bs1_CMD)
 	@echo
 
 define no-pie-g++
@@ -30,22 +33,26 @@ endef
 #vcsPara1:= -lca -debug_access+all -LDFLAGS -Wl,--no-as-needed -LDFLAGS -fPIC -full64
 #vcsPara1:= -lca -debug_access+all
 #vcsPara1:= -lca -debug_access+all -full64 -LDFLAGS -Wl,--no-as-needed
-vcsPara1:= -debug_access+all -full64 -LDFLAGS -Wl,--no-as-needed
+vcsPara1:= -lca -debug_access+all -full64 
+# -LDFLAGS -Wl,--no-as-needed
 
 ### +define+<macro_name>=<value>
 
+
+#	PATH=$(synopsysPATH)/gcc4:$${PATH}     
+bs2_CMD:= \
+	VCS_HOME=$(VCS_HOME)                \
+	VERDI_HOME=$(VERDI_HOME)            \
+	$(synopsysBIN)/vcs  	            \
+	$(vcsPara1)   			            \
+	$(VCSdefine)   			            \
+	$(RTLhdlSearch)			            \
+	$(TBhdlList) $(RTLhdlList) 
 bs2:=synopsys_VCS_build___with_Verdi_FSDB
 bs2:
 	@echo    --------- process $@ ------- begin
 	@pwd
-	VCS_HOME=$(VCS_HOME) 				\
-			 VERDI_HOME=$(VERDI_HOME) 	\
-			 PATH=$(synopsysPATH)/gcc4:$${PATH}     \
-			 $(synopsysBIN)/vcs  		\
-			 $(vcsPara1)   				\
-			 $(VCSdefine)   			\
-			 $(RTLhdlSearch)			\
-			 $(TBhdlList) $(RTLhdlList) 
+	$(bs2_CMD) 				
 	@echo    --------- process $@ ------- end
 
 
@@ -76,7 +83,7 @@ ts2:
 	@echo
 	rm -f verdi.fsdb
 	pwd
-	LD_LIBRARY_PATH=$(VERDI_HOME)/share/PLI/VCS/linux   \
+	LD_LIBRARY_PATH=$(VERDI_HOME)/share/PLI/VCS/linux64   \
 					./simv
 	pwd
 	@echo
