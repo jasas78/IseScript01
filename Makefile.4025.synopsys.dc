@@ -9,6 +9,9 @@ $(if $(synopsysPATH),,$(error 'you should define the synopsysPATH and run again'
 
 define DCconfig01
 
+set cache_read "/tmp"
+set cache_write "/tmp"
+
 set_app_var designer 		"dyn" ;
 set_app_var company  		"C-matrixtech_Zhuhai_China";
 set 		plot_command 	"lpr -P PRINTER" ;
