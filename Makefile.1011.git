@@ -13,7 +13,7 @@ gc :
 	echo "$(TT)_ _$(time_called)" > date.now.txt
 	git commit -a --template=date.now.txt
 
-gcXmmm:=$(shell (LC_ALL=C date +"%Y%m%d_%H%M%p" ; cat /etc/timezone )|tr "/\r\n-" _)
+gcXmmm:=$(shell (LC_ALL=C date +"%Y%m%d_%H%M%p" ; [ ! -e /etc/timezone ] || ls -l /etc/timezone )|tr "/\r\n-" _)
 gcX:=git_commit_X
 $(gcX):=git_commit_with_date______current_dir_filesX
 gcX :
