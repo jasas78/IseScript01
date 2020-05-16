@@ -36,7 +36,7 @@ verdiWindowWorkMode -win $$_Verdi_1 -hardwareDebug
 srcSignalView -on
 
 verdiWindowBeWindow -win $$_nWave2
-wvResizeWindow -win $$_nWave2 20 28 1800 980
+wvResizeWindow -win $$_nWave2 20 28 1600 900
 
 $(waveAddLine)
 
