@@ -86,11 +86,11 @@ bv1:
 tv1:=run_the_test_of_Verdi_FSDB1
 tv1:
 	@echo
-	rm -f ./verdi.fsdb && cp srcSIM/verdi.fsdb ./
+#	rm -f ./verdi.fsdb && cp srcSIM/verdi.fsdb ./
 	echo "$${veridiPlay01}" > verdi.play01.txt 
 	VERDI_HOME=$(VERDI_HOME) 			\
 			   $(VERDI_HOME)/bin/verdi 	\
-			   -ssf verdi.fsdb  		\
+			   -ssf /tmp/verdi.fsdb  		\
 			   -ba						\
 			   -play verdi.play01.txt	\
 			   -top $(VERDItb)
@@ -99,12 +99,12 @@ tv1:
 tv9:=run_the_test_of_Verdi_FSDB9
 tv9:
 	@echo
-	rm -f ./verdi.fsdb && cp srcSIM/verdi.fsdb ./
+#	rm -f ./verdi.fsdb && cp srcSIM/verdi.fsdb ./
 	echo "$${VERDIhdlSearch}" 	|xargs -n 1 >  filelist.verdi.txt 
 	echo "$${VERDIhdlList}" 	|xargs -n 1 >> filelist.verdi.txt 
 	VERDI_HOME=$(VERDI_HOME) 			\
 			   $(VERDI_HOME)/bin/verdi 	\
-			   -ssf verdi.fsdb  		\
+			   -ssf /tmp/verdi.fsdb  		\
 			   -f filelist.verdi.txt 
 	@echo
 

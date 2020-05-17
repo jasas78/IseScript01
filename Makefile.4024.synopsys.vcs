@@ -66,6 +66,7 @@ cvs:
 		*.vcd.vpd \
 		inter.vpd \
 		command.log \
+		/tmp/verdi.fsdb			\
 		verdi.fsdb			\
 		novas_dump.log			\
 		Simv simv ucli.key 
@@ -77,20 +78,21 @@ cvs:
 ts1:=run_the_test_of_VCS___without_Verdi_FSDB
 ts1:
 	@echo
+	rm -f verdi.fsdb /tmp/verdi.fsdb
 	./simv
 	pwd
-	cp /tmp/verdi.fsdb ./
+#	cp /tmp/verdi.fsdb ./
 	@echo
 
 ts2:=run_the_test_of_VCS___with_Verdi_FSDB
 ts2:
 	@echo
-	rm -f verdi.fsdb
+	rm -f verdi.fsdb /tmp/verdi.fsdb
 	pwd
 	LD_LIBRARY_PATH=$(VERDI_HOME)/share/PLI/VCS/linux64   \
 					./simv
 	pwd
-	cp /tmp/verdi.fsdb ./
+#	cp /tmp/verdi.fsdb ./
 	@echo
 
 ws1:=all_vcs_without_Verdi_FSDB
