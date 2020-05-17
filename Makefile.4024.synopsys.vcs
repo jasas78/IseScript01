@@ -11,7 +11,9 @@ bs1_CMD:= \
 bs1:=synopsys_VCS_build_only___withouth_Verdi_FSDB
 bs1:
 	@echo
+	@echo    --------- process $@ ------- begin
 	$(bs1_CMD)
+	@echo    --------- process $@ ------- end
 	@echo
 
 define no-pie-g++
@@ -76,6 +78,8 @@ ts1:=run_the_test_of_VCS___without_Verdi_FSDB
 ts1:
 	@echo
 	./simv
+	pwd
+	cp /tmp/verdi.fsdb ./
 	@echo
 
 ts2:=run_the_test_of_VCS___with_Verdi_FSDB
@@ -86,6 +90,7 @@ ts2:
 	LD_LIBRARY_PATH=$(VERDI_HOME)/share/PLI/VCS/linux64   \
 					./simv
 	pwd
+	cp /tmp/verdi.fsdb ./
 	@echo
 
 ws1:=all_vcs_without_Verdi_FSDB
