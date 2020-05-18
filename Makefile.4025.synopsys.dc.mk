@@ -42,7 +42,7 @@ set_app_var synthetic_library { \
 	}
 
 
-define_design_lib WORK -path ./dcWORK
+define_design_lib WORK -path $(tmpRunDir2)/dcWORK
 
 set_app_var compile_fix_multiple_port_nets 		true
 
