@@ -5,7 +5,7 @@ bkMCS1=$(strip $(wildcard out/$(FNmcsOut1)))
 bkMCS2=$(FNmcsOut1).$(time_called).bk1_mcs
 bkBIT1=$(strip $(wildcard out/$(FNbitOut1)))
 bkBIT2=$(FNbitOut1).$(time_called).bk1_bit
-$(bk1):=Makefile.3060.backupBase
+$(bk1):=Makefile.3060.backupBase.mk
 bk1 :
 	[ -d bkRAR ] || mkdir bkRAR 
 	[ -d bkMCS ] || mkdir bkMCS
@@ -22,7 +22,7 @@ bk1 :
 
 bk2:=backup_the_bit_and_mcs_by_date_with_cds_coe_for_release_only
 bkOBJs=$(strip $(wildcard out/$(FNbitOut1) out/$(FNmcsOut1)))
-$(bk2):=Makefile.3060.backupBase
+$(bk2):=Makefile.3060.backupBase.mk
 bk2 :
 	[ -d 111 ] || mkdir 111
 	/home/bootH/bin/rar a -m5 -s -hp1 -r- \

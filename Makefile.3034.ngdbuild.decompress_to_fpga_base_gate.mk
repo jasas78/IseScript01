@@ -26,7 +26,7 @@ endef
 RUNngd:=cd tmp/ && $(ISEbin)/ngdbuild $(RUNngdPara) > ../out/$(FNngdLog1)
 
 rn:=run_ngdbuild_to_decompress_to_base_fpga_gates 
-$(rn):=Makefile.3034.ngdbuild.decompress_to_fpga_base_gate
+$(rn):=Makefile.3034.ngdbuild.decompress_to_fpga_base_gate.mk
 rn :
 	@echo out/$(FNngdLog1) > out/loging.txt
 	@echo ;echo '---- $(rn) start --- out/$(FNngdLog1)'

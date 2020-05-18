@@ -27,14 +27,14 @@ CFGiseTop:=$(shell cat $(CFGiseFN1)|grep 'Implementation Top'|grep Module |xargs
 
 
 ifeq (,$(CFGmakeVimBase))
-CFGmakeVimBase:=$(firstword $(wildcard Makefile.vimBase scriptX/Makefile.vimBase Makefile.vimTop scriptX/Makefile.vimTop Makefile))
+CFGmakeVimBase:=$(firstword $(wildcard Makefile.vimBase.mk scriptX/Makefile.vimBase.mk Makefile.vimTop.mk scriptX/Makefile.vimTop.mk Makefile))
 ifeq (,$(CFGmakeVimBase))
 $(error 'CFGmakeVimBase not found 001 ')
 endif
 CFGmakeVimBase:=$(shell realpath $(CFGmakeVimBase))
 $(info 'CFGmakeVimBase:$(CFGmakeVimBase)')
 CFGmakeVimBase:=$(shell dirname $(CFGmakeVimBase))
-CFGmakeVimBase:=$(CFGmakeVimBase)/Makefile.vimBase
+CFGmakeVimBase:=$(CFGmakeVimBase)/Makefile.vimBase.mk
 CFGmakeVimBase:=$(wildcard $(CFGmakeVimBase))
 ifeq (,$(CFGmakeVimBase))
 $(error 'CFGmakeVimBase not found 001 ')

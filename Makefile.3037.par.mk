@@ -30,7 +30,7 @@ CMDparLine3:= (echo ; echo "... error reason :" ; grep ^ERROR ../tmp/$(FNparOut0
 
 
 rp:=run_par_to_gen_the_last_ncd
-$(rp):=Makefile.3037.par
+$(rp):=Makefile.3037.par.mk
 rp :
 	@echo out/$(FNparLog1) > out/loging_37.txt
 	@echo ;echo '---- $(rp) start --- out/$(FNparLog1)'

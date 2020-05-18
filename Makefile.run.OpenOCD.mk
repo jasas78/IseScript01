@@ -1,10 +1,10 @@
 all: 
 
 CFGrunOpenocdINCset1:=\
-	Makefile.3031.ise.path		\
-	Makefile.3044.impact.gen_svf_for_run		\
-	Makefile.3045.impact.gen_svf_for_burn_flash		\
-	Makefile.3046.openocd.burn.svf		\
+	Makefile.3031.ise.path.mk		\
+	Makefile.3044.impact.gen_svf_for_run.mk		\
+	Makefile.3045.impact.gen_svf_for_burn_flash.mk		\
+	Makefile.3046.openocd.burn.svf.mk		\
 
 CFGrunOpenocdINCset2:=$(foreach aa1,$(CFGrunOpenocdINCset1),$(TM)/$(aa1))
 

@@ -32,7 +32,7 @@ export CMDmcsLine2
 
 
 rs:=run_promgen_to_gen_mcs
-$(rs):=Makefile.303b.promgen.mcs
+$(rs):=Makefile.303b.promgen.mcs.mk
 rs :
 	@echo out/$(FNmcsLog1) > out/loging.txt
 	@echo ;echo '---- $(rs) start --- out/$(FNmcsLog1)'

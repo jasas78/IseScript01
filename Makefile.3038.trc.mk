@@ -39,7 +39,7 @@ export CMDtrceLine2
 
 
 rt:=run_trce_to_gen_the_last_ncd
-$(rt):=Makefile.3038.trce
+$(rt):=Makefile.3038.trce.mk
 rt :
 	@echo out/$(FNtrceLog1) > out/loging.txt
 	@echo ;echo '---- $(rt) start --- out/$(FNtrceLog1)'

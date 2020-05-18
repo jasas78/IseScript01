@@ -9,7 +9,7 @@ all:
 
 ifeq (,$(GoTOP))
 $(info )
-$(info ' js lang project , should has a VAR named GoTOP being defined in Makefile.env')
+$(info ' js lang project , should has a VAR named GoTOP being defined in Makefile.env.mk')
 $(info '                   as the end target name; ')
 $(info ' and the src files being put into the src?/*.js' )
 $(info )
@@ -43,10 +43,10 @@ StripLinuxArm64:=aarch64-linux-gnu-strip
 Wput_default :=wput -u -nc 
 
 CFGrunGoINCset1:=\
-Makefile.1021.docker01 \
-Makefile.3071.beautifyBase    \
-Makefile.3073.beautifyGo    \
-Makefile.4001.go.lang.analyze    \
+Makefile.1021.docker01.mk \
+Makefile.3071.beautifyBase.mk    \
+Makefile.3073.beautifyGo.mk    \
+Makefile.4001.go.lang.analyze.mk    \
 
 CFGrunGoINCset2:=$(foreach aa1,$(CFGrunGoINCset1),$(TM)/$(aa1))
 

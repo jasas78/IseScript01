@@ -27,7 +27,7 @@ export CMDbinLine2
 
 
 rr:=run_promgen_to_gen_bin
-$(rr):=Makefile.303a.promgen.bin
+$(rr):=Makefile.303a.promgen.bin.mk
 rr :
 	@echo out/$(FNbinLog1) > out/loging.txt
 	@echo ;echo '---- $(rr) start --- out/$(FNbinLog1)'

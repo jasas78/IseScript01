@@ -19,21 +19,21 @@ $(call genVimWithFileList,showSourceCodeTEXT0,$(NFTruleList),vn)
 
 
 CFGrunLinuxNftINCset1:=\
-	Makefile.5000.linuxNft.base \
-	Makefile.5001.linuxNft.blockIpv6 \
-	Makefile.5011.linuxNft.localMachineBaseIpv4_input \
-	Makefile.5013.linuxNft.localMachineBaseIpv4_output \
-    Makefile.5015.linuxNft.localMachineBaseIpv4_forward \
-    Makefile.5021.linuxNft.localMachineBaseIpv4_natPre \
-	Makefile.5023.linuxNft.localMachineBaseIpv4_natPost \
-	Makefile.5025.linuxNft.localMachineBaseIpv4_natInput \
-	Makefile.5027.linuxNft.localMachineBaseIpv4_natOutput \
-	Makefile.5029.linuxNft.localMachineBaseIpv4_natForward \
-    Makefile.5039.linuxNft.localMachineBaseIpv4_end \
-	Makefile.5099.linuxNft.groupS \
+	Makefile.5000.linuxNft.base.mk \
+	Makefile.5001.linuxNft.blockIpv6.mk \
+	Makefile.5011.linuxNft.localMachineBaseIpv4_input.mk \
+	Makefile.5013.linuxNft.localMachineBaseIpv4_output.mk \
+    Makefile.5015.linuxNft.localMachineBaseIpv4_forward.mk \
+    Makefile.5021.linuxNft.localMachineBaseIpv4_natPre.mk \
+	Makefile.5023.linuxNft.localMachineBaseIpv4_natPost.mk \
+	Makefile.5025.linuxNft.localMachineBaseIpv4_natInput.mk \
+	Makefile.5027.linuxNft.localMachineBaseIpv4_natOutput.mk \
+	Makefile.5029.linuxNft.localMachineBaseIpv4_natForward.mk \
+    Makefile.5039.linuxNft.localMachineBaseIpv4_end.mk \
+	Makefile.5099.linuxNft.groupS.mk \
 
-#	Makefile.4010.synopsys.path 	\
-#	Makefile.4021.synopsys.verdi		\
+#	Makefile.4010.synopsys.path.mk 	\
+#	Makefile.4021.synopsys.verdi.mk		\
 
 
 CFGrunLinuxNftINCset2:=$(foreach aa1,$(CFGrunLinuxNftINCset1),$(TM)/$(aa1))

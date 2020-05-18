@@ -1,7 +1,7 @@
 all:
 
 an:=analyze_ise_report_for_resource_usage
-$(an):=Makefile.3043.iseAnalyze.report.resouce.usage
+$(an):=Makefile.3043.iseAnalyze.report.resouce.usage.mk
 an:
 	 @echo
 	 @cd out && \

@@ -2,7 +2,7 @@ all:
 
 ifeq (,$(GoTOP))
 $(info )
-$(info ' go lang project , should has a VAR named GoTOP being defined in Makefile.env')
+$(info ' go lang project , should has a VAR named GoTOP being defined in Makefile.env.mk')
 $(info '                   as the end target name; ')
 $(info ' and the src files being put into the src?/*.go' )
 $(info )

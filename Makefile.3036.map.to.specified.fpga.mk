@@ -33,7 +33,7 @@ export CMDmapLine2
 CMDmapLine3:= (echo ; echo "... error reason :" ; grep ^ERROR ../tmp/$(FNmapOut0).map ; echo ; exit 35 )
 
 rm:=run_map_to_target_fapga
-$(rm):=Makefile.3036.map.to.specified.fpga
+$(rm):=Makefile.3036.map.to.specified.fpga.mk
 rm :
 	echo out/$(FNmapLog1) > out/loging.txt
 	@echo ;echo '---- $(rm) start --- out/$(FNmapLog1)'

@@ -2,8 +2,8 @@ all:
 
 #$(NFTbin)     
 # NFtext_blockIpv6
-# Makefile.5000
-# Makefile.5001
+# Makefile.5000.mk
+# Makefile.5001.mk
 
 
 # NFTdebug:=

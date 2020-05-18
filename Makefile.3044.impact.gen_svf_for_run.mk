@@ -29,7 +29,7 @@ export SCRgvrScr1
 define gvrUsageTEXT
 
 make gvr [SSgvr=$(SSgvr)] [DDgvr=$(DDgvr)] [JtagPart1=$(JtagPart1)] [JtagPart2=$(JtagPart2)] 
-note : you can re-define SSgvr & DDgvr & JtagPart1 & JtagPart2 in Makefile.env or in command line
+note : you can re-define SSgvr & DDgvr & JtagPart1 & JtagPart2 in Makefile.env.mk or in command line
 
 endef
 export gvrUsageTEXT
@@ -44,7 +44,7 @@ gvrUSAGE:
 
 
 gvr:=gen_svf_for_run_in_fpga_RAM_only
-$(gvr):=Makefile.3044.impact.gen_svf_for_run
+$(gvr):=Makefile.3044.impact.gen_svf_for_run.mk
 
 gvr :
 	[ -d tmp ] || mkdir tmp

@@ -29,7 +29,7 @@ export SCRgvfScr1
 define gvfUsageTEXT
 
 make gvf [SSgvf=$(SSgvf)] [DDgvf=$(DDgvf)] [JtagPart1=$(JtagPart1)] [JtagPart2=$(JtagPart2)] 
-note : you can re-define SSgvf & DDgvf & JtagPart1 & JtagPart2 in Makefile.env or in command line
+note : you can re-define SSgvf & DDgvf & JtagPart1 & JtagPart2 in Makefile.env.mk or in command line
 
 endef
 export gvfUsageTEXT
@@ -44,7 +44,7 @@ gvfUSAGE:
 
 
 gvf:=gen_svf_for_burn_into_fpga_flash
-$(gvf):=Makefile.3045.impact.gen_svf_for_burn_flash
+$(gvf):=Makefile.3045.impact.gen_svf_for_burn_flash.mk
 
 gvf :
 	[ -d tmp ] || mkdir tmp

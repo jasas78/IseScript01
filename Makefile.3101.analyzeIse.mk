@@ -129,14 +129,14 @@ $(an5):= XISE
 an5: $(iseRTLverilogListFile)
 ifdef coreGenRomList
 	$(foreach aa1,$(coreGenRomList),\
-		@echo;echo '$(aa1) -> $($(aa1))  <<< === $@ parameter , from Makefile.env : you may do : make an5 ipcore_dir/ROM.xise=XXXyyy ' ;echo; \
+		@echo;echo '$(aa1) -> $($(aa1))  <<< === $@ parameter , from Makefile.env.mk : you may do : make an5 ipcore_dir/ROM.xise=XXXyyy ' ;echo; \
 		$(EOL)\
 		$(eval aa2:=$(shell basename $(aa1)))\
 		$(eval aa3:=$(shell realpath src5/$(aa2)_cDIR))\
 		mkdir -p $(aa3) ;$(EOL) \
 		make \
 		coreGen \
-		-f $(TM)/Makefile.3801.runAlone.coreGen \
+		-f $(TM)/Makefile.3801.runAlone.coreGen.mk \
 		-C $(aa3) \
 		cgROMname=$$(realpath nowX/$(aa1)) \
 		cgROMcontent=$$(realpath $($(aa1))) \

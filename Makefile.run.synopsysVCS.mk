@@ -23,8 +23,8 @@ $(call genVimWithFileList,showSourceCodeTEXT0,$(RTLhdlList) $(TBhdlList),vv)
 
 
 CFGrunSynopsysVcsINCset1:=\
-	Makefile.4010.synopsys.path 	\
-	Makefile.4024.synopsys.vcs		\
+	Makefile.4010.synopsys.path.mk 	\
+	Makefile.4024.synopsys.vcs.mk		\
 
 
 CFGrunSynopsysVcsINCset2:=$(foreach aa1,$(CFGrunSynopsysVcsINCset1),$(TM)/$(aa1))

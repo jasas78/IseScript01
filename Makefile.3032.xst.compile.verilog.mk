@@ -181,7 +181,7 @@ export RUNxst42
 FILTERxst23:=sed -e 's;^\s*;;g'|grep -v ^$$
 
 rx:=run_xst_to_compile_the_verilog
-$(rx):=_add_the_"HELP=1"_can_generate_the_help_of_xst Makefile.3032.xst.compile.verilog
+$(rx):=_add_the_"HELP=1"_can_generate_the_help_of_xst Makefile.3032.xst.compile.verilog.mk
 rx :
 	@echo out/$(FNxstLOG2) > out/loging.txt
 	@echo ;echo '---- $(rx) start --- out/$(FNxstLOG2)'

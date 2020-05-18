@@ -10,7 +10,7 @@ openocd:=$(OCDbin)/openocd
 ifneq (11,$(shell [ -f $(openocd) ] && echo 11 || echo 22))
 $(info )
 $(info ' openocd , need a dir named "openocd_run" to place the openocd execute-program ')
-$(info ' or , being defined in the Makefile.env ')
+$(info ' or , being defined in the Makefile.env.mk ')
 $(info )
 $(error )
 endif

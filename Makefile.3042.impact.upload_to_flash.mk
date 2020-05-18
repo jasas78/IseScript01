@@ -57,7 +57,7 @@ endef
 export SCRuuf1
 
 ufo:=upload_to_flash_only
-$(ufo):=Makefile.3042.impact.upload_to_flash
+$(ufo):=Makefile.3042.impact.upload_to_flash.mk
 ufo :
 	@echo out/$(FNuufLog1) > out/loging.txt
 	@echo ;echo '---- $(uf) start --- out/$(FNuufLog1) --- burn into flash --->> $(AnotherDSTuf) ' ; echo

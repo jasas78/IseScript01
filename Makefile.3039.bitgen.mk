@@ -57,7 +57,7 @@ export CMDbitLineF2
 
 
 rb:=run_bitgen
-$(rb):=Makefile.3039.bitgen
+$(rb):=Makefile.3039.bitgen.mk
 rb :
 	@echo out/$(FNbitLog1) > out/loging.txt
 	@echo ;echo '---- $(rb) start --- out/$(FNbitLog1)'
