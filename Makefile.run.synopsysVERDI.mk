@@ -2,13 +2,13 @@ all:
 
 VERDIhdlSearch:=$(foreach aa1,\
 	$(sort $(wildcard srcSIM/srcSYN/src?)),\
-    +incdir+$(aa1))
+    +incdir+$(shell realpath $(aa1)))
 export VERDIhdlSearch
 
 
 VERDIhdlList:=$(filter-out $(VERDIfilterOutList),$(sort \
-	$(wildcard srcSIM/srcSYN/src?/*.v) \
-	$(wildcard srcSIM/srcSYN/tbSrc?/*.v) \
+	$(foreach aa2,$(wildcard srcSIM/srcSYN/src?/*.v) \
+	$(wildcard srcSIM/srcSYN/tbSrc?/*.v),$(shell realpath $(aa2))) \
 	))\
 	$(VERDIextSrcList)
 export VERDIhdlList

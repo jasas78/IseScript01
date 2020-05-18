@@ -4,10 +4,10 @@ $(if $(wildcard srcSYN),,$(shell ln -s ../ srcSYN))
 
 RTLhdlSearch:=$(foreach aa1,\
 	$(sort $(wildcard srcSYN/src?)),\
-	$(aa1))
+	$(shell realpath $(aa1)))
 
 RTLhdlList:=$(filter-out $(DCfilterOutList),$(sort \
-	$(wildcard srcSYN/src?/*.v) \
+	$(foreach aa2,$(wildcard srcSYN/src?/*.v),$(shell realpath $(aa2))) \
 	))\
 	$(DCextSrcList)
 

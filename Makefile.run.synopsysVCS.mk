@@ -3,17 +3,17 @@ all:
 $(if $(wildcard srcSYN),,$(shell ln -s ../ srcSYN))
 
 RTLhdlSearch:=$(foreach aa1,\
-	$(shell realpath $(wildcard srcSYN/src?)),\
-	+incdir+$(aa1))
+	$(wildcard srcSYN/src?),\
+	+incdir+$(shell realpath $(aa1)))
 
 RTLhdlList:=$(filter-out $(VCSfilterOutList),$(sort \
-	$(shell realpath $(wildcard srcSYN/src?/*.v)) \
+	$(foreach aa2,$(wildcard srcSYN/src?/*.v),$(shell realpath $(aa2))) \
 	))\
 	$(VCSextSrcList)
 
 
 TBhdlList:=$(filter-out $(VCSfilterOutList),$(sort \
-	$(shell realpath $(wildcard srcSYN/tbSrc?/*.v)) \
+	$(foreach aa2,$(wildcard srcSYN/tbSrc?/*.v),$(shell realpath $(aa2))) \
 	))\
 	$(VCSextSrcList)
 $(call genVimWithFileList,showSourceCodeTEXT0,$(RTLhdlList) $(TBhdlList),vv)

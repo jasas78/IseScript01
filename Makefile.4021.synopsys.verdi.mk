@@ -51,7 +51,8 @@ export veridiPlay01
 
 cvv:=clean_verdi_tmp_file
 cvv:
-	rm -f 					\
+	mkdir -p $(tmpRunDir2) 
+	cd $(tmpRunDir2) && rm -f 					\
 		opendatabase.log 	\
 		*.vcd 				\
 		*.vcd.vpd 			\
@@ -64,7 +65,7 @@ cvv:
 		filelist.verdi.txt	\
 		verdi.play0?.txt	\
 		Simv simv ucli.key 
-	rm -fr 					\
+	cd $(tmpRunDir2) && rm -fr 					\
 		work.lib++			\
 		vericomLog			\
 		verdiLog    		\
@@ -75,7 +76,8 @@ cvv:
 bv1:=synopsys_compile_Verdi_FSDB_database
 bv1:
 	@echo
-	VERDI_HOME=$(VERDI_HOME) 				\
+	cd $(tmpRunDir2) && rm -f verdi.fsdb && cp $(tmpRunDir3)topVCS/verdi.fsdb  ./
+	cd $(tmpRunDir2) && VERDI_HOME=$(VERDI_HOME) 				\
 			   $(VERDI_HOME)/bin/vericom 	\
 			   $(VERICOMdefine)				\
 			   $${VERDIhdlSearch}			\
@@ -87,10 +89,10 @@ tv1:=run_the_test_of_Verdi_FSDB1
 tv1:
 	@echo
 #	rm -f ./verdi.fsdb && cp srcSIM/verdi.fsdb ./
-	echo "$${veridiPlay01}" > verdi.play01.txt 
-	VERDI_HOME=$(VERDI_HOME) 			\
+	cd $(tmpRunDir2) && echo "$${veridiPlay01}" > verdi.play01.txt 
+	cd $(tmpRunDir2) && VERDI_HOME=$(VERDI_HOME) 			\
 			   $(VERDI_HOME)/bin/verdi 	\
-			   -ssf /tmp/verdi.fsdb  		\
+			   -ssf verdi.fsdb  		\
 			   -ba						\
 			   -play verdi.play01.txt	\
 			   -top $(VERDItb)
@@ -104,7 +106,7 @@ tv9:
 	echo "$${VERDIhdlList}" 	|xargs -n 1 >> filelist.verdi.txt 
 	VERDI_HOME=$(VERDI_HOME) 			\
 			   $(VERDI_HOME)/bin/verdi 	\
-			   -ssf /tmp/verdi.fsdb  		\
+			   -ssf verdi.fsdb  		\
 			   -f filelist.verdi.txt 
 	@echo
 

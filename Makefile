@@ -2,8 +2,9 @@ env64:=LD_LIBRARY_PATH=/lib64:/usr/lib64
 env32:=LD_LIBRARY_PATH=/lib:/usr/lib:/lib32:/usr/lib32
 awk:=$(env64) awk
 
-tmpRunDir1:=$(shell echo $${PWD}|awk -F/ '{print $$(NF-1) "_" $$NF }')
+tmpRunDir1:=$(shell      echo $${PWD}|awk -F/ '{print $$(NF-1) "_" $$NF }')
 tmpRunDir2:=/tmp/$(shell echo $${PWD}|awk -F/ '{print $$(NF-1) "_" $$NF }')
+tmpRunDir3:=/tmp/$(shell echo $${PWD}|awk -F/ '{print $$(NF-1) "_"      }')
 
 all:
 
