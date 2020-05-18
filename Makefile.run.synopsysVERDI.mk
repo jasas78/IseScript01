@@ -20,8 +20,8 @@ $(call genVimWithFileList,showSourceCodeTEXT0,$(VERDIhdlList),vv)
 
 
 CFGrunSynopsysVerdiINCset1:=\
-	Makefile.4010.synopsys.path 	\
-	Makefile.4021.synopsys.verdi		\
+	Makefile.4010.synopsys.path.mk 	\
+	Makefile.4021.synopsys.verdi.mk		\
 
 
 CFGrunSynopsysVerdiINCset2:=$(foreach aa1,$(CFGrunSynopsysVerdiINCset1),$(TM)/$(aa1))

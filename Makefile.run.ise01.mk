@@ -1,33 +1,33 @@
 all: 
 
 CFGrunIseINCset1:=\
-	Makefile.3031.ise.path		\
-	Makefile.3032.xst.compile.verilog    \
-	Makefile.3034.ngdbuild.decompress_to_fpga_base_gate    \
-	Makefile.3036.map.to.specified.fpga    \
-	Makefile.3037.par    \
-	Makefile.3038.trc    \
-	Makefile.3039.bitgen    \
-	Makefile.303a.promgen.bin    \
-	Makefile.303b.promgen.mcs    \
-	Makefile.3044.impact.gen_svf_for_run		\
-	Makefile.3045.impact.gen_svf_for_burn_flash		\
-	Makefile.3046.openocd.burn.svf		\
-	Makefile.3041.impact.upload_and_run    \
-	Makefile.3042.impact.upload_to_flash    \
-	Makefile.3043.iseAnalyze.report.resouce.usage    \
-	Makefile.3051.partgen.gen_device_pin_info    \
-	Makefile.3060.backupBase    \
-	Makefile.3061.backupXilinxISE    \
-	Makefile.3062.impact.burn.now    \
-	Makefile.3071.beautifyBase    \
-	Makefile.3072.beautifyVerilog    \
+	Makefile.3031.ise.path.mk		\
+	Makefile.3032.xst.compile.verilog.mk    \
+	Makefile.3034.ngdbuild.decompress_to_fpga_base_gate.mk    \
+	Makefile.3036.map.to.specified.fpga.mk    \
+	Makefile.3037.par.mk    \
+	Makefile.3038.trc.mk    \
+	Makefile.3039.bitgen.mk    \
+	Makefile.303a.promgen.bin.mk    \
+	Makefile.303b.promgen.mcs.mk    \
+	Makefile.3044.impact.gen_svf_for_run.mk		\
+	Makefile.3045.impact.gen_svf_for_burn_flash.mk		\
+	Makefile.3046.openocd.burn.svf.mk		\
+	Makefile.3041.impact.upload_and_run.mk    \
+	Makefile.3042.impact.upload_to_flash.mk    \
+	Makefile.3043.iseAnalyze.report.resouce.usage.mk    \
+	Makefile.3051.partgen.gen_device_pin_info.mk    \
+	Makefile.3060.backupBase.mk    \
+	Makefile.3061.backupXilinxISE.mk    \
+	Makefile.3062.impact.burn.now.mk    \
+	Makefile.3071.beautifyBase.mk    \
+	Makefile.3072.beautifyVerilog.mk    \
 
 CFGrunIseINCset2:=$(foreach aa1,$(CFGrunIseINCset1),$(TM)/$(aa1))
 
 CFGanalyzeIseINCset1:=\
-	Makefile.3101.analyzeIse \
-	Makefile.3102.diffISEwinLinx \
+	Makefile.3101.analyzeIse.mk \
+	Makefile.3102.diffISEwinLinx.mk \
 
 CFGanalyzeIseINCset2:=$(foreach aa1,$(CFGanalyzeIseINCset1),$(TM)/$(aa1))
 
