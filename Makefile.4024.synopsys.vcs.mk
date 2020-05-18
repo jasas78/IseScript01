@@ -12,7 +12,7 @@ bs1:=synopsys_VCS_build_only___withouth_Verdi_FSDB
 bs1:
 	@echo
 	@echo    --------- process $@ ------- begin
-	$(bs1_CMD)
+	cd $(tmpRunDir2) && $(bs1_CMD)
 	@echo    --------- process $@ ------- end
 	@echo
 
@@ -54,23 +54,24 @@ bs2:=synopsys_VCS_build___with_Verdi_FSDB
 bs2:
 	@echo    --------- process $@ ------- begin
 	@pwd
-	$(bs2_CMD) 				
+	cd $(tmpRunDir2) && $(bs2_CMD) 				
 	@echo    --------- process $@ ------- end
 
 
 cvs:=clean_vcs_tmp_file
 cvs:
-	rm -f \
+	mkdir -p $(tmpRunDir2) 
+	cd $(tmpRunDir2) && rm -f \
 		opendatabase.log \
 		*.vcd \
 		*.vcd.vpd \
 		inter.vpd \
 		command.log \
-		/tmp/verdi.fsdb			\
+		$(tmpRunDir2)/verdi.fsdb			\
 		verdi.fsdb			\
 		novas_dump.log			\
 		Simv simv ucli.key 
-	rm -fr \
+	cd $(tmpRunDir2) && rm -fr \
 		DVEfiles \
 		simv.daidir/ \
 		csrc/
@@ -78,21 +79,21 @@ cvs:
 ts1:=run_the_test_of_VCS___without_Verdi_FSDB
 ts1:
 	@echo
-	rm -f verdi.fsdb /tmp/verdi.fsdb
-	./simv
+	rm -f verdi.fsdb $(tmpRunDir2)/verdi.fsdb
+	cd $(tmpRunDir2) && ./simv
 	pwd
-#	cp /tmp/verdi.fsdb ./
+#	cp $(tmpRunDir2)/verdi.fsdb ./
 	@echo
 
 ts2:=run_the_test_of_VCS___with_Verdi_FSDB
 ts2:
 	@echo
-	rm -f verdi.fsdb /tmp/verdi.fsdb
+	rm -f verdi.fsdb $(tmpRunDir2)/verdi.fsdb
 	pwd
-	LD_LIBRARY_PATH=$(VERDI_HOME)/share/PLI/VCS/linux64   \
+	cd $(tmpRunDir2) && LD_LIBRARY_PATH=$(VERDI_HOME)/share/PLI/VCS/linux64   \
 					./simv
 	pwd
-#	cp /tmp/verdi.fsdb ./
+#	cp $(tmpRunDir2)/verdi.fsdb ./
 	@echo
 
 ws1:=all_vcs_without_Verdi_FSDB
