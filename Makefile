@@ -8,7 +8,7 @@ tmpRunDir2:=/tmp/$(shell echo $${PWD}|awk -F/ '{print $$(NF-1) "_" $$NF }')
 all:
 
 File01?=$(shell /usr/bin/realpath --relative-to . ./Makefile)
-File01?=$(shell /usr/bin/realpath --relative-to . ./Makefile.notExist038381)
+File01?=$(shell /usr/bin/realpath --relative-to . ./Makefile.notExist038381.mk)
 #export File01
 TT:=$(shell /usr/bin/realpath --relative-to . .)
 $(iinfo File01:$(File01))
@@ -16,9 +16,9 @@ TM:=$(shell dirname $(File01))
 TN:=$(shell /usr/bin/realpath --relative-to . $(TT)/script.NOW)
 
 
-CFGmake00env:=$(wildcard $(TM)/Makefile.00.env)
-ifndef CFGmake00env
-$(eerror "173800 why      $(TM)/Makefile.00.env don't exist ?")
+CFGmake00env:=$(wildcard $(TM)/Makefile.00.env.mk)
+ifeq (,$(CFGmake00env))
+$(error "173800 why      $(TM)/Makefile.00.env.mk don't exist ?")
 endif
 include $(CFGmake00env)
 
