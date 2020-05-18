@@ -1,6 +1,6 @@
 all:
 
-vim:=vim -i /tmp/_viminfo.$(USER)
+vim :=vim -i /tmp/_viminfo.$(USER)
 
 btCMD01:= astyle --suffix=none 
 btCMD01:= $(vim) \
