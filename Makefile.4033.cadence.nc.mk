@@ -2,26 +2,40 @@ all:
 
 $(if $(cadencePATH),,$(error 'you should define the cadencePATH and run again'))
 
-bn1_CMD:= \
-	NC_HOME=$(NC_HOME) 				\
-	$(cadenceBIN)/nc  		        \
-	$(RTLhdlSearch)			            \
-	$(TBhdlList) $(RTLhdlList) 
+VERDI_HOME?=/e/eda2312/verdi_2018.09
+
+bn1_ENV:= \
+	LD_LIBRARY_PATH=$(VERDI_HOME)/share/PLI/IUS/linux64/boot	\
+	NC_HOME=$(NC_HOME) 											\
+	VERDI_HOME=$(VERDI_HOME)                    				\
+    LM_LICENSE_FILE=$(LM_LICENSE_FILE)                          \
+    VRST_HOME=$(NC_HOME)                      					\
+    PATH=$(NC_HOME)/tools.lnx86/bin/64bit:$(NC_HOME)/bin:$${PATH}
+
+
+bn1_CMD1:= \
+	$(bn1_ENV)       xmvlog 				\
+	-messages 								\
+	-define VERDI_HOME=\"1\"				\
+	$(NCrtlHdlSearch)			            \
+	$(TBhdlList)           $(RTLhdlList) 
+
+bn1_CMD2:= \
+	$(bn1_ENV)  		    xmelab 			\
+	-loadpli1 debpli:novas_pli_boot 		\
+	-NOLICSuspend -messages 				\
+	-access +r+w+c 							\
+	$(topModule)
 
 bn1:=cadence_NC_build_only___withouth_Verdi_FSDB
 bn1:
 	@echo
 	@echo    --------- process $@ ------- begin
-	cd $(tmpRunDir2) && $(bn1_CMD)
+	cd $(tmpRunDir2) && $(bn1_CMD1)
+	@echo;echo
+	cd $(tmpRunDir2) && $(bn1_CMD2)
 	@echo    --------- process $@ ------- end
 	@echo
-
-define no-pie-g++
-
-#!/bin/bash
-exec g++ -no-pie $*
-
-endef
 
 ncPara1:= -lca -debug_access+all -full64 
 
@@ -32,7 +46,7 @@ bn2_CMD:= \
 	$(cadenceBIN)/nc  	            \
 	$(ncPara1)   			            \
 	$(NCdefine)   			            \
-	$(RTLhdlSearch)			            \
+	$(NCrtlHdlSearch)			            \
 	$(TBhdlList) $(RTLhdlList) 
 bn2:=cadence_NC_build___with_Verdi_FSDB
 bn2:

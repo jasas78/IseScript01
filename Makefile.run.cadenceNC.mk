@@ -2,9 +2,9 @@ all:
 
 $(if $(wildcard srcSYN),,$(shell ln -s ../ srcSYN))
 
-RTLhdlSearch:=$(foreach aa1,\
+NCrtlHdlSearch:=$(foreach aa1,\
 	$(wildcard srcSYN/src?),\
-	+incdir+$(shell realpath $(aa1)))
+	-incdir $(shell realpath $(aa1)))
 
 RTLhdlList:=$(filter-out $(NCfilterOutList),$(sort \
 	$(foreach aa2,$(wildcard srcSYN/src?/*.v),$(shell realpath $(aa2))) \
