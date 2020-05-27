@@ -44,7 +44,7 @@ bn1:
 ncPara1:= -lca -debug_access+all -full64 
 
 
-bn2_CMD1:=$(bn1_CMD1)      +define+VERDI_HOME=\"1\"     +define+simulating=\"1\" 
+bn2_CMD1:=$(bn1_CMD1)      -define VERDI_HOME=\"1\"     -define simulating=\"1\" 
 bn2_CMD2:=$(bn1_CMD2)
 
 bn2:=cadence_NC_build___with_Verdi_FSDB
