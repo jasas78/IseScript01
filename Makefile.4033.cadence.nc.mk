@@ -16,7 +16,6 @@ bn1_ENV:= \
 bn1_CMD1:= \
 	$(bn1_ENV)       xmvlog 				\
 	-messages 								\
-	-define VERDI_HOME=\"1\"				\
 	$(NCrtlHdlSearch)			            \
 	$(TBhdlList)           $(RTLhdlList) 
 
@@ -27,39 +26,42 @@ bn1_CMD2:= \
 	-access +r+w+c 							\
 	$(topModule)
 
+tn1_CMD:= \
+	$(bn1_ENV)  		    xmsim 			\
+	-NOLICSuspend -messages 				\
+	$(topModule)
+
 bn1:=cadence_NC_build_only___withouth_Verdi_FSDB
 bn1:
 	@echo
-	@echo    --------- process $@ ------- begin
+	@echo      --------- process $@ ------- begin
 	cd $(tmpRunDir2) && $(bn1_CMD1)
-	@echo;echo
+	@echo;echo --------- process $@ ------- begin
 	cd $(tmpRunDir2) && $(bn1_CMD2)
-	@echo    --------- process $@ ------- end
+	@echo      --------- process $@ ------- end
 	@echo
 
 ncPara1:= -lca -debug_access+all -full64 
 
 
-bn2_CMD:= \
-	NC_HOME=$(NC_HOME)                \
-	VERDI_HOME=$(VERDI_HOME)            \
-	$(cadenceBIN)/nc  	            \
-	$(ncPara1)   			            \
-	$(NCdefine)   			            \
-	$(NCrtlHdlSearch)			            \
-	$(TBhdlList) $(RTLhdlList) 
+bn2_CMD1:=$(bn1_CMD1)      +define+VERDI_HOME=\"1\"
+bn2_CMD2:=$(bn1_CMD2)
+
 bn2:=cadence_NC_build___with_Verdi_FSDB
 bn2:
-	@echo    --------- process $@ ------- begin
+	@echo      --------- process $@ ------- begin
 	@pwd
-	cd $(tmpRunDir2) && $(bn2_CMD) 				
-	@echo    --------- process $@ ------- end
+	cd $(tmpRunDir2) && $(bn2_CMD1) 				
+	@echo;echo --------- process $@ ------- begin
+	cd $(tmpRunDir2) && $(bn2_CMD2) 				
+	@echo      --------- process $@ ------- end
 
 
 cvn:=clean_nc_tmp_file
 cvn:
 	mkdir -p $(tmpRunDir2) 
 	cd $(tmpRunDir2) && rm -f \
+		xmelab.log  xmsim.log  xmvlog.log    \
 		opendatabase.log \
 		*.vcd \
 		*.vcd.vpd \
@@ -70,6 +72,7 @@ cvn:
 		novas_dump.log			\
 		Simv simv ucli.key 
 	cd $(tmpRunDir2) && rm -fr \
+		xcelium.d     \
 		DVEfiles \
 		simv.daidir/ \
 		csrc/
@@ -78,21 +81,12 @@ tn1:=run_the_test_of_NC___without_Verdi_FSDB
 tn1:
 	@echo
 	rm -f verdi.fsdb $(tmpRunDir2)/verdi.fsdb
-	cd $(tmpRunDir2) && ./simv
+	cd $(tmpRunDir2) && pwd && $(tn1_CMD) 				
 	pwd
-#	cp $(tmpRunDir2)/verdi.fsdb ./
 	@echo
 
 tn2:=run_the_test_of_NC___with_Verdi_FSDB
-tn2:
-	@echo
-	rm -f verdi.fsdb $(tmpRunDir2)/verdi.fsdb
-	pwd
-	cd $(tmpRunDir2) && LD_LIBRARY_PATH=$(VERDI_HOME)/share/PLI/NC/linux64   \
-					./simv
-	pwd
-#	cp $(tmpRunDir2)/verdi.fsdb ./
-	@echo
+tn2: tn1
 
 wn1:=all_nc_without_Verdi_FSDB
 $(wn1):=cvn bn1 tn1
