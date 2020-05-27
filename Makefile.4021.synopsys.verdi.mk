@@ -58,7 +58,6 @@ cvv:
 		*.vcd.vpd 			\
 		inter.vpd 			\
 		command.log 		\
-		verdi.fsdb			\
 		novas_dump.log		\
 		novas.conf			\
 		novas.rc			\
@@ -117,13 +116,13 @@ simTOP?=unknown88381811
 ws2:=call_the_VCS_to_compile
 ws2: 
 	make -C ../topVCS $@
-	mkdir -p                                   $(tmpRunDir3)topVCS/  
+	mkdir -p                                   $(tmpRunDir2)
 	cd $(tmpRunDir2) && rm -f verdi.fsdb && cp $(tmpRunDir3)topVCS/verdi.fsdb  ./
 
 wn2:=call_the_NC_to_compile
 wn2: 
 	make -C ../topNC $@
-	mkdir -p                                   $(tmpRunDir3)topNC/  
+	mkdir -p                                   $(tmpRunDir2)
 	cd $(tmpRunDir2) && rm -f verdi.fsdb && cp $(tmpRunDir3)topNC/verdi.fsdb  ./
 
 sv1:=VCS_and_VERDI01
