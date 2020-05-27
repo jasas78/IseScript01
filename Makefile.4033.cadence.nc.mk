@@ -60,6 +60,7 @@ bn2:
 cvn:=clean_nc_tmp_file
 cvn:
 	mkdir -p $(tmpRunDir2) 
+	mkdir -p /tmp/simvision/
 	cd $(tmpRunDir2) && rm -f \
 		xmelab.log  xmsim.log  xmvlog.log    \
 		opendatabase.log \

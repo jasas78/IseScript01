@@ -76,7 +76,6 @@ cvv:
 bv1:=synopsys_compile_Verdi_FSDB_database
 bv1:
 	@echo
-	cd $(tmpRunDir2) && rm -f verdi.fsdb && cp $(tmpRunDir3)topVCS/verdi.fsdb  ./
 	cd $(tmpRunDir2) && VERDI_HOME=$(VERDI_HOME) 				\
 			   $(VERDI_HOME)/bin/vericom 	\
 			   $(VERICOMdefine)				\
@@ -114,13 +113,18 @@ wv1:=group_run_the_verdi1
 $(wv1):=cvv bv1 tv1
 wv1: $($(wv1))
 
+simTOP?=unknown88381811
 ws2:=call_the_VCS_to_compile
 ws2: 
 	make -C ../topVCS $@
+	mkdir -p                                   $(tmpRunDir3)topVCS/  
+	cd $(tmpRunDir2) && rm -f verdi.fsdb && cp $(tmpRunDir3)topVCS/verdi.fsdb  ./
 
 wn2:=call_the_NC_to_compile
 wn2: 
 	make -C ../topNC $@
+	mkdir -p                                   $(tmpRunDir3)topNC/  
+	cd $(tmpRunDir2) && rm -f verdi.fsdb && cp $(tmpRunDir3)topNC/verdi.fsdb  ./
 
 sv1:=VCS_and_VERDI01
 $(sv1):=ws2 wv1
