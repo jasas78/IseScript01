@@ -80,15 +80,15 @@ tn2:
 #	cp $(tmpRunDir2)/verdi.fsdb ./
 	@echo
 
-ws1:=all_nc_without_Verdi_FSDB
-$(ws1):=cvn bn1 tn1
-ws1: $($(ws1))
+wn1:=all_nc_without_Verdi_FSDB
+$(wn1):=cvn bn1 tn1
+wn1: $($(wn1))
 
 wn2:=all_nc_with_Verdi_FSDB
 $(wn2):=cvn bn2 tn2
 wn2:$($(wn2))
 
-cadenceNC_OpList:=cvn bn1 bn2 tn1 tn2 ws1 wn2
+cadenceNC_OpList:=cvn bn1 bn2 tn1 tn2 wn1 wn2
 
 define NChelp
 
