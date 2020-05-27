@@ -118,9 +118,17 @@ ws2:=call_the_VCS_to_compile
 ws2: 
 	make -C ../topVCS $@
 
+wn2:=call_the_NC_to_compile
+wn2: 
+	make -C ../topNC $@
+
 sv1:=VCS_and_VERDI01
 $(sv1):=ws2 wv1
 sv1: $($(sv1))
+
+nv1:=NC_and_VERDI01
+$(nv1):=wn2 wv1
+nv1: $($(nv1))
 
 synopsysVerdi_OpList:=		\
 	cvv bv1 tv1 			\
@@ -128,6 +136,7 @@ synopsysVerdi_OpList:=		\
 	ws2						\
 	wv1						\
 	sv1						\
+	nv1						\
 
 
 define VERICOMhelp
