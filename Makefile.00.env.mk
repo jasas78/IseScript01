@@ -75,6 +75,7 @@ CFGmakeINCsetNOW?=						\
 	Makefile.run.synopsysVCS.mk 			\
 	Makefile.run.synopsysVERDI.mk 			\
 	Makefile.run.synopsysDC.mk 			\
+	Makefile.run.cadenceNC.mk 			\
 	Makefile.run.NFT.mk    	 			\
 
 
