@@ -39,8 +39,12 @@ GoPreDockerALL?= Linux386 LinuxArm LinuxX64 LinuxArm64
 
 StripLinux386:=strip
 StripLinuxX64:=strip
-StripLinuxArm:=arm-none-eabi-strip
-StripLinuxArm64:=aarch64-linux-gnu-strip
+StripLinuxArm:=$(firstword   $(wildcard $(shell which arm-none-eabi-strip)        $(shell which llvm-strip)))
+StripLinuxArm64:=$(firstword $(wildcard $(shell which aarch64-linux-gnu-strip)    $(shell which llvm-strip)))
+ifeq (,$(StripLinuxArm))
+$(info ) $(info ) $(info not StripLinuxArm exist. 83818198 )
+$(info ) $(error )
+endif
 
 Wput_default :=wput -u -nc 
 
