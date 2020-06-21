@@ -167,8 +167,10 @@ ttX1:
 	$(foreach aa2,$(GoPreLinuxALL),$(foreach aa1,$(GoTOP),lnx/$(aa1).lnx.$(aa2).exe $(runPara_$(aa1)) $(EOL)))
 	@reset
 
+t:=ttX1
+t:ttX1
 
-showRunHelpList += cw cl c ll bw bl ttX1  vpgo tour
+showRunHelpList += cw cl c ll bw bl ttX1  t vpgo tour
 
 define showRunHelpTEXText1
 endef
