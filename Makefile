@@ -26,13 +26,6 @@ include $(CFGmake00env)
 #$(info vvvv1->$(vvvv1))
 #$(info vvvv2->$(vvvv2))
 
-# git remote add origin https://dengyanuoapp@github.com/dengyanuoapp/Ise601.3phrase.motoro.git
-# git remote add origin https://github.com/dengyanuoapp/IseScript01.git
-up:
-	git push -u origin master
-
-upp upup:
-	make up -C $(TM) 
 
 define if_home_end_key_do_NOT_work_in_docker
 https://superuser.com/questions/94436/how-to-configure-putty-so-that-home-end-pgup-pgdn-work-properly-in-bash

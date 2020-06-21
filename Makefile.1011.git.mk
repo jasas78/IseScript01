@@ -58,9 +58,17 @@ $(ga):=git_add______current_dir_files
 ga :
 	git add .
 
-showOptionListDefault += gs gc gcX gd ga
+# git remote add origin https://dengyanuoapp@github.com/dengyanuoapp/Ise601.3phrase.motoro.git
+# git remote add origin https://github.com/dengyanuoapp/IseScript01.git
+up:
+	git push -u origin master
+
+showOptionListDefault += gs gc gcX gd ga up
 
 ifndef inMakeScriptDIR
+
+upp upup:
+	make up -C $(TM) 
 
 gss:=git_status_______script_dir_files
 gss:
