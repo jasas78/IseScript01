@@ -11,28 +11,48 @@ endif
 
 Wput_default :=wput -u -nc 
 
-ifdef GoPath00001
-GobinPathList1:=$${HOME}/go/BBgo $${HOME}/go/bin/
-GobinPathList2:=$(foreach aa1,$(GobinPathList1),$(shell echo $(aa1)))
-GobinPathList3:=$(wildcard $(GobinPathList2))
-GObinPathX:=PATH="$(shell echo $(GobinPathList2)|tr ' ' ':'):$${PATH}"
-GObinNow:=$(strip $(firstword $(wildcard $(foreach aa1,$(GobinPathList2),$(shell echo $(aa1)/gomobile)))))
 
-GobinPath09:=$(shell realpath $${HOME}/go/bin/)
-GobinPath11:=$(shell realpath $(GobinPath09)/../../)
-GobinPath18:=$(GobinPath11)/go/bin
+#GOapkNow=/e/eda5201/src/goInUserHome/GOPATH/bin/gomobile
+#GObinNow=/e/eda5201/src/goInUserHome/go/bin/go
+#/home/g/gD/nowDIR/bin
+GoPath01:=$(wildcard /home/g/gD/nowDIR/bin)
+ifeq (,$(GoPath01))
+GoPath11:=$(shell  dirname `realpath /usr/bin/go`)
 else
-GobinPath18:=$(shell realpath /home/g/gD/nowDIR/bin)
+GoPath11:=$(shell  realpath $(GoPath01))
 endif
-GobinPath19:=$(GobinPath11)/GOPATH/bin
-GobinPath20:=$(GobinPath11)/GOPATH
-export GobinPath20
-GObinPathX:=PATH="$(GobinPath18):$(GobinPath19):$${PATH}"
-GObinPathY:=GOPATH=$(GobinPath11)/GOPATH
-GObinNow:=$(GobinPath18)/go
-GOapkNow:=$(GobinPath19)/gomobile
+$(info GoPath11 $(GoPath11) for bin : go )
 
-ifeq (,$(GObinNow))
+GoPath21:=$(shell  realpath $(GoPath11)/../../goInUserHome/go/bin)
+$(info     GoPath21 $(GoPath21): for bin : gomobile , gobind )
+
+#  ifdef GoPath00001
+#  GobinPathList1:=$${HOME}/go/BBgo $${HOME}/go/bin/ /usr/bin
+#  GobinPathList2:=$(foreach aa1,$(GobinPathList1),$(shell echo $(aa1)))
+#  GobinPathList3:=$(wildcard $(GobinPathList2))
+#  GObinPathX:=PATH="$(shell echo $(GobinPathList2)|tr ' ' ':'):$${PATH}"
+#  GObinNow:=$(strip $(firstword $(wildcard $(foreach aa1,$(GobinPathList2),$(shell echo $(aa1)/gomobile)))))
+#  
+#  GobinPath09:=$(shell realpath $${HOME}/go/bin/)
+#  GobinPath11:=$(shell realpath $(GobinPath09)/../../)
+#  GobinPath18:=$(GobinPath11)/go/bin
+#  else
+#  GobinPath18:=$(shell realpath /home/g/gD/nowDIR/bin)
+#  endif
+#  GobinPath19:=$(GobinPath11)/GOPATH/bin
+#  GobinPath20:=$(GobinPath11)/GOPATH
+#  export GobinPath20
+#  GObinPathX:=PATH="$(GobinPath18):$(GobinPath19):$${PATH}"
+#  GObinPathY:=GOPATH=$(GobinPath11)/GOPATH
+#  GObinNow:=$(GobinPath18)/go
+#  GOapkNow:=$(GobinPath19)/gomobile
+
+GObinPathX:=PATH="$(GoPath11):$(GoPath21):$${PATH}"
+GObinPathY:=GOPATH=$(GobinPath11)/GOPATH
+GObinNow:=$(GoPath11)/go
+GOapkNow:=$(GoPath21)/gomobile
+
+ifeq (,$(wildcard $(shell realpath $(GObinNow))))
 $(info )
 $(info ' file do NOT exist : $(GobinPathList1)')
 $(info ' file do NOT exist : $(GobinPathList2)')

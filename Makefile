@@ -33,3 +33,23 @@ up:
 
 upp upup:
 	make up -C $(TM) 
+
+define if_home_end_key_do_NOT_work_in_docker
+https://superuser.com/questions/94436/how-to-configure-putty-so-that-home-end-pgup-pgdn-work-properly-in-bash
+~/.inputrc
+
+set meta-flag on
+set input-meta on
+set convert-meta off
+set output-meta on
+"\e[1~": beginning-of-line     # Home key
+"\e[4~": end-of-line           # End key
+"\e[5~": beginning-of-history  # PageUp key
+"\e[6~": end-of-history        # PageDown key
+"\e[3~": delete-char           # Delete key
+"\e[2~": quoted-insert         # Insert key
+"\eOD": backward-word          # Ctrl + Left Arrow key
+"\eOC": forward-word           # Ctrl + Right Arrow key
+
+endef
+
