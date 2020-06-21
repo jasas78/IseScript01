@@ -64,11 +64,14 @@ endif
 # list.001.file.txt  list.002.dir.txt
 listPath1:=$(shell realpath $${HOME}/go/)
 listPath2:=$(shell realpath $(listPath1)/../)
-ifdef GoPath000002
-listPath3:=$(shell realpath $(listPath2)/now_dir__)
-listPath4:=$(shell realpath $(listPath3)/go/bin)
-listPath5:=$(shell realpath $(listPath3)/GOPATH/bin)
-endif
+# ifdef GoPath000002
+# listPath3:=$(shell realpath $(listPath2)/now_dir__)
+# listPath4:=$(shell realpath $(listPath3)/go/bin)
+# listPath5:=$(shell realpath $(listPath3)/GOPATH/bin)
+# endif
+listPath3:=$(shell realpath $(GoPath11)/../../)
+listPath4:=$(shell realpath $(GoPath11))
+listPath5:=$(shell realpath $(GoPath21))
 listPath91:=$(listPath3).001.file.txt
 listPath92:=$(listPath3).002.dir.txt
 goPATH1:=PATH=$(listPath4):$(listPath5):$${PATH}
@@ -98,7 +101,7 @@ tour:=gotour
 $(tour):=tour_of_go_langauge
 tour:
 	@echo
-	@pkill -9 tour
+	@-pkill -9 tour
 	@echo
 	$(goPATH1) tour &
 	@echo
