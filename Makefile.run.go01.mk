@@ -185,11 +185,11 @@ aaa:=build_win_and_linux_execute_bin_fileS
 $(aaa):=cw cl bw bl
 aaa: $($(aaa))
 
-lnx:=build_and_test_linux_only
-$(lnx):=cl bl ttX1
-lnx:$($(lnx))
+lnxAll:=build_and_test_linux_only
+$(lnxAll):=cl bl ttX1
+lnxAll:$($(lnxAll))
 
-showRunHelpList += aaa lnx
+showRunHelpList += aaa lnxAll
 
 #$(info goVimFileSetS -> $(goVimFileSetS))
 btList01verilog += $(goVimFileSetS)
