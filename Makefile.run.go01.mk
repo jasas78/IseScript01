@@ -34,7 +34,9 @@ GoPreLinux386:=   GOOS=linux   GOARCH=386
 GoPreLinuxX64:=   GOOS=linux   GOARCH=amd64
 GoPreLinuxArm:=   GOOS=linux   GOARCH=arm
 GoPreLinuxArm64:= GOOS=linux   GOARCH=arm64
-GoPreLinuxALL?= Linux386 LinuxArm LinuxX64 LinuxArm64
+GoPreLinuxArchALL?= Linux386 LinuxArm LinuxX64 LinuxArm64
+GoPreLinuxArchX32?= Linux386 
+GoPreLinuxArchX64?= LinuxX64 
 GoPreDockerALL?= Linux386 LinuxArm LinuxX64 LinuxArm64
 
 StripLinux386:=strip
@@ -98,8 +100,22 @@ ifdef wputPATH
 	$(Wput_default) win/$(GoTOP).win.exe $(wputPATH)/ 
 endif
 
-bl:=build_go_lang_for_linux
-bl: $(foreach aa2,$(GoPreLinuxALL),\
+bl:=build_go_lang_for_linuxALL
+bl: $(foreach aa2,$(GoPreLinuxArchALL),\
+	$(foreach aa1,$(GoTOP),\
+		lnx/$(aa1).lnx.$(aa2).exe \
+		))
+	@ls -l lnx/* -d
+
+b64:=build_go_lang_for_linux64
+b64: $(foreach aa2,$(GoPreLinuxArchX64),\
+	$(foreach aa1,$(GoTOP),\
+		lnx/$(aa1).lnx.$(aa2).exe \
+		))
+	@ls -l lnx/* -d
+
+b32:=build_go_lang_for_linux32
+b32: $(foreach aa2,$(GoPreLinuxArchX32),\
 	$(foreach aa1,$(GoTOP),\
 		lnx/$(aa1).lnx.$(aa2).exe \
 		))
@@ -149,9 +165,9 @@ win/$(1).win.$(2).exe : $(lnxGoSrc01)
 
 endef
 
-$(iinfo GoPreLinuxALL:$(GoPreLinuxALL))
+$(iinfo GoPreLinuxArchALL:$(GoPreLinuxArchALL))
 $(iinfo GoTOP:$(GoTOP))
-$(foreach aa2,$(GoPreLinuxALL),\
+$(foreach aa2,$(GoPreLinuxArchALL),\
 	$(foreach aa1,$(GoTOP),\
 	$(eval $(call build_go_lang_tp01,$(aa1),$(aa2)))\
 	))
@@ -160,17 +176,30 @@ $(foreach aa2,$(GoPreWinALL),\
 	$(eval $(call build_go_lang_tp01,$(aa1),$(aa2)))\
 	))
 
-ttX1:=test
+ttX1:=testALL
+tt32:=testX32
+tt64:=testX64
 
-$(ttX1):=$(foreach aa2,$(GoPreLinuxALL),$(foreach aa1,$(GoTOP),lnx/$(aa1).lnx.$(aa2).exe ))
+$(ttX1):=$(foreach aa2,$(GoPreLinuxArchALL),$(foreach aa1,$(GoTOP),lnx/$(aa1).lnx.$(aa2).exe ))
+$(tt32):=$(foreach aa2,$(GoPreLinuxArchX32),$(foreach aa1,$(GoTOP),lnx/$(aa1).lnx.$(aa2).exe ))
+$(tt64):=$(foreach aa2,$(GoPreLinuxArchX64),$(foreach aa1,$(GoTOP),lnx/$(aa1).lnx.$(aa2).exe ))
+
 ttX1:
-	$(foreach aa2,$(GoPreLinuxALL),$(foreach aa1,$(GoTOP),lnx/$(aa1).lnx.$(aa2).exe $(runPara_$(aa1)) $(EOL)))
+	$(foreach aa2,$(GoPreLinuxArchALL),$(foreach aa1,$(GoTOP),lnx/$(aa1).lnx.$(aa2).exe $(runPara_$(aa1)) $(EOL)))
+	@reset
+
+tt32:
+	$(foreach aa2,$(GoPreLinuxArchX32),$(foreach aa1,$(GoTOP),lnx/$(aa1).lnx.$(aa2).exe $(runPara_$(aa1)) $(EOL)))
+	@reset
+
+tt64:
+	$(foreach aa2,$(GoPreLinuxArchX64),$(foreach aa1,$(GoTOP),lnx/$(aa1).lnx.$(aa2).exe $(runPara_$(aa1)) $(EOL)))
 	@reset
 
 t:=ttX1
 t:ttX1
 
-showRunHelpList += cw cl c ll bw bl ttX1  t vpgo tour
+showRunHelpList += cw cl c ll bw bl ttX1 tt32 tt64 t vpgo tour
 
 define showRunHelpTEXText1
 endef
@@ -185,11 +214,19 @@ aaa:=build_win_and_linux_execute_bin_fileS
 $(aaa):=cw cl bw bl
 aaa: $($(aaa))
 
-lnxAll:=build_and_test_linux_only
+lnxAll:=$(bl)
 $(lnxAll):=cl bl ttX1
 lnxAll:$($(lnxAll))
 
-showRunHelpList += aaa lnxAll
+l64:=$(b64)
+$(l64):=cl b64 tt64
+l64:$($(l64))
+
+l32:=$(b32)
+$(l32):=cl b32 tt32
+l32:$($(l32))
+
+showRunHelpList += aaa lnxAll l64 l32
 
 #$(info goVimFileSetS -> $(goVimFileSetS))
 btList01verilog += $(goVimFileSetS)
