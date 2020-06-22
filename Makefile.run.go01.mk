@@ -185,14 +185,17 @@ $(tt32):=$(foreach aa2,$(GoPreLinuxArchX32),$(foreach aa1,$(GoTOP),lnx/$(aa1).ln
 $(tt64):=$(foreach aa2,$(GoPreLinuxArchX64),$(foreach aa1,$(GoTOP),lnx/$(aa1).lnx.$(aa2).exe ))
 
 ttX1:
+	$(foreach aa2,$(GoPreLinuxArchALL),$(foreach aa1,$(GoTOP),-killall -9 lnx/$(aa1).lnx.$(aa2).exe $(EOL)))
 	$(foreach aa2,$(GoPreLinuxArchALL),$(foreach aa1,$(GoTOP),lnx/$(aa1).lnx.$(aa2).exe $(runPara_$(aa1)) $(EOL)))
 	@reset
 
 tt32:
+	$(foreach aa2,$(GoPreLinuxArchX32),$(foreach aa1,$(GoTOP),-killall -9 lnx/$(aa1).lnx.$(aa2).exe $(EOL)))
 	$(foreach aa2,$(GoPreLinuxArchX32),$(foreach aa1,$(GoTOP),lnx/$(aa1).lnx.$(aa2).exe $(runPara_$(aa1)) $(EOL)))
 	@reset
 
 tt64:
+	$(foreach aa2,$(GoPreLinuxArchX64),$(foreach aa1,$(GoTOP),-killall -9 lnx/$(aa1).lnx.$(aa2).exe $(EOL)))
 	$(foreach aa2,$(GoPreLinuxArchX64),$(foreach aa1,$(GoTOP),lnx/$(aa1).lnx.$(aa2).exe $(runPara_$(aa1)) $(EOL)))
 	@reset
 
