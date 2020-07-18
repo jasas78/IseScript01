@@ -44,5 +44,11 @@ set output-meta on
 "\eOD": backward-word          # Ctrl + Left Arrow key
 "\eOC": forward-word           # Ctrl + Right Arrow key
 
+curl ipinfo.io/76.102.132.225
+wget https://github.com/mbcc2006/GeoLiteCity-data/raw/master/GeoLiteCity.dat
+	https://www.miyuru.lk/geoiplegacy
+	https://dl.miyuru.lk/geoip/dbip/city/dbip4.dat.gz
+	https://github.com/caddyserver/caddy/releases
+
 endef
 
