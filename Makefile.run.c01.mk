@@ -29,21 +29,51 @@ $(call genVimWithFileList,showSourceCodeTEXT0,$(GccSrcList),vv)
 
 GccIncPath:=$(foreach aa1,$(sort $(wildcard incH?/)), -I $(aa1))
 
-GccPara01:= -static -Werror 
+GccPara01:= -Werror 
+GccPara02:= -Werror -static 
 
-define FUNCgccCompile
-bin/$1.bin : $(foreach bb1,$($1), src*/$(bb1).c )
-	@echo "build : $$@ <-- $$^"
-#	@echo "build : $@ <-- $^"
+# define FUNCgccCompileC
+# bin/$1.bin : $(foreach bb1,$($1), src*/$(bb1).c )
+# 	@echo "build C: $$@ <-- $$^"
+# 	test -d bin/ || mkdir bin/
+# 	gcc $(GccIncPath)      \
+# 		$(GccPara01)   \
+# 		$$^    \
+# 		-o    $$@
+# 
+# endef
+
+define FUNCgccCompileO1
+$(iinfo oooo1 : $1_$2)
+obj/$1_$2.o : $(firstword $(wildcard src*/$2.c)) $(wildcard incH*/*.h)
+	@echo "build O1: $$@ <-- $$^"
+	@test -d obj/ || mkdir obj/
+	gcc \
+		-c \
+		$(GccIncPath)      \
+		$(GccPara01)   \
+		$$<    \
+		-o    $$@
+endef
+
+
+define FUNCgccCompileC
+$(iinfo cccc1 : $1)
+
+
+bin/$1.bin : $(foreach bb1,$($1), obj/$1_$(bb1).o )
+	@echo "build Bin: $$@ <-- $$^"
 	test -d bin/ || mkdir bin/
 	gcc $(GccIncPath)      \
-		$(GccPara01)   \
+		$(GccPara02)   \
 		$$^    \
 		-o    $$@
 
+
 endef
 
-$(foreach aa1,$(GccTOP),$(eval $(call FUNCgccCompile,$(aa1))))
+$(foreach aa1,$(GccTOP),$(foreach ee1,$($(aa1)),$(eval $(call FUNCgccCompileO1,$(aa1),$(ee1)))))
+$(foreach aa1,$(GccTOP),$(eval $(call FUNCgccCompileC,$(aa1))))
 
 
 b : build_bin
