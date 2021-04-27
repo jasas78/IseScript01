@@ -35,6 +35,7 @@ define FUNCgccCompile
 bin/$1.bin : $(foreach bb1,$($1), src*/$(bb1).c )
 	@echo "build : $$@ <-- $$^"
 #	@echo "build : $@ <-- $^"
+	test -d bin/ || mkdir bin/
 	gcc $(GccIncPath)      \
 		$(GccPara01)   \
 		$$^    \
