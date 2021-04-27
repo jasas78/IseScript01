@@ -1,6 +1,20 @@
 all: 
 
 
+ifeq (,$(GccTOP))
+$(info )
+$(info ' c lang project , should has a VAR named GccTOP being defined in Makefile.env.mk')
+$(info '                   as the end target name; ')
+$(info ' and the src files being put into the src?/*.go' )
+$(info )
+$(error )
+else
+#$(info )
+#$(info ' c lang project : $(GccTOP)')
+#$(info )
+endif
+
+
 #GccCccfilterOutList:=
 #GccCccextSrcList:=
 
@@ -13,7 +27,27 @@ export GccSrcList
 
 $(call genVimWithFileList,showSourceCodeTEXT0,$(GccSrcList),vv)
 
+GccIncPath:=$(foreach aa1,$(sort $(wildcard incH?/)), -I $(aa1))
 
+GccPara01:= -static -Werror 
+
+define FUNCgccCompile
+bin/$1.bin : $(foreach bb1,$($1), src*/$(bb1).c )
+	@echo "build : $$@ <-- $$^"
+#	@echo "build : $@ <-- $^"
+	gcc $(GccIncPath)      \
+		$(GccPara01)   \
+		$$^    \
+		-o    $$@
+
+endef
+
+$(foreach aa1,$(GccTOP),$(eval $(call FUNCgccCompile,$(aa1))))
+
+
+b : build_bin
+build_bin:=$(foreach aa1,$(GccTOP),bin/$(aa1).bin)
+build_bin:$(build_bin)
 
 
 
