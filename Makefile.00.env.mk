@@ -66,7 +66,7 @@ CFGmakeInc91firstVimAndGit:=Makefile.2091.vimAndGit.mk
 CFGmakeInc99endAll:=Makefile.2099.endAll.mk
 
 CFGmakeINCsetNOW?=						\
-	Makefile.run.c01.mk 				\
+	Makefile.run.gcc01.mk 				\
 	Makefile.run.document01.mk 			\
 	Makefile.run.ise01.mk 					\
 	Makefile.run.OpenOCD.mk 				\
